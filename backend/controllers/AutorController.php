@@ -1,8 +1,8 @@
 <?php
 include_once 'includes/BaseController.php';
-include_once 'models/EnderecoModel.php';
+include_once 'models/AutorModel.php';
 
-class EnderecoController extends BaseController
+class AutorController extends BaseController
 {
     public function __construct() {
         parent::__construct();
@@ -12,11 +12,7 @@ class EnderecoController extends BaseController
             case 'GET':
                 switch ($params['acao']) {
                     case 'listar':
-                        if ( $this->isAuth() ) {
-                            $this->listar($this->getFieldFromToken('uid'));
-                        } else {
-                            $this->httpResponse(401,'Não autorizado');
-                        }
+                        $this->listar();
                         break;
                     default:
                         $this->httpResponse(501,'Ação Indisponível');
@@ -28,7 +24,7 @@ class EnderecoController extends BaseController
                     switch ($params['acao']) {
                         case 'adicionar':
                             if ( $this->isAuth() ) {
-                                $this->adicionar($this->getFieldFromToken('uid'), $dados);
+                                $this->adicionar($dados);
                             } else {
                                 $this->httpResponse(401,'Não autorizado');
                             }
@@ -43,7 +39,7 @@ class EnderecoController extends BaseController
                     case 'atualizar':
                         $dados = $this->pegarArrayPut();
                         if ( $this->isAuth() ) {
-                            $this->atualizar($params['param1'], $this->getFieldFromToken('uid'), $dados);
+                            $this->atualizar($params['param1'], $dados);
                         } else {
                             $this->httpResponse(401,'Não autorizado');
                         }
@@ -57,7 +53,7 @@ class EnderecoController extends BaseController
                 switch ($params['acao']) {
                     case 'deletar':
                         if ( $this->isAuth() ) {
-                            $this->deletar($params['param1'], $this->getFieldFromToken('uid'));
+                            $this->deletar($params['param1']);
                         } else {
                             $this->httpResponse(401,'Não autorizado');
                         }
@@ -76,25 +72,25 @@ class EnderecoController extends BaseController
     public function listar($uid = 0)
     {
         try {
-            $enderecoModel = new EnderecoModel();
-            $arrEnderecos = $enderecoModel->buscarEndereco($uid);
-            $responseData = json_encode($arrEnderecos);
+            $autorModel = new AutorModel();
+            $arrAutores = $autorModel->listarAutores();
+            $responseData = json_encode($arrAutores);
         } catch (Exception $e) {
             $this->httpResponse(500,$e->getMessage());
         }
         $this->montarSaidaOk($responseData);
     }
 
-    public function adicionar($uid, $dados)
+    public function adicionar($dados)
     {       
         try {
-            $enderecoModel = new EnderecoModel();
-            $enderecoModel->adicionarEndereco($uid, $dados);
+            $autorModel = new AutorModel();
+            $autorModel->adicionarAutor($dados);
         } catch (Exception $e) {
             switch ($e->getCode()) {
                 case 23000:
-                    if (stripos($e->getMessage(),'usu_ende_cep_uk')) {
-                        $this->httpResponse(200,'É permitido apenas um endereço com o mesmo CEP.');
+                    if (stripos($e->getMessage(),'nome_autor_uk')) {
+                        $this->httpResponse(200,'Já existe um autor com este nome');
                     } else {
                         $this->httpResponse(500,"Erro: " . $e->getCode() . " | " . $e->getMessage());
                     }
@@ -105,43 +101,67 @@ class EnderecoController extends BaseController
                     break;
             }
         } finally {
-            $this->httpResponse(200,'Endereço cadastrado com sucesso.');
+            $this->httpResponse(200,'Autor cadastrado com sucesso.');
         }
     }
 
-    public function deletar($eid, $uid)
+    public function deletar($aid)
     {
         try {
-            if ( is_numeric($eid) && is_numeric($uid) ) {
-                $enderecoModel = new EnderecoModel();            
-                if ($enderecoModel->deletarEndereco($eid, $uid)>0) {
-                    $this->httpResponse(200,'Endereço deletado com sucesso.');
+            if ( is_numeric($aid) ) {
+                $autorModel = new AutorModel();            
+                if ( $autorModel->deletarAutor($aid) > 0 ) {
+                    $this->httpResponse(200,'Autor deletado com sucesso.');
                 } else {
-                    $this->httpResponse(200,'Endereço não encontrado');
+                    $this->httpResponse(200,'Autor não encontrado');
                 }
             } else {
                 $this->httpResponse(200,'Identificador inválido');
             }
         } catch (Exception $e) {
-            $this->httpResponse(500,'Erro');
+            switch ($e->getCode()) {
+                case 23000:
+                    if (stripos($e->getMessage(),'fk_autores')) {
+                        $this->httpResponse(200,'Este autor não pode ser deletado pois está vinculado a um ou mais livros');
+                    } else {
+                        $this->httpResponse(500,"Erro: " . $e->getCode() . " | " . $e->getMessage());
+                    }
+                    break;
+
+                default:
+                    $this->httpResponse(500,"Erro: " . $e->getCode() . " | " . $e->getMessage());
+                    break;
+            }
         }
     }
 
-    public function atualizar($eid, $uid, $dados)
+    public function atualizar($aid, $dados)
     {       
         try {
-            if ( is_numeric($eid) && is_numeric($uid) ) {
-                $enderecoModel = new EnderecoModel();            
-                if ( $enderecoModel->atualizarEndereco($eid, $uid, $dados) <= 0) {
-                    $this->httpResponse(200,'Endereço não localizado');
+            if ( is_numeric($aid) ) {
+                $autorModel = new AutorModel();            
+                if ( $autorModel->atualizarAutor($aid, $dados) == 0 ) {
+                    $this->httpResponse(200,'Autor não localizado');
                 }
             } else {
                 $this->httpResponse(200,'Identificador inválido');
             }            
         } catch (Exception $e) {
-            $this->httpResponse(500,"Erro: " . $e->getCode() . " | " . $e->getMessage());
+            switch ($e->getCode()) {
+                case 23000:
+                    if (stripos($e->getMessage(),'nome_autor_uk')) {
+                        $this->httpResponse(200,'Já existe um autor com este nome');
+                    } else {
+                        $this->httpResponse(500,"Erro: " . $e->getCode() . " | " . $e->getMessage());
+                    }
+                    break;
+
+                default:
+                    $this->httpResponse(500,"Erro: " . $e->getCode() . " | " . $e->getMessage());
+                    break;
+            }
         } finally {
-            $this->httpResponse(200,'Endereço atualizado com sucesso.');
+            $this->httpResponse(200,'Autor atualizado com sucesso.');
         }
     }
 }

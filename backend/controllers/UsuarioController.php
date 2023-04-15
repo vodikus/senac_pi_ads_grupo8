@@ -72,7 +72,7 @@ class UsuarioController extends BaseController
             $usuarioModel = new UsuarioModel();
             $arrUsuarios = $usuarioModel->buscarTodosUsuarios();
             $responseData = json_encode($arrUsuarios);
-        } catch (Error $e) {
+        } catch (Exception $e) {
             $this->httpResponse(500,'Erro');
         }
         $this->montarSaidaOk($responseData);
@@ -83,7 +83,7 @@ class UsuarioController extends BaseController
             $usuarioModel = new UsuarioModel();
             $arrUsuarios = $usuarioModel->buscarUsuario($id);
             $responseData = json_encode($arrUsuarios);
-        } catch (Error $e) {
+        } catch (Exception $e) {
             $this->httpResponse(500,'Erro');
         }
         $this->montarSaidaOk($responseData);
@@ -101,7 +101,7 @@ class UsuarioController extends BaseController
             } else {
                 $this->httpResponse(200,'Identificador inválido');
             }
-        } catch (Error $e) {
+        } catch (Exception $e) {
             $this->httpResponse(500,'Erro');
         }
     }

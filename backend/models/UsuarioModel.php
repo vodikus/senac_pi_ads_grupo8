@@ -5,7 +5,7 @@ require_once "helpers/TimeDateHelper.php";
 
 class UsuarioModel extends BaseModel
 {
-    private $campos = array (
+    public $campos = array (
         'uid' => ['protected' => 'all', 'type' => 'int', 'visible' => true],
         'email' => ['protected' => 'update', 'type' => 'varchar', 'visible' => true],
         'nome' => ['protected' => 'none', 'type' => 'varchar', 'visible' => true],
@@ -28,8 +28,8 @@ class UsuarioModel extends BaseModel
     }
     public function buscarUsuario($id = 0)
     {
-        $campos = SQLHelper::montaCamposSelect($this->campos);
-        return $this->select("SELECT $campos FROM usuarios WHERE uid=:uid", ['uid'=>$id]);
+        $campos = SQLHelper::montaCamposSelect($this->campos,'u');
+        return $this->select("SELECT $campos FROM usuarios u WHERE uid=:uid", ['uid'=>$id]);
     }
     public function deletarUsuario($id = 0)
     {

@@ -5,7 +5,7 @@ require_once "helpers/TimeDateHelper.php";
 
 class EnderecoModel extends BaseModel
 {
-    private $campos = array (
+    public $campos = array (
         'eid' => ['protected' => 'all', 'type' => 'int', 'visible' => true],
         'uid' => ['protected' => 'all', 'type' => 'int', 'visible' => true],
         'cep' => ['protected' => 'update', 'type' => 'int', 'visible' => true],
@@ -20,8 +20,8 @@ class EnderecoModel extends BaseModel
 
     public function buscarEndereco($id = 0)
     {
-        $campos = SQLHelper::montaCamposSelect($this->campos);
-        return $this->select("SELECT $campos FROM enderecos WHERE uid=:uid", ['uid'=>$id]);
+        $campos = SQLHelper::montaCamposSelect($this->campos,'e');
+        return $this->select("SELECT $campos FROM enderecos e WHERE uid=:uid", ['uid'=>$id]);
     }
     public function deletarEndereco($eid = 0, $uid = 0)
     {

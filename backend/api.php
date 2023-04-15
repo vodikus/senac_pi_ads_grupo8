@@ -3,9 +3,11 @@ define( 'INCLUDE_DIR', dirname( __FILE__ ) . '/controllers/' );
 
 // Regras de roteamento
 $rules = array( 
-    'AuthController'      => "auth/?(?'acao'[\w\-]*)\/?(?'param1'[\w\s]*)",
-    'UsuarioController'      => "usuarios/?(?'acao'[\w\-]*)\/?(?'param1'[\w\s]*)",
-    'EnderecoController'      => "enderecos/?(?'acao'[\w\-]*)\/?(?'param1'[\w\s]*)"
+    'AuthController'        => "auth/?(?'acao'[\w\-]*)\/?(?'param1'[\w\s]*)",
+    'AutorController'       => "autores/?(?'acao'[\w\-]*)\/?(?'param1'[\w\s]*)",
+    'EnderecoController'    => "enderecos/?(?'acao'[\w\-]*)\/?(?'param1'[\w\s]*)",
+    'LivroController'       => "livros/?(?'acao'[\w\-]*)\/?(?'param1'[\w\s]*)",
+    'UsuarioController'     => "usuarios/?(?'acao'[\w\-]*)\/?(?'param1'[\w\s]*)"
 );
 
 

@@ -5,6 +5,8 @@ class BaseModel
     private $database;
     private $db;
 
+    public $campos = [];
+
     function __construct() {
         try {
             $this->database = new Connection();
@@ -46,4 +48,7 @@ class BaseModel
         return $this->db;
     }
 
+    function getCampos() {
+        return $this->campos;
+    }
 }
