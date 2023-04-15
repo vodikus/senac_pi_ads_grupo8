@@ -6,36 +6,40 @@ require_once "helpers/TimeDateHelper.php";
 class UsuarioModel extends BaseModel
 {
     private $campos = array (
-        'uid' => ['protected' => 'all', 'type' => 'int'],
-        'email' => ['protected' => 'update', 'type' => 'varchar'],
-        'nome' => ['protected' => 'none', 'type' => 'varchar'],
-        'senha' => ['protected' => 'none', 'type' => 'varchar', 'transform' => 'sha256'],
-        'cpf' => ['protected' => 'update', 'type' => 'varchar'],
-        'nascimento' => ['protected' => 'none', 'type' => 'date'],
-        'sexo' => ['protected' => 'none', 'type'=>'varchar'],
-        'dh_atualizacao' => ['protected' => 'all', 'type' => 'timestamp', 'transform' => 'current_timestamp', 'update' => 'always'],
-        'dh_criacao' => ['protected' => 'all', 'type' => 'timestamp', 'update' => 'never'],
-        'avatar' => ['protected' => 'none', 'type' => 'varchar'],
-        'status' => ['protected' => 'none', 'type' => 'varchar']
+        'uid' => ['protected' => 'all', 'type' => 'int', 'visible' => true],
+        'email' => ['protected' => 'update', 'type' => 'varchar', 'visible' => true],
+        'nome' => ['protected' => 'none', 'type' => 'varchar', 'visible' => true],
+        'senha' => ['protected' => 'none', 'type' => 'varchar', 'transform' => 'sha256', 'visible' => false],
+        'cpf' => ['protected' => 'update', 'type' => 'varchar', 'visible' => true],
+        'nascimento' => ['protected' => 'none', 'type' => 'date', 'visible' => true],
+        'sexo' => ['protected' => 'none', 'type'=>'varchar', 'visible' => true],
+        'dh_atualizacao' => ['protected' => 'all', 'type' => 'timestamp', 'transform' => 'current_timestamp', 'update' => 'always', 'visible' => true],
+        'dh_criacao' => ['protected' => 'all', 'type' => 'timestamp', 'update' => 'never', 'visible' => true],
+        'avatar' => ['protected' => 'none', 'type' => 'varchar', 'visible' => true],
+        'apelido' => ['protected' => 'none', 'type' => 'varchar', 'visible' => true],
+        'status' => ['protected' => 'none', 'type' => 'varchar', 'visible' => true],
+        'role' => ['protected' => 'all', 'type' => 'varchar', 'visible' => true]
     );
 
     public function buscarTodosUsuarios()
     {
-        return $this->select("SELECT * FROM usuarios");
+        $campos = SQLHelper::montaCamposSelect($this->campos);
+        return $this->select("SELECT $campos FROM usuarios");
     }
     public function buscarUsuario($id = 0)
     {
-        return $this->select("SELECT * FROM usuarios WHERE uid=:uid", ['uid'=>$id]);
+        $campos = SQLHelper::montaCamposSelect($this->campos);
+        return $this->select("SELECT $campos FROM usuarios WHERE uid=:uid", ['uid'=>$id]);
     }
     public function deletarUsuario($id = 0)
     {
         return $this->query("UPDATE usuarios SET status='D' WHERE uid=:uid", ['uid'=>$id]);
     }
-    public function criarUsuario($entrada)
+    public function adicionarUsuario($entrada)
     {
         try {
             $dados = SQLHelper::validaCampos($this->campos, $entrada, 'INSERT');
-            return $this->query("INSERT INTO usuarios (email,nome,senha,cpf,nascimento,sexo,dh_atualizacao) VALUES (:email, :nome, SHA2(:senha,256), :cpf, :nascimento, :sexo, CURRENT_TIMESTAMP)", $dados);
+            return $this->query("INSERT INTO usuarios (email, nome, senha, cpf, nascimento, sexo, apelido, dh_atualizacao) VALUES (:email, :nome, SHA2(:senha,256), :cpf, :nascimento, :sexo, :apelido, CURRENT_TIMESTAMP)", $dados);
         } catch (Exception $e) {
             throw New Exception( $e->getMessage(), $e->getCode() );
         }
@@ -61,8 +65,8 @@ class UsuarioModel extends BaseModel
     public function buscaPorEmail($email)
     {
         try {
-            $uid = $this->select("SELECT uid FROM usuarios WHERE email=:email", ['email' => $email]);
-            return $uid[0]['uid'];
+            $uid = $this->select("SELECT uid, role FROM usuarios WHERE email=:email", ['email' => $email]);
+            return $uid[0];
         } catch (Exception $e) {
             throw New Exception( );
         }

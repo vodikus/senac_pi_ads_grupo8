@@ -8,7 +8,7 @@ class EnderecoModel extends BaseModel
     private $campos = array (
         'eid' => ['protected' => 'all', 'type' => 'int'],
         'uid' => ['protected' => 'all', 'type' => 'int'],
-        'cep' => ['protected' => 'none', 'type' => 'int'],
+        'cep' => ['protected' => 'update', 'type' => 'int'],
         'logradouro' => ['protected' => 'none', 'type' => 'varchar'],
         'numero' => ['protected' => 'none', 'type' => 'varchar'],
         'complemento' => ['protected' => 'none', 'type' => 'varchar'],
@@ -24,14 +24,15 @@ class EnderecoModel extends BaseModel
     }
     public function deletarEndereco($eid = 0, $uid = 0)
     {
-        return $this->query("DELETE enderecos WHERE eid=:eid and uid=:uid", ['eid' => $eid, 'uid' => $uid]);
+        return $this->query("DELETE FROM enderecos WHERE eid=:eid and uid=:uid", ['eid' => $eid, 'uid' => $uid]);
     }
     public function adicionarEndereco($uid, $entrada)
     {
         try {
             $dados = SQLHelper::validaCampos($this->campos, $entrada, 'INSERT');
             return $this->query("INSERT INTO enderecos (uid, cep, logradouro, numero, complemento, bairro, cidade, uf) VALUES " .
-                                " (:uid, :cep, :logradouro, :numero, :complemento, :bairro, :cidade, :uf)", $dados
+                                " (:uid, :cep, :logradouro, :numero, :complemento, :bairro, :cidade, :uf)",
+                                array_merge(['uid'=>$uid], $dados)
                             );
         } catch (Exception $e) {
             throw New Exception( $e->getMessage(), $e->getCode() );
@@ -42,7 +43,7 @@ class EnderecoModel extends BaseModel
         try {
             $dados = SQLHelper::validaCampos($this->campos, $entrada, 'UPDATE');
             $campos = SQLHelper::montaCamposUpdate($this->campos, $dados);
-            return $this->query("UPDATE enderecos SET $campos WHERE uid=:uid", array_merge(['uid'=>$uid], $dados));
+            return $this->query("UPDATE enderecos SET $campos WHERE eid=:eid and uid=:uid", array_merge(['eid' => $eid, 'uid'=>$uid], $dados));
         } catch (Exception $e) {
             throw New Exception( $e->getMessage(), $e->getCode() );
         }

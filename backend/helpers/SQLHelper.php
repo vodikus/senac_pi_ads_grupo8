@@ -24,8 +24,16 @@ class SQLHelper
         }
         return substr($saida,0,-2);
     }
+    public static function montaCamposSelect($campos) {
+        $saida = '';
+        foreach ( $campos as $chave => $valor ) {
+            if ( array_key_exists('visible', $valor) && $valor['visible']) {
+                $saida .= "$chave, ";
+            }
+        }
+        return substr($saida,0,-2);
+    }
     public static function validaCampos($campos, $dados, $acao) {
-        // @TODO AJUSTAR LÓGICA PARA VALIDAR OBRIGATORIEDADE INSERT / UPDATE
         $retorno = array();
         foreach ( $dados as $chave => $valor ) {
             if ( array_key_exists($chave, $campos) ) {
@@ -36,10 +44,10 @@ class SQLHelper
                     if ($campos[$chave]['protected']=='none' || $acao == 'INSERT' || ( $acao == 'UPDATE' && $campos[$chave]['protected']!='update') ) {
                         switch ($campos[$chave]['type']) {
                             case 'int':
-                                $valido = is_int($valor);
+                                $valido = is_int(intval($valor));
                                 break;
                             case 'float':
-                                $valido = is_float($valor);
+                                $valido = is_float(floatval($valor));
                                 break;
                             case 'varchar':
                                 $valido = is_string($valor);

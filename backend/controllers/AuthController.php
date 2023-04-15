@@ -14,8 +14,9 @@ class AuthController extends BaseController
                         if ( array_key_exists('username', $_POST) && array_key_exists('password', $_POST) ) {
                             $usuarioModel = new UsuarioModel();
                             if ( $usuarioModel->validarUsuarioSenha($_POST['username'], $_POST['password']) == 1 ) {
+                                $usuario = $usuarioModel->buscaPorEmail($_POST['username']);
                                 $token = [ 
-                                    "access_token" => TokenHelper::generateToken($_POST['username'], 'user', $usuarioModel->buscaPorEmail($_POST['username']), $this->expSeconds),
+                                    "access_token" => TokenHelper::generateToken($_POST['username'], $usuario['role'], $usuario['uid'], $this->expSeconds),
                                     "expires_in" => $this->expSeconds,
                                     "token_type" => "bearer"
                                 ];

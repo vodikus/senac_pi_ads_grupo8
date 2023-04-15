@@ -99,12 +99,13 @@ class BaseController
         }  
     }
 
-    protected function getUidFromToken() {
+    protected function getFieldFromToken($field) {
         if ( $this->token ) {
-            return TokenHelper::extractTokenField($this->token, 'uid');
+            return TokenHelper::extractTokenField($this->token, $field);
         } else {
             $this->httpResponse(401,'Não autorizado');
         }
     }
+
 
 }

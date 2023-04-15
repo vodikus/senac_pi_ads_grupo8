@@ -222,7 +222,7 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "http://clube-backend/api/usuarios/deletar/1",
+							"raw": "http://clube-backend/api/usuarios/deletar/42",
 							"protocol": "http",
 							"host": [
 								"clube-backend"
@@ -231,7 +231,149 @@
 								"api",
 								"usuarios",
 								"deletar",
+								"42"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Endereços",
+			"item": [
+				{
+					"name": "Listar Endereços do Usuário",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://clube-backend/api/enderecos/listar",
+							"protocol": "http",
+							"host": [
+								"clube-backend"
+							],
+							"path": [
+								"api",
+								"enderecos",
+								"listar"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Adicionar Endereço do Usuário",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "dados[cep]",
+									"value": "08673041",
+									"type": "text"
+								},
+								{
+									"key": "dados[logradouro]",
+									"value": "Rua José Garcia de Souza",
+									"type": "text"
+								},
+								{
+									"key": "dados[numero]",
+									"value": "1234",
+									"type": "text"
+								},
+								{
+									"key": "dados[complemento]",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "dados[bairro]",
+									"value": "Parque Suzano",
+									"type": "text"
+								},
+								{
+									"key": "dados[cidade]",
+									"value": "Suzano",
+									"type": "text"
+								},
+								{
+									"key": "dados[uf]",
+									"value": "SP",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://clube-backend/api/enderecos/adicionar",
+							"protocol": "http",
+							"host": [
+								"clube-backend"
+							],
+							"path": [
+								"api",
+								"enderecos",
+								"adicionar"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Deletar Endereço do Usuário",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://clube-backend/api/enderecos/deletar/1",
+							"protocol": "http",
+							"host": [
+								"clube-backend"
+							],
+							"path": [
+								"api",
+								"enderecos",
+								"deletar",
 								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Atualizar Endereço do Usuário",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "dados[logradouro]",
+									"value": "José da Silva 999",
+									"type": "text"
+								},
+								{
+									"key": "dados[numero]",
+									"value": "dasdasdassss",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://clube-backend/api/enderecos/atualizar/6",
+							"protocol": "http",
+							"host": [
+								"clube-backend"
+							],
+							"path": [
+								"api",
+								"enderecos",
+								"atualizar",
+								"6"
 							]
 						}
 					},

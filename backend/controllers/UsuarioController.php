@@ -12,7 +12,7 @@ class UsuarioController extends BaseController
             case 'GET':
                 switch ($params['acao']) {
                     case 'listar':
-                        if ( $this->isAuth() ) {
+                        if ( $this->isAuth() && $this->getFieldFromToken('roles') == 'admin' ) {
                             $this->listar();
                         } else {
                             $this->httpResponse(401,'Não autorizado');
@@ -33,7 +33,7 @@ class UsuarioController extends BaseController
             case 'POST':
                 if ( $this->isAuth() ) {
                     $dados = $this->pegarArrayPost();
-                    $this->cadastrar($dados);
+                    $this->adicionar($dados);
                 } else {
                     $this->httpResponse(401,'Não autorizado');
                 }
@@ -105,11 +105,11 @@ class UsuarioController extends BaseController
             $this->httpResponse(500,'Erro');
         }
     }
-    public function cadastrar($dados)
+    public function adicionar($dados)
     {       
         try {
             $usuarioModel = new UsuarioModel();
-            $usuarioModel->criarUsuario($dados);
+            $usuarioModel->adicionarUsuario($dados);
         } catch (Exception $e) {
             switch ($e->getCode()) {
                 case 23000:
@@ -140,21 +140,7 @@ class UsuarioController extends BaseController
                 $this->httpResponse(200,'Identificador inválido');
             }            
         } catch (Exception $e) {
-            switch ($e->getCode()) {
-                case 23000:
-                    if (stripos($e->getMessage(),'email')) {
-                        $this->httpResponse(200,'E-mail já cadastrado.');
-                    } elseif (stripos($e->getMessage(),'cpf')) {
-                        $this->httpResponse(200,'CPF já cadastrado.');
-                    } else {
-                        $this->httpResponse(500,"Erro: " . $e->getCode() . " | " . $e->getMessage());
-                    }
-                    break;
-
-                default:
-                    $this->httpResponse(500,"Erro: " . $e->getCode() . " | " . $e->getMessage());
-                    break;
-            }
+            $this->httpResponse(500,"Erro: " . $e->getCode() . " | " . $e->getMessage());
         } finally {
             $this->httpResponse(200,'Usuário atualizado com sucesso.');
         }
