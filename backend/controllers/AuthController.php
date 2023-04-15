@@ -1,7 +1,7 @@
 <?php
 include_once 'helpers/TokenHelper.php';
 include_once 'includes/BaseController.php';
-include_once 'models/UserModel.php';
+include_once 'models/UsuarioModel.php';
 
 class AuthController extends BaseController
 {
@@ -12,10 +12,10 @@ class AuthController extends BaseController
                 switch ($params['acao']) {
                     case 'getToken':       
                         if ( array_key_exists('username', $_POST) && array_key_exists('password', $_POST) ) {
-                            $userModel = new UserModel();
-                            if ( $userModel->validarUsuarioSenha($_POST['username'], $_POST['password']) == 1 ) {
+                            $usuarioModel = new UsuarioModel();
+                            if ( $usuarioModel->validarUsuarioSenha($_POST['username'], $_POST['password']) == 1 ) {
                                 $token = [ 
-                                    "access_token" => TokenHelper::generateToken($_POST['username'], 'user', $this->expSeconds),
+                                    "access_token" => TokenHelper::generateToken($_POST['username'], 'user', $usuarioModel->buscaPorEmail($_POST['username']), $this->expSeconds),
                                     "expires_in" => $this->expSeconds,
                                     "token_type" => "bearer"
                                 ];

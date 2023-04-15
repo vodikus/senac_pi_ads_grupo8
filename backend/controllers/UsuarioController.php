@@ -1,8 +1,8 @@
 <?php
 include_once 'includes/BaseController.php';
-include_once 'models/UserModel.php';
+include_once 'models/UsuarioModel.php';
 
-class UserController extends BaseController
+class UsuarioController extends BaseController
 {
     public function __construct() {
         parent::__construct();
@@ -69,9 +69,9 @@ class UserController extends BaseController
     public function listar()
     {
         try {
-            $userModel = new UserModel();
-            $arrUsers = $userModel->buscarTodosUsuarios();
-            $responseData = json_encode($arrUsers);
+            $usuarioModel = new UsuarioModel();
+            $arrUsuarios = $usuarioModel->buscarTodosUsuarios();
+            $responseData = json_encode($arrUsuarios);
         } catch (Error $e) {
             $this->httpResponse(500,'Erro');
         }
@@ -80,9 +80,9 @@ class UserController extends BaseController
     public function buscar($id=0)
     {
         try {
-            $userModel = new UserModel();
-            $arrUsers = $userModel->buscarUsuario($id);
-            $responseData = json_encode($arrUsers);
+            $usuarioModel = new UsuarioModel();
+            $arrUsuarios = $usuarioModel->buscarUsuario($id);
+            $responseData = json_encode($arrUsuarios);
         } catch (Error $e) {
             $this->httpResponse(500,'Erro');
         }
@@ -92,8 +92,8 @@ class UserController extends BaseController
     {
         try {
             if (is_numeric($id)) {
-                $userModel = new UserModel();            
-                if ($userModel->deletarUsuario($id)>0) {
+                $usuarioModel = new UsuarioModel();            
+                if ($usuarioModel->deletarUsuario($id)>0) {
                     $this->httpResponse(200,'Usuário deletado com sucesso.');
                 } else {
                     $this->httpResponse(200,'Usuário não encontrado');
@@ -108,8 +108,8 @@ class UserController extends BaseController
     public function cadastrar($dados)
     {       
         try {
-            $userModel = new UserModel();
-            $userModel->criarUsuario($dados);
+            $usuarioModel = new UsuarioModel();
+            $usuarioModel->criarUsuario($dados);
         } catch (Exception $e) {
             switch ($e->getCode()) {
                 case 23000:
@@ -134,8 +134,8 @@ class UserController extends BaseController
     {       
         try {
             if (is_numeric($id)) {
-                $userModel = new UserModel();            
-                $userModel->atualizarUsuario($id, $dados);
+                $usuarioModel = new UsuarioModel();            
+                $usuarioModel->atualizarUsuario($id, $dados);
             } else {
                 $this->httpResponse(200,'Identificador inválido');
             }            

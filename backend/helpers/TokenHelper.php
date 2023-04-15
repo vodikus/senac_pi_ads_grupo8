@@ -7,18 +7,19 @@ class TokenHelper
         'alg' => 'HS256'
     ];
 
-    public static function generateToken($userId, $role, $expSeconds = 60) {
-        if ( !empty($userId) && !empty($role) ) {
+    public static function generateToken($email, $roles, $userId=0, $expSeconds = 60) {
+        if ( !empty($email) && !empty($roles) ) {
             return self::generateJwt(
                 self::$defaultHeader,
                 [ 
-                    'user_id' => $userId, 
-                    'role' => $role,
+                    'uid' => $userId, 
+                    'email' => $email, 
+                    'roles' => $roles,
                     'exp' => time() + $expSeconds
                 ]
                 );
         } else {
-            throw New Exception( 'Campos user_id e role são requeridos para gerar o token.' );
+            throw New Exception( 'Campos email e roles são requeridos para gerar o token.' );
         }
     }
 
@@ -58,6 +59,18 @@ class TokenHelper
             return false;
         }
     }
+    public static function decodeToken($token) {
+        $arrToken = explode('.', $token);
+        if ( count($arrToken) == 3 ) {
+            $header = json_decode(base64_decode($arrToken[0]));
+            $payload = json_decode(base64_decode($arrToken[1]));
+            $signTkn = base64_decode($arrToken[2]);
+    
+            return ['header' => $header, 'payload' => $payload, 'signature' => $signTkn];
+        } else {
+            throw New Exception( 'Token inválido' );
+        }
+    }
 
     private static function generateSignature($str, $secret) {
         return self::base64Url_encode(
@@ -77,4 +90,20 @@ class TokenHelper
         }
         return false;
     }
+
+    public static function extractTokenField($token, $field) {
+        if ( !empty($token) ) {
+            $arrToken = self::decodeToken($token);
+            if (array_key_exists('payload', $arrToken) && array_key_exists($field, $arrToken['payload'])) {
+                return $arrToken['payload']->$field;
+            } else {
+                throw New Exception( "Campo $field não existe neste token" );
+            }
+        } else {
+            throw New Exception( 'Token requerido' );
+        }
+        
+    }
+
+
 }

@@ -3,7 +3,7 @@ require_once "includes/BaseModel.php";
 require_once "helpers/SQLHelper.php";
 require_once "helpers/TimeDateHelper.php";
 
-class UserModel extends BaseModel
+class UsuarioModel extends BaseModel
 {
     private $campos = array (
         'uid' => ['protected' => 'all', 'type' => 'int'],
@@ -54,6 +54,15 @@ class UserModel extends BaseModel
     {
         try {
             return $this->query("SELECT 1 FROM usuarios WHERE email=:email and senha=SHA2(:senha, 256)", ['email' => $email, 'senha' => $senha]);
+        } catch (Exception $e) {
+            throw New Exception( );
+        }
+    }
+    public function buscaPorEmail($email)
+    {
+        try {
+            $uid = $this->select("SELECT uid FROM usuarios WHERE email=:email", ['email' => $email]);
+            return $uid[0]['uid'];
         } catch (Exception $e) {
             throw New Exception( );
         }

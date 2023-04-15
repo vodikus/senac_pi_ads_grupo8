@@ -91,7 +91,6 @@ class BaseController
         }
     }
   
-
     protected function isAuth() {
         if ( $this->token ) {
             return TokenHelper::validateToken($this->token);
@@ -100,5 +99,12 @@ class BaseController
         }  
     }
 
+    protected function getUidFromToken() {
+        if ( $this->token ) {
+            return TokenHelper::extractTokenField($this->token, 'uid');
+        } else {
+            $this->httpResponse(401,'Não autorizado');
+        }
+    }
 
 }
