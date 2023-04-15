@@ -1,0 +1,294 @@
+{
+	"info": {
+		"_postman_id": "59ceb481-abbf-47ef-8fb6-0f00aa24ad20",
+		"name": "Clube do Empréstimo de Livro",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "6732260"
+	},
+	"item": [
+		{
+			"name": "Autenticação",
+			"item": [
+				{
+					"name": "Pegar token",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "username",
+									"value": "teste@teste.com.br0",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "1234",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://clube-backend/api/auth/getToken",
+							"protocol": "http",
+							"host": [
+								"clube-backend"
+							],
+							"path": [
+								"api",
+								"auth",
+								"getToken"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Validar token",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": []
+						},
+						"url": {
+							"raw": "http://clube-backend/api/auth/authToken",
+							"protocol": "http",
+							"host": [
+								"clube-backend"
+							],
+							"path": [
+								"api",
+								"auth",
+								"authToken"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Usuários",
+			"item": [
+				{
+					"name": "Listar Todos Usuários",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://clube-backend/api/usuarios/listar",
+							"protocol": "http",
+							"host": [
+								"clube-backend"
+							],
+							"path": [
+								"api",
+								"usuarios",
+								"listar"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Buscar Usuário",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://clube-backend/api/usuarios/buscar/41",
+							"protocol": "http",
+							"host": [
+								"clube-backend"
+							],
+							"path": [
+								"api",
+								"usuarios",
+								"buscar",
+								"41"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Criar Usuário",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "dados[email]",
+									"value": "teste@teste.com.br1",
+									"type": "text"
+								},
+								{
+									"key": "dados[nome]",
+									"value": "José da Silva",
+									"type": "text"
+								},
+								{
+									"key": "dados[senha]",
+									"value": "1234",
+									"type": "text"
+								},
+								{
+									"key": "dados[cpf]",
+									"value": "1234562890111",
+									"type": "text"
+								},
+								{
+									"key": "dados[nascimento]",
+									"value": "2000-01-01",
+									"type": "text"
+								},
+								{
+									"key": "dados[sexo]",
+									"value": "M",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://clube-backend/api/usuarios/criar",
+							"protocol": "http",
+							"host": [
+								"clube-backend"
+							],
+							"path": [
+								"api",
+								"usuarios",
+								"criar"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Atualizar Usuário",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "dados[nome]",
+									"value": "José da Silva 99",
+									"type": "text"
+								},
+								{
+									"key": "dados[senha]",
+									"value": "dasdasdassss",
+									"type": "text"
+								},
+								{
+									"key": "dados[nascimento]",
+									"value": "2000-01-01",
+									"type": "text"
+								},
+								{
+									"key": "dados[cpf]",
+									"value": "123499999",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "http://clube-backend/api/usuarios/atualizar/42",
+							"protocol": "http",
+							"host": [
+								"clube-backend"
+							],
+							"path": [
+								"api",
+								"usuarios",
+								"atualizar",
+								"42"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Deletar Usuário",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://clube-backend/api/usuarios/deletar/1",
+							"protocol": "http",
+							"host": [
+								"clube-backend"
+							],
+							"path": [
+								"api",
+								"usuarios",
+								"deletar",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{token}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					"var server       = \"http://clube-backend\"; ",
+					"var username     = \"teste@teste.com.br0\"; ",
+					"var password     = \"1234\"; ",
+					"",
+					"var url  = `${server}/api/auth/getToken`;",
+					"var data = `username=${username}&password=${password}`;",
+					"",
+					"pm.sendRequest({",
+					"    url: url,",
+					"    method: 'POST',",
+					"    header: { 'Content-Type': 'application/x-www-form-urlencoded'},",
+					"    body: {",
+					"        mode: 'raw',",
+					"        raw: data",
+					"    }",
+					"},  function(err, response) {",
+					"    var response_json = response.json();",
+					"    var token = response_json.access_token;",
+					"    pm.environment.set('token', token);",
+					"    console.log(token);",
+					"});",
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
