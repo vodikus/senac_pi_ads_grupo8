@@ -151,6 +151,11 @@
 									"key": "dados[sexo]",
 									"value": "M",
 									"type": "text"
+								},
+								{
+									"key": "dados[apelido]",
+									"value": "dinossauro",
+									"type": "text"
 								}
 							]
 						},
@@ -979,6 +984,76 @@
 								"api",
 								"livros",
 								"desvincularAssunto"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Adicionar livro favorito",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "dados[lid]",
+									"value": "6",
+									"type": "text"
+								},
+								{
+									"key": "dados[uid_dono]",
+									"value": "41",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://clube-backend/api/livros/adicionarFavorito",
+							"protocol": "http",
+							"host": [
+								"clube-backend"
+							],
+							"path": [
+								"api",
+								"livros",
+								"adicionarFavorito"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Remover livro favorito",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "dados[lid]",
+									"value": "6",
+									"type": "text"
+								},
+								{
+									"key": "dados[uid_dono]",
+									"value": "41",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://clube-backend/api/livros/removerFavorito",
+							"protocol": "http",
+							"host": [
+								"clube-backend"
+							],
+							"path": [
+								"api",
+								"livros",
+								"removerFavorito"
 							]
 						}
 					},
