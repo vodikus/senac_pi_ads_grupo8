@@ -4,6 +4,7 @@ include_once 'models/LivroModel.php';
 include_once 'models/LivroAutorModel.php';
 include_once 'models/LivroAssuntoModel.php';
 include_once 'models/LivroAvaliacaoModel.php';
+include_once 'models/FavoritosModel.php';
 
 class LivroController extends BaseController
 {
@@ -66,6 +67,20 @@ class LivroController extends BaseController
                         case 'desvincularAssunto':
                             if ( $this->isAuth() ) {
                                 $this->desvincularAssunto($dados);
+                            } else {
+                                $this->httpResponse(401,'Não autorizado');
+                            }
+                            break;
+                        case 'adicionarFavorito':
+                            if ( $this->isAuth() ) {
+                                $this->adicionarFavorito($this->getFieldFromToken('uid'), $dados);
+                            } else {
+                                $this->httpResponse(401,'Não autorizado');
+                            }
+                            break;
+                        case 'removerFavorito':
+                            if ( $this->isAuth() ) {
+                                $this->removerFavorito($this->getFieldFromToken('uid'), $dados);
                             } else {
                                 $this->httpResponse(401,'Não autorizado');
                             }
@@ -286,7 +301,7 @@ class LivroController extends BaseController
             switch ($e->getCode()) {
                 case 23000:
                     if ( stripos($e->getMessage(),'PRIMARY') ) {
-                        $this->httpResponse(200,'Este livro já foi avaliado por este usuário.');
+                        $this->httpResponse(200,'Este livro já está na lista de Favoritos.');
                     } else {
                         $this->httpResponse(500,"Erro: " . $e->getCode() . " | " . $e->getMessage());
                     }
@@ -298,6 +313,46 @@ class LivroController extends BaseController
             }
         } finally {
             $this->httpResponse(200,'Livro avaliado com sucesso.');
+        }
+    }
+
+    public function adicionarFavorito($uid = 0, $dados)
+    {       
+        try {
+            $favoritosModel = new FavoritosModel();
+            if ( $favoritosModel->adicionarFavorito($uid, $dados) <= 0 ) {
+                $this->httpResponse(200,'Livro não encontrado');
+            }
+        } catch (Exception $e) {
+            switch ($e->getCode()) {
+                case 23000:
+                    if ( stripos($e->getMessage(),'PRIMARY') ) {
+                        $this->httpResponse(200,'Este livro já foi adicionado a lista de favoritos.');
+                    } else {
+                        $this->httpResponse(500,"Erro: " . $e->getCode() . " | " . $e->getMessage());
+                    }
+                    break;
+
+                default:
+                    $this->httpResponse(500,"Erro: " . $e->getCode() . " | " . $e->getMessage());
+                    break;
+            }
+        } finally {
+            $this->httpResponse(200,'Livro adicionado a lista de Favoritos com sucesso.');
+        }
+    }
+
+    public function removerFavorito($uid = 0, $dados)
+    {       
+        try {
+            $favoritosModel = new FavoritosModel();
+            if ( $favoritosModel->removerFavorito($uid, $dados) <= 0 ) {
+                $this->httpResponse(200,'Livro não encontrado');
+            }
+        } catch (Exception $e) {
+            $this->httpResponse(500,"Erro: " . $e->getCode() . " | " . $e->getMessage());
+        } finally {
+            $this->httpResponse(200,'Livro removido da lista de Favoritos com sucesso.');
         }
     }
 }
