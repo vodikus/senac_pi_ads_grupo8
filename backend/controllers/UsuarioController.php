@@ -1,6 +1,8 @@
 <?php
 include_once 'includes/BaseController.php';
 include_once 'models/UsuarioModel.php';
+include_once 'models/UsuarioAssuntoModel.php';
+include_once 'models/UsuarioLivroModel.php';
 
 class UsuarioController extends BaseController
 {
@@ -31,20 +33,62 @@ class UsuarioController extends BaseController
                 }
                 break;
             case 'POST':
-                if ( $this->isAuth() ) {
-                    $dados = $this->pegarArrayPost();
-                    $this->adicionar($dados);
-                } else {
-                    $this->httpResponse(401,'Não autorizado');
-                }
+                $dados = $this->pegarArrayPost();
+                switch ($params['acao']) {
+                    case 'adicionar':
+                        if ( $this->isAuth() ) {
+                            $this->adicionar($dados);
+                        } else {
+                            $this->httpResponse(401,'Não autorizado');
+                        }
+                        break;
+                    case 'vincularAssunto':
+                        if ( $this->isAuth() ) {
+                            $this->vincularAssunto($this->getFieldFromToken('uid'), $dados);
+                        } else {
+                            $this->httpResponse(401,'Não autorizado');
+                        }
+                        break;
+                    case 'desvincularAssunto':
+                        if ( $this->isAuth() ) {
+                            $this->desvincularAssunto($this->getFieldFromToken('uid'), $dados);
+                        } else {
+                            $this->httpResponse(401,'Não autorizado');
+                        }
+                        break;
+                    case 'vincularLivro':
+                        if ( $this->isAuth() ) {
+                            $this->vincularLivro($this->getFieldFromToken('uid'), $dados);
+                        } else {
+                            $this->httpResponse(401,'Não autorizado');
+                        }
+                        break;
+                    case 'desvincularLivro':
+                        if ( $this->isAuth() ) {
+                            $this->desvincularLivro($this->getFieldFromToken('uid'), $dados);
+                        } else {
+                            $this->httpResponse(401,'Não autorizado');
+                        }
+                        break;
+                    default:
+                        $this->httpResponse(501,'Ação Indisponível');
+                        break;
+                }                
                 break;
             case 'PUT':
-                if ( $this->isAuth() ) {
-                    $dados = $this->pegarArrayPut();
-                    $this->atualizar($params['param1'],$dados);
-                } else {
-                    $this->httpResponse(401,'Não autorizado');
-                }
+                switch ($params['acao']) {
+                    case 'atualizar':
+                        $dados = $this->pegarArrayPut();
+                        if ( $this->isAuth() ) {
+                            $this->atualizar($params['param1'], $dados);
+                        } else {
+                            $this->httpResponse(401,'Não autorizado');
+                        }
+                        break;
+                    default:
+                        $this->httpResponse(501,'Ação Indisponível');
+                        break;
+                }                 
                 break;
             case 'DELETE':
                 switch ($params['acao']) {
@@ -77,6 +121,7 @@ class UsuarioController extends BaseController
         }
         $this->montarSaidaOk($responseData);
     }
+ 
     public function buscar($id=0)
     {
         try {
@@ -88,6 +133,7 @@ class UsuarioController extends BaseController
         }
         $this->montarSaidaOk($responseData);
     }
+ 
     public function deletar($id=0)
     {
         try {
@@ -105,6 +151,7 @@ class UsuarioController extends BaseController
             $this->httpResponse(500,'Erro');
         }
     }
+ 
     public function adicionar($dados)
     {       
         try {
@@ -130,6 +177,7 @@ class UsuarioController extends BaseController
             $this->httpResponse(200,'Usuário cadastrado com sucesso.');
         }
     }
+ 
     public function atualizar($id, $dados)
     {       
         try {
@@ -143,6 +191,86 @@ class UsuarioController extends BaseController
             $this->httpResponse(500,"Erro: " . $e->getCode() . " | " . $e->getMessage());
         } finally {
             $this->httpResponse(200,'Usuário atualizado com sucesso.');
+        }
+    }
+
+    public function vincularAssunto($uid, $dados)
+    {       
+        try {
+            $usuarioAssuntoModel = new UsuarioAssuntoModel();
+            if ( $usuarioAssuntoModel->adicionarUsuarioAssunto($uid, $dados) <= 0 ) {
+                $this->httpResponse(200,'Assunto não encontrado');
+            }
+        } catch (Exception $e) {
+            switch ($e->getCode()) {
+                case 23000:
+                    if (stripos($e->getMessage(),'PRIMARY')) {
+                        $this->httpResponse(200,'Este Assunto já está vinculado a este usuário.');
+                    } else {
+                        $this->httpResponse(500,"Erro: " . $e->getCode() . " | " . $e->getMessage());
+                    }
+                    break;
+
+                default:
+                    $this->httpResponse(500,"Erro: " . $e->getCode() . " | " . $e->getMessage());
+                    break;
+            }
+        } finally {
+            $this->httpResponse(200,'Assunto vinculado ao usuário com sucesso.');
+        }
+    }
+
+    public function desvincularAssunto($uid, $dados)
+    {       
+        try {
+            $usuarioAssuntoModel = new UsuarioAssuntoModel();
+            if ( $usuarioAssuntoModel->deletarUsuarioAssunto($uid, $dados) <= 0 ) {
+                $this->httpResponse(200,'Assunto não encontrado');
+            }
+        } catch (Exception $e) {
+            $this->httpResponse(500,"Erro: " . $e->getCode() . " | " . $e->getMessage());
+        } finally {
+            $this->httpResponse(200,'Assunto desvinculado do usuário com sucesso.');
+        }
+    }
+
+    public function vincularLivro($uid, $dados)
+    {       
+        try {
+            $usuarioLivroModel = new UsuarioLivroModel();
+            if ( $usuarioLivroModel->adicionarUsuarioLivro($uid, $dados) <= 0 ) {
+                $this->httpResponse(200,'Livro não encontrado');
+            }
+        } catch (Exception $e) {
+            switch ($e->getCode()) {
+                case 23000:
+                    if (stripos($e->getMessage(),'PRIMARY')) {
+                        $this->httpResponse(200,'Este Livro já está vinculado a este usuário.');
+                    } else {
+                        $this->httpResponse(500,"Erro: " . $e->getCode() . " | " . $e->getMessage());
+                    }
+                    break;
+
+                default:
+                    $this->httpResponse(500,"Erro: " . $e->getCode() . " | " . $e->getMessage());
+                    break;
+            }
+        } finally {
+            $this->httpResponse(200,'Livro vinculado ao usuário com sucesso.');
+        }
+    }
+
+    public function desvincularLivro($uid, $dados)
+    {       
+        try {
+            $usuarioLivroModel = new UsuarioLivroModel();
+            if ( $usuarioLivroModel->deletarUsuarioLivro($uid, $dados) <= 0 ) {
+                $this->httpResponse(200,'Livro não encontrado');
+            }
+        } catch (Exception $e) {
+            $this->httpResponse(500,"Erro: " . $e->getCode() . " | " . $e->getMessage());
+        } finally {
+            $this->httpResponse(200,'Livro desvinculado do usuário com sucesso.');
         }
     }
 }

@@ -236,6 +236,126 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "Vincular Assunto ao Usuário",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "dados[iid]",
+									"value": "3",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://clube-backend/api/usuarios/vincularAssunto",
+							"protocol": "http",
+							"host": [
+								"clube-backend"
+							],
+							"path": [
+								"api",
+								"usuarios",
+								"vincularAssunto"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Desvincular Assunto do Usuário",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "dados[iid]",
+									"value": "3",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://clube-backend/api/usuarios/desvincularAssunto",
+							"protocol": "http",
+							"host": [
+								"clube-backend"
+							],
+							"path": [
+								"api",
+								"usuarios",
+								"desvincularAssunto"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Vincular Livro ao Usuário",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "dados[lid]",
+									"value": "3",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://clube-backend/api/usuarios/vincularLivro",
+							"protocol": "http",
+							"host": [
+								"clube-backend"
+							],
+							"path": [
+								"api",
+								"usuarios",
+								"vincularLivro"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Desvincular Livro do Usuário",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "dados[lid]",
+									"value": "3",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://clube-backend/api/usuarios/desvincularLivro",
+							"protocol": "http",
+							"host": [
+								"clube-backend"
+							],
+							"path": [
+								"api",
+								"usuarios",
+								"desvincularLivro"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},

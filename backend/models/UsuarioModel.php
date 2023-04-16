@@ -23,8 +23,8 @@ class UsuarioModel extends BaseModel
 
     public function buscarTodosUsuarios()
     {
-        $campos = SQLHelper::montaCamposSelect($this->campos);
-        return $this->select("SELECT $campos FROM usuarios");
+        $campos = SQLHelper::montaCamposSelect($this->campos,'u');
+        return $this->select("SELECT $campos FROM usuarios u");
     }
     public function buscarUsuario($id = 0)
     {
