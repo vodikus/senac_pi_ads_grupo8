@@ -36,11 +36,7 @@ class UsuarioController extends BaseController
                 $dados = $this->pegarArrayPost();
                 switch ($params['acao']) {
                     case 'adicionar':
-                        if ( $this->isAuth() ) {
-                            $this->adicionar($dados);
-                        } else {
-                            $this->httpResponse(401,'Não autorizado');
-                        }
+                        $this->adicionar($dados);
                         break;
                     case 'vincularAssunto':
                         if ( $this->isAuth() ) {

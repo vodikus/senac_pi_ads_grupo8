@@ -77,7 +77,7 @@ class EnderecoController extends BaseController
     {
         try {
             $enderecoModel = new EnderecoModel();
-            $arrEnderecos = $enderecoModel->buscarEndereco($uid);
+            $arrEnderecos = $enderecoModel->buscarEnderecos($uid);
             $responseData = json_encode($arrEnderecos);
         } catch (Exception $e) {
             $this->httpResponse(500,$e->getMessage());

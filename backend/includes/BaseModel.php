@@ -28,6 +28,8 @@ class BaseModel
         try {
             $sth = $this->db->prepare($query, [PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY]);
             $sth->execute($parametros);
+            error_log("SQL: $query");
+            error_log("Parametros: ".var_export($parametros, true));
             return $sth->fetchAll();
         } catch (Exception $e) {
             throw New Exception( $e->getMessage() );
@@ -36,6 +38,8 @@ class BaseModel
 
     function query($query = "", $parametros = []) {
         try {
+            error_log("SQL: $query");
+            error_log("Parametros: ".var_export($parametros, true));            
             $sth = $this->db->prepare($query);
             $sth->execute($parametros);
             return $sth->rowCount();
