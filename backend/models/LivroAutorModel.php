@@ -7,8 +7,8 @@ require_once "models/AutorModel.php";
 class LivroAutorModel extends BaseModel
 {
     public $campos = array (
-        'aid' => ['protected' => 'none', 'type' => 'int', 'visible' => true],
-        'lid' => ['protected' => 'none', 'type' => 'int', 'visible' => true]
+        'aid' => ['protected' => 'none', 'type' => 'int', 'visible' => true, 'required' => true],
+        'lid' => ['protected' => 'none', 'type' => 'int', 'visible' => true, 'required' => true]
     );
 
     public function adicionarLivroAutor($entrada)

@@ -7,16 +7,16 @@ class UsuarioModel extends BaseModel
 {
     public $campos = array (
         'uid' => ['protected' => 'all', 'type' => 'int', 'visible' => true],
-        'email' => ['protected' => 'update', 'type' => 'varchar', 'visible' => true],
-        'nome' => ['protected' => 'none', 'type' => 'varchar', 'visible' => true],
-        'senha' => ['protected' => 'none', 'type' => 'varchar', 'transform' => 'sha256', 'visible' => false],
-        'cpf' => ['protected' => 'update', 'type' => 'varchar', 'visible' => true],
-        'nascimento' => ['protected' => 'none', 'type' => 'date', 'visible' => true],
-        'sexo' => ['protected' => 'none', 'type'=>'varchar', 'visible' => true],
+        'email' => ['protected' => 'update', 'type' => 'varchar', 'visible' => true, 'required' => true],
+        'nome' => ['protected' => 'none', 'type' => 'varchar', 'visible' => true, 'required' => true],
+        'senha' => ['protected' => 'none', 'type' => 'varchar', 'transform' => 'sha256', 'visible' => false, 'required' => true],
+        'cpf' => ['protected' => 'update', 'type' => 'varchar', 'visible' => true, 'required' => true],
+        'nascimento' => ['protected' => 'none', 'type' => 'date', 'visible' => true, 'required' => true],
+        'sexo' => ['protected' => 'none', 'type'=>'varchar', 'visible' => true, 'required' => true],
         'dh_atualizacao' => ['protected' => 'all', 'type' => 'timestamp', 'transform' => 'current_timestamp', 'update' => 'always', 'visible' => true],
         'dh_criacao' => ['protected' => 'all', 'type' => 'timestamp', 'update' => 'never', 'visible' => true],
         'avatar' => ['protected' => 'none', 'type' => 'varchar', 'visible' => true],
-        'apelido' => ['protected' => 'none', 'type' => 'varchar', 'visible' => true],
+        'apelido' => ['protected' => 'none', 'type' => 'varchar', 'visible' => true, 'required' => true],
         'status' => ['protected' => 'none', 'type' => 'varchar', 'visible' => true],
         'role' => ['protected' => 'all', 'type' => 'varchar', 'visible' => true]
     );

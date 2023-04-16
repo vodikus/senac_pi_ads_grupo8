@@ -124,12 +124,12 @@
 							"urlencoded": [
 								{
 									"key": "dados[email]",
-									"value": "teste@teste.com.br1",
+									"value": "teste@teste.com.br2",
 									"type": "text"
 								},
 								{
 									"key": "dados[nome]",
-									"value": "José da Silva",
+									"value": "Dino da Silva Sauro",
 									"type": "text"
 								},
 								{
@@ -139,7 +139,7 @@
 								},
 								{
 									"key": "dados[cpf]",
-									"value": "1234562890111",
+									"value": "1234562890112",
 									"type": "text"
 								},
 								{
@@ -155,7 +155,7 @@
 							]
 						},
 						"url": {
-							"raw": "http://clube-backend/api/usuarios/criar",
+							"raw": "http://clube-backend/api/usuarios/adicionar",
 							"protocol": "http",
 							"host": [
 								"clube-backend"
@@ -163,7 +163,7 @@
 							"path": [
 								"api",
 								"usuarios",
-								"criar"
+								"adicionar"
 							]
 						}
 					},
@@ -307,7 +307,12 @@
 							"urlencoded": [
 								{
 									"key": "dados[lid]",
-									"value": "3",
+									"value": "6",
+									"type": "text"
+								},
+								{
+									"key": "dados[estado]",
+									"value": "NOVO",
 									"type": "text"
 								}
 							]
@@ -337,7 +342,7 @@
 							"urlencoded": [
 								{
 									"key": "dados[lid]",
-									"value": "3",
+									"value": "6",
 									"type": "text"
 								}
 							]
@@ -769,7 +774,7 @@
 							"urlencoded": [
 								{
 									"key": "dados[titulo]",
-									"value": "O Senhor dos Anéis - A sociedade do Anel",
+									"value": "O Senhor dos Anéis - O Retorno do Rei",
 									"type": "text"
 								},
 								{
@@ -784,7 +789,7 @@
 								},
 								{
 									"key": "dados[isbn]",
-									"value": "12345",
+									"value": "123457",
 									"type": "text"
 								}
 							]

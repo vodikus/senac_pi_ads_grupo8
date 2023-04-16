@@ -8,13 +8,13 @@ class EnderecoModel extends BaseModel
     public $campos = array (
         'eid' => ['protected' => 'all', 'type' => 'int', 'visible' => true],
         'uid' => ['protected' => 'all', 'type' => 'int', 'visible' => true],
-        'cep' => ['protected' => 'update', 'type' => 'int', 'visible' => true],
-        'logradouro' => ['protected' => 'none', 'type' => 'varchar', 'visible' => true],
-        'numero' => ['protected' => 'none', 'type' => 'varchar', 'visible' => true],
+        'cep' => ['protected' => 'update', 'type' => 'int', 'visible' => true, 'required' => true],
+        'logradouro' => ['protected' => 'none', 'type' => 'varchar', 'visible' => true, 'required' => true],
+        'numero' => ['protected' => 'none', 'type' => 'varchar', 'visible' => true, 'required' => true],
         'complemento' => ['protected' => 'none', 'type' => 'varchar', 'visible' => true],
-        'bairro' => ['protected' => 'none', 'type' => 'varchar', 'visible' => true],
-        'cidade' => ['protected' => 'none', 'type'=>'varchar', 'visible' => true],
-        'uf' => ['protected' => 'none', 'type' => 'varchar', 'visible' => true],
+        'bairro' => ['protected' => 'none', 'type' => 'varchar', 'visible' => true, 'required' => true],
+        'cidade' => ['protected' => 'none', 'type'=>'varchar', 'visible' => true, 'required' => true],
+        'uf' => ['protected' => 'none', 'type' => 'varchar', 'visible' => true, 'required' => true],
         'dh_atualizacao' => ['protected' => 'all', 'type' => 'timestamp', 'transform' => 'current_timestamp', 'update' => 'always', 'visible' => true]
     );
 

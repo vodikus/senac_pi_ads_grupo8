@@ -6,9 +6,9 @@ require_once "helpers/TimeDateHelper.php";
 class LivroAvaliacaoModel extends BaseModel
 {
     public $campos = array (
-        'lid' => ['protected' => 'none', 'type' => 'int', 'visible' => true],
+        'lid' => ['protected' => 'none', 'type' => 'int', 'visible' => true, 'required' => true],
         'uid' => ['protected' => 'none', 'type' => 'int', 'visible' => true],
-        'nota' => ['protected' => 'none', 'type' => 'float', 'visible' => true]
+        'nota' => ['protected' => 'none', 'type' => 'float', 'visible' => true, 'required' => true]
     );
 
     public function adicionarLivroAvaliacao($uid, $entrada)

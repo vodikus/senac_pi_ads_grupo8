@@ -6,8 +6,8 @@ require_once "helpers/TimeDateHelper.php";
 class LivroAssuntoModel extends BaseModel
 {
     public $campos = array (
-        'lid' => ['protected' => 'none', 'type' => 'int', 'visible' => true],
-        'iid' => ['protected' => 'none', 'type' => 'int', 'visible' => true]
+        'lid' => ['protected' => 'none', 'type' => 'int', 'visible' => true, 'required' => true],
+        'iid' => ['protected' => 'none', 'type' => 'int', 'visible' => true, 'required' => true]
     );
 
     public function adicionarLivroAssunto($entrada)

@@ -7,9 +7,9 @@ class UsuarioLivroModel extends BaseModel
 {
     public $campos = array (
         'uid' => ['protected' => 'none', 'type' => 'int', 'visible' => true],
-        'lid' => ['protected' => 'none', 'type' => 'int', 'visible' => true],
+        'lid' => ['protected' => 'none', 'type' => 'int', 'visible' => true, 'required' => true],
         'status' => ['protected' => 'none', 'type' => 'varchar', 'visible' => true],
-        'estado' => ['protected' => 'none', 'type' => 'varchar', 'visible' => true],
+        'estado' => ['protected' => 'none', 'type' => 'varchar', 'visible' => true, 'required' => true],
         'dh_cadastro' => ['protected' => 'all', 'type' => 'timestamp', 'update' => 'never', 'visible' => true],
         'dh_atualizacao' => ['protected' => 'all', 'type' => 'timestamp', 'transform' => 'current_timestamp', 'update' => 'always', 'visible' => true]
     );

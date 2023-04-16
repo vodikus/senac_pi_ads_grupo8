@@ -59,6 +59,14 @@ class SQLHelper
                 throw New Exception( "Campo $chave não localizado para este modelo" , -1 );
             }
         }
+        // Percorrer a lista de campos e verificar se os requeridos existem no array de dados
+        foreach ( $campos as $chave => $valor ) {
+            if ( array_key_exists('required', $valor) && $valor['required'] ) {
+                if ( !array_key_exists($chave, $dados) ) {
+                    throw New Exception( "Campo $chave é requerido" , -1 );
+                }
+            }
+        }        
         return $retorno;
     }
     

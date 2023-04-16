@@ -7,7 +7,7 @@ class AssuntoModel extends BaseModel
 {
     public $campos = array (
         'iid' => ['protected' => 'all', 'type' => 'int', 'visible' => true],
-        'nome_assunto' => ['protected' => 'none', 'type' => 'varchar', 'visible' => true],
+        'nome_assunto' => ['protected' => 'none', 'type' => 'varchar', 'visible' => true, 'required' => true],
         'dh_atualizacao' => ['protected' => 'all', 'type' => 'timestamp', 'transform' => 'current_timestamp', 'update' => 'always', 'visible' => true]
     );
 

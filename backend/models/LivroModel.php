@@ -7,11 +7,11 @@ class LivroModel extends BaseModel
 {
     public $campos = array (
         'lid' => ['protected' => 'all', 'type' => 'int', 'visible' => true],
-        'titulo' => ['protected' => 'none', 'type' => 'varchar', 'visible' => true],
-        'descricao' => ['protected' => 'none', 'type' => 'varchar', 'visible' => true],
+        'titulo' => ['protected' => 'none', 'type' => 'varchar', 'visible' => true, 'required' => true],
+        'descricao' => ['protected' => 'none', 'type' => 'varchar', 'visible' => true, 'required' => true],
         'avaliacao' => ['protected' => 'update', 'type' => 'float', 'visible' => true],
         'capa' => ['protected' => 'none', 'type'=>'varchar', 'visible' => true],
-        'isbn' => ['protected' => 'none', 'type' => 'varchar', 'visible' => true],
+        'isbn' => ['protected' => 'none', 'type' => 'varchar', 'visible' => true, 'required' => true],
         'status' => ['protected' => 'none', 'type' => 'varchar', 'visible' => true],
         'dh_atualizacao' => ['protected' => 'all', 'type' => 'timestamp', 'transform' => 'current_timestamp', 'update' => 'always', 'visible' => true]
     );

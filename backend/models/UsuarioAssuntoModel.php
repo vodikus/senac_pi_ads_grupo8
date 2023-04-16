@@ -7,7 +7,7 @@ class UsuarioAssuntoModel extends BaseModel
 {
     public $campos = array (
         'uid' => ['protected' => 'none', 'type' => 'int', 'visible' => true],
-        'iid' => ['protected' => 'none', 'type' => 'int', 'visible' => true]
+        'iid' => ['protected' => 'none', 'type' => 'int', 'visible' => true, 'required' => true]
     );
 
     public function adicionarUsuarioAssunto($uid, $entrada)
