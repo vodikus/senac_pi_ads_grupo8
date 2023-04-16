@@ -38,12 +38,12 @@ Este projeto consiste em uma aplicação de uma rede social para empréstimo de 
 
 ## Componentes do Grupo
 
-Ivan Martins Pereira   
-Janaína Pereira Ângelo   
-Jean da Rocha Vertuoso   
-João Luís Câmara Gueiral   
-Jonatha Moreno Jorge   
-Julio Knach de Bittencourt   
+[Ivan Martins Pereira](https://github.com/vodikus)   
+[Janaína Pereira Ângelo](https://github.com/jainiss)   
+[Jean da Rocha Vertuoso](https://github.com/Jean-Vertuoso)   
+[João Luís Câmara Gueiral](https://github.com/joaogueiral)   
+[Jonatha Moreno Jorge](https://github.com/jonathamoreno)   
+[Julio Knach de Bittencourt](https://github.com/juliokn)   
 
 <div align="left">
   <img src="https://github-readme-stats.vercel.app/api?username=vodikus&hide_title=false&hide_rank=false&show_icons=true&include_all_commits=true&count_private=true&disable_animations=false&theme=vue&locale=pt-br&hide_border=true&order=1" height="150" alt="stats graph"  style="float: left; padding: 10px;" />
