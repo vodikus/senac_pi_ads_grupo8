@@ -99,7 +99,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://clube-backend/api/usuarios/buscar/41",
+							"raw": "http://clube-backend/api/usuarios/buscar/999",
 							"protocol": "http",
 							"host": [
 								"clube-backend"
@@ -108,7 +108,7 @@
 								"api",
 								"usuarios",
 								"buscar",
-								"41"
+								"999"
 							]
 						}
 					},
@@ -465,7 +465,7 @@
 							"urlencoded": [
 								{
 									"key": "dados[nome_autor]",
-									"value": "José da Silva",
+									"value": "José da Silva 1",
 									"type": "text"
 								}
 							]
@@ -479,6 +479,113 @@
 							"path": [
 								"api",
 								"autores",
+								"atualizar",
+								"3"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Assuntos",
+			"item": [
+				{
+					"name": "Listar Assuntos",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://clube-backend/api/assuntos/listar",
+							"protocol": "http",
+							"host": [
+								"clube-backend"
+							],
+							"path": [
+								"api",
+								"assuntos",
+								"listar"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Adicionar Assunto",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "dados[nome_assunto]",
+									"value": "Terror",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://clube-backend/api/assuntos/adicionar",
+							"protocol": "http",
+							"host": [
+								"clube-backend"
+							],
+							"path": [
+								"api",
+								"assuntos",
+								"adicionar"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Deletar Assunto",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://clube-backend/api/assuntos/deletar/1",
+							"protocol": "http",
+							"host": [
+								"clube-backend"
+							],
+							"path": [
+								"api",
+								"assuntos",
+								"deletar",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Atualizar Assunto",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "dados[nome_assunto]",
+									"value": "Terror",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://clube-backend/api/assuntos/atualizar/3",
+							"protocol": "http",
+							"host": [
+								"clube-backend"
+							],
+							"path": [
+								"api",
+								"assuntos",
 								"atualizar",
 								"3"
 							]
@@ -517,7 +624,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://clube-backend/api/livros/buscar/1",
+							"raw": "http://clube-backend/api/livros/buscar/6",
 							"protocol": "http",
 							"host": [
 								"clube-backend"
@@ -526,7 +633,7 @@
 								"api",
 								"livros",
 								"buscar",
-								"1"
+								"6"
 							]
 						}
 					},
@@ -557,12 +664,7 @@
 								},
 								{
 									"key": "dados[isbn]",
-									"value": "1234",
-									"type": "text"
-								},
-								{
-									"key": "dados[iid]",
-									"value": "1",
+									"value": "12345",
 									"type": "text"
 								}
 							]
@@ -577,6 +679,76 @@
 								"api",
 								"livros",
 								"adicionar"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Avaliar Livro",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "dados[lid]",
+									"value": "6",
+									"type": "text"
+								},
+								{
+									"key": "dados[nota]",
+									"value": "3",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://clube-backend/api/livros/avaliar",
+							"protocol": "http",
+							"host": [
+								"clube-backend"
+							],
+							"path": [
+								"api",
+								"livros",
+								"avaliar"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Vincular Autor ao Livro",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "dados[lid]",
+									"value": "6",
+									"type": "text"
+								},
+								{
+									"key": "dados[aid]",
+									"value": "3",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://clube-backend/api/livros/vincularAutor",
+							"protocol": "http",
+							"host": [
+								"clube-backend"
+							],
+							"path": [
+								"api",
+								"livros",
+								"vincularAutor"
 							]
 						}
 					},
@@ -618,7 +790,7 @@
 					"response": []
 				},
 				{
-					"name": "Vincular Autor de Livro",
+					"name": "Vincular Assunto ao Livro",
 					"request": {
 						"method": "POST",
 						"header": [],
@@ -631,14 +803,14 @@
 									"type": "text"
 								},
 								{
-									"key": "dados[aid]",
-									"value": "5",
+									"key": "dados[iid]",
+									"value": "1",
 									"type": "text"
 								}
 							]
 						},
 						"url": {
-							"raw": "http://clube-backend/api/livros/vincularAutor",
+							"raw": "http://clube-backend/api/livros/vincularAssunto",
 							"protocol": "http",
 							"host": [
 								"clube-backend"
@@ -646,7 +818,42 @@
 							"path": [
 								"api",
 								"livros",
-								"vincularAutor"
+								"vincularAssunto"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Desvincular Assunto do Livro",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "dados[lid]",
+									"value": "6",
+									"type": "text"
+								},
+								{
+									"key": "dados[iid]",
+									"value": "3",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://clube-backend/api/livros/desvincularAssunto",
+							"protocol": "http",
+							"host": [
+								"clube-backend"
+							],
+							"path": [
+								"api",
+								"livros",
+								"desvincularAssunto"
 							]
 						}
 					},

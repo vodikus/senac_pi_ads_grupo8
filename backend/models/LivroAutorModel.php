@@ -2,6 +2,7 @@
 require_once "includes/BaseModel.php";
 require_once "helpers/SQLHelper.php";
 require_once "helpers/TimeDateHelper.php";
+require_once "models/AutorModel.php";
 
 class LivroAutorModel extends BaseModel
 {
@@ -14,6 +15,12 @@ class LivroAutorModel extends BaseModel
     {
         try {
             $dados = SQLHelper::validaCampos($this->campos, $entrada, 'INSERT');
+            if ( 
+                $this->query("SELECT 1 FROM livros WHERE lid=:lid", ['lid' => $dados['lid'] ]) <= 0 || 
+                $this->query("SELECT 1 FROM autores WHERE aid=:aid",  ['aid' => $dados['aid'] ]) <= 0  ) {
+                    throw New Exception( "Autor ou Livro não encontrado");
+            }
+
             return $this->query("INSERT INTO livros_autores (lid, aid) VALUES " .
             " (:lid, :aid)",
             $dados

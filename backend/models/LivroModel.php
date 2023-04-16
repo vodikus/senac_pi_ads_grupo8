@@ -2,7 +2,6 @@
 require_once "includes/BaseModel.php";
 require_once "helpers/SQLHelper.php";
 require_once "helpers/TimeDateHelper.php";
-require_once "models/AutorModel.php";
 
 class LivroModel extends BaseModel
 {
@@ -13,33 +12,41 @@ class LivroModel extends BaseModel
         'avaliacao' => ['protected' => 'update', 'type' => 'float', 'visible' => true],
         'capa' => ['protected' => 'none', 'type'=>'varchar', 'visible' => true],
         'isbn' => ['protected' => 'none', 'type' => 'varchar', 'visible' => true],
-        'iid' => ['protected' => 'none', 'type' => 'int', 'visible' => true],
         'status' => ['protected' => 'none', 'type' => 'varchar', 'visible' => true],
         'dh_atualizacao' => ['protected' => 'all', 'type' => 'timestamp', 'transform' => 'current_timestamp', 'update' => 'always', 'visible' => true]
     );
 
     public function listarLivros()
     {
-        $autorModel = new AutorModel();
         $campos = SQLHelper::montaCamposSelect($this->campos, 'l');
-        $campos_autor = SQLHelper::montaCamposSelect($autorModel->getCampos(), 'a');
 
-        return $this->select("SELECT $campos, $campos_autor FROM livros l" .
-        " LEFT JOIN livros_autores la ON la.lid = l.lid " .
-        " LEFT JOIN autores a ON a.aid = la.aid "
+        return $this->select("SELECT $campos, " .
+            " group_concat(DISTINCT a.nome_autor ORDER BY a.nome_autor SEPARATOR ', ') autores, " .
+            " group_concat(DISTINCT i.nome_assunto ORDER BY i.nome_assunto SEPARATOR ', ') assuntos " .
+            " FROM livros l" .
+            " LEFT JOIN livros_autores la ON la.lid = l.lid " .
+            " LEFT JOIN autores a ON a.aid = la.aid " .
+            " LEFT JOIN livros_assuntos li ON li.lid = l.lid " .
+            " LEFT JOIN assuntos i ON i.iid = li.iid "  .
+            " GROUP BY $campos"
         );
     }
 
     public function buscarLivro($id = 0)
     {
-        $autorModel = new AutorModel();
         $campos = SQLHelper::montaCamposSelect($this->campos, 'l');
-        $campos_autor = SQLHelper::montaCamposSelect($autorModel->getCampos(), 'a');
-        return $this->select("SELECT $campos, $campos_autor FROM livros l" .
-        " LEFT JOIN livros_autores la ON la.lid = l.lid " .
-        " LEFT JOIN autores a ON a.aid = la.aid " .
-        " WHERE l.lid=:lid", 
-            [ 'lid' => $id ]
+
+        return $this->select("SELECT $campos, " .
+            " group_concat(DISTINCT a.nome_autor ORDER BY a.nome_autor SEPARATOR ', ') autores, " .
+            " group_concat(DISTINCT i.nome_assunto ORDER BY i.nome_assunto SEPARATOR ', ') assuntos " .
+            " FROM livros l" .
+            " LEFT JOIN livros_autores la ON la.lid = l.lid " .
+            " LEFT JOIN autores a ON a.aid = la.aid " .
+            " LEFT JOIN livros_assuntos li ON li.lid = l.lid " .
+            " LEFT JOIN assuntos i ON i.iid = li.iid " .
+            " WHERE l.lid=:lid " .
+            " GROUP BY $campos", 
+                [ 'lid' => $id ]
         );
     }
 
@@ -47,8 +54,8 @@ class LivroModel extends BaseModel
     {
         try {
             $dados = SQLHelper::validaCampos($this->campos, $entrada, 'INSERT');
-            return $this->query("INSERT INTO livros (titulo, descricao, capa, isbn, iid) VALUES " .
-                                " (:titulo, :descricao, :capa, :isbn, :iid)",
+            return $this->query("INSERT INTO livros (titulo, descricao, capa, isbn) VALUES " .
+                                " (:titulo, :descricao, :capa, :isbn)",
                                 $dados
                             );
         } catch (Exception $e) {

@@ -2,6 +2,8 @@
 include_once 'includes/BaseController.php';
 include_once 'models/LivroModel.php';
 include_once 'models/LivroAutorModel.php';
+include_once 'models/LivroAssuntoModel.php';
+include_once 'models/LivroAvaliacaoModel.php';
 
 class LivroController extends BaseController
 {
@@ -14,6 +16,9 @@ class LivroController extends BaseController
                 switch ($params['acao']) {
                     case 'listar':
                         $this->listar();
+                        break;
+                    case 'buscar':
+                        $this->buscar($params['param1']);
                         break;
                     default:
                         $this->httpResponse(501,'Ação Indisponível');
@@ -30,6 +35,13 @@ class LivroController extends BaseController
                                 $this->httpResponse(401,'Não autorizado');
                             }
                             break;
+                        case 'avaliar':
+                            if ( $this->isAuth() ) {
+                                $this->avaliarLivro($this->getFieldFromToken('uid'), $dados);
+                            } else {
+                                $this->httpResponse(401,'Não autorizado');
+                            }
+                            break;
                         case 'vincularAutor':
                             if ( $this->isAuth() ) {
                                 $this->vincularAutor($dados);
@@ -40,6 +52,20 @@ class LivroController extends BaseController
                         case 'desvincularAutor':
                             if ( $this->isAuth() ) {
                                 $this->desvincularAutor($dados);
+                            } else {
+                                $this->httpResponse(401,'Não autorizado');
+                            }
+                            break;
+                        case 'vincularAssunto':
+                            if ( $this->isAuth() ) {
+                                $this->vincularAssunto($dados);
+                            } else {
+                                $this->httpResponse(401,'Não autorizado');
+                            }
+                            break;
+                        case 'desvincularAssunto':
+                            if ( $this->isAuth() ) {
+                                $this->desvincularAssunto($dados);
                             } else {
                                 $this->httpResponse(401,'Não autorizado');
                             }
@@ -96,6 +122,18 @@ class LivroController extends BaseController
         $this->montarSaidaOk($responseData);
     }
 
+    public function buscar($lid = 0)
+    {
+        try {
+            $livroModel = new LivroModel();
+            $arrLivros = $livroModel->buscarLivro($lid);
+            $responseData = json_encode($arrLivros);
+        } catch (Exception $e) {
+            $this->httpResponse(500,$e->getMessage());
+        }
+        $this->montarSaidaOk($responseData);
+    }
+
     public function adicionar($dados)
     {       
         try {
@@ -117,46 +155,6 @@ class LivroController extends BaseController
             }
         } finally {
             $this->httpResponse(200,'Livro cadastrado com sucesso.');
-        }
-    }
-
-    public function vincularAutor($dados)
-    {       
-        try {
-            $livroAutorModel = new LivroAutorModel();
-            if ( $livroAutorModel->adicionarLivroAutor($dados) <= 0 ) {
-                $this->httpResponse(200,'Livro / Autor não encontrado');
-            }
-        } catch (Exception $e) {
-            switch ($e->getCode()) {
-                case 23000:
-                    if (stripos($e->getMessage(),'PRIMARY')) {
-                        $this->httpResponse(200,'Este Autor já está vinculado a este Livro.');
-                    } else {
-                        $this->httpResponse(500,"Erro: " . $e->getCode() . " | " . $e->getMessage());
-                    }
-                    break;
-
-                default:
-                    $this->httpResponse(500,"Erro: " . $e->getCode() . " | " . $e->getMessage());
-                    break;
-            }
-        } finally {
-            $this->httpResponse(200,'Autor vinculado ao Livro com sucesso.');
-        }
-    }
-
-    public function desvincularAutor($dados)
-    {       
-        try {
-            $livroAutorModel = new LivroAutorModel();
-            if ( $livroAutorModel->deletarLivroAutor($dados) <= 0 ) {
-                $this->httpResponse(200,'Livro / Autor não encontrado');
-            }
-        } catch (Exception $e) {
-            $this->httpResponse(500,"Erro: " . $e->getCode() . " | " . $e->getMessage());
-        } finally {
-            $this->httpResponse(200,'Autor desvinculado do livro com sucesso.');
         }
     }
 
@@ -193,6 +191,113 @@ class LivroController extends BaseController
             $this->httpResponse(500,"Erro: " . $e->getCode() . " | " . $e->getMessage());
         } finally {
             $this->httpResponse(200,'Livro atualizado com sucesso.');
+        }
+    }
+
+    public function vincularAutor($dados)
+    {       
+        try {
+            $livroAutorModel = new LivroAutorModel();
+
+            if ( $livroAutorModel->adicionarLivroAutor($dados) <= 0 ) {
+                $this->httpResponse(200,'Livro / Autor não encontrado');
+            }
+        } catch (Exception $e) {
+            switch ($e->getCode()) {
+                case 23000:
+                    if (stripos($e->getMessage(),'PRIMARY')) {
+                        $this->httpResponse(200,'Este Autor já está vinculado a este Livro.');
+                    } else {
+                        $this->httpResponse(500,"Erro: " . $e->getCode() . " | " . $e->getMessage());
+                    }
+                    break;
+
+                default:
+                    $this->httpResponse(500,"Erro: " . $e->getCode() . " | " . $e->getMessage());
+                    break;
+            }
+        } finally {
+            $this->httpResponse(200,'Autor vinculado ao Livro com sucesso.');
+        }
+    }
+
+    public function desvincularAutor($dados)
+    {       
+        try {
+            $livroAutorModel = new LivroAutorModel();
+            if ( $livroAutorModel->deletarLivroAutor($dados) <= 0 ) {
+                $this->httpResponse(200,'Livro / Autor não encontrado');
+            }
+        } catch (Exception $e) {
+            $this->httpResponse(500,"Erro: " . $e->getCode() . " | " . $e->getMessage());
+        } finally {
+            $this->httpResponse(200,'Autor desvinculado do livro com sucesso.');
+        }
+    }
+
+    public function vincularAssunto($dados)
+    {       
+        try {
+            $livroAssuntoModel = new LivroAssuntoModel();
+            if ( $livroAssuntoModel->adicionarLivroAssunto($dados) <= 0 ) {
+                $this->httpResponse(200,'Livro / Assunto não encontrado');
+            }
+        } catch (Exception $e) {
+            switch ($e->getCode()) {
+                case 23000:
+                    if (stripos($e->getMessage(),'PRIMARY')) {
+                        $this->httpResponse(200,'Este Assunto já está vinculado a este Livro.');
+                    } else {
+                        $this->httpResponse(500,"Erro: " . $e->getCode() . " | " . $e->getMessage());
+                    }
+                    break;
+
+                default:
+                    $this->httpResponse(500,"Erro: " . $e->getCode() . " | " . $e->getMessage());
+                    break;
+            }
+        } finally {
+            $this->httpResponse(200,'Assunto vinculado ao Livro com sucesso.');
+        }
+    }
+
+    public function desvincularAssunto($dados)
+    {       
+        try {
+            $livroAssuntoModel = new LivroAssuntoModel();
+            if ( $livroAssuntoModel->deletarLivroAssunto($dados) <= 0 ) {
+                $this->httpResponse(200,'Livro / Assunto não encontrado');
+            }
+        } catch (Exception $e) {
+            $this->httpResponse(500,"Erro: " . $e->getCode() . " | " . $e->getMessage());
+        } finally {
+            $this->httpResponse(200,'Assunto desvinculado do livro com sucesso.');
+        }
+    }
+
+    public function avaliarLivro($uid = 0, $dados)
+    {       
+        try {
+            $livroAvaliacaoModel = new LivroAvaliacaoModel();
+            if ( $livroAvaliacaoModel->adicionarLivroAvaliacao($uid, $dados) <= 0 ) {
+                $this->httpResponse(200,'Livro não encontrado');
+            }
+        } catch (Exception $e) {
+            switch ($e->getCode()) {
+                case 23000:
+                    if ( stripos($e->getMessage(),'PRIMARY') ) {
+                        $this->httpResponse(200,'Este livro já foi avaliado por este usuário.');
+                    } else {
+                        $this->httpResponse(500,"Erro: " . $e->getCode() . " | " . $e->getMessage());
+                    }
+                    break;
+
+                default:
+                    $this->httpResponse(500,"Erro: " . $e->getCode() . " | " . $e->getMessage());
+                    break;
+            }
+        } finally {
+            $this->httpResponse(200,'Livro avaliado com sucesso.');
         }
     }
 }

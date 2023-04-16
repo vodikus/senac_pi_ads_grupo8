@@ -2,7 +2,6 @@
 require_once "includes/BaseModel.php";
 require_once "helpers/SQLHelper.php";
 require_once "helpers/TimeDateHelper.php";
-require_once "models/AutorModel.php";
 
 class AutorModel extends BaseModel
 {
