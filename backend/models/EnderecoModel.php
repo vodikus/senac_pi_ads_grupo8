@@ -18,11 +18,12 @@ class EnderecoModel extends BaseModel
         'dh_atualizacao' => ['protected' => 'all', 'type' => 'timestamp', 'transform' => 'current_timestamp', 'update' => 'always', 'visible' => true]
     );
 
-    public function buscarEndereco($id = 0)
+    public function buscarEnderecos($id = 0)
     {
         $campos = SQLHelper::montaCamposSelect($this->campos,'e');
         return $this->select("SELECT $campos FROM enderecos e WHERE uid=:uid", ['uid'=>$id]);
     }
+
     public function deletarEndereco($eid = 0, $uid = 0)
     {
         return $this->query("DELETE FROM enderecos WHERE eid=:eid and uid=:uid", ['eid' => $eid, 'uid' => $uid]);

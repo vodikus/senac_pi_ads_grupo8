@@ -19,7 +19,7 @@
 							"urlencoded": [
 								{
 									"key": "username",
-									"value": "teste@teste.com.br0",
+									"value": "teste@teste.com.br",
 									"type": "text"
 								},
 								{
@@ -30,10 +30,10 @@
 							]
 						},
 						"url": {
-							"raw": "http://clube-backend/api/auth/getToken",
+							"raw": "http://{{URL}}/api/auth/getToken",
 							"protocol": "http",
 							"host": [
-								"clube-backend"
+								"{{URL}}"
 							],
 							"path": [
 								"api",
@@ -54,10 +54,10 @@
 							"urlencoded": []
 						},
 						"url": {
-							"raw": "http://clube-backend/api/auth/authToken",
+							"raw": "http://{{URL}}/api/auth/authToken",
 							"protocol": "http",
 							"host": [
-								"clube-backend"
+								"{{URL}}"
 							],
 							"path": [
 								"api",
@@ -79,10 +79,10 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://clube-backend/api/usuarios/listar",
+							"raw": "http://{{URL}}/api/usuarios/listar",
 							"protocol": "http",
 							"host": [
-								"clube-backend"
+								"{{URL}}"
 							],
 							"path": [
 								"api",
@@ -99,10 +99,10 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://clube-backend/api/usuarios/buscar/999",
+							"raw": "http://{{URL}}/api/usuarios/buscar/999",
 							"protocol": "http",
 							"host": [
-								"clube-backend"
+								"{{URL}}"
 							],
 							"path": [
 								"api",
@@ -124,7 +124,7 @@
 							"urlencoded": [
 								{
 									"key": "dados[email]",
-									"value": "teste@teste.com.br2",
+									"value": "teste@teste.com.br",
 									"type": "text"
 								},
 								{
@@ -139,7 +139,7 @@
 								},
 								{
 									"key": "dados[cpf]",
-									"value": "1234562890112",
+									"value": "12345678900",
 									"type": "text"
 								},
 								{
@@ -160,10 +160,10 @@
 							]
 						},
 						"url": {
-							"raw": "http://clube-backend/api/usuarios/adicionar",
+							"raw": "http://{{URL}}/api/usuarios/adicionar",
 							"protocol": "http",
 							"host": [
-								"clube-backend"
+								"{{URL}}"
 							],
 							"path": [
 								"api",
@@ -206,10 +206,10 @@
 							]
 						},
 						"url": {
-							"raw": "http://clube-backend/api/usuarios/atualizar/42",
+							"raw": "http://{{URL}}/api/usuarios/atualizar/42",
 							"protocol": "http",
 							"host": [
-								"clube-backend"
+								"{{URL}}"
 							],
 							"path": [
 								"api",
@@ -227,10 +227,10 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "http://clube-backend/api/usuarios/deletar/42",
+							"raw": "http://{{URL}}/api/usuarios/deletar/42",
 							"protocol": "http",
 							"host": [
-								"clube-backend"
+								"{{URL}}"
 							],
 							"path": [
 								"api",
@@ -258,10 +258,10 @@
 							]
 						},
 						"url": {
-							"raw": "http://clube-backend/api/usuarios/vincularAssunto",
+							"raw": "http://{{URL}}/api/usuarios/vincularAssunto",
 							"protocol": "http",
 							"host": [
-								"clube-backend"
+								"{{URL}}"
 							],
 							"path": [
 								"api",
@@ -288,10 +288,10 @@
 							]
 						},
 						"url": {
-							"raw": "http://clube-backend/api/usuarios/desvincularAssunto",
+							"raw": "http://{{URL}}/api/usuarios/desvincularAssunto",
 							"protocol": "http",
 							"host": [
-								"clube-backend"
+								"{{URL}}"
 							],
 							"path": [
 								"api",
@@ -312,21 +312,16 @@
 							"urlencoded": [
 								{
 									"key": "dados[lid]",
-									"value": "6",
-									"type": "text"
-								},
-								{
-									"key": "dados[estado]",
-									"value": "NOVO",
+									"value": "11",
 									"type": "text"
 								}
 							]
 						},
 						"url": {
-							"raw": "http://clube-backend/api/usuarios/vincularLivro",
+							"raw": "http://{{URL}}/api/usuarios/vincularLivro",
 							"protocol": "http",
 							"host": [
-								"clube-backend"
+								"{{URL}}"
 							],
 							"path": [
 								"api",
@@ -353,10 +348,10 @@
 							]
 						},
 						"url": {
-							"raw": "http://clube-backend/api/usuarios/desvincularLivro",
+							"raw": "http://{{URL}}/api/usuarios/desvincularLivro",
 							"protocol": "http",
 							"host": [
-								"clube-backend"
+								"{{URL}}"
 							],
 							"path": [
 								"api",
@@ -378,10 +373,10 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://clube-backend/api/enderecos/listar",
+							"raw": "http://{{URL}}/api/enderecos/listar",
 							"protocol": "http",
 							"host": [
-								"clube-backend"
+								"{{URL}}"
 							],
 							"path": [
 								"api",
@@ -438,10 +433,10 @@
 							]
 						},
 						"url": {
-							"raw": "http://clube-backend/api/enderecos/adicionar",
+							"raw": "http://{{URL}}/api/enderecos/adicionar",
 							"protocol": "http",
 							"host": [
-								"clube-backend"
+								"{{URL}}"
 							],
 							"path": [
 								"api",
@@ -458,10 +453,10 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "http://clube-backend/api/enderecos/deletar/1",
+							"raw": "http://{{URL}}/api/enderecos/deletar/1",
 							"protocol": "http",
 							"host": [
-								"clube-backend"
+								"{{URL}}"
 							],
 							"path": [
 								"api",
@@ -494,10 +489,10 @@
 							]
 						},
 						"url": {
-							"raw": "http://clube-backend/api/enderecos/atualizar/6",
+							"raw": "http://{{URL}}/api/enderecos/atualizar/6",
 							"protocol": "http",
 							"host": [
-								"clube-backend"
+								"{{URL}}"
 							],
 							"path": [
 								"api",
@@ -520,10 +515,10 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://clube-backend/api/autores/listar",
+							"raw": "http://{{URL}}/api/autores/listar",
 							"protocol": "http",
 							"host": [
-								"clube-backend"
+								"{{URL}}"
 							],
 							"path": [
 								"api",
@@ -550,10 +545,10 @@
 							]
 						},
 						"url": {
-							"raw": "http://clube-backend/api/autores/adicionar",
+							"raw": "http://{{URL}}/api/autores/adicionar",
 							"protocol": "http",
 							"host": [
-								"clube-backend"
+								"{{URL}}"
 							],
 							"path": [
 								"api",
@@ -570,10 +565,10 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "http://clube-backend/api/autores/deletar/1",
+							"raw": "http://{{URL}}/api/autores/deletar/1",
 							"protocol": "http",
 							"host": [
-								"clube-backend"
+								"{{URL}}"
 							],
 							"path": [
 								"api",
@@ -601,10 +596,10 @@
 							]
 						},
 						"url": {
-							"raw": "http://clube-backend/api/autores/atualizar/3",
+							"raw": "http://{{URL}}/api/autores/atualizar/3",
 							"protocol": "http",
 							"host": [
-								"clube-backend"
+								"{{URL}}"
 							],
 							"path": [
 								"api",
@@ -627,10 +622,10 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://clube-backend/api/assuntos/listar",
+							"raw": "http://{{URL}}/api/assuntos/listar",
 							"protocol": "http",
 							"host": [
-								"clube-backend"
+								"{{URL}}"
 							],
 							"path": [
 								"api",
@@ -657,10 +652,10 @@
 							]
 						},
 						"url": {
-							"raw": "http://clube-backend/api/assuntos/adicionar",
+							"raw": "http://{{URL}}/api/assuntos/adicionar",
 							"protocol": "http",
 							"host": [
-								"clube-backend"
+								"{{URL}}"
 							],
 							"path": [
 								"api",
@@ -677,10 +672,10 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "http://clube-backend/api/assuntos/deletar/1",
+							"raw": "http://{{URL}}/api/assuntos/deletar/1",
 							"protocol": "http",
 							"host": [
-								"clube-backend"
+								"{{URL}}"
 							],
 							"path": [
 								"api",
@@ -708,10 +703,10 @@
 							]
 						},
 						"url": {
-							"raw": "http://clube-backend/api/assuntos/atualizar/3",
+							"raw": "http://{{URL}}/api/assuntos/atualizar/3",
 							"protocol": "http",
 							"host": [
-								"clube-backend"
+								"{{URL}}"
 							],
 							"path": [
 								"api",
@@ -734,10 +729,10 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://clube-backend/api/livros/listar",
+							"raw": "http://{{URL}}/api/livros/listar",
 							"protocol": "http",
 							"host": [
-								"clube-backend"
+								"{{URL}}"
 							],
 							"path": [
 								"api",
@@ -754,10 +749,10 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://clube-backend/api/livros/buscar/6",
+							"raw": "http://{{URL}}/api/livros/buscar/6",
 							"protocol": "http",
 							"host": [
-								"clube-backend"
+								"{{URL}}"
 							],
 							"path": [
 								"api",
@@ -800,10 +795,10 @@
 							]
 						},
 						"url": {
-							"raw": "http://clube-backend/api/livros/adicionar",
+							"raw": "http://{{URL}}/api/livros/adicionar",
 							"protocol": "http",
 							"host": [
-								"clube-backend"
+								"{{URL}}"
 							],
 							"path": [
 								"api",
@@ -835,10 +830,10 @@
 							]
 						},
 						"url": {
-							"raw": "http://clube-backend/api/livros/avaliar",
+							"raw": "http://{{URL}}/api/livros/avaliar",
 							"protocol": "http",
 							"host": [
-								"clube-backend"
+								"{{URL}}"
 							],
 							"path": [
 								"api",
@@ -870,10 +865,10 @@
 							]
 						},
 						"url": {
-							"raw": "http://clube-backend/api/livros/vincularAutor",
+							"raw": "http://{{URL}}/api/livros/vincularAutor",
 							"protocol": "http",
 							"host": [
-								"clube-backend"
+								"{{URL}}"
 							],
 							"path": [
 								"api",
@@ -905,10 +900,10 @@
 							]
 						},
 						"url": {
-							"raw": "http://clube-backend/api/livros/desvincularAutor",
+							"raw": "http://{{URL}}/api/livros/desvincularAutor",
 							"protocol": "http",
 							"host": [
-								"clube-backend"
+								"{{URL}}"
 							],
 							"path": [
 								"api",
@@ -940,10 +935,10 @@
 							]
 						},
 						"url": {
-							"raw": "http://clube-backend/api/livros/vincularAssunto",
+							"raw": "http://{{URL}}/api/livros/vincularAssunto",
 							"protocol": "http",
 							"host": [
-								"clube-backend"
+								"{{URL}}"
 							],
 							"path": [
 								"api",
@@ -975,10 +970,10 @@
 							]
 						},
 						"url": {
-							"raw": "http://clube-backend/api/livros/desvincularAssunto",
+							"raw": "http://{{URL}}/api/livros/desvincularAssunto",
 							"protocol": "http",
 							"host": [
-								"clube-backend"
+								"{{URL}}"
 							],
 							"path": [
 								"api",
@@ -1010,10 +1005,10 @@
 							]
 						},
 						"url": {
-							"raw": "http://clube-backend/api/livros/adicionarFavorito",
+							"raw": "http://{{URL}}/api/livros/adicionarFavorito",
 							"protocol": "http",
 							"host": [
-								"clube-backend"
+								"{{URL}}"
 							],
 							"path": [
 								"api",
@@ -1045,10 +1040,10 @@
 							]
 						},
 						"url": {
-							"raw": "http://clube-backend/api/livros/removerFavorito",
+							"raw": "http://{{URL}}/api/livros/removerFavorito",
 							"protocol": "http",
 							"host": [
-								"clube-backend"
+								"{{URL}}"
 							],
 							"path": [
 								"api",
@@ -1065,10 +1060,10 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "http://clube-backend/api/livros/deletar/5",
+							"raw": "http://{{URL}}/api/livros/deletar/5",
 							"protocol": "http",
 							"host": [
-								"clube-backend"
+								"{{URL}}"
 							],
 							"path": [
 								"api",
@@ -1101,16 +1096,96 @@
 							]
 						},
 						"url": {
-							"raw": "http://clube-backend/api/livros/atualizar/6",
+							"raw": "http://{{URL}}/api/livros/atualizar/6",
 							"protocol": "http",
 							"host": [
-								"clube-backend"
+								"{{URL}}"
 							],
 							"path": [
 								"api",
 								"livros",
 								"atualizar",
 								"6"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Empréstimos",
+			"item": [
+				{
+					"name": "Solicitar Empréstimo",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "dados[uid_dono]",
+									"value": "39",
+									"type": "text"
+								},
+								{
+									"key": "dados[lid]",
+									"value": "6",
+									"type": "text"
+								},
+								{
+									"key": "dados[qtd_dias]",
+									"value": "15",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://{{URL}}/api/emprestimos/solicitar",
+							"protocol": "http",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"emprestimos",
+								"solicitar"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Devolver Empréstimo",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "dados[uid_dono]",
+									"value": "39",
+									"type": "text"
+								},
+								{
+									"key": "dados[lid]",
+									"value": "6",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://{{URL}}/api/emprestimos/devolver",
+							"protocol": "http",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"emprestimos",
+								"devolver"
 							]
 						}
 					},
@@ -1135,11 +1210,11 @@
 			"script": {
 				"type": "text/javascript",
 				"exec": [
-					"var server       = \"http://clube-backend\"; ",
-					"var username     = \"teste@teste.com.br0\"; ",
-					"var password     = \"1234\"; ",
+					"var server       = pm.environment.get('URL'); ",
+					"var username     = pm.environment.get('USERNAME'); ",
+					"var password     = pm.environment.get('PASSWORD'); ",
 					"",
-					"var url  = `${server}/api/auth/getToken`;",
+					"var url  = `http://${server}/api/auth/getToken`;",
 					"var data = `username=${username}&password=${password}`;",
 					"",
 					"pm.sendRequest({",

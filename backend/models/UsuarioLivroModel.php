@@ -9,7 +9,6 @@ class UsuarioLivroModel extends BaseModel
         'uid' => ['protected' => 'none', 'type' => 'int', 'visible' => true],
         'lid' => ['protected' => 'none', 'type' => 'int', 'visible' => true, 'required' => true],
         'status' => ['protected' => 'none', 'type' => 'varchar', 'visible' => true],
-        'estado' => ['protected' => 'none', 'type' => 'varchar', 'visible' => true, 'required' => true],
         'dh_cadastro' => ['protected' => 'all', 'type' => 'timestamp', 'update' => 'never', 'visible' => true],
         'dh_atualizacao' => ['protected' => 'all', 'type' => 'timestamp', 'transform' => 'current_timestamp', 'update' => 'always', 'visible' => true]
     );
@@ -22,17 +21,17 @@ class UsuarioLivroModel extends BaseModel
                     throw New Exception( "Livro não encontrado");
             }
 
-            return $this->query("INSERT INTO usuarios_livros (uid, lid, estado) VALUES " .
-            " (:uid, :lid, :estado)",
+            return $this->query("INSERT INTO usuarios_livros (uid, lid) VALUES " .
+            " (:uid, :lid)",
             array_merge(['uid' => $uid], $dados)
-        );
-    } catch (Exception $e) {
-        throw New Exception( $e->getMessage(), $e->getCode() );
+           );
+        } catch (Exception $e) {
+            throw New Exception( $e->getMessage(), $e->getCode() );
+        }
     }
-}
 
-public function deletarUsuarioLivro($uid, $entrada)
-{
+    public function deletarUsuarioLivro($uid, $entrada)
+    {
         SQLHelper::validaCampos($this->campos, $entrada , 'DELETE');
         try {
             return $this->query("DELETE FROM usuarios_livros WHERE uid=:uid AND lid=:lid", ['uid' => $uid, 'lid' => $entrada['lid']]);
@@ -40,5 +39,7 @@ public function deletarUsuarioLivro($uid, $entrada)
             throw New Exception( $e->getMessage(), $e->getCode() );
         }
     }
+
+    // @TODO Adicionar método para alterar o status do UsuarioLivro
 
 }
