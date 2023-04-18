@@ -41,9 +41,13 @@ class BaseModel
             error_log("SQL: $query");
             error_log("Parametros: ".var_export($parametros, true));            
             $sth = $this->db->prepare($query);
-            $sth->execute($parametros);
-            return $sth->rowCount();
+            $stExec = $sth->execute($parametros);
+            $rowCount = $sth->rowCount();
+            // error_log("Status Exec: $stExec");
+            // error_log("Result: $rowCount");
+            return $rowCount;
         } catch (Exception $e) {
+            error_log("Erro: " . $e->getMessage());
             throw New Exception( $e->getMessage(), $e->getCode());
         }
     }

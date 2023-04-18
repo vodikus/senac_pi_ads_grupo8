@@ -124,12 +124,12 @@
 							"urlencoded": [
 								{
 									"key": "dados[email]",
-									"value": "teste@teste.com.br",
+									"value": "teste4@teste.com.br",
 									"type": "text"
 								},
 								{
 									"key": "dados[nome]",
-									"value": "Dino da Silva Sauro",
+									"value": "Charlene da Silva Sauro",
 									"type": "text"
 								},
 								{
@@ -139,7 +139,7 @@
 								},
 								{
 									"key": "dados[cpf]",
-									"value": "12345678900",
+									"value": "12345678903",
 									"type": "text"
 								},
 								{
@@ -149,12 +149,12 @@
 								},
 								{
 									"key": "dados[sexo]",
-									"value": "M",
+									"value": "F",
 									"type": "text"
 								},
 								{
 									"key": "dados[apelido]",
-									"value": "dinossauro",
+									"value": "charlenessauro",
 									"type": "text"
 								}
 							]
@@ -312,7 +312,7 @@
 							"urlencoded": [
 								{
 									"key": "dados[lid]",
-									"value": "11",
+									"value": "3",
 									"type": "text"
 								}
 							]
@@ -646,7 +646,7 @@
 							"urlencoded": [
 								{
 									"key": "dados[nome_assunto]",
-									"value": "Terror",
+									"value": "Aventura",
 									"type": "text"
 								}
 							]
@@ -779,7 +779,7 @@
 								},
 								{
 									"key": "dados[descricao]",
-									"value": "Um grupo destemido de hobbits vão levar o anel até a casa do chapéu, chamado Mordor.",
+									"value": "Gandalf e Pippin entram na cidade de Minas Tirith, onde se encontram com Denethor, regente do reino de Gondor. Gandalf o avisa da guerra próxima, e o regente pede a ajuda de Rohan, mas revela seu rancor por Aragorn, que, sendo descendente direto do último rei, é o herdeiro legítimo do trono de Gondor. Merry, entretanto, permanece com os rohirrim, para servir ao rei Théoden, que reúne todos os guerreiros aptos de seu reino e parte para a guerra em Minas Tirith. Junto com ele vão Aragorn, Legolas e Gimli.",
 									"type": "text"
 								},
 								{
@@ -789,7 +789,7 @@
 								},
 								{
 									"key": "dados[isbn]",
-									"value": "123457",
+									"value": "3",
 									"type": "text"
 								}
 							]
@@ -854,12 +854,12 @@
 							"urlencoded": [
 								{
 									"key": "dados[lid]",
-									"value": "6",
+									"value": "3",
 									"type": "text"
 								},
 								{
 									"key": "dados[aid]",
-									"value": "3",
+									"value": "1",
 									"type": "text"
 								}
 							]
@@ -924,12 +924,12 @@
 							"urlencoded": [
 								{
 									"key": "dados[lid]",
-									"value": "6",
+									"value": "3",
 									"type": "text"
 								},
 								{
 									"key": "dados[iid]",
-									"value": "1",
+									"value": "3",
 									"type": "text"
 								}
 							]
@@ -1085,18 +1085,23 @@
 							"urlencoded": [
 								{
 									"key": "dados[titulo]",
-									"value": "O Senhor dos Anéis - A sociedade do Anel - Volume 1",
+									"value": "O Senhor dos Anéis - A Sociedade do Anel",
 									"type": "text"
 								},
 								{
 									"key": "dados[descricao]",
-									"value": "Um grupo destemido de hobbits vão levar o Anel até a casa do chapéu, também conhecido como Mordor.",
+									"value": "Frodo Bolseiro é um hobbit do Condado, que recebe de seu tio Bilbo um anel de rara beleza. Esse anel tem uma longa história: foi roubado de uma criatura chamada Gollum (como relatado no livro O Hobbit), e desde então ele tem sido guardado por Bilbo.",
+									"type": "text"
+								},
+								{
+									"key": "dados[isbn]",
+									"value": "1",
 									"type": "text"
 								}
 							]
 						},
 						"url": {
-							"raw": "http://{{URL}}/api/livros/atualizar/6",
+							"raw": "http://{{URL}}/api/livros/atualizar/1",
 							"protocol": "http",
 							"host": [
 								"{{URL}}"
@@ -1105,7 +1110,7 @@
 								"api",
 								"livros",
 								"atualizar",
-								"6"
+								"1"
 							]
 						}
 					},
@@ -1186,6 +1191,41 @@
 								"api",
 								"emprestimos",
 								"devolver"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Desistir Empréstimo",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "dados[uid_dono]",
+									"value": "39",
+									"type": "text"
+								},
+								{
+									"key": "dados[lid]",
+									"value": "6",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://{{URL}}/api/emprestimos/desistir",
+							"protocol": "http",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"emprestimos",
+								"desistir"
 							]
 						}
 					},
