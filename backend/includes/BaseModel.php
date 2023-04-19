@@ -36,11 +36,14 @@ class BaseModel
         }
     }
 
-    function query($query = "", $parametros = []) {
+    function query($query = "", $params = []) {
         try {
             error_log("SQL: $query");
-            error_log("Parametros: ".var_export($parametros, true));            
+            error_log("Parametros: ".var_export($params, true));            
             $sth = $this->db->prepare($query);
+            $parametros = $this->sanitizeParams($query,$params);
+            error_log("Clean: ".var_export($parametros, true));                        
+
             $stExec = $sth->execute($parametros);
             $rowCount = $sth->rowCount();
             // error_log("Status Exec: $stExec");
@@ -52,11 +55,21 @@ class BaseModel
         }
     }
 
+    function sanitizeParams($query, $params) {
+        $arrParams = [];
+        preg_match_all( '/(\:[a-zA-Z0-9-_]+)/', $query, $tokens );
+        error_log("Tokens: ".var_export($tokens[0], true)); 
+        $arrTokens = array_diff_key($tokens[0], $params);
+        foreach ( $arrTokens as $token ) {
+            $chave = str_replace(':','',$token);
+            error_log("Chave: $chave");
+            $arrParams[$chave] = $params[$chave];
+        }
+        return $arrParams;
+    }
+
     function pegarConexao() {
         return $this->db;
     }
 
-    function getCampos() {
-        return $this->campos;
-    }
 }

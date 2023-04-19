@@ -88,11 +88,14 @@ class EmprestimoModel extends BaseModel
     public function devolverEmprestimo($uid, $entrada)
     {
         try {
-            $dados = SQLHelper::validaCampos($this->campos, array_merge(['qtd_dias'=>0],$entrada), 'UPDATE');
+            $campos = SQLHelper::sobrescrevePropriedades( $this->campos, [
+                'qtd_dias' => ['required' => false]
+            ]);    
+            $dados = SQLHelper::validaCampos($campos, $entrada, 'UPDATE');
             if ( $this->validaUsuarioLivro($dados) && $this->validaStatusLivro($uid, 'EMPR', $dados) ) {
                 return $this->query("UPDATE emprestimos SET status='DEVO', devolucao_efetiva=CURRENT_TIMESTAMP, dh_atualizacao=CURRENT_TIMESTAMP " .
                     " WHERE uid_dono=:uid_dono AND lid=:lid AND uid_tomador=:uid_tomador AND status='EMPR' ", 
-                    ['uid_tomador'=>$uid, 'uid_dono' => $dados['uid_dono'], 'lid' => $dados['lid'] ] );
+                    array_merge(['uid_tomador'=>$uid], $dados) );
             }
         } catch (Exception $e) {
             throw New Exception( $e->getMessage(), $e->getCode() );
@@ -102,11 +105,14 @@ class EmprestimoModel extends BaseModel
     public function desistirEmprestimo($uid, $entrada)
     {
         try {
-            $dados = SQLHelper::validaCampos($this->campos, array_merge(['qtd_dias'=>0],$entrada), 'UPDATE');
+            $campos = SQLHelper::sobrescrevePropriedades( $this->campos, [
+                'qtd_dias' => ['required' => false]
+            ]);            
+            $dados = SQLHelper::validaCampos($campos, $entrada, 'UPDATE');
             if ( $this->validaUsuarioLivro($dados) && $this->validaStatusLivro($uid, 'SOLI', $dados) ) {
                 return $this->query("UPDATE emprestimos SET status='CANC', dh_atualizacao=CURRENT_TIMESTAMP " .
                     " WHERE uid_dono=:uid_dono AND lid=:lid AND uid_tomador=:uid_tomador AND status='SOLI' ", 
-                    ['uid_tomador'=>$uid, 'uid_dono' => $dados['uid_dono'], 'lid' => $dados['lid'] ] );
+                    array_merge(['uid_tomador'=>$uid],$dados) );
             }
         } catch (Exception $e) {
             throw New Exception( $e->getMessage(), $e->getCode() );
@@ -116,12 +122,17 @@ class EmprestimoModel extends BaseModel
     public function previsaoEmprestimo($uid, $entrada)
     {
         try {
-            $dados = SQLHelper::validaCampos($this->campos, $entrada, 'UPDATE');
+            $campos = SQLHelper::sobrescrevePropriedades( $this->campos, [
+                'qtd_dias' => ['required' => false],
+                'retirada_prevista' => ['required' => true],
+                'devolucao_prevista' => ['required' => true]
+            ]);
+            $dados = SQLHelper::validaCampos($campos, $entrada, 'UPDATE');
             if ( $this->validaUsuarioLivro($dados)  && $this->validaStatusLivro($uid, 'SOLI', $dados) ) {
                 return $this->query("UPDATE emprestimos SET " .
-                    " retirada_prevista=:retirada_prevista, devolucao_prevista=:devolucao_prevista " .
+                    " retirada_prevista=:retirada_prevista, devolucao_prevista=:devolucao_prevista, dh_atualizacao=CURRENT_TIMESTAMP " .
                     " WHERE uid_dono=:uid_dono AND lid=:lid AND uid_tomador=:uid_tomador AND status = 'SOLI'", 
-                    ['uid_tomador'=>$uid, 'uid_dono' => $dados['uid_dono'], 'lid' => $dados['lid'] ] );
+                    array_merge(['uid_tomador'=>$uid], $dados ));
             }
         } catch (Exception $e) {
             throw New Exception( $e->getMessage(), $e->getCode() );
@@ -131,17 +142,21 @@ class EmprestimoModel extends BaseModel
     public function retirarEmprestimo($uid, $entrada)
     {
         try {
-            $dados = SQLHelper::validaCampos($this->campos, $entrada, 'UPDATE');
+            $campos = SQLHelper::sobrescrevePropriedades( $this->campos, [
+                'qtd_dias' => ['required' => false]
+            ]);            
+            $dados = SQLHelper::validaCampos($campos, $entrada, 'UPDATE');
             if ( $this->validaUsuarioLivro($dados) && $this->validaStatusLivro($uid, 'SOLI', $dados) ) {
                 return $this->query("UPDATE emprestimos SET " .
-                    " retirada_efetiva=CURRENT_TIMESTAMP, status='EMPR' " .
+                    " retirada_efetiva=CURRENT_TIMESTAMP, status='EMPR', dh_atualizacao=CURRENT_TIMESTAMP " .
                     " WHERE uid_dono=:uid_dono AND lid=:lid AND uid_tomador=:uid_tomador AND status = 'SOLI'", 
-                    ['uid_tomador'=>$uid, 'uid_dono' => $dados['uid_dono'], 'lid' => $dados['lid'] ] );
+                    array_merge(['uid_tomador'=>$uid], $dados ) );
             }
         } catch (Exception $e) {
             throw New Exception( $e->getMessage(), $e->getCode() );
         }
     }
 
+    // @TODO Validar estados antes de realizar os updates / inserts devido a retirada da chave primária
 
 }

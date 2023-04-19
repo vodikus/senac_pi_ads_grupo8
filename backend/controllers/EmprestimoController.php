@@ -58,14 +58,14 @@ class EmprestimoController extends BaseController
                         break;
                     case 'previsao':
                         if ($this->isAuth()) {
-                            // $this->adicionar($dados);
+                            $this->previsaoEmprestimo($this->getFieldFromToken('uid'), $dados);
                         } else {
                             $this->httpResponse(401, 'Não autorizado');
                         }
                         break;
                     case 'retirar':
                         if ($this->isAuth()) {
-                            // $this->adicionar($dados);
+                            $this->retirarEmprestimo($this->getFieldFromToken('uid'), $dados);
                         } else {
                             $this->httpResponse(401, 'Não autorizado');
                         }
@@ -136,4 +136,34 @@ class EmprestimoController extends BaseController
             $this->httpResponse(200, 'Solicitação de Empréstimo cancelada com sucesso.');
         }
     }
+
+    public function previsaoEmprestimo($uid = 0, $dados)
+    {
+        try {
+            $emprestimoModel = new EmprestimoModel();
+            if ($emprestimoModel->previsaoEmprestimo($uid, $dados) <= 0) {
+                $this->httpResponse(200, 'Não foi possivel marcar a previsão deste empréstimo. Motivo: Livro / usuário não encontrado ou status do empréstimo inválido.');
+            }
+        } catch (Exception $e) {
+            $this->httpResponse(500, "Erro: " . $e->getCode() . " | " . $e->getMessage());
+        } finally {
+            $this->httpResponse(200, 'Previsão de Empréstimo registrada com sucesso.');
+        }
+    }
+
+    public function retirarEmprestimo($uid = 0, $dados)
+    {
+        try {
+            $emprestimoModel = new EmprestimoModel();
+            if ($emprestimoModel->retirarEmprestimo($uid, $dados) <= 0) {
+                $this->httpResponse(200, 'Não foi possivel registrar a retirada deste empréstimo. Motivo: Livro / usuário não encontrado ou status do empréstimo inválido.');
+            }
+        } catch (Exception $e) {
+            $this->httpResponse(500, "Erro: " . $e->getCode() . " | " . $e->getMessage());
+        } finally {
+            $this->httpResponse(200, 'Retirada de Empréstimo registrada com sucesso.');
+        }
+    }
+
+    // @TODO Validar estados antes de realizar os updates / inserts devido a retirada da chave primária
 }

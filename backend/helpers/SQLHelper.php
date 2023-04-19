@@ -93,4 +93,9 @@ class SQLHelper
         }
         return $valido;
     }
+
+    public static function sobrescrevePropriedades($campos, $entrada) {
+        $saida = array_replace_recursive($campos,$entrada);
+        return $saida;
+    }
 }
