@@ -17,14 +17,20 @@ class EmprestimoController extends BaseController
                 switch ($params['acao']) {
                     case 'meus-emprestimos':
                         if ($this->isAuth()) {
-                            // $this->listarEmprestimos($this->getFieldFromToken('uid'));
+                            $this->listarEmprestimos($this->getFieldFromToken('uid'), "TOMADOS");
+                        } else {
+                            $this->httpResponse(401, 'Não autorizado');
+                        }
+                    case 'meus-emprestados':
+                        if ($this->isAuth()) {
+                            $this->listarEmprestimos($this->getFieldFromToken('uid'), "EMPRESTADOS");
                         } else {
                             $this->httpResponse(401, 'Não autorizado');
                         }
                         break;
                     case 'buscar':
                         if ($this->isAuth()) {
-                            // $this->buscarEmprestimo($this->getFieldFromToken('uid'), $params['param1'], $params['param2']);
+                            $this->buscarEmprestimo($this->getFieldFromToken('uid'), $params['param1']);
                         } else {
                             $this->httpResponse(401, 'Não autorizado');
                         }
@@ -89,6 +95,30 @@ class EmprestimoController extends BaseController
                 $this->httpResponse(405, 'Method Not Allowed');
                 break;
         }
+    }
+
+    public function buscarEmprestimo($uid = 0, $eid = 0)
+    {
+        try {
+            $emprestimoModel = new EmprestimoModel();
+            $emprestimo = json_encode($emprestimoModel->buscaEmprestimo($uid, $eid));
+        } catch (Exception $e) {
+            $this->httpResponse(200, MessageHelper::fmtException($e));
+        }
+        $this->montarSaidaOk($emprestimo);
+
+    }
+
+    public function listarEmprestimos($uid = 0, $tipo)
+    {
+        try {
+            $emprestimoModel = new EmprestimoModel();
+            $emprestimo = json_encode($emprestimoModel->listarEmprestimos($uid, $tipo));
+        } catch (Exception $e) {
+            $this->httpResponse(200, MessageHelper::fmtException($e));
+        }
+        $this->montarSaidaOk($emprestimo);
+
     }
 
     public function solicitarEmprestimo($uid = 0, $dados)
@@ -157,5 +187,5 @@ class EmprestimoController extends BaseController
         $this->httpResponse(200, 'Retirada de Empréstimo registrada com sucesso.');
     }
 
-// @TODO Validar estados antes de realizar os updates / inserts devido a retirada da chave primária
+
 }

@@ -70,7 +70,7 @@ class EmprestimoModel extends BaseModel
         return true;
     }
 
-    private function buscaEmprestimo($uid = 0, $eid = 0) {
+    public function buscaEmprestimo($uid = 0, $eid = 0) {
         try {
             $emprestimo = $this->select("SELECT uid_dono, lid, uid_tomador, qtd_dias, retirada_prevista, retirada_efetiva, devolucao_prevista, devolucao_efetiva, status, dh_solicitacao, dh_atualizacao FROM emprestimos WHERE eid=:eid AND uid_tomador=:uid_tomador", ['uid_tomador'=>$uid, 'eid'=>$eid]);
             if ( count($emprestimo) > 0 ) {
@@ -81,7 +81,25 @@ class EmprestimoModel extends BaseModel
         } catch (Exception $e) {
             throw New Exception( $e->getMessage(), $e->getCode() );
         }
+    }
 
+    public function listarEmprestimos($uid = 0, $tipo = 'TOMADOS') {
+        try {
+            switch ($tipo) {
+                case "TOMADOS":
+                    $emprestimos = $this->select("SELECT uid_dono, lid, uid_tomador, qtd_dias, retirada_prevista, retirada_efetiva, devolucao_prevista, devolucao_efetiva, status, dh_solicitacao, dh_atualizacao FROM emprestimos WHERE uid_tomador=:uid_tomador", ['uid_tomador'=>$uid]);
+                    break;
+                case "EMPRESTADOS":
+                    $emprestimos = $this->select("SELECT uid_dono, lid, uid_tomador, qtd_dias, retirada_prevista, retirada_efetiva, devolucao_prevista, devolucao_efetiva, status, dh_solicitacao, dh_atualizacao FROM emprestimos WHERE uid_dono=:uid_dono", ['uid_dono'=>$uid]);
+                    break;
+                default:
+                    $emprestimos = [];
+                    break;
+            }
+            return $emprestimos;
+        } catch (Exception $e) {
+            throw New Exception( $e->getMessage(), $e->getCode() );
+        }
     }
 
     public function listarLivrosEmprestados($uid = 0)

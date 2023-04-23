@@ -1112,6 +1112,88 @@
 			"name": "Empréstimos",
 			"item": [
 				{
+					"name": "Buscar Empréstimo",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": []
+						},
+						"url": {
+							"raw": "http://{{URL}}/api/emprestimos/buscar/15",
+							"protocol": "http",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"emprestimos",
+								"buscar",
+								"15"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Listar Meus Empréstimos",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": []
+						},
+						"url": {
+							"raw": "http://{{URL}}/api/emprestimos/meus-emprestimos",
+							"protocol": "http",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"emprestimos",
+								"meus-emprestimos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Listar Meus Empréstados",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": []
+						},
+						"url": {
+							"raw": "http://{{URL}}/api/emprestimos/meus-emprestados",
+							"protocol": "http",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"emprestimos",
+								"meus-emprestados"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "Solicitar Empréstimo",
 					"request": {
 						"method": "POST",
