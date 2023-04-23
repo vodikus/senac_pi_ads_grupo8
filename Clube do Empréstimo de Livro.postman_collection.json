@@ -662,6 +662,27 @@
 					"response": []
 				},
 				{
+					"name": "Buscar assunto",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://{{URL}}/api/assuntos/buscar/26",
+							"protocol": "http",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"assuntos",
+								"buscar",
+								"26"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "Adicionar Assunto",
 					"request": {
 						"method": "POST",
@@ -697,7 +718,7 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "http://{{URL}}/api/assuntos/deletar/1",
+							"raw": "http://{{URL}}/api/assuntos/deletar/26",
 							"protocol": "http",
 							"host": [
 								"{{URL}}"
@@ -706,7 +727,7 @@
 								"api",
 								"assuntos",
 								"deletar",
-								"1"
+								"26"
 							]
 						}
 					},
@@ -1408,7 +1429,7 @@
 							"mode": "urlencoded",
 							"urlencoded": [
 								{
-									"key": "dados[uid_dono]",
+									"key": "dados[uid_destino]",
 									"value": "39",
 									"type": "text"
 								},
@@ -1418,22 +1439,37 @@
 									"type": "text"
 								},
 								{
-									"key": "dados[qtd_dias]",
-									"value": "15",
+									"key": "dados[tipo]",
+									"value": "RECLAMACAO",
+									"type": "text"
+								},
+								{
+									"key": "dados[assunto]",
+									"value": "O baguio é zicado",
+									"type": "text"
+								},
+								{
+									"key": "dados[motivo]",
+									"value": "Picareta",
+									"type": "text"
+								},
+								{
+									"key": "dados[texto]",
+									"value": "Lorem ipsum...",
 									"type": "text"
 								}
 							]
 						},
 						"url": {
-							"raw": "http://{{URL}}/api/emprestimos/solicitar",
+							"raw": "http://{{URL}}/api/chamados/adicionar",
 							"protocol": "http",
 							"host": [
 								"{{URL}}"
 							],
 							"path": [
 								"api",
-								"emprestimos",
-								"solicitar"
+								"chamados",
+								"adicionar"
 							]
 						}
 					},
