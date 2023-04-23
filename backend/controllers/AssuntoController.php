@@ -14,6 +14,9 @@ class AssuntoController extends BaseController
                     case 'listar':
                         $this->listar();
                         break;
+                    case 'buscar':
+                        $this->buscar($params['param1']);
+                        break;
                     default:
                         $this->httpResponse(501,'Ação Indisponível');
                         break;
@@ -80,12 +83,23 @@ class AssuntoController extends BaseController
         }
         $this->montarSaidaOk($responseData);
     }
+    public function buscar($iid = 0)
+    {
+        try {
+            $assuntoModel = new AssuntoModel();
+            $arrAssunto = $assuntoModel->buscarAssunto($iid);
+            $responseData = json_encode($arrAssunto);
+        } catch (Exception $e) {
+            $this->httpResponse(500,$e->getMessage());
+        }
+        $this->montarSaidaOk($responseData);
+    }
 
     public function adicionar($dados)
     {       
         try {
             $assuntoModel = new AssuntoModel();
-            $assuntoModel->adicionarAssunto($dados);
+            $assuntoId = $assuntoModel->adicionarAssunto($dados);
         } catch (Exception $e) {
             switch ($e->getCode()) {
                 case 23000:
@@ -100,9 +114,8 @@ class AssuntoController extends BaseController
                     $this->httpResponse(500,"Erro: " . $e->getCode() . " | " . $e->getMessage());
                     break;
             }
-        } finally {
-            $this->httpResponse(200,'Assunto cadastrado com sucesso.');
         }
+        $this->httpResponse(200,'Assunto cadastrado com sucesso.', ['assuntoId' => $assuntoId]);
     }
 
     public function deletar($aid)

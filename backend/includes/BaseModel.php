@@ -52,6 +52,24 @@ class BaseModel
             throw New Exception( $e->getMessage(), $e->getCode());
         }
     }
+    
+    function insert($query = "", $params = []) {
+        try {
+            $this->errorLog($query,$params);
+            $sth = $this->db->prepare($query);
+            $parametros = $this->sanitizeParams($query,$params);
+            error_log("Clean: ".var_export($parametros, true));                        
+            
+            $stExec = $sth->execute($parametros);
+            $sqlId = $this->db->lastInsertId();
+            error_log("ReturnId: $sqlId");
+
+            return $sqlId;
+        } catch (Exception $e) {
+            error_log("Erro: " . $e->getMessage());
+            throw New Exception( $e->getMessage(), $e->getCode());
+        }
+    }
 
     function sanitizeParams($query, $params) {
         $arrParams = [];

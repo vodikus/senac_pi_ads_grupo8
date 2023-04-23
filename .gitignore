@@ -1022,14 +1022,6 @@ tests/backend/vendor/theseer/tokenizer/src/TokenCollectionException.php
 tests/backend/vendor/theseer/tokenizer/src/Tokenizer.php
 tests/backend/vendor/theseer/tokenizer/src/XMLSerializer.php
 tests/backend/.phpunit.result.cache
-tests/backend/composer.json
-tests/backend/composer.lock
-tests/backend/phpunit.xml
-tests/backend/src/AutenticacaoHelper.php
-tests/backend/src/HttpHelper.php
-tests/backend/tests/AssuntoTest.php
-tests/backend/tests/AutenticacaoTest.php
-tests/backend/tests/UsuarioTest.php
 tests/backend/vendor/sebastian/diff/tests/fixtures/out/.editorconfig
 tests/backend/vendor/sebastian/diff/tests/fixtures/out/.gitignore
 

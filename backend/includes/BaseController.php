@@ -73,10 +73,10 @@ class BaseController
         exit;
     }
 
-    protected function httpResponse($httpCode = 200, $msg='')
+    protected function httpResponse($httpCode = 200, $msg='', $arrData=[])
     {        
         if (array_key_exists($httpCode,$this->httpCodes)) {
-            $this->montarSaida(json_encode(array('message' => $msg)), 
+            $this->montarSaida(json_encode(array_merge(['message' => $msg], $arrData)), 
                 array('Content-Type: application/json', $this->httpCodes[$httpCode] )
             );        
         }

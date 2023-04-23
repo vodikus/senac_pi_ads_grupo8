@@ -5,7 +5,7 @@ require_once "helpers/TimeDateHelper.php";
 
 class AssuntoModel extends BaseModel
 {
-    public $campos = array (
+    public $campos = array(
         'iid' => ['protected' => 'all', 'type' => 'int', 'visible' => true],
         'nome_assunto' => ['protected' => 'none', 'type' => 'varchar', 'visible' => true, 'required' => true],
         'dh_atualizacao' => ['protected' => 'all', 'type' => 'timestamp', 'transform' => 'current_timestamp', 'update' => 'always', 'visible' => true]
@@ -18,20 +18,28 @@ class AssuntoModel extends BaseModel
     }
     public function buscarAssunto($id = 0)
     {
-        $campos = SQLHelper::montaCamposSelect($this->campos, 'a');
-        return $this->select("SELECT $campos FROM assuntos a WHERE iid=:iid",  [ 'iid' => $id ] );
+        try {
+            $campos = SQLHelper::montaCamposSelect($this->campos, 'a');
+            $assunto = $this->select("SELECT $campos FROM assuntos a WHERE iid=:iid", ['iid' => $id]);
+            if (count($assunto) > 0) {
+                return $assunto[0];
+            }
+        } catch (Exception $e) {
+            throw new Exception($e->getMessage(), $e->getCode());
+        }
     }
 
     public function adicionarAssunto($entrada)
     {
         try {
             $dados = SQLHelper::validaCampos($this->campos, $entrada, 'INSERT');
-            return $this->query("INSERT INTO assuntos (nome_assunto) VALUES " .
-                                " (:nome_assunto)",
-                                $dados
-                            );
+            return $this->insert(
+                "INSERT INTO assuntos (nome_assunto) VALUES " .
+                " (:nome_assunto)",
+                $dados
+            );
         } catch (Exception $e) {
-            throw New Exception( $e->getMessage(), $e->getCode() );
+            throw new Exception($e->getMessage(), $e->getCode());
         }
     }
 
@@ -40,7 +48,7 @@ class AssuntoModel extends BaseModel
         try {
             return $this->query("DELETE FROM assuntos WHERE iid=:iid", ['iid' => $iid]);
         } catch (Exception $e) {
-            throw New Exception( $e->getMessage(), $e->getCode() );
+            throw new Exception($e->getMessage(), $e->getCode());
         }
     }
 
@@ -51,7 +59,7 @@ class AssuntoModel extends BaseModel
             $campos = SQLHelper::montaCamposUpdate($this->campos, $dados);
             return $this->query("UPDATE assuntos SET $campos WHERE iid=:iid", array_merge(['iid' => $iid], $dados));
         } catch (Exception $e) {
-            throw New Exception( $e->getMessage(), $e->getCode() );
+            throw new Exception($e->getMessage(), $e->getCode());
         }
     }
 
