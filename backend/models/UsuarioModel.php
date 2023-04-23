@@ -47,7 +47,16 @@ class UsuarioModel extends BaseModel
     public function atualizarUsuario($id,$entrada)
     {
         try {
-            $dados = SQLHelper::validaCampos($this->campos, $entrada, 'UPDATE');
+            $campos = array_filter(SQLHelper::sobrescrevePropriedades( $this->campos, [
+                'email' => ['required' => false],
+                'nome' => ['required' => false],
+                'cpf' => ['required' => false],
+                'nascimento' => ['required' => false],
+                'sexo' => ['required' => false],
+                'apelido' => ['required' => false],
+            ]), ['SQLHelper','limpaCamposProtegidos']);
+
+            $dados = SQLHelper::validaCampos($campos, $entrada, 'UPDATE');
             $campos = SQLHelper::montaCamposUpdate($this->campos, $dados);
             return $this->query("UPDATE usuarios SET $campos WHERE uid=:uid", array_merge(['uid'=>$id],$dados));
         } catch (Exception $e) {

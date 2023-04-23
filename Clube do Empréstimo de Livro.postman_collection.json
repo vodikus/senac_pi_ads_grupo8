@@ -99,7 +99,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://{{URL}}/api/usuarios/buscar/999",
+							"raw": "http://{{URL}}/api/usuarios/buscar/45",
 							"protocol": "http",
 							"host": [
 								"{{URL}}"
@@ -108,7 +108,7 @@
 								"api",
 								"usuarios",
 								"buscar",
-								"999"
+								"45"
 							]
 						}
 					},
@@ -124,12 +124,12 @@
 							"urlencoded": [
 								{
 									"key": "dados[email]",
-									"value": "teste@teste.com.br",
+									"value": "teste4@teste.com.br",
 									"type": "text"
 								},
 								{
 									"key": "dados[nome]",
-									"value": "Dino da Silva Sauro",
+									"value": "Charlene da Silva Sauro",
 									"type": "text"
 								},
 								{
@@ -139,7 +139,7 @@
 								},
 								{
 									"key": "dados[cpf]",
-									"value": "12345678900",
+									"value": "12345678903",
 									"type": "text"
 								},
 								{
@@ -149,12 +149,12 @@
 								},
 								{
 									"key": "dados[sexo]",
-									"value": "M",
+									"value": "F",
 									"type": "text"
 								},
 								{
 									"key": "dados[apelido]",
-									"value": "dinossauro",
+									"value": "charlenessauro",
 									"type": "text"
 								}
 							]
@@ -183,18 +183,8 @@
 							"mode": "urlencoded",
 							"urlencoded": [
 								{
-									"key": "dados[nome]",
-									"value": "José da Silva 99",
-									"type": "text"
-								},
-								{
 									"key": "dados[senha]",
-									"value": "dasdasdassss",
-									"type": "text"
-								},
-								{
-									"key": "dados[nascimento]",
-									"value": "2000-01-01",
+									"value": "231321321",
 									"type": "text"
 								},
 								{
@@ -206,7 +196,7 @@
 							]
 						},
 						"url": {
-							"raw": "http://{{URL}}/api/usuarios/atualizar/42",
+							"raw": "http://{{URL}}/api/usuarios/atualizar/45",
 							"protocol": "http",
 							"host": [
 								"{{URL}}"
@@ -215,7 +205,7 @@
 								"api",
 								"usuarios",
 								"atualizar",
-								"42"
+								"45"
 							]
 						}
 					},
@@ -227,7 +217,7 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "http://{{URL}}/api/usuarios/deletar/42",
+							"raw": "http://{{URL}}/api/usuarios/deletar/44",
 							"protocol": "http",
 							"host": [
 								"{{URL}}"
@@ -236,7 +226,7 @@
 								"api",
 								"usuarios",
 								"deletar",
-								"42"
+								"44"
 							]
 						}
 					},
@@ -312,7 +302,7 @@
 							"urlencoded": [
 								{
 									"key": "dados[lid]",
-									"value": "11",
+									"value": "3",
 									"type": "text"
 								}
 							]
@@ -646,7 +636,7 @@
 							"urlencoded": [
 								{
 									"key": "dados[nome_assunto]",
-									"value": "Terror",
+									"value": "Aventura",
 									"type": "text"
 								}
 							]
@@ -779,7 +769,7 @@
 								},
 								{
 									"key": "dados[descricao]",
-									"value": "Um grupo destemido de hobbits vão levar o anel até a casa do chapéu, chamado Mordor.",
+									"value": "Gandalf e Pippin entram na cidade de Minas Tirith, onde se encontram com Denethor, regente do reino de Gondor. Gandalf o avisa da guerra próxima, e o regente pede a ajuda de Rohan, mas revela seu rancor por Aragorn, que, sendo descendente direto do último rei, é o herdeiro legítimo do trono de Gondor. Merry, entretanto, permanece com os rohirrim, para servir ao rei Théoden, que reúne todos os guerreiros aptos de seu reino e parte para a guerra em Minas Tirith. Junto com ele vão Aragorn, Legolas e Gimli.",
 									"type": "text"
 								},
 								{
@@ -789,7 +779,7 @@
 								},
 								{
 									"key": "dados[isbn]",
-									"value": "123457",
+									"value": "3",
 									"type": "text"
 								}
 							]
@@ -854,12 +844,12 @@
 							"urlencoded": [
 								{
 									"key": "dados[lid]",
-									"value": "6",
+									"value": "3",
 									"type": "text"
 								},
 								{
 									"key": "dados[aid]",
-									"value": "3",
+									"value": "1",
 									"type": "text"
 								}
 							]
@@ -924,12 +914,12 @@
 							"urlencoded": [
 								{
 									"key": "dados[lid]",
-									"value": "6",
+									"value": "3",
 									"type": "text"
 								},
 								{
 									"key": "dados[iid]",
-									"value": "1",
+									"value": "3",
 									"type": "text"
 								}
 							]
@@ -1085,18 +1075,23 @@
 							"urlencoded": [
 								{
 									"key": "dados[titulo]",
-									"value": "O Senhor dos Anéis - A sociedade do Anel - Volume 1",
+									"value": "O Senhor dos Anéis - A Sociedade do Anel",
 									"type": "text"
 								},
 								{
 									"key": "dados[descricao]",
-									"value": "Um grupo destemido de hobbits vão levar o Anel até a casa do chapéu, também conhecido como Mordor.",
+									"value": "Frodo Bolseiro é um hobbit do Condado, que recebe de seu tio Bilbo um anel de rara beleza. Esse anel tem uma longa história: foi roubado de uma criatura chamada Gollum (como relatado no livro O Hobbit), e desde então ele tem sido guardado por Bilbo.",
+									"type": "text"
+								},
+								{
+									"key": "dados[isbn]",
+									"value": "1",
 									"type": "text"
 								}
 							]
 						},
 						"url": {
-							"raw": "http://{{URL}}/api/livros/atualizar/6",
+							"raw": "http://{{URL}}/api/livros/atualizar/1",
 							"protocol": "http",
 							"host": [
 								"{{URL}}"
@@ -1105,7 +1100,7 @@
 								"api",
 								"livros",
 								"atualizar",
-								"6"
+								"1"
 							]
 						}
 					},
@@ -1116,6 +1111,88 @@
 		{
 			"name": "Empréstimos",
 			"item": [
+				{
+					"name": "Buscar Empréstimo",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": []
+						},
+						"url": {
+							"raw": "http://{{URL}}/api/emprestimos/buscar/15",
+							"protocol": "http",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"emprestimos",
+								"buscar",
+								"15"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Listar Meus Empréstimos",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": []
+						},
+						"url": {
+							"raw": "http://{{URL}}/api/emprestimos/meus-emprestimos",
+							"protocol": "http",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"emprestimos",
+								"meus-emprestimos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Listar Meus Empréstados",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": []
+						},
+						"url": {
+							"raw": "http://{{URL}}/api/emprestimos/meus-emprestados",
+							"protocol": "http",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"emprestimos",
+								"meus-emprestados"
+							]
+						}
+					},
+					"response": []
+				},
 				{
 					"name": "Solicitar Empréstimo",
 					"request": {
@@ -1157,7 +1234,7 @@
 					"response": []
 				},
 				{
-					"name": "Devolver Empréstimo",
+					"name": "Previsão de Empréstimo",
 					"request": {
 						"method": "POST",
 						"header": [],
@@ -1173,11 +1250,26 @@
 									"key": "dados[lid]",
 									"value": "6",
 									"type": "text"
+								},
+								{
+									"key": "dados[retirada_prevista]",
+									"value": "2023-04-19 12:31:00",
+									"type": "text"
+								},
+								{
+									"key": "dados[devolucao_prevista]",
+									"value": "2023-05-02 12:31:00",
+									"type": "text"
+								},
+								{
+									"key": "dados[eid]",
+									"value": "16",
+									"type": "text"
 								}
 							]
 						},
 						"url": {
-							"raw": "http://{{URL}}/api/emprestimos/devolver",
+							"raw": "http://{{URL}}/api/emprestimos/previsao/",
 							"protocol": "http",
 							"host": [
 								"{{URL}}"
@@ -1185,7 +1277,83 @@
 							"path": [
 								"api",
 								"emprestimos",
-								"devolver"
+								"previsao",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Desistir Empréstimo",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": []
+						},
+						"url": {
+							"raw": "http://{{URL}}/api/emprestimos/desistir/9",
+							"protocol": "http",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"emprestimos",
+								"desistir",
+								"9"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Retirar Empréstimo",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": []
+						},
+						"url": {
+							"raw": "http://{{URL}}/api/emprestimos/retirar/15",
+							"protocol": "http",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"emprestimos",
+								"retirar",
+								"15"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Devolver Empréstimo",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": []
+						},
+						"url": {
+							"raw": "http://{{URL}}/api/emprestimos/devolver/15",
+							"protocol": "http",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"emprestimos",
+								"devolver",
+								"15"
 							]
 						}
 					},

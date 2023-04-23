@@ -1,123 +1,191 @@
 <?php
+include_once 'helpers/MessageHelper.php';
 include_once 'includes/BaseController.php';
+include_once 'includes/Constantes.php';
 include_once 'models/EmprestimoModel.php';
 
 class EmprestimoController extends BaseController
 {
-    public function __construct() {
+    public function __construct()
+    {
         parent::__construct();
     }
-    public function processarRequisicao($metodo='', $params=[]) {
+    public function processarRequisicao($metodo = '', $params = [])
+    {
         switch ($metodo) {
             case 'GET':
-                switch ($params['acao']) {                    
+                switch ($params['acao']) {
                     case 'meus-emprestimos':
-                        if ( $this->isAuth() ) {
-                            // $this->listarEmprestimos($this->getFieldFromToken('uid'));
+                        if ($this->isAuth()) {
+                            $this->listarEmprestimos($this->getFieldFromToken('uid'), "TOMADOS");
                         } else {
-                            $this->httpResponse(401,'Não autorizado');
+                            $this->httpResponse(401, 'Não autorizado');
+                        }
+                    case 'meus-emprestados':
+                        if ($this->isAuth()) {
+                            $this->listarEmprestimos($this->getFieldFromToken('uid'), "EMPRESTADOS");
+                        } else {
+                            $this->httpResponse(401, 'Não autorizado');
                         }
                         break;
                     case 'buscar':
-                        if ( $this->isAuth() ) {
-                            // $this->buscarEmprestimo($this->getFieldFromToken('uid'), $params['param1'], $params['param2']);
+                        if ($this->isAuth()) {
+                            $this->buscarEmprestimo($this->getFieldFromToken('uid'), $params['param1']);
                         } else {
-                            $this->httpResponse(401,'Não autorizado');
+                            $this->httpResponse(401, 'Não autorizado');
                         }
                         break;
                     default:
-                        $this->httpResponse(501,'Ação Indisponível');
+                        $this->httpResponse(501, 'Ação Indisponível');
                         break;
                 }
                 break;
-                case 'POST':
-                    $dados = $this->pegarArrayPost();
-                    switch ($params['acao']) {
-                        case 'solicitar':
-                            if ( $this->isAuth() ) {
-                                $this->solicitarEmprestimo($this->getFieldFromToken('uid'), $dados);
-                            } else {
-                                $this->httpResponse(401,'Não autorizado');
-                            }
-                            break;
-                            case 'devolver':
-                            if ( $this->isAuth() ) {
-                                $this->devolverEmprestimo($this->getFieldFromToken('uid'), $dados);
-                            } else {
-                                $this->httpResponse(401,'Não autorizado');
-                            }
-                            break;
-                        case 'desistir':
-                            if ( $this->isAuth() ) {
-                                // $this->adicionar($dados);
-                            } else {
-                                $this->httpResponse(401,'Não autorizado');
-                            }
-                            break;
-                        case 'previsao':
-                            if ( $this->isAuth() ) {
-                                // $this->adicionar($dados);
-                            } else {
-                                $this->httpResponse(401,'Não autorizado');
-                            }
-                            break;
-                        case 'retirar':
-                            if ( $this->isAuth() ) {
-                                // $this->adicionar($dados);
-                            } else {
-                                $this->httpResponse(401,'Não autorizado');
-                            }
-                            break;
-
-                        default:
-                            $this->httpResponse(501,'Ação Indisponível');
-                            break;
-                    }
+            case 'POST':
+                $dados = $this->pegarArrayPost();
+                switch ($params['acao']) {
+                    case 'solicitar':
+                        if ($this->isAuth()) {
+                            $this->solicitarEmprestimo($this->getFieldFromToken('uid'), $dados);
+                        } else {
+                            $this->httpResponse(401, 'Não autorizado');
+                        }
+                        break;
+                    case 'previsao':
+                        if ($this->isAuth()) {
+                            $this->previsaoEmprestimo($this->getFieldFromToken('uid'), $dados);
+                        } else {
+                            $this->httpResponse(401, 'Não autorizado');
+                        }
+                        break;
+                    default:
+                        $this->httpResponse(501, 'Ação Indisponível');
+                        break;
+                }
                 break;
-
+            case 'PUT':
+                $dados = $this->pegarArrayPut();
+                switch ($params['acao']) {
+                    case 'desistir':
+                        if ($this->isAuth()) {
+                            $this->desistirEmprestimo($this->getFieldFromToken('uid'), $params['param1']);
+                        } else {
+                            $this->httpResponse(401, 'Não autorizado');
+                        }
+                        break;
+                    case 'retirar':
+                        if ($this->isAuth()) {
+                            $this->retirarEmprestimo($this->getFieldFromToken('uid'), $params['param1']);
+                        } else {
+                            $this->httpResponse(401, 'Não autorizado');
+                        }
+                        break;
+                    case 'devolver':
+                        if ($this->isAuth()) {
+                            $this->devolverEmprestimo($this->getFieldFromToken('uid'), $params['param1']);
+                        } else {
+                            $this->httpResponse(401, 'Não autorizado');
+                        }
+                        break;
+                    default:
+                        $this->httpResponse(501, 'Ação Indisponível');
+                        break;
+                }
+                break;
             default:
-                $this->httpResponse(405,'Method Not Allowed');
+                $this->httpResponse(405, 'Method Not Allowed');
                 break;
-        }      
+        }
+    }
+
+    public function buscarEmprestimo($uid = 0, $eid = 0)
+    {
+        try {
+            $emprestimoModel = new EmprestimoModel();
+            $emprestimo = json_encode($emprestimoModel->buscaEmprestimo($uid, $eid));
+        } catch (Exception $e) {
+            $this->httpResponse(200, MessageHelper::fmtException($e));
+        }
+        $this->montarSaidaOk($emprestimo);
+
+    }
+
+    public function listarEmprestimos($uid = 0, $tipo)
+    {
+        try {
+            $emprestimoModel = new EmprestimoModel();
+            $emprestimo = json_encode($emprestimoModel->listarEmprestimos($uid, $tipo));
+        } catch (Exception $e) {
+            $this->httpResponse(200, MessageHelper::fmtException($e));
+        }
+        $this->montarSaidaOk($emprestimo);
+
     }
 
     public function solicitarEmprestimo($uid = 0, $dados)
-    {       
+    {
         try {
             $emprestimoModel = new EmprestimoModel();
-            if ( $emprestimoModel->solicitarEmprestimo($uid, $dados) <= 0 ) {
-                $this->httpResponse(200,'Livro ou usuário não encontrado');
+            if (!$emprestimoModel->solicitarEmprestimo($uid, $dados)) {
+                $this->httpResponse(200, 'Livro ou usuário não encontrado');
             }
         } catch (Exception $e) {
-            switch ($e->getCode()) {
-                case 23000:
-                    if ( stripos($e->getMessage(),'PRIMARY') ) {
-                        $this->httpResponse(200,'Um empréstimo para este livro já foi solicitado.');
-                    } else {
-                        $this->httpResponse(500,"Erro: " . $e->getCode() . " | " . $e->getMessage());
-                    }
-                    break;
-
-                default:
-                    $this->httpResponse(500,"Erro: " . $e->getCode() . " | " . $e->getMessage());
-                    break;
-            }
-        } finally {
-            $this->httpResponse(200,'Empréstimo solicitado com sucesso.');
+            $this->httpResponse(200, MessageHelper::fmtException($e));
         }
+        $this->httpResponse(200, 'Empréstimo solicitado com sucesso.');
+
     }
 
-    public function devolverEmprestimo($uid = 0, $dados)
-    {       
+    public function devolverEmprestimo($uid = 0, $eid = 0)
+    {
         try {
             $emprestimoModel = new EmprestimoModel();
-            if ( $emprestimoModel->devolverEmprestimo($uid, $dados) <= 0 ) {
-                $this->httpResponse(200,'O empréstimo do livro não foi devolvido. Motivo: Livro / usuário não encontrado ou status do empréstimo inválido.');
+            if (!$emprestimoModel->devolverEmprestimo($uid, $eid)) {
+                $this->httpResponse(200, MessageHelper::fmtMsgConst(Constantes::getConst('ERR_EMPRESTIMO_NAO_DEVOLVIDO')));
             }
         } catch (Exception $e) {
-            $this->httpResponse(500,"Erro: " . $e->getCode() . " | " . $e->getMessage());
-        } finally {
-            $this->httpResponse(200,'Empréstimo devolvido com sucesso.');
+            $this->httpResponse(200, MessageHelper::fmtException($e));
         }
+        $this->httpResponse(200, 'Empréstimo devolvido com sucesso.');
     }
+
+    public function desistirEmprestimo($uid = 0, $eid = 0)
+    {
+        try {
+            $emprestimoModel = new EmprestimoModel();
+            if (!$emprestimoModel->desistirEmprestimo($uid, $eid)) {
+                $this->httpResponse(200, MessageHelper::fmtMsgConst(Constantes::getConst('ERR_EMPRESTIMO_NAO_CANCELADO')));
+            }
+        } catch (Exception $e) {
+            $this->httpResponse(200, MessageHelper::fmtException($e));
+        }
+        $this->httpResponse(200, 'Solicitação de Empréstimo cancelada com sucesso.');
+    }
+
+    public function previsaoEmprestimo($uid = 0, $dados)
+    {
+        try {
+            $emprestimoModel = new EmprestimoModel();
+            if (!$emprestimoModel->previsaoEmprestimo($uid, $dados)) {
+                $this->httpResponse(200, MessageHelper::fmtMsgConst(Constantes::getConst('ERR_EMPRESTIMO_NAO_PREVISAO')));
+            }
+        } catch (Exception $e) {
+            $this->httpResponse(500, MessageHelper::fmtException($e));
+        }
+        $this->httpResponse(200, 'Previsão de Empréstimo registrada com sucesso.');
+    }
+
+    public function retirarEmprestimo($uid = 0, $eid = 0)
+    {
+        try {
+            $emprestimoModel = new EmprestimoModel();
+            if (!$emprestimoModel->retirarEmprestimo($uid, $eid)) {
+                $this->httpResponse(200, MessageHelper::fmtMsgConst(Constantes::getConst('ERR_EMPRESTIMO_NAO_RETIRADO')));
+            }
+        } catch (Exception $e) {
+            $this->httpResponse(500, MessageHelper::fmtException($e));
+        }
+        $this->httpResponse(200, 'Retirada de Empréstimo registrada com sucesso.');
+    }
+
+
 }

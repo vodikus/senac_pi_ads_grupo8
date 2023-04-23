@@ -51,7 +51,7 @@ class BaseController
     protected function pegarArrayPut($chave='dados')
     {
         parse_str(file_get_contents("php://input"), $dados);        
-        return (is_array($dados)) ? $dados[$chave] : [];
+        return (isset($dados) && is_array($dados) && array_key_exists($chave, $dados)) ? $dados[$chave] : [];
     }
 
     protected function montarSaidaOk($dados='')
