@@ -99,7 +99,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://{{URL}}/api/usuarios/buscar/999",
+							"raw": "http://{{URL}}/api/usuarios/buscar/45",
 							"protocol": "http",
 							"host": [
 								"{{URL}}"
@@ -108,7 +108,7 @@
 								"api",
 								"usuarios",
 								"buscar",
-								"999"
+								"45"
 							]
 						}
 					},
@@ -183,18 +183,8 @@
 							"mode": "urlencoded",
 							"urlencoded": [
 								{
-									"key": "dados[nome]",
-									"value": "José da Silva 99",
-									"type": "text"
-								},
-								{
 									"key": "dados[senha]",
-									"value": "dasdasdassss",
-									"type": "text"
-								},
-								{
-									"key": "dados[nascimento]",
-									"value": "2000-01-01",
+									"value": "231321321",
 									"type": "text"
 								},
 								{
@@ -206,7 +196,7 @@
 							]
 						},
 						"url": {
-							"raw": "http://{{URL}}/api/usuarios/atualizar/42",
+							"raw": "http://{{URL}}/api/usuarios/atualizar/45",
 							"protocol": "http",
 							"host": [
 								"{{URL}}"
@@ -215,7 +205,7 @@
 								"api",
 								"usuarios",
 								"atualizar",
-								"42"
+								"45"
 							]
 						}
 					},
@@ -227,7 +217,7 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "http://{{URL}}/api/usuarios/deletar/42",
+							"raw": "http://{{URL}}/api/usuarios/deletar/44",
 							"protocol": "http",
 							"host": [
 								"{{URL}}"
@@ -236,7 +226,7 @@
 								"api",
 								"usuarios",
 								"deletar",
-								"42"
+								"44"
 							]
 						}
 					},
@@ -1162,7 +1152,7 @@
 					"response": []
 				},
 				{
-					"name": "Devolver Empréstimo",
+					"name": "Previsão de Empréstimo",
 					"request": {
 						"method": "POST",
 						"header": [],
@@ -1178,11 +1168,26 @@
 									"key": "dados[lid]",
 									"value": "6",
 									"type": "text"
+								},
+								{
+									"key": "dados[retirada_prevista]",
+									"value": "2023-04-19 12:31:00",
+									"type": "text"
+								},
+								{
+									"key": "dados[devolucao_prevista]",
+									"value": "2023-05-02 12:31:00",
+									"type": "text"
+								},
+								{
+									"key": "dados[eid]",
+									"value": "16",
+									"type": "text"
 								}
 							]
 						},
 						"url": {
-							"raw": "http://{{URL}}/api/emprestimos/devolver",
+							"raw": "http://{{URL}}/api/emprestimos/previsao/",
 							"protocol": "http",
 							"host": [
 								"{{URL}}"
@@ -1190,7 +1195,8 @@
 							"path": [
 								"api",
 								"emprestimos",
-								"devolver"
+								"previsao",
+								""
 							]
 						}
 					},
@@ -1199,25 +1205,14 @@
 				{
 					"name": "Desistir Empréstimo",
 					"request": {
-						"method": "POST",
+						"method": "PUT",
 						"header": [],
 						"body": {
 							"mode": "urlencoded",
-							"urlencoded": [
-								{
-									"key": "dados[uid_dono]",
-									"value": "39",
-									"type": "text"
-								},
-								{
-									"key": "dados[lid]",
-									"value": "6",
-									"type": "text"
-								}
-							]
+							"urlencoded": []
 						},
 						"url": {
-							"raw": "http://{{URL}}/api/emprestimos/desistir",
+							"raw": "http://{{URL}}/api/emprestimos/desistir/9",
 							"protocol": "http",
 							"host": [
 								"{{URL}}"
@@ -1225,7 +1220,58 @@
 							"path": [
 								"api",
 								"emprestimos",
-								"desistir"
+								"desistir",
+								"9"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Retirar Empréstimo",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": []
+						},
+						"url": {
+							"raw": "http://{{URL}}/api/emprestimos/retirar/15",
+							"protocol": "http",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"emprestimos",
+								"retirar",
+								"15"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Devolver Empréstimo",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": []
+						},
+						"url": {
+							"raw": "http://{{URL}}/api/emprestimos/devolver/15",
+							"protocol": "http",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"emprestimos",
+								"devolver",
+								"15"
 							]
 						}
 					},
