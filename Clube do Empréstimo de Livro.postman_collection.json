@@ -302,7 +302,7 @@
 							"urlencoded": [
 								{
 									"key": "dados[lid]",
-									"value": "3",
+									"value": "8",
 									"type": "text"
 								}
 							]
@@ -347,6 +347,41 @@
 								"api",
 								"usuarios",
 								"desvincularLivro"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Atualizar status do Livro do Usuário",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "dados[lid]",
+									"value": "8",
+									"type": "text"
+								},
+								{
+									"key": "dados[status]",
+									"value": "NS",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://{{URL}}/api/usuarios/atualizarStatusLivro",
+							"protocol": "http",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"usuarios",
+								"atualizarStatusLivro"
 							]
 						}
 					},
@@ -1354,6 +1389,51 @@
 								"emprestimos",
 								"devolver",
 								"15"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Chamados",
+			"item": [
+				{
+					"name": "Adicionar Chamado",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "dados[uid_dono]",
+									"value": "39",
+									"type": "text"
+								},
+								{
+									"key": "dados[lid]",
+									"value": "6",
+									"type": "text"
+								},
+								{
+									"key": "dados[qtd_dias]",
+									"value": "15",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://{{URL}}/api/emprestimos/solicitar",
+							"protocol": "http",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"emprestimos",
+								"solicitar"
 							]
 						}
 					},
