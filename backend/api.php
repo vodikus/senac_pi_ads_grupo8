@@ -5,6 +5,7 @@ define( 'INCLUDE_DIR', dirname( __FILE__ ) . '/controllers/' );
 $rules = array( 
     'AuthController'        => "auth/?(?'acao'[\w\-]*)\/?(?'param1'[\w\s]*)",
     'AutorController'       => "autores/?(?'acao'[\w\-]*)\/?(?'param1'[\w\s]*)",
+    'ChamadoController'     => "chamados/?(?'acao'[\w\-]*)\/?(?'param1'[\w\s]*)",
     'EmprestimoController'  => "emprestimos/?(?'acao'[\w\-]*)\/?(?'param1'[\w\s]*)\/?(?'param2'[\w\s]*)",
     'EnderecoController'    => "enderecos/?(?'acao'[\w\-]*)\/?(?'param1'[\w\s]*)",
     'AssuntoController'     => "assuntos/?(?'acao'[\w\-]*)\/?(?'param1'[\w\s]*)",

@@ -21,6 +21,12 @@ class UsuarioModel extends BaseModel
         'role' => ['protected' => 'all', 'type' => 'varchar', 'visible' => true]
     );
 
+    public function validaUsuario($uid) {
+        if ( $this->query("SELECT 1 FROM usuarios WHERE uid=:uid",  ['uid' => $uid ]) <= 0  ) {
+            throw New Exception( Constantes::getMsg('ERR_USUARIO_NAO_ENCONTRADO'), Constantes::getCode('ERR_USUARIO_NAO_ENCONTRADO') );
+        }
+        return true;
+    }
     public function buscarTodosUsuarios()
     {
         $campos = SQLHelper::montaCamposSelect($this->campos,'u');

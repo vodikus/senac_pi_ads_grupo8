@@ -60,13 +60,11 @@ class EmprestimoModel extends BaseModel
                         'lid' => $dados['lid']
                     ]  
                 ) <= 0  ) {
-                    error_log("vsl not ahoy");
                     return false;
             } 
         } catch (Exception $e) {
             throw New Exception( $e->getMessage(), $e->getCode() );
         }
-        error_log("vsl ahoy");
         return true;
     }
 
