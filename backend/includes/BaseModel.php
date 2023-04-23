@@ -28,8 +28,7 @@ class BaseModel
         try {
             $sth = $this->db->prepare($query, [PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY]);
             $sth->execute($parametros);
-            error_log("SQL: $query");
-            error_log("Parametros: ".var_export($parametros, true));
+            $this->errorLog($query,$parametros);
             return $sth->fetchAll();
         } catch (Exception $e) {
             throw New Exception( $e->getMessage() );
@@ -38,8 +37,7 @@ class BaseModel
 
     function query($query = "", $params = []) {
         try {
-            error_log("SQL: $query");
-            error_log("Parametros: ".var_export($params, true));            
+            $this->errorLog($query,$params);
             $sth = $this->db->prepare($query);
             $parametros = $this->sanitizeParams($query,$params);
             error_log("Clean: ".var_export($parametros, true));                        
@@ -62,7 +60,7 @@ class BaseModel
         $arrTokens = array_diff_key($tokens[0], $params);
         foreach ( $arrTokens as $token ) {
             $chave = str_replace(':','',$token);
-            error_log("Chave: $chave");
+            // error_log("Chave: $chave");
             $arrParams[$chave] = $params[$chave];
         }
         return $arrParams;
@@ -70,6 +68,11 @@ class BaseModel
 
     function pegarConexao() {
         return $this->db;
+    }
+
+    function errorLog($query, $param) {
+        error_log("SQL: $query");
+        error_log("Parametros: ".var_export($param, true));
     }
 
 }
