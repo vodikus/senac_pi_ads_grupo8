@@ -10,7 +10,7 @@
 
     <label class="mb-0" for="password">Senha</label>
     <input class="caixaDeTexto shadow-sm" type="password">
-
+<!------------------------------------------------------------------------------ Check box "Manter conectado" ------------------------------------------------------------------>
     <div class="form-check mt-3 p-0">
         <label class="form-check-label d-inline-flex align-items-center justify-content-center align-contents-end" for="flexCheckDefault">
             <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" name="manterConectado">                                    
@@ -29,7 +29,7 @@
 </div>
 <!-------------------------------------------------------------------- Parte dos botões para login com vinculo de conta -------------------------------------------------------->
 
-<div class="botoesVinculo d-inline-flex justify-content-center">
+<div class="botoesVinculo w-100 d-inline-flex justify-content-center">
     <button class="botaoGoogle p-0 d-inline-flex align-items-start">
         <a href="" target="_blank" class="me-1 ms-2 link-grayish"><img src="../assets/iconeGoogle.png" alt="Icone Google" width="40" height="30">
             <i class="fab fa-google-f"></i>
@@ -50,8 +50,8 @@
     </button>
 </div>
 <!----------------------------------------------------------------- Mensagem caso não tenha cadastro e link para cadastro ------------------------------------------------------>
-<div class="mensagemCadastro d-inline-flex justify-content-center ms-1 mt-4">
+<div class="mensagemCadastro w-100 d-inline-flex justify-content-center mt-4">
     <p>Não tem uma conta?</p>
-    <a class="linkCadastro text-success ms-2" href="">Cadastre-se</a>
+    <a routerLink="/cadastro/dadosacesso" class="linkCadastro text-success ms-2">Cadastre-se</a>
 </div>
 <!------------------------------------------------------------------------------------ Fim do código --------------------------------------------------------------------------->
