@@ -5,37 +5,31 @@ require_once "helpers/TimeDateHelper.php";
 
 class UsuarioModel extends BaseModel
 {
-    public $campos = array (
+    private $campos = array (
         'uid' => ['protected' => 'all', 'type' => 'int', 'visible' => true],
-        'email' => ['protected' => 'update', 'type' => 'varchar', 'visible' => true, 'required' => true],
-        'nome' => ['protected' => 'none', 'type' => 'varchar', 'visible' => true, 'required' => true],
-        'senha' => ['protected' => 'none', 'type' => 'varchar', 'transform' => 'sha256', 'visible' => false, 'required' => true],
-        'cpf' => ['protected' => 'update', 'type' => 'varchar', 'visible' => true, 'required' => true],
-        'nascimento' => ['protected' => 'none', 'type' => 'date', 'visible' => true, 'required' => true],
-        'sexo' => ['protected' => 'none', 'type'=>'varchar', 'visible' => true, 'required' => true],
+        'email' => ['protected' => 'update', 'type' => 'varchar', 'visible' => true],
+        'nome' => ['protected' => 'none', 'type' => 'varchar', 'visible' => true],
+        'senha' => ['protected' => 'none', 'type' => 'varchar', 'transform' => 'sha256', 'visible' => false],
+        'cpf' => ['protected' => 'update', 'type' => 'varchar', 'visible' => true],
+        'nascimento' => ['protected' => 'none', 'type' => 'date', 'visible' => true],
+        'sexo' => ['protected' => 'none', 'type'=>'varchar', 'visible' => true],
         'dh_atualizacao' => ['protected' => 'all', 'type' => 'timestamp', 'transform' => 'current_timestamp', 'update' => 'always', 'visible' => true],
         'dh_criacao' => ['protected' => 'all', 'type' => 'timestamp', 'update' => 'never', 'visible' => true],
         'avatar' => ['protected' => 'none', 'type' => 'varchar', 'visible' => true],
-        'apelido' => ['protected' => 'none', 'type' => 'varchar', 'visible' => true, 'required' => true],
+        'apelido' => ['protected' => 'none', 'type' => 'varchar', 'visible' => true],
         'status' => ['protected' => 'none', 'type' => 'varchar', 'visible' => true],
         'role' => ['protected' => 'all', 'type' => 'varchar', 'visible' => true]
     );
 
-    public function validaUsuario($uid) {
-        if ( $this->query("SELECT 1 FROM usuarios WHERE uid=:uid",  ['uid' => $uid ]) <= 0  ) {
-            throw New Exception( Constantes::getMsg('ERR_USUARIO_NAO_ENCONTRADO'), Constantes::getCode('ERR_USUARIO_NAO_ENCONTRADO') );
-        }
-        return true;
-    }
     public function buscarTodosUsuarios()
     {
-        $campos = SQLHelper::montaCamposSelect($this->campos,'u');
-        return $this->select("SELECT $campos FROM usuarios u");
+        $campos = SQLHelper::montaCamposSelect($this->campos);
+        return $this->select("SELECT $campos FROM usuarios");
     }
     public function buscarUsuario($id = 0)
     {
-        $campos = SQLHelper::montaCamposSelect($this->campos,'u');
-        return $this->select("SELECT $campos FROM usuarios u WHERE uid=:uid", ['uid'=>$id]);
+        $campos = SQLHelper::montaCamposSelect($this->campos);
+        return $this->select("SELECT $campos FROM usuarios WHERE uid=:uid", ['uid'=>$id]);
     }
     public function deletarUsuario($id = 0)
     {
@@ -53,16 +47,7 @@ class UsuarioModel extends BaseModel
     public function atualizarUsuario($id,$entrada)
     {
         try {
-            $campos = array_filter(SQLHelper::sobrescrevePropriedades( $this->campos, [
-                'email' => ['required' => false],
-                'nome' => ['required' => false],
-                'cpf' => ['required' => false],
-                'nascimento' => ['required' => false],
-                'sexo' => ['required' => false],
-                'apelido' => ['required' => false],
-            ]), ['SQLHelper','limpaCamposProtegidos']);
-
-            $dados = SQLHelper::validaCampos($campos, $entrada, 'UPDATE');
+            $dados = SQLHelper::validaCampos($this->campos, $entrada, 'UPDATE');
             $campos = SQLHelper::montaCamposUpdate($this->campos, $dados);
             return $this->query("UPDATE usuarios SET $campos WHERE uid=:uid", array_merge(['uid'=>$id],$dados));
         } catch (Exception $e) {

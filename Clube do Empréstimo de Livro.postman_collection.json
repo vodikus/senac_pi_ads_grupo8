@@ -19,7 +19,7 @@
 							"urlencoded": [
 								{
 									"key": "username",
-									"value": "teste@teste.com.br",
+									"value": "teste@teste.com.br0",
 									"type": "text"
 								},
 								{
@@ -30,10 +30,10 @@
 							]
 						},
 						"url": {
-							"raw": "http://{{URL}}/api/auth/getToken",
+							"raw": "http://clube-backend/api/auth/getToken",
 							"protocol": "http",
 							"host": [
-								"{{URL}}"
+								"clube-backend"
 							],
 							"path": [
 								"api",
@@ -54,10 +54,10 @@
 							"urlencoded": []
 						},
 						"url": {
-							"raw": "http://{{URL}}/api/auth/authToken",
+							"raw": "http://clube-backend/api/auth/authToken",
 							"protocol": "http",
 							"host": [
-								"{{URL}}"
+								"clube-backend"
 							],
 							"path": [
 								"api",
@@ -79,10 +79,10 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://{{URL}}/api/usuarios/listar",
+							"raw": "http://clube-backend/api/usuarios/listar",
 							"protocol": "http",
 							"host": [
-								"{{URL}}"
+								"clube-backend"
 							],
 							"path": [
 								"api",
@@ -99,16 +99,16 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://{{URL}}/api/usuarios/buscar/45",
+							"raw": "http://clube-backend/api/usuarios/buscar/41",
 							"protocol": "http",
 							"host": [
-								"{{URL}}"
+								"clube-backend"
 							],
 							"path": [
 								"api",
 								"usuarios",
 								"buscar",
-								"45"
+								"41"
 							]
 						}
 					},
@@ -124,12 +124,12 @@
 							"urlencoded": [
 								{
 									"key": "dados[email]",
-									"value": "teste4@teste.com.br",
+									"value": "teste@teste.com.br1",
 									"type": "text"
 								},
 								{
 									"key": "dados[nome]",
-									"value": "Charlene da Silva Sauro",
+									"value": "José da Silva",
 									"type": "text"
 								},
 								{
@@ -139,7 +139,7 @@
 								},
 								{
 									"key": "dados[cpf]",
-									"value": "12345678903",
+									"value": "1234562890111",
 									"type": "text"
 								},
 								{
@@ -149,26 +149,21 @@
 								},
 								{
 									"key": "dados[sexo]",
-									"value": "F",
-									"type": "text"
-								},
-								{
-									"key": "dados[apelido]",
-									"value": "charlenessauro",
+									"value": "M",
 									"type": "text"
 								}
 							]
 						},
 						"url": {
-							"raw": "http://{{URL}}/api/usuarios/adicionar",
+							"raw": "http://clube-backend/api/usuarios/criar",
 							"protocol": "http",
 							"host": [
-								"{{URL}}"
+								"clube-backend"
 							],
 							"path": [
 								"api",
 								"usuarios",
-								"adicionar"
+								"criar"
 							]
 						}
 					},
@@ -183,8 +178,18 @@
 							"mode": "urlencoded",
 							"urlencoded": [
 								{
+									"key": "dados[nome]",
+									"value": "José da Silva 99",
+									"type": "text"
+								},
+								{
 									"key": "dados[senha]",
-									"value": "231321321",
+									"value": "dasdasdassss",
+									"type": "text"
+								},
+								{
+									"key": "dados[nascimento]",
+									"value": "2000-01-01",
 									"type": "text"
 								},
 								{
@@ -196,16 +201,16 @@
 							]
 						},
 						"url": {
-							"raw": "http://{{URL}}/api/usuarios/atualizar/45",
+							"raw": "http://clube-backend/api/usuarios/atualizar/42",
 							"protocol": "http",
 							"host": [
-								"{{URL}}"
+								"clube-backend"
 							],
 							"path": [
 								"api",
 								"usuarios",
 								"atualizar",
-								"45"
+								"42"
 							]
 						}
 					},
@@ -217,171 +222,16 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "http://{{URL}}/api/usuarios/deletar/44",
+							"raw": "http://clube-backend/api/usuarios/deletar/42",
 							"protocol": "http",
 							"host": [
-								"{{URL}}"
+								"clube-backend"
 							],
 							"path": [
 								"api",
 								"usuarios",
 								"deletar",
-								"44"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Vincular Assunto ao Usuário",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "urlencoded",
-							"urlencoded": [
-								{
-									"key": "dados[iid]",
-									"value": "3",
-									"type": "text"
-								}
-							]
-						},
-						"url": {
-							"raw": "http://{{URL}}/api/usuarios/vincularAssunto",
-							"protocol": "http",
-							"host": [
-								"{{URL}}"
-							],
-							"path": [
-								"api",
-								"usuarios",
-								"vincularAssunto"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Desvincular Assunto do Usuário",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "urlencoded",
-							"urlencoded": [
-								{
-									"key": "dados[iid]",
-									"value": "3",
-									"type": "text"
-								}
-							]
-						},
-						"url": {
-							"raw": "http://{{URL}}/api/usuarios/desvincularAssunto",
-							"protocol": "http",
-							"host": [
-								"{{URL}}"
-							],
-							"path": [
-								"api",
-								"usuarios",
-								"desvincularAssunto"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Vincular Livro ao Usuário",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "urlencoded",
-							"urlencoded": [
-								{
-									"key": "dados[lid]",
-									"value": "8",
-									"type": "text"
-								}
-							]
-						},
-						"url": {
-							"raw": "http://{{URL}}/api/usuarios/vincularLivro",
-							"protocol": "http",
-							"host": [
-								"{{URL}}"
-							],
-							"path": [
-								"api",
-								"usuarios",
-								"vincularLivro"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Desvincular Livro do Usuário",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "urlencoded",
-							"urlencoded": [
-								{
-									"key": "dados[lid]",
-									"value": "6",
-									"type": "text"
-								}
-							]
-						},
-						"url": {
-							"raw": "http://{{URL}}/api/usuarios/desvincularLivro",
-							"protocol": "http",
-							"host": [
-								"{{URL}}"
-							],
-							"path": [
-								"api",
-								"usuarios",
-								"desvincularLivro"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Atualizar status do Livro do Usuário",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "urlencoded",
-							"urlencoded": [
-								{
-									"key": "dados[lid]",
-									"value": "8",
-									"type": "text"
-								},
-								{
-									"key": "dados[status]",
-									"value": "NS",
-									"type": "text"
-								}
-							]
-						},
-						"url": {
-							"raw": "http://{{URL}}/api/usuarios/atualizarStatusLivro",
-							"protocol": "http",
-							"host": [
-								"{{URL}}"
-							],
-							"path": [
-								"api",
-								"usuarios",
-								"atualizarStatusLivro"
+								"42"
 							]
 						}
 					},
@@ -398,10 +248,10 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://{{URL}}/api/enderecos/listar",
+							"raw": "http://clube-backend/api/enderecos/listar",
 							"protocol": "http",
 							"host": [
-								"{{URL}}"
+								"clube-backend"
 							],
 							"path": [
 								"api",
@@ -458,10 +308,10 @@
 							]
 						},
 						"url": {
-							"raw": "http://{{URL}}/api/enderecos/adicionar",
+							"raw": "http://clube-backend/api/enderecos/adicionar",
 							"protocol": "http",
 							"host": [
-								"{{URL}}"
+								"clube-backend"
 							],
 							"path": [
 								"api",
@@ -478,10 +328,10 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "http://{{URL}}/api/enderecos/deletar/1",
+							"raw": "http://clube-backend/api/enderecos/deletar/1",
 							"protocol": "http",
 							"host": [
-								"{{URL}}"
+								"clube-backend"
 							],
 							"path": [
 								"api",
@@ -514,962 +364,16 @@
 							]
 						},
 						"url": {
-							"raw": "http://{{URL}}/api/enderecos/atualizar/6",
+							"raw": "http://clube-backend/api/enderecos/atualizar/6",
 							"protocol": "http",
 							"host": [
-								"{{URL}}"
+								"clube-backend"
 							],
 							"path": [
 								"api",
 								"enderecos",
 								"atualizar",
 								"6"
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "Autores",
-			"item": [
-				{
-					"name": "Listar Autores",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://{{URL}}/api/autores/listar",
-							"protocol": "http",
-							"host": [
-								"{{URL}}"
-							],
-							"path": [
-								"api",
-								"autores",
-								"listar"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Adicionar Autor",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "urlencoded",
-							"urlencoded": [
-								{
-									"key": "dados[nome_autor]",
-									"value": "J. R. R. Tolkien",
-									"type": "text"
-								}
-							]
-						},
-						"url": {
-							"raw": "http://{{URL}}/api/autores/adicionar",
-							"protocol": "http",
-							"host": [
-								"{{URL}}"
-							],
-							"path": [
-								"api",
-								"autores",
-								"adicionar"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Deletar Autor",
-					"request": {
-						"method": "DELETE",
-						"header": [],
-						"url": {
-							"raw": "http://{{URL}}/api/autores/deletar/1",
-							"protocol": "http",
-							"host": [
-								"{{URL}}"
-							],
-							"path": [
-								"api",
-								"autores",
-								"deletar",
-								"1"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Atualizar Autor",
-					"request": {
-						"method": "PUT",
-						"header": [],
-						"body": {
-							"mode": "urlencoded",
-							"urlencoded": [
-								{
-									"key": "dados[nome_autor]",
-									"value": "José da Silva 1",
-									"type": "text"
-								}
-							]
-						},
-						"url": {
-							"raw": "http://{{URL}}/api/autores/atualizar/3",
-							"protocol": "http",
-							"host": [
-								"{{URL}}"
-							],
-							"path": [
-								"api",
-								"autores",
-								"atualizar",
-								"3"
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "Assuntos",
-			"item": [
-				{
-					"name": "Listar Assuntos",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://{{URL}}/api/assuntos/listar",
-							"protocol": "http",
-							"host": [
-								"{{URL}}"
-							],
-							"path": [
-								"api",
-								"assuntos",
-								"listar"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Buscar assunto",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://{{URL}}/api/assuntos/buscar/26",
-							"protocol": "http",
-							"host": [
-								"{{URL}}"
-							],
-							"path": [
-								"api",
-								"assuntos",
-								"buscar",
-								"26"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Adicionar Assunto",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "urlencoded",
-							"urlencoded": [
-								{
-									"key": "dados[nome_assunto]",
-									"value": "Aventura",
-									"type": "text"
-								}
-							]
-						},
-						"url": {
-							"raw": "http://{{URL}}/api/assuntos/adicionar",
-							"protocol": "http",
-							"host": [
-								"{{URL}}"
-							],
-							"path": [
-								"api",
-								"assuntos",
-								"adicionar"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Deletar Assunto",
-					"request": {
-						"method": "DELETE",
-						"header": [],
-						"url": {
-							"raw": "http://{{URL}}/api/assuntos/deletar/26",
-							"protocol": "http",
-							"host": [
-								"{{URL}}"
-							],
-							"path": [
-								"api",
-								"assuntos",
-								"deletar",
-								"26"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Atualizar Assunto",
-					"request": {
-						"method": "PUT",
-						"header": [],
-						"body": {
-							"mode": "urlencoded",
-							"urlencoded": [
-								{
-									"key": "dados[nome_assunto]",
-									"value": "Terror",
-									"type": "text"
-								}
-							]
-						},
-						"url": {
-							"raw": "http://{{URL}}/api/assuntos/atualizar/3",
-							"protocol": "http",
-							"host": [
-								"{{URL}}"
-							],
-							"path": [
-								"api",
-								"assuntos",
-								"atualizar",
-								"3"
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "Livros",
-			"item": [
-				{
-					"name": "Listar Livros",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://{{URL}}/api/livros/listar",
-							"protocol": "http",
-							"host": [
-								"{{URL}}"
-							],
-							"path": [
-								"api",
-								"livros",
-								"listar"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Buscar Livro",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://{{URL}}/api/livros/buscar/6",
-							"protocol": "http",
-							"host": [
-								"{{URL}}"
-							],
-							"path": [
-								"api",
-								"livros",
-								"buscar",
-								"6"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Adicionar Livro",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "urlencoded",
-							"urlencoded": [
-								{
-									"key": "dados[titulo]",
-									"value": "O Senhor dos Anéis - O Retorno do Rei",
-									"type": "text"
-								},
-								{
-									"key": "dados[descricao]",
-									"value": "Gandalf e Pippin entram na cidade de Minas Tirith, onde se encontram com Denethor, regente do reino de Gondor. Gandalf o avisa da guerra próxima, e o regente pede a ajuda de Rohan, mas revela seu rancor por Aragorn, que, sendo descendente direto do último rei, é o herdeiro legítimo do trono de Gondor. Merry, entretanto, permanece com os rohirrim, para servir ao rei Théoden, que reúne todos os guerreiros aptos de seu reino e parte para a guerra em Minas Tirith. Junto com ele vão Aragorn, Legolas e Gimli.",
-									"type": "text"
-								},
-								{
-									"key": "dados[capa]",
-									"value": "",
-									"type": "text"
-								},
-								{
-									"key": "dados[isbn]",
-									"value": "3",
-									"type": "text"
-								}
-							]
-						},
-						"url": {
-							"raw": "http://{{URL}}/api/livros/adicionar",
-							"protocol": "http",
-							"host": [
-								"{{URL}}"
-							],
-							"path": [
-								"api",
-								"livros",
-								"adicionar"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Avaliar Livro",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "urlencoded",
-							"urlencoded": [
-								{
-									"key": "dados[lid]",
-									"value": "6",
-									"type": "text"
-								},
-								{
-									"key": "dados[nota]",
-									"value": "3",
-									"type": "text"
-								}
-							]
-						},
-						"url": {
-							"raw": "http://{{URL}}/api/livros/avaliar",
-							"protocol": "http",
-							"host": [
-								"{{URL}}"
-							],
-							"path": [
-								"api",
-								"livros",
-								"avaliar"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Vincular Autor ao Livro",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "urlencoded",
-							"urlencoded": [
-								{
-									"key": "dados[lid]",
-									"value": "3",
-									"type": "text"
-								},
-								{
-									"key": "dados[aid]",
-									"value": "1",
-									"type": "text"
-								}
-							]
-						},
-						"url": {
-							"raw": "http://{{URL}}/api/livros/vincularAutor",
-							"protocol": "http",
-							"host": [
-								"{{URL}}"
-							],
-							"path": [
-								"api",
-								"livros",
-								"vincularAutor"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Desvincular Autor de Livro",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "urlencoded",
-							"urlencoded": [
-								{
-									"key": "dados[lid]",
-									"value": "4",
-									"type": "text"
-								},
-								{
-									"key": "dados[aid]",
-									"value": "4",
-									"type": "text"
-								}
-							]
-						},
-						"url": {
-							"raw": "http://{{URL}}/api/livros/desvincularAutor",
-							"protocol": "http",
-							"host": [
-								"{{URL}}"
-							],
-							"path": [
-								"api",
-								"livros",
-								"desvincularAutor"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Vincular Assunto ao Livro",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "urlencoded",
-							"urlencoded": [
-								{
-									"key": "dados[lid]",
-									"value": "3",
-									"type": "text"
-								},
-								{
-									"key": "dados[iid]",
-									"value": "3",
-									"type": "text"
-								}
-							]
-						},
-						"url": {
-							"raw": "http://{{URL}}/api/livros/vincularAssunto",
-							"protocol": "http",
-							"host": [
-								"{{URL}}"
-							],
-							"path": [
-								"api",
-								"livros",
-								"vincularAssunto"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Desvincular Assunto do Livro",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "urlencoded",
-							"urlencoded": [
-								{
-									"key": "dados[lid]",
-									"value": "6",
-									"type": "text"
-								},
-								{
-									"key": "dados[iid]",
-									"value": "3",
-									"type": "text"
-								}
-							]
-						},
-						"url": {
-							"raw": "http://{{URL}}/api/livros/desvincularAssunto",
-							"protocol": "http",
-							"host": [
-								"{{URL}}"
-							],
-							"path": [
-								"api",
-								"livros",
-								"desvincularAssunto"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Adicionar livro favorito",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "urlencoded",
-							"urlencoded": [
-								{
-									"key": "dados[lid]",
-									"value": "6",
-									"type": "text"
-								},
-								{
-									"key": "dados[uid_dono]",
-									"value": "41",
-									"type": "text"
-								}
-							]
-						},
-						"url": {
-							"raw": "http://{{URL}}/api/livros/adicionarFavorito",
-							"protocol": "http",
-							"host": [
-								"{{URL}}"
-							],
-							"path": [
-								"api",
-								"livros",
-								"adicionarFavorito"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Remover livro favorito",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "urlencoded",
-							"urlencoded": [
-								{
-									"key": "dados[lid]",
-									"value": "6",
-									"type": "text"
-								},
-								{
-									"key": "dados[uid_dono]",
-									"value": "41",
-									"type": "text"
-								}
-							]
-						},
-						"url": {
-							"raw": "http://{{URL}}/api/livros/removerFavorito",
-							"protocol": "http",
-							"host": [
-								"{{URL}}"
-							],
-							"path": [
-								"api",
-								"livros",
-								"removerFavorito"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Deletar Livro",
-					"request": {
-						"method": "DELETE",
-						"header": [],
-						"url": {
-							"raw": "http://{{URL}}/api/livros/deletar/5",
-							"protocol": "http",
-							"host": [
-								"{{URL}}"
-							],
-							"path": [
-								"api",
-								"livros",
-								"deletar",
-								"5"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Atualizar Livro",
-					"request": {
-						"method": "PUT",
-						"header": [],
-						"body": {
-							"mode": "urlencoded",
-							"urlencoded": [
-								{
-									"key": "dados[titulo]",
-									"value": "O Senhor dos Anéis - A Sociedade do Anel",
-									"type": "text"
-								},
-								{
-									"key": "dados[descricao]",
-									"value": "Frodo Bolseiro é um hobbit do Condado, que recebe de seu tio Bilbo um anel de rara beleza. Esse anel tem uma longa história: foi roubado de uma criatura chamada Gollum (como relatado no livro O Hobbit), e desde então ele tem sido guardado por Bilbo.",
-									"type": "text"
-								},
-								{
-									"key": "dados[isbn]",
-									"value": "1",
-									"type": "text"
-								}
-							]
-						},
-						"url": {
-							"raw": "http://{{URL}}/api/livros/atualizar/1",
-							"protocol": "http",
-							"host": [
-								"{{URL}}"
-							],
-							"path": [
-								"api",
-								"livros",
-								"atualizar",
-								"1"
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "Empréstimos",
-			"item": [
-				{
-					"name": "Buscar Empréstimo",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"method": "GET",
-						"header": [],
-						"body": {
-							"mode": "urlencoded",
-							"urlencoded": []
-						},
-						"url": {
-							"raw": "http://{{URL}}/api/emprestimos/buscar/15",
-							"protocol": "http",
-							"host": [
-								"{{URL}}"
-							],
-							"path": [
-								"api",
-								"emprestimos",
-								"buscar",
-								"15"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Listar Meus Empréstimos",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"method": "GET",
-						"header": [],
-						"body": {
-							"mode": "urlencoded",
-							"urlencoded": []
-						},
-						"url": {
-							"raw": "http://{{URL}}/api/emprestimos/meus-emprestimos",
-							"protocol": "http",
-							"host": [
-								"{{URL}}"
-							],
-							"path": [
-								"api",
-								"emprestimos",
-								"meus-emprestimos"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Listar Meus Empréstados",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"method": "GET",
-						"header": [],
-						"body": {
-							"mode": "urlencoded",
-							"urlencoded": []
-						},
-						"url": {
-							"raw": "http://{{URL}}/api/emprestimos/meus-emprestados",
-							"protocol": "http",
-							"host": [
-								"{{URL}}"
-							],
-							"path": [
-								"api",
-								"emprestimos",
-								"meus-emprestados"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Solicitar Empréstimo",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "urlencoded",
-							"urlencoded": [
-								{
-									"key": "dados[uid_dono]",
-									"value": "39",
-									"type": "text"
-								},
-								{
-									"key": "dados[lid]",
-									"value": "6",
-									"type": "text"
-								},
-								{
-									"key": "dados[qtd_dias]",
-									"value": "15",
-									"type": "text"
-								}
-							]
-						},
-						"url": {
-							"raw": "http://{{URL}}/api/emprestimos/solicitar",
-							"protocol": "http",
-							"host": [
-								"{{URL}}"
-							],
-							"path": [
-								"api",
-								"emprestimos",
-								"solicitar"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Previsão de Empréstimo",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "urlencoded",
-							"urlencoded": [
-								{
-									"key": "dados[uid_dono]",
-									"value": "39",
-									"type": "text"
-								},
-								{
-									"key": "dados[lid]",
-									"value": "6",
-									"type": "text"
-								},
-								{
-									"key": "dados[retirada_prevista]",
-									"value": "2023-04-19 12:31:00",
-									"type": "text"
-								},
-								{
-									"key": "dados[devolucao_prevista]",
-									"value": "2023-05-02 12:31:00",
-									"type": "text"
-								},
-								{
-									"key": "dados[eid]",
-									"value": "16",
-									"type": "text"
-								}
-							]
-						},
-						"url": {
-							"raw": "http://{{URL}}/api/emprestimos/previsao/",
-							"protocol": "http",
-							"host": [
-								"{{URL}}"
-							],
-							"path": [
-								"api",
-								"emprestimos",
-								"previsao",
-								""
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Desistir Empréstimo",
-					"request": {
-						"method": "PUT",
-						"header": [],
-						"body": {
-							"mode": "urlencoded",
-							"urlencoded": []
-						},
-						"url": {
-							"raw": "http://{{URL}}/api/emprestimos/desistir/9",
-							"protocol": "http",
-							"host": [
-								"{{URL}}"
-							],
-							"path": [
-								"api",
-								"emprestimos",
-								"desistir",
-								"9"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Retirar Empréstimo",
-					"request": {
-						"method": "PUT",
-						"header": [],
-						"body": {
-							"mode": "urlencoded",
-							"urlencoded": []
-						},
-						"url": {
-							"raw": "http://{{URL}}/api/emprestimos/retirar/15",
-							"protocol": "http",
-							"host": [
-								"{{URL}}"
-							],
-							"path": [
-								"api",
-								"emprestimos",
-								"retirar",
-								"15"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Devolver Empréstimo",
-					"request": {
-						"method": "PUT",
-						"header": [],
-						"body": {
-							"mode": "urlencoded",
-							"urlencoded": []
-						},
-						"url": {
-							"raw": "http://{{URL}}/api/emprestimos/devolver/15",
-							"protocol": "http",
-							"host": [
-								"{{URL}}"
-							],
-							"path": [
-								"api",
-								"emprestimos",
-								"devolver",
-								"15"
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "Chamados",
-			"item": [
-				{
-					"name": "Adicionar Chamado",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "urlencoded",
-							"urlencoded": [
-								{
-									"key": "dados[uid_destino]",
-									"value": "39",
-									"type": "text"
-								},
-								{
-									"key": "dados[lid]",
-									"value": "6",
-									"type": "text"
-								},
-								{
-									"key": "dados[tipo]",
-									"value": "RECLAMACAO",
-									"type": "text"
-								},
-								{
-									"key": "dados[assunto]",
-									"value": "O baguio é zicado",
-									"type": "text"
-								},
-								{
-									"key": "dados[motivo]",
-									"value": "Picareta",
-									"type": "text"
-								},
-								{
-									"key": "dados[texto]",
-									"value": "Lorem ipsum...",
-									"type": "text"
-								}
-							]
-						},
-						"url": {
-							"raw": "http://{{URL}}/api/chamados/adicionar",
-							"protocol": "http",
-							"host": [
-								"{{URL}}"
-							],
-							"path": [
-								"api",
-								"chamados",
-								"adicionar"
 							]
 						}
 					},
@@ -1494,11 +398,11 @@
 			"script": {
 				"type": "text/javascript",
 				"exec": [
-					"var server       = pm.environment.get('URL'); ",
-					"var username     = pm.environment.get('USERNAME'); ",
-					"var password     = pm.environment.get('PASSWORD'); ",
+					"var server       = \"http://clube-backend\"; ",
+					"var username     = \"teste@teste.com.br0\"; ",
+					"var password     = \"1234\"; ",
 					"",
-					"var url  = `http://${server}/api/auth/getToken`;",
+					"var url  = `${server}/api/auth/getToken`;",
 					"var data = `username=${username}&password=${password}`;",
 					"",
 					"pm.sendRequest({",

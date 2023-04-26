@@ -5,25 +5,24 @@ require_once "helpers/TimeDateHelper.php";
 
 class EnderecoModel extends BaseModel
 {
-    public $campos = array (
+    private $campos = array (
         'eid' => ['protected' => 'all', 'type' => 'int', 'visible' => true],
         'uid' => ['protected' => 'all', 'type' => 'int', 'visible' => true],
-        'cep' => ['protected' => 'update', 'type' => 'int', 'visible' => true, 'required' => true],
-        'logradouro' => ['protected' => 'none', 'type' => 'varchar', 'visible' => true, 'required' => true],
-        'numero' => ['protected' => 'none', 'type' => 'varchar', 'visible' => true, 'required' => true],
+        'cep' => ['protected' => 'update', 'type' => 'int', 'visible' => true],
+        'logradouro' => ['protected' => 'none', 'type' => 'varchar', 'visible' => true],
+        'numero' => ['protected' => 'none', 'type' => 'varchar', 'visible' => true],
         'complemento' => ['protected' => 'none', 'type' => 'varchar', 'visible' => true],
-        'bairro' => ['protected' => 'none', 'type' => 'varchar', 'visible' => true, 'required' => true],
-        'cidade' => ['protected' => 'none', 'type'=>'varchar', 'visible' => true, 'required' => true],
-        'uf' => ['protected' => 'none', 'type' => 'varchar', 'visible' => true, 'required' => true],
+        'bairro' => ['protected' => 'none', 'type' => 'varchar', 'visible' => true],
+        'cidade' => ['protected' => 'none', 'type'=>'varchar', 'visible' => true],
+        'uf' => ['protected' => 'none', 'type' => 'varchar', 'visible' => true],
         'dh_atualizacao' => ['protected' => 'all', 'type' => 'timestamp', 'transform' => 'current_timestamp', 'update' => 'always', 'visible' => true]
     );
 
-    public function buscarEnderecos($id = 0)
+    public function buscarEndereco($id = 0)
     {
-        $campos = SQLHelper::montaCamposSelect($this->campos,'e');
-        return $this->select("SELECT $campos FROM enderecos e WHERE uid=:uid", ['uid'=>$id]);
+        $campos = SQLHelper::montaCamposSelect($this->campos);
+        return $this->select("SELECT $campos FROM enderecos WHERE uid=:uid", ['uid'=>$id]);
     }
-
     public function deletarEndereco($eid = 0, $uid = 0)
     {
         return $this->query("DELETE FROM enderecos WHERE eid=:eid and uid=:uid", ['eid' => $eid, 'uid' => $uid]);

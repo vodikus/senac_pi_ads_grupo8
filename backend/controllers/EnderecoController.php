@@ -77,9 +77,9 @@ class EnderecoController extends BaseController
     {
         try {
             $enderecoModel = new EnderecoModel();
-            $arrEnderecos = $enderecoModel->buscarEnderecos($uid);
+            $arrEnderecos = $enderecoModel->buscarEndereco($uid);
             $responseData = json_encode($arrEnderecos);
-        } catch (Exception $e) {
+        } catch (Error $e) {
             $this->httpResponse(500,$e->getMessage());
         }
         $this->montarSaidaOk($responseData);
@@ -122,7 +122,7 @@ class EnderecoController extends BaseController
             } else {
                 $this->httpResponse(200,'Identificador inválido');
             }
-        } catch (Exception $e) {
+        } catch (Error $e) {
             $this->httpResponse(500,'Erro');
         }
     }

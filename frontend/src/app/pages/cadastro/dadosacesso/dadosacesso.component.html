@@ -1,0 +1,65 @@
+<!----------------------------------------------------------------------------- Parte do título e solicitação ------------------------------------------------------------------>
+<div class="header mt-3 d-flex flex-column justify-content-flex-start">
+    <h2 class="title mb-0">Dados de acesso</h2>
+    <p class="subtitle mt-2 mb-2">Nós precisamos de algumas informações suas para a utilização da nossa plataforma.</p>
+</div>
+<!------------------------------------------------------------------------------- Parte do "conecte-se com" -------------------------------------------------------------------->
+<div class="d-inline-flex w-100 mt-2 justify-content-center align-items-center">
+    <hr class="linhaTextoRedes mt-0 bg-dark">
+        <p class="textoRedes ms-2 me-2">ou conecte-se com</p>
+    <hr class="linhaTextoRedes mt-0 bg-dark">
+</div>
+<!--------------------------------------------------------------------- Parte dos botões para login com vinculo de conta ------------------------------------------------------->
+<div class="botoesVinculo d-inline-flex mt-1 justify-content-center">
+    <button class="botaoGoogle p-0 d-inline-flex align-items-start">
+        <a href="" target="_blank" class="me-1 ms-2 link-grayish"><img src="../assets/iconeGoogle.png" alt="Icone Google" width="40" height="30">
+            <i class="fab fa-google-f"></i>
+        </a>
+        <p>Google</p>
+    </button>
+    <button class="botaoApple p-0 d-inline-flex align-items-start">
+        <a href="" target="_blank" class="link-grayish"><img src="../assets/iconeApple.png" alt="Icone Apple" width="40" height="30">
+            <i class="fab fa-apple-f"></i>
+        </a>
+        <p>Apple</p>
+    </button>
+    <button class="botaoFacebook p-0 d-inline-flex align-items-start">
+        <a href="" target="_blank" class="link-grayish"><img src="../assets/iconeFacebook.png" alt="Icone Facebook" width="40" height="30">
+            <i class="fab fa-facebook-f"></i>
+        </a>
+        <p>Facebook</p>
+    </button>
+</div>
+<!--------------------------------------------------------------------------- Parte do "ou preencha os dados" ------------------------------------------------------------------>
+<div class="d-inline-flex w-100 mt-3 justify-content-center align-items-center">
+    <hr class="linhaTextoPreencha mt-0 bg-dark">
+        <p class="textoRedes ms-2 me-2">ou preencha os dados</p>
+    <hr class="linhaTextoPreencha mt-0 bg-dark">
+</div>
+<!------------------------------------------------------------------------ Parte do formulário de criação de conta ------------------------------------------------------------->
+<form class="formCriarUsuario w-100 d-flex flex-column align-items-start" action="" method="post">
+    <label class="mb-0" for="user">Endereço de E-mail</label>
+    <input class="caixaDeTexto shadow-sm" type="text" placeholder="joao.silva@provedor.com">
+
+    <label class="mb-0" for="password">Digite uma senha</label>
+    <input class="caixaDeTexto shadow-sm" type="password" placeholder="Pelo menos 8 dígitos">
+
+    <label class="mb-0" for="password">Confirme a senha</label>
+    <input class="caixaDeTexto shadow-sm" type="password">
+
+    <div class="form-check p-0">
+        <label class="form-check-label d-inline-flex align-items-center justify-content-center align-contents-end" for="flexCheckDefault">
+            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" name="manterConectado">                                    
+            <span class="mt-2"></span>
+            <label class="labelCheckbox ms-2 mt-2" for="manterConectado" onclick="document.getElementById('flexCheckDefault').click()">Mantenha-me conectado</label>
+        </label>
+    </div>
+<!-------------------------------------------------------------------------- Botão para ir para próxima página ----------------------------------------------------------------->
+    <button class="botaoProximo mt-3 text-white" type="button">Próximo ></button>
+</form>
+<!--------------------------------------------------------------------- Mensagem e link para acesso caso possua conta ---------------------------------------------------------->
+<div class="mensagemPossuiConta d-inline-flex justify-content-center ms-1 mt-4">
+    <p>Você já tem uma conta?</p>
+    <a class="linkAcesso text-success ms-2" href="">Acesse aqui</a>
+</div>
+<!----------------------------------------------------------------------------------- Fim do código ---------------------------------------------------------------------------->
