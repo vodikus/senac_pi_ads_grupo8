@@ -1,0 +1,34 @@
+<main class="d-flex justify-content-center align-items-center vh-100 bg-light">
+    <section>
+        <div class="boxExterna shadow-lg d-flex bg-dark justify-content-center align-items-center">
+            <div class="boxInterna border border-1 p-2 d-flex flex-column align-items-center bg-light justify-content-flex-start">
+                <div class="d-flex p-1 justify-content-center align-items-center rounded-pill m-2">
+                    <div class="campoCamera border rounded-4 bg-dark d-flex justify-content-end align-items-center position-fixed">
+                        <img class="cameraFrontal me-1" src="../assets/cameraFrontal.png" alt="Câmera frontal celular">
+                    </div>
+                </div>
+<!----------------------------------------------------------------------- Parte do Ícone e título do aplicativo ---------------------------------------------------------------->
+                <div class="logo d-inline-flex m-2 ms-1 mb-0">
+                    <img class="iconeTitulo me-2" src="../assets/livroIcone.png" alt="Icone de um livro representando o tema do aplicativo">
+                    <h1 class="escritaTitulo"> Clube de Empréstimo de Livros</h1>
+                </div>
+<!--------------------------------------------------------------------------------- Corpo do trabalho -------------------------------------------------------------------------->
+                <div class="ps-2 pe-2">
+                    <router-outlet></router-outlet>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+<!--------------------------------------------------------------------------------- Rodapé da página --------------------------------------------------------------------------->
+<footer class="rodape bg-light text-center text-lg-start vw-100">
+    <div class="text-center p-3 mb-2 border-top">
+        <div class="d-flex flex-row justify-content-around w-100 align-items-end ">
+          <div class="d-flex flex-row align-items-baseline justify-content-around w-100">
+            <div>
+              <h6 class="copyright text-secondary fw-normal">© 2023, Desenvolvido por: GRUPO 8 - ADS, Senac</h6>
+            </div>
+          </div>
+        </div>
+    </div>
+</footer>
