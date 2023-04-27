@@ -1,7 +1,7 @@
 <?php
 include_once 'helpers/MessageHelper.php';
 include_once 'includes/BaseController.php';
-include_once 'includes/Constantes.php';
+include_once 'helpers/Constantes.php';
 include_once 'models/ChamadoModel.php';
 
 class ChamadoController extends BaseController
@@ -63,13 +63,14 @@ class ChamadoController extends BaseController
     {
         try {
             $chamadoModel = new ChamadoModel();
-            if (!$chamadoModel->adicionarChamado($uid, $dados)) {
-                $this->httpResponse(200, MessageHelper::fmtMsgConst(Constantes::getConst('ERR_CHAMADO_INCLUSAO')));
+            $chamadoId = $chamadoModel->adicionarChamado($uid, $dados);
+            if ($chamadoId <= 0 ) {
+                $this->httpResponse(200, Helpers\MessageHelper::fmtMsgConst(helpers\Constantes::getConst('ERR_CHAMADO_INCLUSAO')));
             }
         } catch (Exception $e) {
-            $this->httpResponse(200, MessageHelper::fmtException($e));
+            $this->httpResponse(200, Helpers\MessageHelper::fmtException($e));
         }
-        $this->httpResponse(200, 'Chamado aberto com sucesso.');
+        $this->httpResponse(200, 'Chamado aberto com sucesso.', ['chamadoId' => $chamadoId]);
 
     }
 

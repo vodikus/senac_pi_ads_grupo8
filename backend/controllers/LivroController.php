@@ -153,7 +153,7 @@ class LivroController extends BaseController
     {       
         try {
             $livroModel = new LivroModel();
-            $livroModel->adicionarLivro($dados);
+            $livroId = $livroModel->adicionarLivro($dados);
         } catch (Exception $e) {
             switch ($e->getCode()) {
                 case 23000:
@@ -169,7 +169,7 @@ class LivroController extends BaseController
                     break;
             }
         } finally {
-            $this->httpResponse(200,'Livro cadastrado com sucesso.');
+            $this->httpResponse(200,'Livro cadastrado com sucesso.', ['livroId' => $livroId]);
         }
     }
 

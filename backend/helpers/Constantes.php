@@ -1,4 +1,5 @@
 <?php
+namespace helpers;
 
 class Constantes
 {
@@ -14,6 +15,9 @@ class Constantes
     const ERR_EMPRESTIMO_NAO_DEVOLVIDO = ['code'=>9206,'message'=>'Não foi possivel marcar este empréstimo como devolvido'];
     const ERR_USUARIO_LIVRO_STATUS_INVALIDO = ['code'=>9300,'message'=>'Status informado inválido'];
     const ERR_CHAMADO_INCLUSAO = ['code'=>9400,'message'=>'Erro ao incluir chamado'];
+
+    const ERR_ASSUNTO_NAO_ENCONTRADO = ['code'=>9500,'message'=>'Assunto não encontrado'];
+    const ERR_ASSUNTO_JA_EXISTENTE = ['code'=>9501,'message'=>'Já existe um assunto com este nome'];
     
     public static function getConst($const = "ERR_NAODEFINIDO") {
         if ( !defined("self::$const") ) {

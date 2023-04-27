@@ -2,12 +2,14 @@
     "name": "clubelivro/teste-api",
     "autoload": {
         "psr-0": {
-            "ClubeLivro\\": "src/"
+            "ClubeLivro\\": "src/",
+            "helpers\\": "../../backend/"
         }
     },
     "autoload-dev": {
         "psr-0": {
-            "ClubeLivro\\": "src/"
+            "ClubeLivro\\": "src/",
+            "helpers\\": "../../backend/"
         }
     },
     "require": {
@@ -15,7 +17,8 @@
     },
     "require-dev": {
         "phpunit/phpunit": "^8",
-        "guzzlehttp/guzzle": "^6.5"
+        "guzzlehttp/guzzle": "^6.5",
+        "fzaninotto/faker": "^1.9"
     },
     "scripts": {
         "test": "vendor\\bin\\phpunit"

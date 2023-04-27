@@ -1,5 +1,5 @@
 <?php
-
+namespace Helpers;
 class TokenHelper
 {
     private static $defaultHeader = [

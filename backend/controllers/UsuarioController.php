@@ -1,6 +1,6 @@
 <?php
 include_once 'includes/BaseController.php';
-include_once 'includes/Constantes.php';
+include_once 'helpers/Constantes.php';
 include_once 'helpers/MessageHelper.php';
 include_once 'models/UsuarioModel.php';
 include_once 'models/UsuarioAssuntoModel.php';
@@ -124,7 +124,7 @@ class UsuarioController extends BaseController
             $arrUsuarios = $usuarioModel->buscarTodosUsuarios();
             $responseData = json_encode($arrUsuarios);
         } catch (Exception $e) {
-            $this->httpResponse(200, MessageHelper::fmtException($e));
+            $this->httpResponse(200, Helpers\MessageHelper::fmtException($e));
         }
         $this->montarSaidaOk($responseData);
     }
@@ -134,9 +134,13 @@ class UsuarioController extends BaseController
         try {
             $usuarioModel = new UsuarioModel();
             $arrUsuarios = $usuarioModel->buscarUsuario($id);
-            $responseData = json_encode($arrUsuarios);
+            if ( count($arrUsuarios) > 0 ) {
+                $responseData = json_encode($arrUsuarios);
+            } else {
+                throw New Exception( helpers\Constantes::getMsg('ERR_USUARIO_NAO_ENCONTRADO'), helpers\Constantes::getCode('ERR_USUARIO_NAO_ENCONTRADO') );
+            }
         } catch (Exception $e) {
-            $this->httpResponse(200, MessageHelper::fmtException($e));
+            $this->httpResponse(200, Helpers\MessageHelper::fmtException($e));
         }
         $this->montarSaidaOk($responseData);
     }
@@ -155,7 +159,7 @@ class UsuarioController extends BaseController
                 $this->httpResponse(200, 'Identificador inválido');
             }
         } catch (Exception $e) {
-            $this->httpResponse(200, MessageHelper::fmtException($e));
+            $this->httpResponse(200, Helpers\MessageHelper::fmtException($e));
         }
     }
 
@@ -163,7 +167,7 @@ class UsuarioController extends BaseController
     {
         try {
             $usuarioModel = new UsuarioModel();
-            $usuarioModel->adicionarUsuario($dados);
+            $usuarioId = $usuarioModel->adicionarUsuario($dados);
         } catch (Exception $e) {
             switch ($e->getCode()) {
                 case 23000:
@@ -172,16 +176,16 @@ class UsuarioController extends BaseController
                     } elseif (stripos($e->getMessage(), 'cpf')) {
                         $this->httpResponse(200, 'CPF já cadastrado.');
                     } else {
-                        $this->httpResponse(200, MessageHelper::fmtException($e));
+                        $this->httpResponse(200, Helpers\MessageHelper::fmtException($e));
                     }
                     break;
 
                 default:
-                    $this->httpResponse(200, MessageHelper::fmtException($e));
+                    $this->httpResponse(200, Helpers\MessageHelper::fmtException($e));
                     break;
             }
         }
-        $this->httpResponse(200, 'Usuário cadastrado com sucesso.');
+        $this->httpResponse(200, 'Usuário cadastrado com sucesso.', ['usuarioId' => $usuarioId]);
 
     }
 
@@ -195,7 +199,7 @@ class UsuarioController extends BaseController
                 $this->httpResponse(200, 'Identificador inválido');
             }
         } catch (Exception $e) {
-            $this->httpResponse(200, MessageHelper::fmtException($e));
+            $this->httpResponse(200, Helpers\MessageHelper::fmtException($e));
         }
         $this->httpResponse(200, 'Usuário atualizado com sucesso.');
     }
@@ -213,12 +217,12 @@ class UsuarioController extends BaseController
                     if (stripos($e->getMessage(), 'PRIMARY')) {
                         $this->httpResponse(200, 'Este Assunto já está vinculado a este usuário.');
                     } else {
-                        $this->httpResponse(200, MessageHelper::fmtException($e));
+                        $this->httpResponse(200, Helpers\MessageHelper::fmtException($e));
                     }
                     break;
 
                 default:
-                    $this->httpResponse(200, MessageHelper::fmtException($e));
+                    $this->httpResponse(200, Helpers\MessageHelper::fmtException($e));
                     break;
             }
         }
@@ -233,7 +237,7 @@ class UsuarioController extends BaseController
                 $this->httpResponse(200, 'Assunto não encontrado');
             }
         } catch (Exception $e) {
-            $this->httpResponse(200, MessageHelper::fmtException($e));
+            $this->httpResponse(200, Helpers\MessageHelper::fmtException($e));
         }
         $this->httpResponse(200, 'Assunto desvinculado do usuário com sucesso.');
     }
@@ -251,12 +255,12 @@ class UsuarioController extends BaseController
                     if (stripos($e->getMessage(), 'PRIMARY')) {
                         $this->httpResponse(200, 'Este Livro já está vinculado a este usuário.');
                     } else {
-                        $this->httpResponse(200, MessageHelper::fmtException($e));
+                        $this->httpResponse(200, Helpers\MessageHelper::fmtException($e));
                     }
                     break;
 
                 default:
-                    $this->httpResponse(200, MessageHelper::fmtException($e));
+                    $this->httpResponse(200, Helpers\MessageHelper::fmtException($e));
                     break;
             }
         }
@@ -271,7 +275,7 @@ class UsuarioController extends BaseController
                 $this->httpResponse(200, 'Livro não encontrado');
             }
         } catch (Exception $e) {
-            $this->httpResponse(200, MessageHelper::fmtException($e));
+            $this->httpResponse(200, Helpers\MessageHelper::fmtException($e));
         }
         $this->httpResponse(200, 'Livro desvinculado do usuário com sucesso.');
     }
@@ -281,10 +285,10 @@ class UsuarioController extends BaseController
         try {
             $usuarioLivroModel = new UsuarioLivroModel();
             if (!$usuarioLivroModel->atualizarUsuarioLivro($uid, $dados)) {
-                $this->httpResponse(200, MessageHelper::fmtMsgConst(Constantes::getConst('ERR_LIVRO_NAO_ENCONTRADO')));
+                $this->httpResponse(200, Helpers\MessageHelper::fmtMsgConst(helpers\Constantes::getConst('ERR_LIVRO_NAO_ENCONTRADO')));
             }
         } catch (Exception $e) {
-            $this->httpResponse(200, MessageHelper::fmtException($e));
+            $this->httpResponse(200, Helpers\MessageHelper::fmtException($e));
         }
         $this->httpResponse(200, 'Status do livro alterado com sucesso.');
     }

@@ -21,7 +21,7 @@ class BaseController
     }
 
     public function __construct() {
-        $this->token = TokenHelper::extractToken( $this->pegarAutorizacao() );
+        $this->token = Helpers\TokenHelper::extractToken( $this->pegarAutorizacao() );
     }
 
     protected function pegarSegmentos()
@@ -93,7 +93,7 @@ class BaseController
   
     protected function isAuth() {
         if ( $this->token ) {
-            return TokenHelper::validateToken($this->token);
+            return Helpers\TokenHelper::validateToken($this->token);
         } else {
             $this->httpResponse(401,'Não autorizado');
         }  
@@ -101,7 +101,7 @@ class BaseController
 
     protected function getFieldFromToken($field) {
         if ( $this->token ) {
-            return TokenHelper::extractTokenField($this->token, $field);
+            return Helpers\TokenHelper::extractTokenField($this->token, $field);
         } else {
             $this->httpResponse(401,'Não autorizado');
         }

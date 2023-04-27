@@ -54,7 +54,7 @@ class LivroModel extends BaseModel
     {
         try {
             $dados = SQLHelper::validaCampos($this->campos, $entrada, 'INSERT');
-            return $this->query("INSERT INTO livros (titulo, descricao, capa, isbn) VALUES " .
+            return $this->insert("INSERT INTO livros (titulo, descricao, capa, isbn) VALUES " .
                                 " (:titulo, :descricao, :capa, :isbn)",
                                 $dados
                             );

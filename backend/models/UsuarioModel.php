@@ -23,7 +23,7 @@ class UsuarioModel extends BaseModel
 
     public function validaUsuario($uid) {
         if ( $this->query("SELECT 1 FROM usuarios WHERE uid=:uid",  ['uid' => $uid ]) <= 0  ) {
-            throw New Exception( Constantes::getMsg('ERR_USUARIO_NAO_ENCONTRADO'), Constantes::getCode('ERR_USUARIO_NAO_ENCONTRADO') );
+            throw New Exception( helpers\Constantes::getMsg('ERR_USUARIO_NAO_ENCONTRADO'), helpers\Constantes::getCode('ERR_USUARIO_NAO_ENCONTRADO') );
         }
         return true;
     }
@@ -45,7 +45,7 @@ class UsuarioModel extends BaseModel
     {
         try {
             $dados = SQLHelper::validaCampos($this->campos, $entrada, 'INSERT');
-            return $this->query("INSERT INTO usuarios (email, nome, senha, cpf, nascimento, sexo, apelido, dh_atualizacao) VALUES (:email, :nome, SHA2(:senha,256), :cpf, :nascimento, :sexo, :apelido, CURRENT_TIMESTAMP)", $dados);
+            return $this->insert("INSERT INTO usuarios (email, nome, senha, cpf, nascimento, sexo, apelido, dh_atualizacao) VALUES (:email, :nome, SHA2(:senha,256), :cpf, :nascimento, :sexo, :apelido, CURRENT_TIMESTAMP)", $dados);
         } catch (Exception $e) {
             throw New Exception( $e->getMessage(), $e->getCode() );
         }

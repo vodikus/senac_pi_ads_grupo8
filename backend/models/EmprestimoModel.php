@@ -1,6 +1,6 @@
 <?php
 require_once "includes/BaseModel.php";
-require_once "includes/Constantes.php";
+require_once "helpers/Constantes.php";
 require_once "helpers/SQLHelper.php";
 require_once "helpers/StringHelper.php";
 require_once "helpers/TimeDateHelper.php";
@@ -24,10 +24,10 @@ class EmprestimoModel extends BaseModel
 
     private function validaUsuarioLivro($dados) {
         if ( $this->query("SELECT 1 FROM livros WHERE lid=:lid",  ['lid' => $dados['lid'] ]) <= 0  ) {
-                throw New Exception( Constantes::getMsg('ERR_LIVRO_NAO_ENCONTRADO'), Constantes::getCode('ERR_LIVRO_NAO_ENCONTRADO') );
+                throw New Exception( helpers\Constantes::getMsg('ERR_LIVRO_NAO_ENCONTRADO'), helpers\Constantes::getCode('ERR_LIVRO_NAO_ENCONTRADO') );
         }
         if ( $this->query("SELECT 1 FROM usuarios WHERE uid=:uid",  ['uid' => $dados['uid_dono'] ]) <= 0  ) {
-            throw New Exception( Constantes::getMsg('ERR_USUARIO_NAO_ENCONTRADO'), Constantes::getCode('ERR_USUARIO_NAO_ENCONTRADO') );
+            throw New Exception( helpers\Constantes::getMsg('ERR_USUARIO_NAO_ENCONTRADO'), helpers\Constantes::getCode('ERR_USUARIO_NAO_ENCONTRADO') );
         }
         return true;
     }
@@ -35,7 +35,7 @@ class EmprestimoModel extends BaseModel
     private function validaDisponibilidadeLivro($dados) {
         try {
             if ( $this->query("SELECT 1 FROM usuarios_livros WHERE lid=:lid AND uid=:uid AND status='D' ",  [ 'uid'=>$dados['uid_dono'], 'lid' => $dados['lid'] ]  ) <= 0  ) {
-                    throw New Exception( Constantes::getMsg('ERR_LIVRO_NAO_DISPONIVEL'), Constantes::getCode('ERR_LIVRO_NAO_DISPONIVEL') );
+                    throw New Exception( helpers\Constantes::getMsg('ERR_LIVRO_NAO_DISPONIVEL'), helpers\Constantes::getCode('ERR_LIVRO_NAO_DISPONIVEL') );
             }
         } catch (Exception $e) {
             throw New Exception( $e->getMessage(), $e->getCode() );
@@ -74,7 +74,7 @@ class EmprestimoModel extends BaseModel
             if ( count($emprestimo) > 0 ) {
                 return $emprestimo[0];
             } else {
-                throw New Exception( Constantes::getMsg('ERR_EMPRESTIMO_NAO_LOCALIZADO'), Constantes::getCode('ERR_EMPRESTIMO_NAO_LOCALIZADO') );
+                throw New Exception( helpers\Constantes::getMsg('ERR_EMPRESTIMO_NAO_LOCALIZADO'), helpers\Constantes::getCode('ERR_EMPRESTIMO_NAO_LOCALIZADO') );
             }
         } catch (Exception $e) {
             throw New Exception( $e->getMessage(), $e->getCode() );
@@ -114,19 +114,17 @@ class EmprestimoModel extends BaseModel
 
     public function solicitarEmprestimo($uid, $entrada)
     {
-        $sqlSt = 0;
         try {
             $campos = array_filter($this->campos, ['SQLHelper','limpaCamposProtegidos']);
 
             $dados = SQLHelper::validaCampos($campos, $entrada, 'INSERT');
             if ( $this->validaUsuarioLivro($dados) && $this->validaDisponibilidadeLivro($dados) && !$this->validaStatusLivro($uid, ['SOLI','EMPR'], $dados) ) {
-                $sqlSt = $this->query("INSERT INTO emprestimos (uid_dono, lid, uid_tomador, qtd_dias) VALUES " .
+                return $this->insert("INSERT INTO emprestimos (uid_dono, lid, uid_tomador, qtd_dias) VALUES " .
                 " (:uid_dono, :lid, :uid_tomador, :qtd_dias)",
                 array_merge(['uid_tomador' => $uid], $dados)
                 );
-                return ( $sqlSt > 0 );
             } else {
-                throw New Exception( Constantes::getMsg('ERR_LIVRO_NAO_DISPONIVEL'), Constantes::getCode('ERR_LIVRO_NAO_DISPONIVEL') );
+                throw New Exception( helpers\Constantes::getMsg('ERR_LIVRO_NAO_DISPONIVEL'), helpers\Constantes::getCode('ERR_LIVRO_NAO_DISPONIVEL') );
             }
         } catch (Exception $e) {
             throw New Exception( $e->getMessage(), $e->getCode() );
@@ -209,7 +207,7 @@ class EmprestimoModel extends BaseModel
             $dados = SQLHelper::validaCampos($campos, $emprestimo, 'UPDATE');            
             if ( $this->validaUsuarioLivro($dados) && $this->validaStatusLivro($uid, 'SOLI', $dados) ) {
                 if ( is_null($dados['retirada_prevista']) || is_null($dados['devolucao_prevista']) ) {
-                    throw New Exception( Constantes::getMsg('ERR_EMPRESTIMO_DATA_DEVOLUCAO_REQUERIDA'), Constantes::getCode('ERR_EMPRESTIMO_DATA_DEVOLUCAO_REQUERIDA') );
+                    throw New Exception( helpers\Constantes::getMsg('ERR_EMPRESTIMO_DATA_DEVOLUCAO_REQUERIDA'), helpers\Constantes::getCode('ERR_EMPRESTIMO_DATA_DEVOLUCAO_REQUERIDA') );
                 } else {
                     $sqlSt = $this->query("UPDATE emprestimos SET " .
                         " retirada_efetiva=CURRENT_TIMESTAMP, status='EMPR', dh_atualizacao=CURRENT_TIMESTAMP " .

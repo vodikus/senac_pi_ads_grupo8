@@ -26,7 +26,7 @@ class AutorModel extends BaseModel
     {
         try {
             $dados = SQLHelper::validaCampos($this->campos, $entrada, 'INSERT');
-            return $this->query("INSERT INTO autores (nome_autor) VALUES " .
+            return $this->insert("INSERT INTO autores (nome_autor) VALUES " .
                                 " (:nome_autor)",
                                 $dados
                             );

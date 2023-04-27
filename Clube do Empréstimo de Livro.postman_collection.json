@@ -99,7 +99,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://{{URL}}/api/usuarios/buscar/45",
+							"raw": "http://{{URL}}/api/usuarios/buscar/539",
 							"protocol": "http",
 							"host": [
 								"{{URL}}"
@@ -108,14 +108,14 @@
 								"api",
 								"usuarios",
 								"buscar",
-								"45"
+								"539"
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "Criar Usuário",
+					"name": "Adicionar Usuário",
 					"request": {
 						"method": "POST",
 						"header": [],
@@ -124,12 +124,12 @@
 							"urlencoded": [
 								{
 									"key": "dados[email]",
-									"value": "teste4@teste.com.br",
+									"value": "teste5@teste.com.br",
 									"type": "text"
 								},
 								{
 									"key": "dados[nome]",
-									"value": "Charlene da Silva Sauro",
+									"value": "Bob da Silva Sauro",
 									"type": "text"
 								},
 								{
@@ -139,7 +139,7 @@
 								},
 								{
 									"key": "dados[cpf]",
-									"value": "12345678903",
+									"value": "12345678904",
 									"type": "text"
 								},
 								{
@@ -149,12 +149,12 @@
 								},
 								{
 									"key": "dados[sexo]",
-									"value": "F",
+									"value": "M",
 									"type": "text"
 								},
 								{
 									"key": "dados[apelido]",
-									"value": "charlenessauro",
+									"value": "bobssauro",
 									"type": "text"
 								}
 							]
@@ -196,7 +196,7 @@
 							]
 						},
 						"url": {
-							"raw": "http://{{URL}}/api/usuarios/atualizar/45",
+							"raw": "http://{{URL}}/api/usuarios/atualizar/539",
 							"protocol": "http",
 							"host": [
 								"{{URL}}"
@@ -205,7 +205,7 @@
 								"api",
 								"usuarios",
 								"atualizar",
-								"45"
+								"539"
 							]
 						}
 					},
@@ -564,7 +564,7 @@
 							"urlencoded": [
 								{
 									"key": "dados[nome_autor]",
-									"value": "J. R. R. Tolkien",
+									"value": "Agatha Christie",
 									"type": "text"
 								}
 							]
@@ -662,12 +662,12 @@
 					"response": []
 				},
 				{
-					"name": "Buscar assunto",
+					"name": "Buscar Assunto",
 					"request": {
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://{{URL}}/api/assuntos/buscar/26",
+							"raw": "http://{{URL}}/api/assuntos/buscar/26111",
 							"protocol": "http",
 							"host": [
 								"{{URL}}"
@@ -676,7 +676,7 @@
 								"api",
 								"assuntos",
 								"buscar",
-								"26"
+								"26111"
 							]
 						}
 					},
@@ -743,13 +743,13 @@
 							"urlencoded": [
 								{
 									"key": "dados[nome_assunto]",
-									"value": "Terror",
+									"value": "Fantasia",
 									"type": "text"
 								}
 							]
 						},
 						"url": {
-							"raw": "http://{{URL}}/api/assuntos/atualizar/3",
+							"raw": "http://{{URL}}/api/assuntos/atualizar/53",
 							"protocol": "http",
 							"host": [
 								"{{URL}}"
@@ -758,7 +758,7 @@
 								"api",
 								"assuntos",
 								"atualizar",
-								"3"
+								"53"
 							]
 						}
 					},
@@ -820,12 +820,12 @@
 							"urlencoded": [
 								{
 									"key": "dados[titulo]",
-									"value": "O Senhor dos Anéis - O Retorno do Rei",
+									"value": "O assassinato no Expresso do Oriente",
 									"type": "text"
 								},
 								{
 									"key": "dados[descricao]",
-									"value": "Gandalf e Pippin entram na cidade de Minas Tirith, onde se encontram com Denethor, regente do reino de Gondor. Gandalf o avisa da guerra próxima, e o regente pede a ajuda de Rohan, mas revela seu rancor por Aragorn, que, sendo descendente direto do último rei, é o herdeiro legítimo do trono de Gondor. Merry, entretanto, permanece com os rohirrim, para servir ao rei Théoden, que reúne todos os guerreiros aptos de seu reino e parte para a guerra em Minas Tirith. Junto com ele vão Aragorn, Legolas e Gimli.",
+									"value": "A matança rola solta no trenzão e Hercule Poirot tenta descobrir o assassino.",
 									"type": "text"
 								},
 								{
@@ -835,7 +835,7 @@
 								},
 								{
 									"key": "dados[isbn]",
-									"value": "3",
+									"value": "4",
 									"type": "text"
 								}
 							]

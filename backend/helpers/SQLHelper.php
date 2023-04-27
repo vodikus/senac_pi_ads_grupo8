@@ -1,5 +1,5 @@
 <?php
-
+// namespace Helpers;
 class SQLHelper
 {
     public static function montaCamposUpdate($campos, $entrada) {

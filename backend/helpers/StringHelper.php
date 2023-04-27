@@ -1,5 +1,5 @@
 <?php
-
+// namespace Helpers;
 class StringHelper
 {
     public static function addQuotes($str) {

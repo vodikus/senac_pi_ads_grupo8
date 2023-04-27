@@ -1,6 +1,6 @@
 <?php
 require_once "includes/BaseModel.php";
-require_once "includes/Constantes.php";
+require_once "helpers/Constantes.php";
 require_once "helpers/SQLHelper.php";
 require_once "helpers/TimeDateHelper.php";
 require_once "models/UsuarioModel.php";
@@ -23,18 +23,16 @@ class ChamadoModel extends BaseModel
    
     public function adicionarChamado($uid, $entrada)
     {
-        $sqlSt = 0;
         try {
             $usuario = new UsuarioModel();
             $campos = array_filter($this->campos, ['SQLHelper','limpaCamposProtegidos']);
 
             $dados = SQLHelper::validaCampos($campos, $entrada, 'INSERT');
             if ( $usuario->validaUsuario($entrada['uid_destino']) ) {
-                $sqlSt = $this->query("INSERT INTO chamados (uid_origem, uid_destino, lid, tipo, assunto, motivo, texto) VALUES " .
+                return $this->insert("INSERT INTO chamados (uid_origem, uid_destino, lid, tipo, assunto, motivo, texto) VALUES " .
                 " (:uid_origem, :uid_destino, :lid, :tipo, :assunto, :motivo, :texto)",
                 array_merge(['uid_origem' => $uid], $dados)
                 );
-                return ( $sqlSt > 0 );
             }
         } catch (Exception $e) {
             throw New Exception( $e->getMessage(), $e->getCode() );

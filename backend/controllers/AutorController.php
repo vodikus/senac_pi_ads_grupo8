@@ -85,7 +85,7 @@ class AutorController extends BaseController
     {       
         try {
             $autorModel = new AutorModel();
-            $autorModel->adicionarAutor($dados);
+            $autorId = $autorModel->adicionarAutor($dados);
         } catch (Exception $e) {
             switch ($e->getCode()) {
                 case 23000:
@@ -101,7 +101,7 @@ class AutorController extends BaseController
                     break;
             }
         } finally {
-            $this->httpResponse(200,'Autor cadastrado com sucesso.');
+            $this->httpResponse(200,'Autor cadastrado com sucesso.', ['autorId' => $autorId]);
         }
     }
 

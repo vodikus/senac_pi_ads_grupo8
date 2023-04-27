@@ -39,6 +39,13 @@ class AssuntoModel extends BaseModel
                 $dados
             );
         } catch (Exception $e) {
+            switch ($e->getCode()) {
+                case 23000:
+                    if (stripos($e->getMessage(),'nome_assunto_uk')) {
+                        throw New Exception( helpers\Constantes::getMsg('ERR_ASSUNTO_JA_EXISTENTE'), helpers\Constantes::getCode('ERR_ASSUNTO_JA_EXISTENTE') );
+                    }
+                    break;
+            }
             throw new Exception($e->getMessage(), $e->getCode());
         }
     }
@@ -59,6 +66,13 @@ class AssuntoModel extends BaseModel
             $campos = SQLHelper::montaCamposUpdate($this->campos, $dados);
             return $this->query("UPDATE assuntos SET $campos WHERE iid=:iid", array_merge(['iid' => $iid], $dados));
         } catch (Exception $e) {
+            switch ($e->getCode()) {
+                case 23000:
+                    if (stripos($e->getMessage(),'nome_assunto_uk')) {
+                        throw New Exception( helpers\Constantes::getMsg('ERR_ASSUNTO_JA_EXISTENTE'), helpers\Constantes::getCode('ERR_ASSUNTO_JA_EXISTENTE') );
+                    }
+                    break;
+            }
             throw new Exception($e->getMessage(), $e->getCode());
         }
     }

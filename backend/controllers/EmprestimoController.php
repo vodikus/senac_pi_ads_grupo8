@@ -1,7 +1,7 @@
 <?php
 include_once 'helpers/MessageHelper.php';
 include_once 'includes/BaseController.php';
-include_once 'includes/Constantes.php';
+include_once 'helpers/Constantes.php';
 include_once 'models/EmprestimoModel.php';
 
 class EmprestimoController extends BaseController
@@ -103,7 +103,7 @@ class EmprestimoController extends BaseController
             $emprestimoModel = new EmprestimoModel();
             $emprestimo = json_encode($emprestimoModel->buscaEmprestimo($uid, $eid));
         } catch (Exception $e) {
-            $this->httpResponse(200, MessageHelper::fmtException($e));
+            $this->httpResponse(200, Helpers\MessageHelper::fmtException($e));
         }
         $this->montarSaidaOk($emprestimo);
 
@@ -115,7 +115,7 @@ class EmprestimoController extends BaseController
             $emprestimoModel = new EmprestimoModel();
             $emprestimo = json_encode($emprestimoModel->listarEmprestimos($uid, $tipo));
         } catch (Exception $e) {
-            $this->httpResponse(200, MessageHelper::fmtException($e));
+            $this->httpResponse(200, Helpers\MessageHelper::fmtException($e));
         }
         $this->montarSaidaOk($emprestimo);
 
@@ -125,13 +125,12 @@ class EmprestimoController extends BaseController
     {
         try {
             $emprestimoModel = new EmprestimoModel();
-            if (!$emprestimoModel->solicitarEmprestimo($uid, $dados)) {
-                $this->httpResponse(200, 'Livro ou usuário não encontrado');
-            }
+            $emprestimoId = $emprestimoModel->solicitarEmprestimo($uid, $dados);
+
         } catch (Exception $e) {
-            $this->httpResponse(200, MessageHelper::fmtException($e));
+            $this->httpResponse(200, Helpers\MessageHelper::fmtException($e));
         }
-        $this->httpResponse(200, 'Empréstimo solicitado com sucesso.');
+        $this->httpResponse(200, 'Empréstimo solicitado com sucesso.', ['emprestimoId' => $emprestimoId]);
 
     }
 
@@ -140,10 +139,10 @@ class EmprestimoController extends BaseController
         try {
             $emprestimoModel = new EmprestimoModel();
             if (!$emprestimoModel->devolverEmprestimo($uid, $eid)) {
-                $this->httpResponse(200, MessageHelper::fmtMsgConst(Constantes::getConst('ERR_EMPRESTIMO_NAO_DEVOLVIDO')));
+                $this->httpResponse(200, Helpers\MessageHelper::fmtMsgConst(helpers\Constantes::getConst('ERR_EMPRESTIMO_NAO_DEVOLVIDO')));
             }
         } catch (Exception $e) {
-            $this->httpResponse(200, MessageHelper::fmtException($e));
+            $this->httpResponse(200, Helpers\MessageHelper::fmtException($e));
         }
         $this->httpResponse(200, 'Empréstimo devolvido com sucesso.');
     }
@@ -153,10 +152,10 @@ class EmprestimoController extends BaseController
         try {
             $emprestimoModel = new EmprestimoModel();
             if (!$emprestimoModel->desistirEmprestimo($uid, $eid)) {
-                $this->httpResponse(200, MessageHelper::fmtMsgConst(Constantes::getConst('ERR_EMPRESTIMO_NAO_CANCELADO')));
+                $this->httpResponse(200, Helpers\MessageHelper::fmtMsgConst(helpers\Constantes::getConst('ERR_EMPRESTIMO_NAO_CANCELADO')));
             }
         } catch (Exception $e) {
-            $this->httpResponse(200, MessageHelper::fmtException($e));
+            $this->httpResponse(200, Helpers\MessageHelper::fmtException($e));
         }
         $this->httpResponse(200, 'Solicitação de Empréstimo cancelada com sucesso.');
     }
@@ -166,10 +165,10 @@ class EmprestimoController extends BaseController
         try {
             $emprestimoModel = new EmprestimoModel();
             if (!$emprestimoModel->previsaoEmprestimo($uid, $dados)) {
-                $this->httpResponse(200, MessageHelper::fmtMsgConst(Constantes::getConst('ERR_EMPRESTIMO_NAO_PREVISAO')));
+                $this->httpResponse(200, Helpers\MessageHelper::fmtMsgConst(helpers\Constantes::getConst('ERR_EMPRESTIMO_NAO_PREVISAO')));
             }
         } catch (Exception $e) {
-            $this->httpResponse(500, MessageHelper::fmtException($e));
+            $this->httpResponse(500, Helpers\MessageHelper::fmtException($e));
         }
         $this->httpResponse(200, 'Previsão de Empréstimo registrada com sucesso.');
     }
@@ -179,10 +178,10 @@ class EmprestimoController extends BaseController
         try {
             $emprestimoModel = new EmprestimoModel();
             if (!$emprestimoModel->retirarEmprestimo($uid, $eid)) {
-                $this->httpResponse(200, MessageHelper::fmtMsgConst(Constantes::getConst('ERR_EMPRESTIMO_NAO_RETIRADO')));
+                $this->httpResponse(200, Helpers\MessageHelper::fmtMsgConst(helpers\Constantes::getConst('ERR_EMPRESTIMO_NAO_RETIRADO')));
             }
         } catch (Exception $e) {
-            $this->httpResponse(500, MessageHelper::fmtException($e));
+            $this->httpResponse(500, Helpers\MessageHelper::fmtException($e));
         }
         $this->httpResponse(200, 'Retirada de Empréstimo registrada com sucesso.');
     }

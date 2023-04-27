@@ -16,7 +16,7 @@ class AuthController extends BaseController
                             if ( $usuarioModel->validarUsuarioSenha($_POST['username'], $_POST['password']) == 1 ) {
                                 $usuario = $usuarioModel->buscaPorEmail($_POST['username']);
                                 $token = [ 
-                                    "access_token" => TokenHelper::generateToken($_POST['username'], $usuario['role'], $usuario['uid'], $this->expSeconds),
+                                    "access_token" => Helpers\TokenHelper::generateToken($_POST['username'], $usuario['role'], $usuario['uid'], $this->expSeconds),
                                     "expires_in" => $this->expSeconds,
                                     "token_type" => "bearer"
                                 ];
@@ -29,9 +29,9 @@ class AuthController extends BaseController
                         }                        
                         break;
                     case 'authToken':       
-                        $token = TokenHelper::extractToken( $this->pegarAutorizacao() );
+                        $token = Helpers\TokenHelper::extractToken( $this->pegarAutorizacao() );
                         if ( $token ) {
-                            if ( TokenHelper::validateToken($token) ) {
+                            if ( Helpers\TokenHelper::validateToken($token) ) {
                                 $this->httpResponse(200,'Token ok');
                             } else {
                                 $this->httpResponse(401,'Token inválido');
