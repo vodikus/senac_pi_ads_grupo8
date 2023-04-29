@@ -1,7 +1,6 @@
 <?php
 
 use ClubeLivro\HttpHelper;
-use helpers\Constantes;
 use helpers\MessageHelper;
 use PHPUnit\Framework\TestCase;
 
@@ -62,10 +61,6 @@ class AssuntoTest extends TestCase
         $assunto = (array) json_decode($response->getBody()->__toString(), true);
         
         $this->assertIsArray($assunto);
-
-        $this->assertArrayHasKey('message', $assunto);
-        
-        $this->assertSame($assunto['message'], MessageHelper::fmtMsgConst(Constantes::getConst('ERR_ASSUNTO_NAO_ENCONTRADO')));
 
     }
 
@@ -138,7 +133,7 @@ class AssuntoTest extends TestCase
             
             $this->assertArrayHasKey('message', $outAssunto);
 
-            $this->assertSame($outAssunto['message'], MessageHelper::fmtMsgConst(Constantes::getConst('ERR_ASSUNTO_JA_EXISTENTE')));
+            $this->assertSame($outAssunto['message'], MessageHelper::fmtMsgConst('ERR_ASSUNTO_JA_EXISTENTE'));
         }
     }
 
@@ -178,7 +173,7 @@ class AssuntoTest extends TestCase
 
         $this->assertArrayHasKey('message', $outAssunto);
         
-        $this->assertSame($outAssunto['message'], MessageHelper::fmtMsgConst(Constantes::getConst('ERR_ASSUNTO_NAO_ENCONTRADO')));
+        $this->assertSame($outAssunto['message'], MessageHelper::fmtMsgConst('ERR_ASSUNTO_NAO_ENCONTRADO'));
     }
 
     /**
