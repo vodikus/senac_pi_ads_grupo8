@@ -55,6 +55,13 @@ class AssuntoModel extends BaseModel
         try {
             return $this->query("DELETE FROM assuntos WHERE iid=:iid", ['iid' => $iid]);
         } catch (Exception $e) {
+            switch ($e->getCode()) {
+                case 23000:
+                    if (stripos($e->getMessage(),'fk_la_assuntos')) {
+                        throw New Exception( helpers\Constantes::getMsg('ERR_ASSUNTO_DELETAR_FK'), helpers\Constantes::getCode('ERR_ASSUNTO_DELETAR_FK') );
+                    }
+                    break;
+            }            
             throw new Exception($e->getMessage(), $e->getCode());
         }
     }

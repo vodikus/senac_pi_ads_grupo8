@@ -4,19 +4,19 @@ namespace helpers;
 class Constantes
 {
     /** Mensagens - Empréstimos */
-    const MSG_EMPRESTIMO_SOLICITADO_SUCESSO  = ['code'=>1301,'message'=>'Empréstimo solicitado com sucesso'];
-    const MSG_EMPRESTIMO_DEVOLVIDO_SUCESSO  = ['code'=>1302,'message'=>'Empréstimo devolvido com sucesso'];
-    const MSG_EMPRESTIMO_CANCELADO_SUCESSO  = ['code'=>1303,'message'=>'Solicitação de Empréstimo cancelada com sucesso'];
-    const MSG_EMPRESTIMO_PREVISAO_SUCESSO  = ['code'=>1304,'message'=>'Previsão de Empréstimo registrada com sucesso'];
-    const MSG_EMPRESTIMO_RETIRADA_SUCESSO  = ['code'=>1305,'message'=>'Retirada de Empréstimo registrada com sucesso'];
+    const MSG_EMPRESTIMO_SOLICITADO_SUCESSO  = ['code'=>1300,'message'=>'Empréstimo solicitado com sucesso'];
+    const MSG_EMPRESTIMO_DEVOLVIDO_SUCESSO  = ['code'=>1301,'message'=>'Empréstimo devolvido com sucesso'];
+    const MSG_EMPRESTIMO_CANCELADO_SUCESSO  = ['code'=>1302,'message'=>'Solicitação de Empréstimo cancelada com sucesso'];
+    const MSG_EMPRESTIMO_PREVISAO_SUCESSO  = ['code'=>1303,'message'=>'Previsão de Empréstimo registrada com sucesso'];
+    const MSG_EMPRESTIMO_RETIRADA_SUCESSO  = ['code'=>1304,'message'=>'Retirada de Empréstimo registrada com sucesso'];
 
     /** Erros - Empréstimos  */
-    const ERR_EMPRESTIMO_NAO_CANCELADO = ['code'=>9301,'message'=>'Empréstimo não cancelado'];
-    const ERR_EMPRESTIMO_NAO_LOCALIZADO = ['code'=>9302,'message'=>'Empréstimo não localizado'];
-    const ERR_EMPRESTIMO_NAO_RETIRADO = ['code'=>9303,'message'=>'Registro de retirada de empréstimo inválido'];
-    const ERR_EMPRESTIMO_DATA_DEVOLUCAO_REQUERIDA = ['code'=>9304,'message'=>'Data de previsão retirada / devolução é requerida'];
-    const ERR_EMPRESTIMO_NAO_PREVISAO = ['code'=>9305,'message'=>'Não foi possivel marcar a previsão deste empréstimo'];
-    const ERR_EMPRESTIMO_NAO_DEVOLVIDO = ['code'=>9306,'message'=>'Não foi possivel marcar este empréstimo como devolvido'];   
+    const ERR_EMPRESTIMO_NAO_CANCELADO = ['code'=>9300,'message'=>'Empréstimo não cancelado'];
+    const ERR_EMPRESTIMO_NAO_LOCALIZADO = ['code'=>9301,'message'=>'Empréstimo não localizado'];
+    const ERR_EMPRESTIMO_NAO_RETIRADO = ['code'=>9302,'message'=>'Registro de retirada de empréstimo inválido'];
+    const ERR_EMPRESTIMO_DATA_DEVOLUCAO_REQUERIDA = ['code'=>9303,'message'=>'Data de previsão retirada / devolução é requerida'];
+    const ERR_EMPRESTIMO_NAO_PREVISAO = ['code'=>9304,'message'=>'Não foi possivel marcar a previsão deste empréstimo'];
+    const ERR_EMPRESTIMO_NAO_DEVOLVIDO = ['code'=>9305,'message'=>'Não foi possivel marcar este empréstimo como devolvido'];   
     
 
     /** Erros - HTTP */
@@ -39,9 +39,15 @@ class Constantes
     /** Erros - Chamados */
     const ERR_CHAMADO_INCLUSAO = ['code'=>9500,'message'=>'Erro ao incluir chamado'];
 
+    /** Mensagens - Assuntos  */
+    const MSG_ASSUNTO_CADASTRO_SUCESSO = ['code'=>1600,'message'=>'Assunto cadastrado com sucesso.'];
+    const MSG_ASSUNTO_DELETADO_SUCESSO = ['code'=>1601,'message'=>'Assunto deletado com sucesso.'];
+    const MSG_ASSUNTO_ATUALIZADO_SUCESSO = ['code'=>1602,'message'=>'Assunto atualizado com sucesso.'];
+
     /** Erros - Assuntos  */
     const ERR_ASSUNTO_NAO_ENCONTRADO = ['code'=>9600,'message'=>'Assunto não encontrado'];
     const ERR_ASSUNTO_JA_EXISTENTE = ['code'=>9601,'message'=>'Já existe um assunto com este nome'];
+    const ERR_ASSUNTO_DELETAR_FK = ['code'=>9602,'message'=>'Este assunto não pode ser deletado pois está vinculado a um ou mais livros'];
     
     public static function getConst($const = "ERR_NAODEFINIDO") {
         if ( !defined("self::$const") ) {

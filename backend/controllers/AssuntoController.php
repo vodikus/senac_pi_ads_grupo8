@@ -22,7 +22,7 @@ class AssuntoController extends BaseController
                         $this->buscar($params['param1']);
                         break;
                     default:
-                        $this->httpResponse(501, 'Ação Indisponível');
+                        $this->httpResponse(501, Helpers\MessageHelper::fmtMsgConst(helpers\Constantes::getConst('ERR_ACAO_INDISPONIVEL')));
                         break;
                 }
                 break;
@@ -33,11 +33,11 @@ class AssuntoController extends BaseController
                         if ($this->isAuth()) {
                             $this->adicionar($dados);
                         } else {
-                            $this->httpResponse(401, 'Não autorizado');
+                            $this->httpResponse(401, Helpers\MessageHelper::fmtMsgConst(helpers\Constantes::getConst('ERR_NAO_AUTORIZADO')));
                         }
                         break;
                     default:
-                        $this->httpResponse(501, 'Ação Indisponível');
+                        $this->httpResponse(501, Helpers\MessageHelper::fmtMsgConst(helpers\Constantes::getConst('ERR_ACAO_INDISPONIVEL')));
                         break;
                 }
                 break;
@@ -48,11 +48,11 @@ class AssuntoController extends BaseController
                         if ($this->isAuth()) {
                             $this->atualizar($params['param1'], $dados);
                         } else {
-                            $this->httpResponse(401, 'Não autorizado');
+                            $this->httpResponse(401, Helpers\MessageHelper::fmtMsgConst(helpers\Constantes::getConst('ERR_NAO_AUTORIZADO')));
                         }
                         break;
                     default:
-                        $this->httpResponse(501, 'Ação Indisponível');
+                        $this->httpResponse(501, Helpers\MessageHelper::fmtMsgConst(helpers\Constantes::getConst('ERR_ACAO_INDISPONIVEL')));
                         break;
                 }
                 break;
@@ -62,16 +62,16 @@ class AssuntoController extends BaseController
                         if ($this->isAuth()) {
                             $this->deletar($params['param1']);
                         } else {
-                            $this->httpResponse(401, 'Não autorizado');
+                            $this->httpResponse(401, Helpers\MessageHelper::fmtMsgConst(helpers\Constantes::getConst('ERR_NAO_AUTORIZADO')));
                         }
                         break;
                     default:
-                        $this->httpResponse(501, 'Ação Indisponível');
+                        $this->httpResponse(501, Helpers\MessageHelper::fmtMsgConst(helpers\Constantes::getConst('ERR_ACAO_INDISPONIVEL')));
                         break;
                 }
                 break;
             default:
-                $this->httpResponse(405, 'Method Not Allowed');
+                $this->httpResponse(405, Helpers\MessageHelper::fmtMsgConst(helpers\Constantes::getConst('ERR_METODO_NAO_PERMITIDO')));
                 break;
         }
     }
@@ -90,12 +90,16 @@ class AssuntoController extends BaseController
     public function buscar($iid = 0)
     {
         try {
-            $assuntoModel = new AssuntoModel();
-            $arrAssunto = $assuntoModel->buscarAssunto($iid);
-            if (count($arrAssunto) > 0) {
-                $responseData = json_encode($arrAssunto);
+            if (is_numeric($iid)) {
+                $assuntoModel = new AssuntoModel();
+                $arrAssunto = $assuntoModel->buscarAssunto($iid);
+                if (count($arrAssunto) > 0) {
+                    $responseData = json_encode($arrAssunto);
+                } else {
+                    throw new Exception(helpers\Constantes::getMsg('ERR_ASSUNTO_NAO_ENCONTRADO'), helpers\Constantes::getCode('ERR_ASSUNTO_NAO_ENCONTRADO'));
+                }
             } else {
-                throw new Exception(helpers\Constantes::getMsg('ERR_ASSUNTO_NAO_ENCONTRADO'), helpers\Constantes::getCode('ERR_ASSUNTO_NAO_ENCONTRADO'));
+                $this->httpResponse(200, Helpers\MessageHelper::fmtMsgConst(helpers\Constantes::getConst('ERR_ID_INVALIDO')));
             }
         } catch (Exception $e) {
             $this->httpResponse(200, Helpers\MessageHelper::fmtException($e));
@@ -111,7 +115,7 @@ class AssuntoController extends BaseController
         } catch (Exception $e) {
             $this->httpResponse(500, Helpers\MessageHelper::fmtException($e));
         }
-        $this->httpResponse(200, 'Assunto cadastrado com sucesso.', ['assuntoId' => $assuntoId]);
+        $this->httpResponse(200, Helpers\MessageHelper::fmtMsgConst(helpers\Constantes::getConst('MSG_ASSUNTO_CADASTRO_SUCESSO'),false), ['assuntoId' => $assuntoId]);
     }
 
     public function deletar($aid)
@@ -119,29 +123,16 @@ class AssuntoController extends BaseController
         try {
             if (is_numeric($aid)) {
                 $assuntoModel = new AssuntoModel();
-                if ($assuntoModel->deletarAssunto($aid) > 0) {
-                    $this->httpResponse(200, 'Assunto deletado com sucesso.');
-                } else {
-                    $this->httpResponse(200, 'Assunto não encontrado');
+                if ($assuntoModel->deletarAssunto($aid) == 0) {
+                    $this->httpResponse(200, Helpers\MessageHelper::fmtMsgConst(helpers\Constantes::getConst('ERR_ASSUNTO_NAO_ENCONTRADO')));
                 }
             } else {
-                $this->httpResponse(200, 'Identificador inválido');
+                $this->httpResponse(200, Helpers\MessageHelper::fmtMsgConst(helpers\Constantes::getConst('ERR_ID_INVALIDO')));
             }
         } catch (Exception $e) {
-            switch ($e->getCode()) {
-                case 23000:
-                    if (stripos($e->getMessage(), 'fk_la_assuntos')) {
-                        $this->httpResponse(200, 'Este assunto não pode ser deletado pois está vinculado a um ou mais livros');
-                    } else {
-                        $this->httpResponse(500, Helpers\MessageHelper::fmtException($e));
-                    }
-                    break;
-
-                default:
-                    $this->httpResponse(500, Helpers\MessageHelper::fmtException($e));
-                    break;
-            }
+            $this->httpResponse(500, Helpers\MessageHelper::fmtException($e));
         }
+        $this->httpResponse(200, Helpers\MessageHelper::fmtMsgConst(helpers\Constantes::getConst('MSG_ASSUNTO_DELETADO_SUCESSO'),false));
     }
 
     public function atualizar($aid, $dados)
@@ -153,11 +144,11 @@ class AssuntoController extends BaseController
                     $this->httpResponse(200, Helpers\MessageHelper::fmtMsgConst(helpers\Constantes::getConst('ERR_ASSUNTO_NAO_ENCONTRADO')));
                 }
             } else {
-                $this->httpResponse(200, 'Identificador inválido');
+                $this->httpResponse(200, Helpers\MessageHelper::fmtMsgConst(helpers\Constantes::getConst('ERR_ID_INVALIDO')));
             }
         } catch (Exception $e) {
             $this->httpResponse(500, Helpers\MessageHelper::fmtException($e));
         }
-        $this->httpResponse(200, 'Assunto atualizado com sucesso.');
+        $this->httpResponse(200, Helpers\MessageHelper::fmtMsgConst(helpers\Constantes::getConst('MSG_ASSUNTO_ATUALIZADO_SUCESSO'),false));
     }
 }
