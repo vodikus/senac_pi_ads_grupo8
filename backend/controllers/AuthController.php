@@ -1,4 +1,6 @@
 <?php
+include_once 'helpers/Constantes.php';
+include_once 'helpers/MessageHelper.php';
 include_once 'helpers/TokenHelper.php';
 include_once 'includes/BaseController.php';
 include_once 'models/UsuarioModel.php';
@@ -22,31 +24,31 @@ class AuthController extends BaseController
                                 ];
                                 $this->httpRawResponse(200,$token);    
                             } else {
-                                $this->httpResponse(401,'E-mail ou senha não conferem');    
+                                $this->httpResponse(401,Helpers\MessageHelper::fmtMsgConst(helpers\Constantes::getConst('ERR_EMAIL_SENHA_INVALIDO')));    
                             }
                         } else {
-                            $this->httpResponse(401,'É necessário informar e-mail e senha');
+                            $this->httpResponse(401,Helpers\MessageHelper::fmtMsgConst(helpers\Constantes::getConst('ERR_EMAIL_SENHA_REQUERIDO')));
                         }                        
                         break;
                     case 'authToken':       
                         $token = Helpers\TokenHelper::extractToken( $this->pegarAutorizacao() );
                         if ( $token ) {
                             if ( Helpers\TokenHelper::validateToken($token) ) {
-                                $this->httpResponse(200,'Token ok');
+                                $this->httpResponse(200,Helpers\MessageHelper::fmtMsgConst(helpers\Constantes::getConst('MSG_TOKEN_OK')));
                             } else {
-                                $this->httpResponse(401,'Token inválido');
+                                $this->httpResponse(401,Helpers\MessageHelper::fmtMsgConst(helpers\Constantes::getConst('ERR_TOKEN_INVALIDO')));
                             }
                         } else {
-                            $this->httpResponse(401,'É necessário informar o token');
+                            $this->httpResponse(401,Helpers\MessageHelper::fmtMsgConst(helpers\Constantes::getConst('ERR_TOKEN_REQUERIDO')));
                         }                        
                         break;
                     default:
-                        $this->httpResponse(501,'Ação Indisponível');
+                        $this->httpResponse(501,Helpers\MessageHelper::fmtMsgConst(helpers\Constantes::getConst('ERR_ACAO_INDISPONIVEL')));
                         break;
                 }
                 break;
             default:
-                $this->httpResponse(405,'Method Not Allowed');
+                $this->httpResponse(405,Helpers\MessageHelper::fmtMsgConst(helpers\Constantes::getConst('ERR_METODO_NAO_PERMITIDO')));
                 break;
         }      
     }

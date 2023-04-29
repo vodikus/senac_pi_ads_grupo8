@@ -3,6 +3,39 @@ namespace helpers;
 
 class Constantes
 {
+
+    /** Mensagens - Genéricos  */
+    
+    /** Erros - Genéricos  */
+    const ERR_NAODEFINIDO = ['code'=>9000,'message'=>'Erro não definido'];
+    const ERR_ID_INVALIDO = ['code'=>9001,'message'=>'Identificador inválido'];
+    
+    /** Erros - HTTP */
+    const ERR_NAO_AUTORIZADO  = ['code'=>401,'message'=>'Acesso não autorizado'];
+    const ERR_METODO_NAO_PERMITIDO  = ['code'=>405,'message'=>'Método não permitido'];
+    const ERR_ACAO_INDISPONIVEL  = ['code'=>501,'message'=>'Ação Indisponível'];
+
+    /** Mensagens - Autenticação  */
+    const MSG_TOKEN_OK = ['code'=>9100,'message'=>'Token OK'];
+
+    /** Erros - Autenticação  */
+    const ERR_EMAIL_SENHA_INVALIDO = ['code'=>9100,'message'=>'E-mail ou senha não conferem'];
+    const ERR_EMAIL_SENHA_REQUERIDO = ['code'=>9100,'message'=>'É necessário informar e-mail e senha'];
+    const ERR_TOKEN_INVALIDO = ['code'=>9100,'message'=>'Token inválido'];
+    const ERR_TOKEN_REQUERIDO = ['code'=>9100,'message'=>'É necessário informar o token'];
+
+    /** Mensagens - Usuários  */
+
+    /** Erros - Usuários  */
+    const ERR_USUARIO_NAO_ENCONTRADO = ['code'=>9100,'message'=>'Usuário não encontrado'];
+    const ERR_USUARIO_LIVRO_STATUS_INVALIDO = ['code'=>9130,'message'=>'Status informado inválido'];
+
+    /** Mensagens - Livros  */
+
+    /** Erros - Livros  */
+    const ERR_LIVRO_NAO_ENCONTRADO = ['code'=>9200,'message'=>'Livro não encontrado'];
+    const ERR_LIVRO_NAO_DISPONIVEL = ['code'=>9201,'message'=>'Livro não disponivel'];
+
     /** Mensagens - Empréstimos */
     const MSG_EMPRESTIMO_SOLICITADO_SUCESSO  = ['code'=>1300,'message'=>'Empréstimo solicitado com sucesso'];
     const MSG_EMPRESTIMO_DEVOLVIDO_SUCESSO  = ['code'=>1301,'message'=>'Empréstimo devolvido com sucesso'];
@@ -18,23 +51,7 @@ class Constantes
     const ERR_EMPRESTIMO_NAO_PREVISAO = ['code'=>9304,'message'=>'Não foi possivel marcar a previsão deste empréstimo'];
     const ERR_EMPRESTIMO_NAO_DEVOLVIDO = ['code'=>9305,'message'=>'Não foi possivel marcar este empréstimo como devolvido'];   
     
-
-    /** Erros - HTTP */
-    const ERR_NAO_AUTORIZADO  = ['code'=>401,'message'=>'Acesso não autorizado'];
-    const ERR_METODO_NAO_PERMITIDO  = ['code'=>405,'message'=>'Método não permitido'];
-    const ERR_ACAO_INDISPONIVEL  = ['code'=>501,'message'=>'Ação Indisponível'];
-
-    /** Erros - Genéricos  */
-    const ERR_NAODEFINIDO = ['code'=>9000,'message'=>'Erro não definido'];
-    const ERR_ID_INVALIDO = ['code'=>9001,'message'=>'Identificador inválido'];
-    
-    /** Erros - Usuários  */
-    const ERR_USUARIO_NAO_ENCONTRADO = ['code'=>9100,'message'=>'Usuário não encontrado'];
-    const ERR_USUARIO_LIVRO_STATUS_INVALIDO = ['code'=>9130,'message'=>'Status informado inválido'];
-
-    /** Erros - Livros  */
-    const ERR_LIVRO_NAO_ENCONTRADO = ['code'=>9200,'message'=>'Livro não encontrado'];
-    const ERR_LIVRO_NAO_DISPONIVEL = ['code'=>9201,'message'=>'Livro não disponivel'];
+    /** Mensagens - Chamados  */
 
     /** Erros - Chamados */
     const ERR_CHAMADO_INCLUSAO = ['code'=>9500,'message'=>'Erro ao incluir chamado'];
