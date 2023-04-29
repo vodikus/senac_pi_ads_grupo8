@@ -85,10 +85,10 @@ class EmprestimoModel extends BaseModel
         try {
             switch ($tipo) {
                 case "TOMADOS":
-                    $emprestimos = $this->select("SELECT uid_dono, lid, uid_tomador, qtd_dias, retirada_prevista, retirada_efetiva, devolucao_prevista, devolucao_efetiva, status, dh_solicitacao, dh_atualizacao FROM emprestimos WHERE uid_tomador=:uid_tomador", ['uid_tomador'=>$uid]);
+                    $emprestimos = $this->select("SELECT eid, uid_dono, lid, uid_tomador, qtd_dias, retirada_prevista, retirada_efetiva, devolucao_prevista, devolucao_efetiva, status, dh_solicitacao, dh_atualizacao FROM emprestimos WHERE uid_tomador=:uid_tomador", ['uid_tomador'=>$uid]);
                     break;
                 case "EMPRESTADOS":
-                    $emprestimos = $this->select("SELECT uid_dono, lid, uid_tomador, qtd_dias, retirada_prevista, retirada_efetiva, devolucao_prevista, devolucao_efetiva, status, dh_solicitacao, dh_atualizacao FROM emprestimos WHERE uid_dono=:uid_dono", ['uid_dono'=>$uid]);
+                    $emprestimos = $this->select("SELECT eid, uid_dono, lid, uid_tomador, qtd_dias, retirada_prevista, retirada_efetiva, devolucao_prevista, devolucao_efetiva, status, dh_solicitacao, dh_atualizacao FROM emprestimos WHERE uid_dono=:uid_dono", ['uid_dono'=>$uid]);
                     break;
                 default:
                     $emprestimos = [];
@@ -220,7 +220,5 @@ class EmprestimoModel extends BaseModel
             throw New Exception( $e->getMessage(), $e->getCode() );
         }
     }
-
-    // @TODO Validar estados antes de realizar os updates / inserts devido a retirada da chave primária
 
 }

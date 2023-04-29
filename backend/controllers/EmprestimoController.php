@@ -19,24 +19,24 @@ class EmprestimoController extends BaseController
                         if ($this->isAuth()) {
                             $this->listarEmprestimos($this->getFieldFromToken('uid'), "TOMADOS");
                         } else {
-                            $this->httpResponse(401, 'Não autorizado');
+                            $this->httpResponse(401, Helpers\MessageHelper::fmtMsgConst(helpers\Constantes::getConst('ERR_NAO_AUTORIZADO')));
                         }
                     case 'meus-emprestados':
                         if ($this->isAuth()) {
                             $this->listarEmprestimos($this->getFieldFromToken('uid'), "EMPRESTADOS");
                         } else {
-                            $this->httpResponse(401, 'Não autorizado');
+                            $this->httpResponse(401, Helpers\MessageHelper::fmtMsgConst(helpers\Constantes::getConst('ERR_NAO_AUTORIZADO')));
                         }
                         break;
                     case 'buscar':
                         if ($this->isAuth()) {
                             $this->buscarEmprestimo($this->getFieldFromToken('uid'), $params['param1']);
                         } else {
-                            $this->httpResponse(401, 'Não autorizado');
+                            $this->httpResponse(401, Helpers\MessageHelper::fmtMsgConst(helpers\Constantes::getConst('ERR_NAO_AUTORIZADO')));
                         }
                         break;
                     default:
-                        $this->httpResponse(501, 'Ação Indisponível');
+                        $this->httpResponse(501, Helpers\MessageHelper::fmtMsgConst(helpers\Constantes::getConst('ERR_ACAO_INDISPONIVEL')));
                         break;
                 }
                 break;
@@ -47,18 +47,18 @@ class EmprestimoController extends BaseController
                         if ($this->isAuth()) {
                             $this->solicitarEmprestimo($this->getFieldFromToken('uid'), $dados);
                         } else {
-                            $this->httpResponse(401, 'Não autorizado');
+                            $this->httpResponse(401, Helpers\MessageHelper::fmtMsgConst(helpers\Constantes::getConst('ERR_NAO_AUTORIZADO')));
                         }
                         break;
                     case 'previsao':
                         if ($this->isAuth()) {
                             $this->previsaoEmprestimo($this->getFieldFromToken('uid'), $dados);
                         } else {
-                            $this->httpResponse(401, 'Não autorizado');
+                            $this->httpResponse(401, Helpers\MessageHelper::fmtMsgConst(helpers\Constantes::getConst('ERR_NAO_AUTORIZADO')));
                         }
                         break;
                     default:
-                        $this->httpResponse(501, 'Ação Indisponível');
+                        $this->httpResponse(501, Helpers\MessageHelper::fmtMsgConst(helpers\Constantes::getConst('ERR_ACAO_INDISPONIVEL')));
                         break;
                 }
                 break;
@@ -69,30 +69,30 @@ class EmprestimoController extends BaseController
                         if ($this->isAuth()) {
                             $this->desistirEmprestimo($this->getFieldFromToken('uid'), $params['param1']);
                         } else {
-                            $this->httpResponse(401, 'Não autorizado');
+                            $this->httpResponse(401, Helpers\MessageHelper::fmtMsgConst(helpers\Constantes::getConst('ERR_NAO_AUTORIZADO')));
                         }
                         break;
                     case 'retirar':
                         if ($this->isAuth()) {
                             $this->retirarEmprestimo($this->getFieldFromToken('uid'), $params['param1']);
                         } else {
-                            $this->httpResponse(401, 'Não autorizado');
+                            $this->httpResponse(401, Helpers\MessageHelper::fmtMsgConst(helpers\Constantes::getConst('ERR_NAO_AUTORIZADO')));
                         }
                         break;
                     case 'devolver':
                         if ($this->isAuth()) {
                             $this->devolverEmprestimo($this->getFieldFromToken('uid'), $params['param1']);
                         } else {
-                            $this->httpResponse(401, 'Não autorizado');
+                            $this->httpResponse(401, Helpers\MessageHelper::fmtMsgConst(helpers\Constantes::getConst('ERR_NAO_AUTORIZADO')));
                         }
                         break;
                     default:
-                        $this->httpResponse(501, 'Ação Indisponível');
+                        $this->httpResponse(501, Helpers\MessageHelper::fmtMsgConst(helpers\Constantes::getConst('ERR_ACAO_INDISPONIVEL')));
                         break;
                 }
                 break;
             default:
-                $this->httpResponse(405, 'Method Not Allowed');
+                $this->httpResponse(405, Helpers\MessageHelper::fmtMsgConst(helpers\Constantes::getConst('ERR_METODO_NAO_PERMITIDO')));
                 break;
         }
     }
@@ -130,8 +130,7 @@ class EmprestimoController extends BaseController
         } catch (Exception $e) {
             $this->httpResponse(200, Helpers\MessageHelper::fmtException($e));
         }
-        $this->httpResponse(200, 'Empréstimo solicitado com sucesso.', ['emprestimoId' => $emprestimoId]);
-
+        $this->httpResponse(200, Helpers\MessageHelper::fmtMsgConst(helpers\Constantes::getConst('MSG_EMPRESTIMO_SOLICITADO_SUCESSO'),false), ['emprestimoId' => $emprestimoId]);
     }
 
     public function devolverEmprestimo($uid = 0, $eid = 0)
@@ -144,7 +143,7 @@ class EmprestimoController extends BaseController
         } catch (Exception $e) {
             $this->httpResponse(200, Helpers\MessageHelper::fmtException($e));
         }
-        $this->httpResponse(200, 'Empréstimo devolvido com sucesso.');
+        $this->httpResponse(200, Helpers\MessageHelper::fmtMsgConst(helpers\Constantes::getConst('MSG_EMPRESTIMO_DEVOLVIDO_SUCESSO'),false));
     }
 
     public function desistirEmprestimo($uid = 0, $eid = 0)
@@ -157,7 +156,7 @@ class EmprestimoController extends BaseController
         } catch (Exception $e) {
             $this->httpResponse(200, Helpers\MessageHelper::fmtException($e));
         }
-        $this->httpResponse(200, 'Solicitação de Empréstimo cancelada com sucesso.');
+        $this->httpResponse(200, Helpers\MessageHelper::fmtMsgConst(helpers\Constantes::getConst('MSG_EMPRESTIMO_CANCELADO_SUCESSO'),false));
     }
 
     public function previsaoEmprestimo($uid = 0, $dados)
@@ -170,7 +169,7 @@ class EmprestimoController extends BaseController
         } catch (Exception $e) {
             $this->httpResponse(500, Helpers\MessageHelper::fmtException($e));
         }
-        $this->httpResponse(200, 'Previsão de Empréstimo registrada com sucesso.');
+        $this->httpResponse(200, Helpers\MessageHelper::fmtMsgConst(helpers\Constantes::getConst('MSG_EMPRESTIMO_PREVISAO_SUCESSO'),false));
     }
 
     public function retirarEmprestimo($uid = 0, $eid = 0)
@@ -183,7 +182,7 @@ class EmprestimoController extends BaseController
         } catch (Exception $e) {
             $this->httpResponse(500, Helpers\MessageHelper::fmtException($e));
         }
-        $this->httpResponse(200, 'Retirada de Empréstimo registrada com sucesso.');
+        $this->httpResponse(200, Helpers\MessageHelper::fmtMsgConst(helpers\Constantes::getConst('MSG_EMPRESTIMO_RETIRADA_SUCESSO'),false));
     }
 
 
