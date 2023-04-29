@@ -1,7 +1,6 @@
 <?php
-include_once 'helpers/MessageHelper.php';
-include_once 'includes/BaseController.php';
-include_once 'helpers/Constantes.php';
+use helpers\MessageHelper;
+
 include_once 'models/EmprestimoModel.php';
 
 class EmprestimoController extends BaseController
@@ -19,24 +18,24 @@ class EmprestimoController extends BaseController
                         if ($this->isAuth()) {
                             $this->listarEmprestimos($this->getFieldFromToken('uid'), "TOMADOS");
                         } else {
-                            $this->httpResponse(401, Helpers\MessageHelper::fmtMsgConst(helpers\Constantes::getConst('ERR_NAO_AUTORIZADO')));
+                            $this->httpResponse(401, MessageHelper::fmtMsgConst('ERR_NAO_AUTORIZADO'));
                         }
                     case 'meus-emprestados':
                         if ($this->isAuth()) {
                             $this->listarEmprestimos($this->getFieldFromToken('uid'), "EMPRESTADOS");
                         } else {
-                            $this->httpResponse(401, Helpers\MessageHelper::fmtMsgConst(helpers\Constantes::getConst('ERR_NAO_AUTORIZADO')));
+                            $this->httpResponse(401, MessageHelper::fmtMsgConst('ERR_NAO_AUTORIZADO'));
                         }
                         break;
                     case 'buscar':
                         if ($this->isAuth()) {
                             $this->buscarEmprestimo($this->getFieldFromToken('uid'), $params['param1']);
                         } else {
-                            $this->httpResponse(401, Helpers\MessageHelper::fmtMsgConst(helpers\Constantes::getConst('ERR_NAO_AUTORIZADO')));
+                            $this->httpResponse(401, MessageHelper::fmtMsgConst('ERR_NAO_AUTORIZADO'));
                         }
                         break;
                     default:
-                        $this->httpResponse(501, Helpers\MessageHelper::fmtMsgConst(helpers\Constantes::getConst('ERR_ACAO_INDISPONIVEL')));
+                        $this->httpResponse(501, MessageHelper::fmtMsgConst('ERR_ACAO_INDISPONIVEL'));
                         break;
                 }
                 break;
@@ -47,18 +46,18 @@ class EmprestimoController extends BaseController
                         if ($this->isAuth()) {
                             $this->solicitarEmprestimo($this->getFieldFromToken('uid'), $dados);
                         } else {
-                            $this->httpResponse(401, Helpers\MessageHelper::fmtMsgConst(helpers\Constantes::getConst('ERR_NAO_AUTORIZADO')));
+                            $this->httpResponse(401, MessageHelper::fmtMsgConst('ERR_NAO_AUTORIZADO'));
                         }
                         break;
                     case 'previsao':
                         if ($this->isAuth()) {
                             $this->previsaoEmprestimo($this->getFieldFromToken('uid'), $dados);
                         } else {
-                            $this->httpResponse(401, Helpers\MessageHelper::fmtMsgConst(helpers\Constantes::getConst('ERR_NAO_AUTORIZADO')));
+                            $this->httpResponse(401, MessageHelper::fmtMsgConst('ERR_NAO_AUTORIZADO'));
                         }
                         break;
                     default:
-                        $this->httpResponse(501, Helpers\MessageHelper::fmtMsgConst(helpers\Constantes::getConst('ERR_ACAO_INDISPONIVEL')));
+                        $this->httpResponse(501, MessageHelper::fmtMsgConst('ERR_ACAO_INDISPONIVEL'));
                         break;
                 }
                 break;
@@ -69,30 +68,30 @@ class EmprestimoController extends BaseController
                         if ($this->isAuth()) {
                             $this->desistirEmprestimo($this->getFieldFromToken('uid'), $params['param1']);
                         } else {
-                            $this->httpResponse(401, Helpers\MessageHelper::fmtMsgConst(helpers\Constantes::getConst('ERR_NAO_AUTORIZADO')));
+                            $this->httpResponse(401, MessageHelper::fmtMsgConst('ERR_NAO_AUTORIZADO'));
                         }
                         break;
                     case 'retirar':
                         if ($this->isAuth()) {
                             $this->retirarEmprestimo($this->getFieldFromToken('uid'), $params['param1']);
                         } else {
-                            $this->httpResponse(401, Helpers\MessageHelper::fmtMsgConst(helpers\Constantes::getConst('ERR_NAO_AUTORIZADO')));
+                            $this->httpResponse(401, MessageHelper::fmtMsgConst('ERR_NAO_AUTORIZADO'));
                         }
                         break;
                     case 'devolver':
                         if ($this->isAuth()) {
                             $this->devolverEmprestimo($this->getFieldFromToken('uid'), $params['param1']);
                         } else {
-                            $this->httpResponse(401, Helpers\MessageHelper::fmtMsgConst(helpers\Constantes::getConst('ERR_NAO_AUTORIZADO')));
+                            $this->httpResponse(401, MessageHelper::fmtMsgConst('ERR_NAO_AUTORIZADO'));
                         }
                         break;
                     default:
-                        $this->httpResponse(501, Helpers\MessageHelper::fmtMsgConst(helpers\Constantes::getConst('ERR_ACAO_INDISPONIVEL')));
+                        $this->httpResponse(501, MessageHelper::fmtMsgConst('ERR_ACAO_INDISPONIVEL'));
                         break;
                 }
                 break;
             default:
-                $this->httpResponse(405, Helpers\MessageHelper::fmtMsgConst(helpers\Constantes::getConst('ERR_METODO_NAO_PERMITIDO')));
+                $this->httpResponse(405, MessageHelper::fmtMsgConst('ERR_METODO_NAO_PERMITIDO'));
                 break;
         }
     }
@@ -100,12 +99,21 @@ class EmprestimoController extends BaseController
     public function buscarEmprestimo($uid = 0, $eid = 0)
     {
         try {
-            $emprestimoModel = new EmprestimoModel();
-            $emprestimo = json_encode($emprestimoModel->buscaEmprestimo($uid, $eid));
+            if (is_numeric($eid)) {
+                $emprestimoModel = new EmprestimoModel();
+                $arrEmprestimo = $emprestimoModel->buscaEmprestimo($uid, $eid);
+                if (count($arrEmprestimo) > 0) {
+                    $responseData = json_encode($arrEmprestimo);
+                } else {
+                    throw new CLException('ERR_EMPRESTIMO_NAO_LOCALIZADO');
+                }
+            } else {
+                $this->httpResponse(200, MessageHelper::fmtMsgConst('ERR_ID_INVALIDO'));
+            }
         } catch (Exception $e) {
-            $this->httpResponse(200, Helpers\MessageHelper::fmtException($e));
+            $this->httpResponse(200, MessageHelper::fmtException($e));
         }
-        $this->montarSaidaOk($emprestimo);
+        $this->montarSaidaOk($responseData);
 
     }
 
@@ -113,11 +121,16 @@ class EmprestimoController extends BaseController
     {
         try {
             $emprestimoModel = new EmprestimoModel();
-            $emprestimo = json_encode($emprestimoModel->listarEmprestimos($uid, $tipo));
+            $arrEmprestimo = $emprestimoModel->listarEmprestimos($uid, $tipo);
+            if (count($arrEmprestimo) > 0) {
+                $responseData = json_encode($arrEmprestimo);
+            } else {
+                throw new CLException('ERR_EMPRESTIMO_NAO_LOCALIZADO');
+            }
         } catch (Exception $e) {
-            $this->httpResponse(200, Helpers\MessageHelper::fmtException($e));
+            $this->httpResponse(200, MessageHelper::fmtException($e));
         }
-        $this->montarSaidaOk($emprestimo);
+        $this->montarSaidaOk($responseData);
 
     }
 
@@ -128,35 +141,43 @@ class EmprestimoController extends BaseController
             $emprestimoId = $emprestimoModel->solicitarEmprestimo($uid, $dados);
 
         } catch (Exception $e) {
-            $this->httpResponse(200, Helpers\MessageHelper::fmtException($e));
+            $this->httpResponse(200, MessageHelper::fmtException($e));
         }
-        $this->httpResponse(200, Helpers\MessageHelper::fmtMsgConst(helpers\Constantes::getConst('MSG_EMPRESTIMO_SOLICITADO_SUCESSO'),false), ['emprestimoId' => $emprestimoId]);
+        $this->httpResponse(200, MessageHelper::fmtMsgConst('MSG_EMPRESTIMO_SOLICITADO_SUCESSO', false), ['emprestimoId' => $emprestimoId]);
     }
 
     public function devolverEmprestimo($uid = 0, $eid = 0)
     {
         try {
-            $emprestimoModel = new EmprestimoModel();
-            if (!$emprestimoModel->devolverEmprestimo($uid, $eid)) {
-                $this->httpResponse(200, Helpers\MessageHelper::fmtMsgConst(helpers\Constantes::getConst('ERR_EMPRESTIMO_NAO_DEVOLVIDO')));
+            if (is_numeric($eid)) {
+                $emprestimoModel = new EmprestimoModel();
+                if (!$emprestimoModel->devolverEmprestimo($uid, $eid)) {
+                    $this->httpResponse(200, MessageHelper::fmtMsgConst('ERR_EMPRESTIMO_NAO_DEVOLVIDO'));
+                }
+            } else {
+                $this->httpResponse(200, MessageHelper::fmtMsgConst('ERR_ID_INVALIDO'));
             }
         } catch (Exception $e) {
-            $this->httpResponse(200, Helpers\MessageHelper::fmtException($e));
+            $this->httpResponse(200, MessageHelper::fmtException($e));
         }
-        $this->httpResponse(200, Helpers\MessageHelper::fmtMsgConst(helpers\Constantes::getConst('MSG_EMPRESTIMO_DEVOLVIDO_SUCESSO'),false));
+        $this->httpResponse(200, MessageHelper::fmtMsgConst('MSG_EMPRESTIMO_DEVOLVIDO_SUCESSO', false));
     }
 
     public function desistirEmprestimo($uid = 0, $eid = 0)
     {
         try {
-            $emprestimoModel = new EmprestimoModel();
-            if (!$emprestimoModel->desistirEmprestimo($uid, $eid)) {
-                $this->httpResponse(200, Helpers\MessageHelper::fmtMsgConst(helpers\Constantes::getConst('ERR_EMPRESTIMO_NAO_CANCELADO')));
+            if (is_numeric($eid)) {
+                $emprestimoModel = new EmprestimoModel();
+                if (!$emprestimoModel->desistirEmprestimo($uid, $eid)) {
+                    $this->httpResponse(200, MessageHelper::fmtMsgConst('ERR_EMPRESTIMO_NAO_CANCELADO'));
+                }
+            } else {
+                $this->httpResponse(200, MessageHelper::fmtMsgConst('ERR_ID_INVALIDO'));
             }
         } catch (Exception $e) {
-            $this->httpResponse(200, Helpers\MessageHelper::fmtException($e));
+            $this->httpResponse(200, MessageHelper::fmtException($e));
         }
-        $this->httpResponse(200, Helpers\MessageHelper::fmtMsgConst(helpers\Constantes::getConst('MSG_EMPRESTIMO_CANCELADO_SUCESSO'),false));
+        $this->httpResponse(200, MessageHelper::fmtMsgConst('MSG_EMPRESTIMO_CANCELADO_SUCESSO', false));
     }
 
     public function previsaoEmprestimo($uid = 0, $dados)
@@ -164,25 +185,29 @@ class EmprestimoController extends BaseController
         try {
             $emprestimoModel = new EmprestimoModel();
             if (!$emprestimoModel->previsaoEmprestimo($uid, $dados)) {
-                $this->httpResponse(200, Helpers\MessageHelper::fmtMsgConst(helpers\Constantes::getConst('ERR_EMPRESTIMO_NAO_PREVISAO')));
+                $this->httpResponse(200, MessageHelper::fmtMsgConst('ERR_EMPRESTIMO_NAO_PREVISAO'));
             }
         } catch (Exception $e) {
-            $this->httpResponse(500, Helpers\MessageHelper::fmtException($e));
+            $this->httpResponse(500, MessageHelper::fmtException($e));
         }
-        $this->httpResponse(200, Helpers\MessageHelper::fmtMsgConst(helpers\Constantes::getConst('MSG_EMPRESTIMO_PREVISAO_SUCESSO'),false));
+        $this->httpResponse(200, MessageHelper::fmtMsgConst('MSG_EMPRESTIMO_PREVISAO_SUCESSO', false));
     }
 
     public function retirarEmprestimo($uid = 0, $eid = 0)
     {
         try {
-            $emprestimoModel = new EmprestimoModel();
-            if (!$emprestimoModel->retirarEmprestimo($uid, $eid)) {
-                $this->httpResponse(200, Helpers\MessageHelper::fmtMsgConst(helpers\Constantes::getConst('ERR_EMPRESTIMO_NAO_RETIRADO')));
+            if (is_numeric($eid)) {
+                $emprestimoModel = new EmprestimoModel();
+                if (!$emprestimoModel->retirarEmprestimo($uid, $eid)) {
+                    $this->httpResponse(200, MessageHelper::fmtMsgConst('ERR_EMPRESTIMO_NAO_RETIRADO'));
+                }
+            } else {
+                $this->httpResponse(200, MessageHelper::fmtMsgConst('ERR_ID_INVALIDO'));
             }
         } catch (Exception $e) {
-            $this->httpResponse(500, Helpers\MessageHelper::fmtException($e));
+            $this->httpResponse(500, MessageHelper::fmtException($e));
         }
-        $this->httpResponse(200, Helpers\MessageHelper::fmtMsgConst(helpers\Constantes::getConst('MSG_EMPRESTIMO_RETIRADA_SUCESSO'),false));
+        $this->httpResponse(200, MessageHelper::fmtMsgConst('MSG_EMPRESTIMO_RETIRADA_SUCESSO', false));
     }
 
 

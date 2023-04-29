@@ -1,10 +1,10 @@
 <?php
 include_once 'includes/BaseController.php';
-include_once 'helpers/Constantes.php';
-include_once 'helpers/MessageHelper.php';
 include_once 'models/UsuarioModel.php';
 include_once 'models/UsuarioAssuntoModel.php';
 include_once 'models/UsuarioLivroModel.php';
+
+use helpers\MessageHelper;
 
 class UsuarioController extends BaseController
 {
@@ -21,18 +21,18 @@ class UsuarioController extends BaseController
                         if ($this->isAuth() && $this->getFieldFromToken('roles') == 'admin') {
                             $this->listar();
                         } else {
-                            $this->httpResponse(401, 'Não autorizado');
+                            $this->httpResponse(401, MessageHelper::fmtMsgConst('ERR_NAO_AUTORIZADO'));
                         }
                         break;
                     case 'buscar':
                         if ($this->isAuth()) {
                             $this->buscar($params['param1']);
                         } else {
-                            $this->httpResponse(401, 'Não autorizado');
+                            $this->httpResponse(401, MessageHelper::fmtMsgConst('ERR_NAO_AUTORIZADO'));
                         }
                         break;
                     default:
-                        $this->httpResponse(501, 'Ação Indisponível');
+                        $this->httpResponse(501, MessageHelper::fmtMsgConst('ERR_ACAO_INDISPONIVEL'));
                         break;
                 }
                 break;
@@ -46,39 +46,39 @@ class UsuarioController extends BaseController
                         if ($this->isAuth()) {
                             $this->vincularAssunto($this->getFieldFromToken('uid'), $dados);
                         } else {
-                            $this->httpResponse(401, 'Não autorizado');
+                            $this->httpResponse(401, MessageHelper::fmtMsgConst('ERR_NAO_AUTORIZADO'));
                         }
                         break;
                     case 'desvincularAssunto':
                         if ($this->isAuth()) {
                             $this->desvincularAssunto($this->getFieldFromToken('uid'), $dados);
                         } else {
-                            $this->httpResponse(401, 'Não autorizado');
+                            $this->httpResponse(401, MessageHelper::fmtMsgConst('ERR_NAO_AUTORIZADO'));
                         }
                         break;
                     case 'vincularLivro':
                         if ($this->isAuth()) {
                             $this->vincularLivro($this->getFieldFromToken('uid'), $dados);
                         } else {
-                            $this->httpResponse(401, 'Não autorizado');
+                            $this->httpResponse(401, MessageHelper::fmtMsgConst('ERR_NAO_AUTORIZADO'));
                         }
                         break;
                     case 'desvincularLivro':
                         if ($this->isAuth()) {
                             $this->desvincularLivro($this->getFieldFromToken('uid'), $dados);
                         } else {
-                            $this->httpResponse(401, 'Não autorizado');
+                            $this->httpResponse(401, MessageHelper::fmtMsgConst('ERR_NAO_AUTORIZADO'));
                         }
                         break;
                     case 'atualizarStatusLivro':
                         if ($this->isAuth()) {
                             $this->atualizarStatusLivro($this->getFieldFromToken('uid'), $dados);
                         } else {
-                            $this->httpResponse(401, 'Não autorizado');
+                            $this->httpResponse(401, MessageHelper::fmtMsgConst('ERR_NAO_AUTORIZADO'));
                         }
                         break;
                     default:
-                        $this->httpResponse(501, 'Ação Indisponível');
+                        $this->httpResponse(501, MessageHelper::fmtMsgConst('ERR_ACAO_INDISPONIVEL'));
                         break;
                 }
                 break;
@@ -89,11 +89,11 @@ class UsuarioController extends BaseController
                         if ($this->isAuth()) {
                             $this->atualizar($params['param1'], $dados);
                         } else {
-                            $this->httpResponse(401, 'Não autorizado');
+                            $this->httpResponse(401, MessageHelper::fmtMsgConst('ERR_NAO_AUTORIZADO'));
                         }
                         break;
                     default:
-                        $this->httpResponse(501, 'Ação Indisponível');
+                        $this->httpResponse(501, MessageHelper::fmtMsgConst('ERR_ACAO_INDISPONIVEL'));
                         break;
                 }
                 break;
@@ -103,16 +103,16 @@ class UsuarioController extends BaseController
                         if ($this->isAuth()) {
                             $this->deletar($params['param1']);
                         } else {
-                            $this->httpResponse(401, 'Não autorizado');
+                            $this->httpResponse(401, MessageHelper::fmtMsgConst('ERR_NAO_AUTORIZADO'));
                         }
                         break;
                     default:
-                        $this->httpResponse(501, 'Ação Indisponível');
+                        $this->httpResponse(501, MessageHelper::fmtMsgConst('ERR_ACAO_INDISPONIVEL'));
                         break;
                 }
                 break;
             default:
-                $this->httpResponse(405, 'Method Not Allowed');
+                $this->httpResponse(405, MessageHelper::fmtMsgConst('ERR_METODO_NAO_PERMITIDO'));
                 break;
         }
     }
@@ -121,10 +121,10 @@ class UsuarioController extends BaseController
     {
         try {
             $usuarioModel = new UsuarioModel();
-            $arrUsuarios = $usuarioModel->buscarTodosUsuarios();
+            $arrUsuarios = (array) $usuarioModel->buscarTodosUsuarios();
             $responseData = json_encode($arrUsuarios);
         } catch (Exception $e) {
-            $this->httpResponse(200, Helpers\MessageHelper::fmtException($e));
+            $this->httpResponse(200, MessageHelper::fmtException($e));
         }
         $this->montarSaidaOk($responseData);
     }
@@ -132,15 +132,15 @@ class UsuarioController extends BaseController
     public function buscar($id = 0)
     {
         try {
-            $usuarioModel = new UsuarioModel();
-            $arrUsuarios = $usuarioModel->buscarUsuario($id);
-            if ( count($arrUsuarios) > 0 ) {
+            if (is_numeric($id)) {
+                $usuarioModel = new UsuarioModel();
+                $arrUsuarios = (array) $usuarioModel->buscarUsuario($id);
                 $responseData = json_encode($arrUsuarios);
             } else {
-                throw New Exception( helpers\Constantes::getMsg('ERR_USUARIO_NAO_ENCONTRADO'), helpers\Constantes::getCode('ERR_USUARIO_NAO_ENCONTRADO') );
+                $this->httpResponse(200, MessageHelper::fmtMsgConst('ERR_ID_INVALIDO'));
             }
         } catch (Exception $e) {
-            $this->httpResponse(200, Helpers\MessageHelper::fmtException($e));
+            $this->httpResponse(200, MessageHelper::fmtException($e));
         }
         $this->montarSaidaOk($responseData);
     }
@@ -150,17 +150,16 @@ class UsuarioController extends BaseController
         try {
             if (is_numeric($id)) {
                 $usuarioModel = new UsuarioModel();
-                if ($usuarioModel->deletarUsuario($id) > 0) {
-                    $this->httpResponse(200, 'Usuário deletado com sucesso.');
-                } else {
-                    $this->httpResponse(200, 'Usuário não encontrado');
+                if ($usuarioModel->deletarUsuario($id) == 0) {
+                    $this->httpResponse(200, MessageHelper::fmtMsgConst('ERR_USUARIO_NAO_ENCONTRADO'));
                 }
             } else {
-                $this->httpResponse(200, 'Identificador inválido');
+                $this->httpResponse(200, MessageHelper::fmtMsgConst('ERR_ID_INVALIDO'));
             }
         } catch (Exception $e) {
-            $this->httpResponse(200, Helpers\MessageHelper::fmtException($e));
+            $this->httpResponse(200, MessageHelper::fmtException($e));
         }
+        $this->httpResponse(200, MessageHelper::fmtMsgConst('MSG_USUARIO_DELETADO_SUCESSO', false));
     }
 
     public function adicionar($dados)
@@ -169,23 +168,9 @@ class UsuarioController extends BaseController
             $usuarioModel = new UsuarioModel();
             $usuarioId = $usuarioModel->adicionarUsuario($dados);
         } catch (Exception $e) {
-            switch ($e->getCode()) {
-                case 23000:
-                    if (stripos($e->getMessage(), 'email')) {
-                        $this->httpResponse(200, 'E-mail já cadastrado.');
-                    } elseif (stripos($e->getMessage(), 'cpf')) {
-                        $this->httpResponse(200, 'CPF já cadastrado.');
-                    } else {
-                        $this->httpResponse(200, Helpers\MessageHelper::fmtException($e));
-                    }
-                    break;
-
-                default:
-                    $this->httpResponse(200, Helpers\MessageHelper::fmtException($e));
-                    break;
-            }
+            $this->httpResponse(200, MessageHelper::fmtException($e));
         }
-        $this->httpResponse(200, 'Usuário cadastrado com sucesso.', ['usuarioId' => $usuarioId]);
+        $this->httpResponse(200, MessageHelper::fmtMsgConst('MSG_USUARIO_CADASTRO_SUCESSO', false), ['usuarioId' => $usuarioId]);
 
     }
 
@@ -196,88 +181,60 @@ class UsuarioController extends BaseController
                 $usuarioModel = new UsuarioModel();
                 $usuarioModel->atualizarUsuario($id, $dados);
             } else {
-                $this->httpResponse(200, 'Identificador inválido');
+                $this->httpResponse(200, MessageHelper::fmtMsgConst('ERR_ID_INVALIDO'));
             }
         } catch (Exception $e) {
-            $this->httpResponse(200, Helpers\MessageHelper::fmtException($e));
+            $this->httpResponse(200, MessageHelper::fmtException($e));
         }
-        $this->httpResponse(200, 'Usuário atualizado com sucesso.');
+        $this->httpResponse(200, MessageHelper::fmtMsgConst('MSG_USUARIO_ATUALIZADO_SUCESSO', false));
     }
 
     public function vincularAssunto($uid, $dados)
     {
         try {
             $usuarioAssuntoModel = new UsuarioAssuntoModel();
-            if ($usuarioAssuntoModel->adicionarUsuarioAssunto($uid, $dados) <= 0) {
-                $this->httpResponse(200, 'Assunto não encontrado');
-            }
+            $usuarioAssuntoModel->adicionarUsuarioAssunto($uid, $dados);
         } catch (Exception $e) {
-            switch ($e->getCode()) {
-                case 23000:
-                    if (stripos($e->getMessage(), 'PRIMARY')) {
-                        $this->httpResponse(200, 'Este Assunto já está vinculado a este usuário.');
-                    } else {
-                        $this->httpResponse(200, Helpers\MessageHelper::fmtException($e));
-                    }
-                    break;
-
-                default:
-                    $this->httpResponse(200, Helpers\MessageHelper::fmtException($e));
-                    break;
-            }
+            $this->httpResponse(200, MessageHelper::fmtException($e));
         }
-        $this->httpResponse(200, 'Assunto vinculado ao usuário com sucesso.');
+        $this->httpResponse(200, MessageHelper::fmtMsgConst('MSG_USUARIO_ASSUNTO_VINCULADO', false));
     }
 
     public function desvincularAssunto($uid, $dados)
     {
         try {
             $usuarioAssuntoModel = new UsuarioAssuntoModel();
-            if ($usuarioAssuntoModel->deletarUsuarioAssunto($uid, $dados) <= 0) {
-                $this->httpResponse(200, 'Assunto não encontrado');
+            if ($usuarioAssuntoModel->deletarUsuarioAssunto($uid, $dados) == 0) {
+                $this->httpResponse(200, MessageHelper::fmtMsgConst('ERR_USUARIO_ASSUNTO_VINCULO_NAO_ENCONTRADO'));
             }
         } catch (Exception $e) {
-            $this->httpResponse(200, Helpers\MessageHelper::fmtException($e));
+            $this->httpResponse(200, MessageHelper::fmtException($e));
         }
-        $this->httpResponse(200, 'Assunto desvinculado do usuário com sucesso.');
+        $this->httpResponse(200, MessageHelper::fmtMsgConst('MSG_USUARIO_ASSUNTO_DESVINCULADO', false));
     }
 
     public function vincularLivro($uid, $dados)
     {
         try {
             $usuarioLivroModel = new UsuarioLivroModel();
-            if ($usuarioLivroModel->adicionarUsuarioLivro($uid, $dados) <= 0) {
-                $this->httpResponse(200, 'Livro não encontrado');
-            }
+            $usuarioLivroModel->adicionarUsuarioLivro($uid, $dados);
         } catch (Exception $e) {
-            switch ($e->getCode()) {
-                case 23000:
-                    if (stripos($e->getMessage(), 'PRIMARY')) {
-                        $this->httpResponse(200, 'Este Livro já está vinculado a este usuário.');
-                    } else {
-                        $this->httpResponse(200, Helpers\MessageHelper::fmtException($e));
-                    }
-                    break;
-
-                default:
-                    $this->httpResponse(200, Helpers\MessageHelper::fmtException($e));
-                    break;
-            }
+            $this->httpResponse(200, MessageHelper::fmtException($e));
         }
-        $this->httpResponse(200, 'Livro vinculado ao usuário com sucesso.');
+        $this->httpResponse(200, MessageHelper::fmtMsgConst('MSG_USUARIO_LIVRO_VINCULADO', false));
     }
 
     public function desvincularLivro($uid, $dados)
     {
         try {
             $usuarioLivroModel = new UsuarioLivroModel();
-            if ($usuarioLivroModel->deletarUsuarioLivro($uid, $dados) <= 0) {
-                $this->httpResponse(200, 'Livro não encontrado');
+            if ($usuarioLivroModel->deletarUsuarioLivro($uid, $dados) == 0) {
+                $this->httpResponse(200, MessageHelper::fmtMsgConst('ERR_USUARIO_LIVRO_VINCULO_NAO_ENCONTRADO'));
             }
         } catch (Exception $e) {
-            $this->httpResponse(200, Helpers\MessageHelper::fmtException($e));
+            $this->httpResponse(200, MessageHelper::fmtException($e));
         }
-        $this->httpResponse(200, 'Livro desvinculado do usuário com sucesso.');
+        $this->httpResponse(200, MessageHelper::fmtMsgConst('MSG_USUARIO_LIVRO_DESVINCULADO', false));
     }
 
     public function atualizarStatusLivro($uid, $dados)
@@ -285,11 +242,11 @@ class UsuarioController extends BaseController
         try {
             $usuarioLivroModel = new UsuarioLivroModel();
             if (!$usuarioLivroModel->atualizarUsuarioLivro($uid, $dados)) {
-                $this->httpResponse(200, Helpers\MessageHelper::fmtMsgConst(helpers\Constantes::getConst('ERR_LIVRO_NAO_ENCONTRADO')));
+                $this->httpResponse(200, MessageHelper::fmtMsgConst('ERR_LIVRO_NAO_ENCONTRADO'));
             }
         } catch (Exception $e) {
-            $this->httpResponse(200, Helpers\MessageHelper::fmtException($e));
+            $this->httpResponse(200, MessageHelper::fmtException($e));
         }
-        $this->httpResponse(200, 'Status do livro alterado com sucesso.');
+        $this->httpResponse(200, MessageHelper::fmtMsgConst('MSG_USUARIO_LIVRO_STATUS_SUCESSO', false));
     }
 }

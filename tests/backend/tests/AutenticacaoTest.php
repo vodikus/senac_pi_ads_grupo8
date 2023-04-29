@@ -1,6 +1,7 @@
 <?php
 
 use ClubeLivro\AutenticacaoHelper;
+use helpers\MessageHelper;
 use PHPUnit\Framework\TestCase;
 
 class AutenticacaoTest extends TestCase
@@ -45,7 +46,7 @@ class AutenticacaoTest extends TestCase
         $this->assertJson($response->getBody()->__toString());
         $body = (array)json_decode($response->getBody()->__toString(),true);
         $this->assertArrayHasKey('message', $body);
-        $this->assertSame("Token ok", $body['message']);
+        $this->assertSame(MessageHelper::fmtMsgConst('MSG_TOKEN_OK'), $body['message']);
     }
     
     private function processToken($token) {

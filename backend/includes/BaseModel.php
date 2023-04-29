@@ -1,5 +1,9 @@
 <?php
 include_once 'includes/Connection.php';
+require_once "helpers/SQLHelper.php";
+require_once "helpers/TimeDateHelper.php";
+require_once "helpers/StringHelper.php";
+
 class BaseModel
 {
     private $database;

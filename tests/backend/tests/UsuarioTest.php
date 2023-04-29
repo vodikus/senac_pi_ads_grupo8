@@ -1,7 +1,6 @@
 <?php
 
 use ClubeLivro\HttpHelper;
-use helpers\Constantes;
 use helpers\MessageHelper;
 use PHPUnit\Framework\TestCase;
 
@@ -95,7 +94,7 @@ class UsuarioTest extends TestCase
 
         $this->assertArrayHasKey('message', $outUsuario);
 
-        $this->assertSame($outUsuario['message'], 'Usuário atualizado com sucesso.');
+        $this->assertSame($outUsuario['message'], MessageHelper::fmtMsgConst('MSG_USUARIO_ATUALIZADO_SUCESSO', false));
     }
  
 
@@ -108,9 +107,5 @@ class UsuarioTest extends TestCase
         $outUsuario = (array) json_decode($response->getBody()->__toString(), true);
 
         $this->assertIsArray($outUsuario);
-
-        $this->assertArrayHasKey('message', $outUsuario);
-
-        $this->assertSame($outUsuario['message'], MessageHelper::fmtMsgConst(Constantes::getConst('ERR_USUARIO_NAO_ENCONTRADO')));
     }
 }

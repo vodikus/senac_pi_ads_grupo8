@@ -1,7 +1,7 @@
 <?php
 require_once "includes/BaseModel.php";
-require_once "helpers/SQLHelper.php";
-require_once "helpers/TimeDateHelper.php";
+require_once "models/LivroModel.php";
+require_once "models/UsuarioModel.php";
 
 class FavoritosModel extends BaseModel
 {
@@ -15,19 +15,23 @@ class FavoritosModel extends BaseModel
     {
         try {
             $dados = SQLHelper::validaCampos($this->campos, $entrada, 'INSERT');
-            if ( $this->query("SELECT 1 FROM livros WHERE lid=:lid",  ['lid' => $dados['lid'] ]) <= 0  ) {
-                    throw New Exception( "Livro não encontrado");
-            }
-            if ( $this->query("SELECT 1 FROM usuarios WHERE uid=:uid",  ['uid' => $dados['uid_dono'] ]) <= 0  ) {
-                    throw New Exception( "Usuário não encontrado");
-            }
+
+            (new LivroModel())->validaLivro($dados['lid']);
+            (new UsuarioModel())->validaUsuario($dados['uid_dono']);            
 
             return $this->query("INSERT INTO favoritos (uid_usuario, lid, uid_dono) VALUES " .
             " (:uid, :lid, :uid_dono)",
             array_merge(['uid' => $uid], $dados)
         );
     } catch (Exception $e) {
-        throw New Exception( $e->getMessage(), $e->getCode() );
+        switch ($e->getCode()) {
+            case 23000:
+                if (stripos($e->getMessage(), 'PRIMARY')) {
+                    throw new CLException('ERR_AUTOR_VINCULO_EXISTE');
+                }
+                break;
+        }
+        throw new Exception($e->getMessage(), $e->getCode());
     }
 }
 

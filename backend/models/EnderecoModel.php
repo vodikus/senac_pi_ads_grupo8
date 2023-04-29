@@ -1,12 +1,10 @@
 <?php
 require_once "includes/BaseModel.php";
-require_once "helpers/SQLHelper.php";
-require_once "helpers/TimeDateHelper.php";
 
 class EnderecoModel extends BaseModel
 {
     public $campos = array (
-        'eid' => ['protected' => 'all', 'type' => 'int', 'visible' => true],
+        'enid' => ['protected' => 'all', 'type' => 'int', 'visible' => true],
         'uid' => ['protected' => 'all', 'type' => 'int', 'visible' => true],
         'cep' => ['protected' => 'update', 'type' => 'int', 'visible' => true, 'required' => true],
         'logradouro' => ['protected' => 'none', 'type' => 'varchar', 'visible' => true, 'required' => true],
@@ -20,33 +18,55 @@ class EnderecoModel extends BaseModel
 
     public function buscarEnderecos($id = 0)
     {
-        $campos = SQLHelper::montaCamposSelect($this->campos,'e');
-        return $this->select("SELECT $campos FROM enderecos e WHERE uid=:uid", ['uid'=>$id]);
+        try {
+            $campos = SQLHelper::montaCamposSelect($this->campos,'e');
+            return $this->select("SELECT $campos FROM enderecos e WHERE uid=:uid", ['uid'=>$id]);
+        } catch (Exception $e) {        
+            throw New Exception( $e->getMessage(), $e->getCode() );
+        }
     }
 
-    public function deletarEndereco($eid = 0, $uid = 0)
+    public function deletarEndereco($enid = 0, $uid = 0)
     {
-        return $this->query("DELETE FROM enderecos WHERE eid=:eid and uid=:uid", ['eid' => $eid, 'uid' => $uid]);
+        try {
+            return $this->query("DELETE FROM enderecos WHERE enid=:enid and uid=:uid", ['enid' => $enid, 'uid' => $uid]);
+        } catch (Exception $e) {        
+            throw New Exception( $e->getMessage(), $e->getCode() );
+        }
     }
     public function adicionarEndereco($uid, $entrada)
     {
         try {
             $dados = SQLHelper::validaCampos($this->campos, $entrada, 'INSERT');
-            return $this->query("INSERT INTO enderecos (uid, cep, logradouro, numero, complemento, bairro, cidade, uf) VALUES " .
+            return $this->insert("INSERT INTO enderecos (uid, cep, logradouro, numero, complemento, bairro, cidade, uf) VALUES " .
                                 " (:uid, :cep, :logradouro, :numero, :complemento, :bairro, :cidade, :uf)",
                                 array_merge(['uid'=>$uid], $dados)
                             );
         } catch (Exception $e) {
+            switch ($e->getCode()) {
+                case 23000:
+                    if (stripos($e->getMessage(),'usu_ende_cep_uk')) {
+                        throw New CLException('ERR_ENDERECO_JA_EXISTENTE');
+                    }
+                    break;
+            }            
             throw New Exception( $e->getMessage(), $e->getCode() );
         }
     }
-    public function atualizarEndereco($eid, $uid, $entrada)
+    public function atualizarEndereco($enid, $uid, $entrada)
     {
         try {
             $dados = SQLHelper::validaCampos($this->campos, $entrada, 'UPDATE');
             $campos = SQLHelper::montaCamposUpdate($this->campos, $dados);
-            return $this->query("UPDATE enderecos SET $campos WHERE eid=:eid and uid=:uid", array_merge(['eid' => $eid, 'uid'=>$uid], $dados));
+            return $this->query("UPDATE enderecos SET $campos WHERE enid=:enid and uid=:uid", array_merge(['enid' => $enid, 'uid'=>$uid], $dados));
         } catch (Exception $e) {
+            switch ($e->getCode()) {
+                case 23000:
+                    if (stripos($e->getMessage(),'usu_ende_cep_uk')) {
+                        throw New CLException('ERR_ENDERECO_JA_EXISTENTE');
+                    }
+                    break;
+            }               
             throw New Exception( $e->getMessage(), $e->getCode() );
         }
     }

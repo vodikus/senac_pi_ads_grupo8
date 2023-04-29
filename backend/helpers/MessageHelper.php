@@ -9,9 +9,10 @@ class MessageHelper
     }
 
     public static function fmtMsgConst($const, $showCode=true) {
+        $constante = Constantes::getConst($const);
         if ($showCode)
-            return sprintf('[%05.0f] %s', $const['code'], $const['message']);
+            return sprintf('[%05.0f] %s', $constante['code'], $constante['message']);
         else
-            return sprintf('%s',$const['message']);
+            return sprintf('%s',$constante['message']);
     }
 }

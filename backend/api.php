@@ -1,4 +1,10 @@
 <?php
+include_once 'helpers/MessageHelper.php';
+include_once 'helpers/Constantes.php';
+include_once 'includes/CLException.php';
+include_once 'includes/BaseController.php';
+
+
 define( 'INCLUDE_DIR', dirname( __FILE__ ) . '/controllers/' );
 
 // Regras de roteamento

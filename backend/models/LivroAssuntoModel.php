@@ -1,11 +1,10 @@
 <?php
-require_once "includes/BaseModel.php";
-require_once "helpers/SQLHelper.php";
-require_once "helpers/TimeDateHelper.php";
+require_once "models/LivroModel.php";
+require_once "models/AssuntoModel.php";
 
 class LivroAssuntoModel extends BaseModel
 {
-    public $campos = array (
+    public $campos = array(
         'lid' => ['protected' => 'none', 'type' => 'int', 'visible' => true, 'required' => true],
         'iid' => ['protected' => 'none', 'type' => 'int', 'visible' => true, 'required' => true]
     );
@@ -14,28 +13,29 @@ class LivroAssuntoModel extends BaseModel
     {
         try {
             $dados = SQLHelper::validaCampos($this->campos, $entrada, 'INSERT');
-            if ( 
-                $this->query("SELECT 1 FROM livros WHERE lid=:lid", ['lid' => $dados['lid'] ]) <= 0 || 
-                $this->query("SELECT 1 FROM assuntos WHERE iid=:iid",  ['iid' => $dados['iid'] ]) <= 0  ) {
-                    throw New Exception( "Assunto ou Livro não encontrado");
-            }
+            (new LivroModel())->validaLivro($dados['lid']);
+            (new AssuntoModel())->validaAssunto($dados['iid']);
 
-            return $this->query("INSERT INTO livros_assuntos (lid, iid) VALUES " .
-            " (:lid, :iid)",
-            $dados
-        );
-    } catch (Exception $e) {
-        throw New Exception( $e->getMessage(), $e->getCode() );
-    }
-}
-
-public function deletarLivroAssunto($entrada)
-{
-        SQLHelper::validaCampos($this->campos, $entrada , 'DELETE');
-        try {
-            return $this->query("DELETE FROM livros_assuntos WHERE lid=:lid AND iid=:iid", ['lid' => $entrada['lid'], 'iid' => $entrada['iid']]);
+            return $this->query(
+                "INSERT INTO livros_assuntos (lid, iid) VALUES " .
+                " (:lid, :iid)",
+                $dados
+            );
         } catch (Exception $e) {
-            throw New Exception( $e->getMessage(), $e->getCode() );
+            throw new Exception($e->getMessage(), $e->getCode());
+        }
+    }
+
+    public function deletarLivroAssunto($entrada)
+    {
+        try {
+            $dados = SQLHelper::validaCampos($this->campos, $entrada, 'DELETE');
+            (new LivroModel())->validaLivro($dados['lid']);
+            (new AssuntoModel())->validaAssunto($dados['iid']);
+
+            return $this->query("DELETE FROM livros_assuntos WHERE lid=:lid AND iid=:iid", ['lid' => $dados['lid'], 'iid' => $dados['iid']]);
+        } catch (Exception $e) {
+            throw new Exception($e->getMessage(), $e->getCode());
         }
     }
 

@@ -1,5 +1,9 @@
 <?php
 include_once 'helpers/TokenHelper.php';
+include_once 'helpers/MessageHelper.php';
+
+use helpers\MessageHelper;
+use helpers\TokenHelper;
 class BaseController
 {
     private $httpCodes = array (
@@ -21,7 +25,7 @@ class BaseController
     }
 
     public function __construct() {
-        $this->token = Helpers\TokenHelper::extractToken( $this->pegarAutorizacao() );
+        $this->token = TokenHelper::extractToken( $this->pegarAutorizacao() );
     }
 
     protected function pegarSegmentos()
@@ -93,9 +97,9 @@ class BaseController
   
     protected function isAuth() {
         if ( $this->token ) {
-            return Helpers\TokenHelper::validateToken($this->token);
+            return TokenHelper::validateToken($this->token);
         } else {
-            $this->httpResponse(401,'Não autorizado');
+            $this->httpResponse(401, MessageHelper::fmtMsgConst('ERR_NAO_AUTORIZADO'));
         }  
     }
 
@@ -103,7 +107,7 @@ class BaseController
         if ( $this->token ) {
             return Helpers\TokenHelper::extractTokenField($this->token, $field);
         } else {
-            $this->httpResponse(401,'Não autorizado');
+            $this->httpResponse(401, MessageHelper::fmtMsgConst('ERR_NAO_AUTORIZADO'));
         }
     }
 

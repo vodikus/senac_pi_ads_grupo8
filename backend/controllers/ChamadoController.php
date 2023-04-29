@@ -1,7 +1,6 @@
 <?php
-include_once 'helpers/MessageHelper.php';
-include_once 'includes/BaseController.php';
-include_once 'helpers/Constantes.php';
+use helpers\MessageHelper;
+
 include_once 'models/ChamadoModel.php';
 
 class ChamadoController extends BaseController
@@ -19,7 +18,7 @@ class ChamadoController extends BaseController
                         // $this->listar();
                         break;
                     default:
-                        $this->httpResponse(501, 'Ação Indisponível');
+                        $this->httpResponse(501, MessageHelper::fmtMsgConst('ERR_ACAO_INDISPONIVEL'));
                         break;
                 }
                 break;
@@ -30,11 +29,11 @@ class ChamadoController extends BaseController
                         if ($this->isAuth()) {
                             $this->adicionarChamado($this->getFieldFromToken('uid'), $dados);
                         } else {
-                            $this->httpResponse(401, 'Não autorizado');
+                            $this->httpResponse(401, MessageHelper::fmtMsgConst('ERR_NAO_AUTORIZADO'));
                         }
                         break;
                     default:
-                        $this->httpResponse(501, 'Ação Indisponível');
+                        $this->httpResponse(501, MessageHelper::fmtMsgConst('ERR_ACAO_INDISPONIVEL'));
                         break;
                 }
                 break;
@@ -45,16 +44,16 @@ class ChamadoController extends BaseController
                         if ($this->isAuth()) {
                             // $this->atualizar($params['param1'], $dados);
                         } else {
-                            $this->httpResponse(401, 'Não autorizado');
+                            $this->httpResponse(401, MessageHelper::fmtMsgConst('ERR_NAO_AUTORIZADO'));
                         }
                         break;
                     default:
-                        $this->httpResponse(501, 'Ação Indisponível');
+                        $this->httpResponse(501, MessageHelper::fmtMsgConst('ERR_ACAO_INDISPONIVEL'));
                         break;
                 }
                 break;
             default:
-                $this->httpResponse(405, 'Method Not Allowed');
+                $this->httpResponse(405, MessageHelper::fmtMsgConst('ERR_METODO_NAO_PERMITIDO'));
                 break;
         }
     }
@@ -64,11 +63,11 @@ class ChamadoController extends BaseController
         try {
             $chamadoModel = new ChamadoModel();
             $chamadoId = $chamadoModel->adicionarChamado($uid, $dados);
-            if ($chamadoId <= 0 ) {
-                $this->httpResponse(200, Helpers\MessageHelper::fmtMsgConst(helpers\Constantes::getConst('ERR_CHAMADO_INCLUSAO')));
+            if ($chamadoId <= 0) {
+                $this->httpResponse(200, MessageHelper::fmtMsgConst('ERR_CHAMADO_INCLUSAO'));
             }
         } catch (Exception $e) {
-            $this->httpResponse(200, Helpers\MessageHelper::fmtException($e));
+            $this->httpResponse(200, MessageHelper::fmtException($e));
         }
         $this->httpResponse(200, 'Chamado aberto com sucesso.', ['chamadoId' => $chamadoId]);
 

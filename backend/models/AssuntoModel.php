@@ -1,7 +1,5 @@
 <?php
 require_once "includes/BaseModel.php";
-require_once "helpers/SQLHelper.php";
-require_once "helpers/TimeDateHelper.php";
 
 class AssuntoModel extends BaseModel
 {
@@ -10,6 +8,13 @@ class AssuntoModel extends BaseModel
         'nome_assunto' => ['protected' => 'none', 'type' => 'varchar', 'visible' => true, 'required' => true],
         'dh_atualizacao' => ['protected' => 'all', 'type' => 'timestamp', 'transform' => 'current_timestamp', 'update' => 'always', 'visible' => true]
     );
+
+    public function validaAssunto($id) {
+        if ( $this->query("SELECT 1 FROM assuntos WHERE iid=:iid",  ['iid' => $id ]) <= 0  ) {
+            throw New CLException('ERR_ASSUNTO_NAO_ENCONTRADO');
+        }
+        return true;
+    }
 
     public function listarAssuntos()
     {
@@ -42,7 +47,7 @@ class AssuntoModel extends BaseModel
             switch ($e->getCode()) {
                 case 23000:
                     if (stripos($e->getMessage(),'nome_assunto_uk')) {
-                        throw New Exception( helpers\Constantes::getMsg('ERR_ASSUNTO_JA_EXISTENTE'), helpers\Constantes::getCode('ERR_ASSUNTO_JA_EXISTENTE') );
+                        throw New CLException('ERR_ASSUNTO_JA_EXISTENTE');
                     }
                     break;
             }
@@ -58,7 +63,7 @@ class AssuntoModel extends BaseModel
             switch ($e->getCode()) {
                 case 23000:
                     if (stripos($e->getMessage(),'fk_la_assuntos')) {
-                        throw New Exception( helpers\Constantes::getMsg('ERR_ASSUNTO_DELETAR_FK'), helpers\Constantes::getCode('ERR_ASSUNTO_DELETAR_FK') );
+                        throw New CLException('ERR_ASSUNTO_DELETAR_FK');
                     }
                     break;
             }            
@@ -76,7 +81,7 @@ class AssuntoModel extends BaseModel
             switch ($e->getCode()) {
                 case 23000:
                     if (stripos($e->getMessage(),'nome_assunto_uk')) {
-                        throw New Exception( helpers\Constantes::getMsg('ERR_ASSUNTO_JA_EXISTENTE'), helpers\Constantes::getCode('ERR_ASSUNTO_JA_EXISTENTE') );
+                        throw New CLException('ERR_ASSUNTO_JA_EXISTENTE');
                     }
                     break;
             }
