@@ -21,13 +21,26 @@ class AssuntoModel extends BaseModel
         $campos = SQLHelper::montaCamposSelect($this->campos, 'a');
         return $this->select("SELECT $campos FROM assuntos a");
     }
-    public function buscarAssunto($id = 0)
+    public function buscarAssuntoPorId($id = 0)
     {
         try {
             $campos = SQLHelper::montaCamposSelect($this->campos, 'a');
             $assunto = $this->select("SELECT $campos FROM assuntos a WHERE iid=:iid", ['iid' => $id]);
             if (count($assunto) > 0) {
                 return $assunto[0];
+            }
+        } catch (Exception $e) {
+            throw new Exception($e->getMessage(), $e->getCode());
+        }
+    }
+    public function buscarAssuntoPorNome($dados)
+    {
+        try {
+            $nome = $dados['nome'];
+            $campos = SQLHelper::montaCamposSelect($this->campos, 'a');
+            $assuntos = $this->select("SELECT $campos FROM assuntos a WHERE nome_assunto LIKE :nome", ['nome' => "%$nome%"]);
+            if (count($assuntos) > 0) {
+                return $assuntos;
             }
         } catch (Exception $e) {
             throw new Exception($e->getMessage(), $e->getCode());

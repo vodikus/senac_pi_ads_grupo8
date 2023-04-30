@@ -18,7 +18,7 @@ class AssuntoController extends BaseController
                         $this->listar();
                         break;
                     case 'buscar':
-                        $this->buscar($params['param1']);
+                        $this->buscarPorId($params['param1']);
                         break;
                     default:
                         $this->httpResponse(501, MessageHelper::fmtMsgConst('ERR_ACAO_INDISPONIVEL'));
@@ -28,6 +28,9 @@ class AssuntoController extends BaseController
             case 'POST':
                 $dados = $this->pegarArrayPost();
                 switch ($params['acao']) {
+                    case 'buscar':
+                        $this->buscarPorNome($dados);
+                        break;
                     case 'adicionar':
                         if ($this->isAuth()) {
                             $this->adicionar($dados);
@@ -86,16 +89,27 @@ class AssuntoController extends BaseController
         }
         $this->montarSaidaOk($responseData);
     }
-    public function buscar($iid = 0)
+    public function buscarPorId($iid = 0)
     {
         try {
             if (is_numeric($iid)) {
                 $assuntoModel = new AssuntoModel();
-                $arrAssunto = (array) $assuntoModel->buscarAssunto($iid);
+                $arrAssunto = (array) $assuntoModel->buscarAssuntoPorId($iid);
                 $responseData = json_encode($arrAssunto);
             } else {
                 $this->httpResponse(200, MessageHelper::fmtMsgConst('ERR_ID_INVALIDO'));
             }
+        } catch (Exception $e) {
+            $this->httpResponse(200, MessageHelper::fmtException($e));
+        }
+        $this->montarSaidaOk($responseData);
+    }
+    public function buscarPorNome($dados)
+    {
+        try {
+            $assuntoModel = new AssuntoModel();
+            $arrAssunto = (array) $assuntoModel->buscarAssuntoPorNome($dados);
+            $responseData = json_encode($arrAssunto);
         } catch (Exception $e) {
             $this->httpResponse(200, MessageHelper::fmtException($e));
         }
@@ -110,7 +124,7 @@ class AssuntoController extends BaseController
         } catch (Exception $e) {
             $this->httpResponse(500, MessageHelper::fmtException($e));
         }
-        $this->httpResponse(200, MessageHelper::fmtMsgConst('MSG_ASSUNTO_CADASTRO_SUCESSO',false), ['assuntoId' => $assuntoId]);
+        $this->httpResponse(200, MessageHelper::fmtMsgConst('MSG_ASSUNTO_CADASTRO_SUCESSO', false), ['assuntoId' => $assuntoId]);
     }
 
     public function deletar($aid)
@@ -127,7 +141,7 @@ class AssuntoController extends BaseController
         } catch (Exception $e) {
             $this->httpResponse(500, MessageHelper::fmtException($e));
         }
-        $this->httpResponse(200, MessageHelper::fmtMsgConst('MSG_ASSUNTO_DELETADO_SUCESSO',false));
+        $this->httpResponse(200, MessageHelper::fmtMsgConst('MSG_ASSUNTO_DELETADO_SUCESSO', false));
     }
 
     public function atualizar($aid, $dados)
@@ -144,6 +158,6 @@ class AssuntoController extends BaseController
         } catch (Exception $e) {
             $this->httpResponse(500, MessageHelper::fmtException($e));
         }
-        $this->httpResponse(200, MessageHelper::fmtMsgConst('MSG_ASSUNTO_ATUALIZADO_SUCESSO',false));
+        $this->httpResponse(200, MessageHelper::fmtMsgConst('MSG_ASSUNTO_ATUALIZADO_SUCESSO', false));
     }
 }
