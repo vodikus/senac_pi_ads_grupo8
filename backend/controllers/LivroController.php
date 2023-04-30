@@ -214,7 +214,7 @@ class LivroController extends BaseController
         } catch (Exception $e) {
             $this->httpResponse(500, MessageHelper::fmtException($e));
         }
-        $this->httpResponse(200, MessageHelper::fmtMsgConst('MSG_LIVRO_ATUALIZADO_SUCESSO', false));
+        $this->httpResponse(200, MessageHelper::fmtMsgConst('MSG_AUTOR_LIVRO_VINCULADO_SUCESSO', false));
     }
 
     public function vincularAutor($dados)
@@ -225,7 +225,7 @@ class LivroController extends BaseController
         } catch (Exception $e) {
             $this->httpResponse(500, MessageHelper::fmtException($e));
         }
-        $this->httpResponse(200, MessageHelper::fmtMsgConst('MSG_LIVRO_VINCULADO_SUCESSO', false));
+        $this->httpResponse(200, MessageHelper::fmtMsgConst('MSG_AUTOR_LIVRO_VINCULADO_SUCESSO', false));
     }
 
     public function desvincularAutor($dados)

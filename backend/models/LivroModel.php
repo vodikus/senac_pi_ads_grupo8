@@ -14,6 +14,31 @@ class LivroModel extends BaseModel
         'dh_atualizacao' => ['protected' => 'all', 'type' => 'timestamp', 'transform' => 'current_timestamp', 'update' => 'always', 'visible' => true]
     );
 
+    private function montaSelectLivros($campos, $where = "", $groupBy = "") {
+        if (!empty($campos)) {
+            $sql = 
+            "SELECT $campos, " .
+            " group_concat(DISTINCT a.nome_autor ORDER BY a.nome_autor SEPARATOR ', ') autores, " .
+            " group_concat(DISTINCT i.nome_assunto ORDER BY i.nome_assunto SEPARATOR ', ') assuntos " .
+            " FROM livros l" .
+            " LEFT JOIN livros_autores la ON la.lid = l.lid " .
+            " LEFT JOIN autores a ON a.aid = la.aid " .
+            " LEFT JOIN livros_assuntos li ON li.lid = l.lid " .
+            " LEFT JOIN assuntos i ON i.iid = li.iid ";       
+            
+            if (!empty($where)) {
+                $sql .= " WHERE $where ";
+            }
+    
+            if (!empty($groupBy)) {
+                $sql .= " GROUP BY $groupBy";
+            }
+    
+            return $sql;
+        }
+        return 'SELECT * FROM livros l';
+    }
+
     public function validaLivro($lid) {
         if ( $this->query("SELECT 1 FROM livros WHERE lid=:lid",  ['lid' => $lid ]) <= 0  ) {
             throw New CLException('ERR_LIVRO_NAO_ENCONTRADO');
@@ -26,15 +51,7 @@ class LivroModel extends BaseModel
         $campos = SQLHelper::montaCamposSelect($this->campos, 'l');
 
         return $this->select(
-            "SELECT $campos, " .
-            " group_concat(DISTINCT a.nome_autor ORDER BY a.nome_autor SEPARATOR ', ') autores, " .
-            " group_concat(DISTINCT i.nome_assunto ORDER BY i.nome_assunto SEPARATOR ', ') assuntos " .
-            " FROM livros l" .
-            " LEFT JOIN livros_autores la ON la.lid = l.lid " .
-            " LEFT JOIN autores a ON a.aid = la.aid " .
-            " LEFT JOIN livros_assuntos li ON li.lid = l.lid " .
-            " LEFT JOIN assuntos i ON i.iid = li.iid " .
-            " GROUP BY $campos"
+            $this->montaSelectLivros($campos,'',$campos)
         );
     }
 
@@ -43,16 +60,9 @@ class LivroModel extends BaseModel
         $campos = SQLHelper::montaCamposSelect($this->campos, 'l');
 
         return $this->select(
-            "SELECT $campos, " .
-            " group_concat(DISTINCT a.nome_autor ORDER BY a.nome_autor SEPARATOR ', ') autores, " .
-            " group_concat(DISTINCT i.nome_assunto ORDER BY i.nome_assunto SEPARATOR ', ') assuntos " .
-            " FROM livros l" .
-            " LEFT JOIN livros_autores la ON la.lid = l.lid " .
-            " LEFT JOIN autores a ON a.aid = la.aid " .
-            " LEFT JOIN livros_assuntos li ON li.lid = l.lid " .
-            " LEFT JOIN assuntos i ON i.iid = li.iid " .
-            " WHERE l.lid=:lid " .
-            " GROUP BY $campos",
+            $this->montaSelectLivros($campos,
+            ' l.lid=:lid ',
+            $campos),
             ['lid' => $id]
         );
     }
@@ -62,17 +72,34 @@ class LivroModel extends BaseModel
         $campos = SQLHelper::montaCamposSelect($this->campos, 'l');
 
         return $this->select(
-            "SELECT $campos, " .
-            " group_concat(DISTINCT a.nome_autor ORDER BY a.nome_autor SEPARATOR ', ') autores, " .
-            " group_concat(DISTINCT i.nome_assunto ORDER BY i.nome_assunto SEPARATOR ', ') assuntos " .
-            " FROM livros l" .
-            " LEFT JOIN livros_autores la ON la.lid = l.lid " .
-            " LEFT JOIN autores a ON a.aid = la.aid " .
-            " LEFT JOIN livros_assuntos li ON li.lid = l.lid " .
-            " LEFT JOIN assuntos i ON i.iid = li.iid " .
-            " WHERE l.isbn=:isbn " .
-            " GROUP BY $campos",
-            ['isbn' => $id]
+            $this->montaSelectLivros($campos,
+            ' l.isbn=:isbn ',
+            $campos),
+            ['lid' => $id]
+        );
+    }
+
+    public function buscarLivroPorAssunto($assunto = "")
+    {
+        $campos = SQLHelper::montaCamposSelect($this->campos, 'l');
+
+        return $this->select(
+            $this->montaSelectLivros($campos,
+            ' i.nome_assunto LIKE :assunto ',
+            $campos),
+            ['assunto' => "%$assunto%"]
+        );
+    }
+
+    public function buscarLivroPorAutor($autor = "")
+    {
+        $campos = SQLHelper::montaCamposSelect($this->campos, 'l');
+
+        return $this->select(
+            $this->montaSelectLivros($campos,
+            ' a.nome_autor LIKE :autor ',
+            $campos),
+            ['autor' => "%$autor%"]
         );
     }
 

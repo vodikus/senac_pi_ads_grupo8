@@ -69,6 +69,8 @@ class Constantes
     const MSG_AUTOR_CADASTRO_SUCESSO = ['code' => 1400, 'message' => 'Autor cadastrado com sucesso.'];
     const MSG_AUTOR_DELETADO_SUCESSO = ['code' => 1401, 'message' => 'Autor deletado com sucesso.'];
     const MSG_AUTOR_ATUALIZADO_SUCESSO = ['code' => 1402, 'message' => 'Autor atualizado com sucesso.'];
+    const MSG_AUTOR_LIVRO_VINCULADO_SUCESSO = ['code' => 1402, 'message' => 'Autor vinculado ao livro com sucesso.'];
+    const MSG_AUTOR_LIVRO_DESVINCULADO_SUCESSO = ['code' => 1402, 'message' => 'Autor desvinculado ao livro com sucesso.'];
 
     /** Erros - Autores  */
     const ERR_AUTOR_NAO_ENCONTRADO = ['code' => 9400, 'message' => 'Autor não encontrado'];
