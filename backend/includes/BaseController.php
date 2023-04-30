@@ -55,7 +55,7 @@ class BaseController
     protected function pegarArrayPut($chave='dados')
     {
         parse_str(file_get_contents("php://input"), $dados);        
-        return (isset($dados) && is_array($dados) && array_key_exists($chave, $dados)) ? $dados[$chave] : [];
+        return (is_array($dados)) ? $dados[$chave] : [];
     }
 
     protected function montarSaidaOk($dados='')
@@ -77,10 +77,10 @@ class BaseController
         exit;
     }
 
-    protected function httpResponse($httpCode = 200, $msg='', $arrData=[])
+    protected function httpResponse($httpCode = 200, $msg='')
     {        
         if (array_key_exists($httpCode,$this->httpCodes)) {
-            $this->montarSaida(json_encode(array_merge(['message' => $msg], $arrData)), 
+            $this->montarSaida(json_encode(array('message' => $msg)), 
                 array('Content-Type: application/json', $this->httpCodes[$httpCode] )
             );        
         }

@@ -1,0 +1,36 @@
+*{
+    margin: 0;
+    padding: 0;
+    text-decoration: none;
+    font-family: 'Manrope', sans-serif;
+}
+
+.page-item{
+    width: 20px;
+    height: 20px;
+}
+
+.page-item a{ 
+    border: 1px solid #047857;
+    color: #047857;
+    border-radius: 4px;
+}
+
+.page-link{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 80%;
+}
+
+.page-item a:focus, .page-item a:active, .page-item a::after, .page-item a::before, .page-item a:default{
+    background-color: #047857;
+    color: white;
+    box-shadow: none;
+}
+
+.separacaoBotoes{
+    font-size: 50%;
+    margin: 0px 5px 0px 5px;
+    user-select: none;
+}
