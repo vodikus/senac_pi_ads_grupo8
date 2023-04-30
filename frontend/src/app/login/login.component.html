@@ -4,12 +4,12 @@
     <p class="subtitle mt-2 mb-2">Para acessar sua conta, é necessário entrar com suas credenciais</p>
 </div>
 <!-------------------------------------------------------------------- Parte do formulário de input de usuário e senha --------------------------------------------------------->
-<form class="formLogin w-100 d-flex flex-column align-items-start" action="" method="post">
+<form class="formLogin w-100 d-flex flex-column align-items-start" name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
     <label class="mb-0" for="user">Endereço de E-mail</label>
-    <input class="caixaDeTexto shadow-sm" type="text">
+    <input class="caixaDeTexto shadow-sm" type="text" name="username" [(ngModel)]="form.username" required #username="ngModel">
 
     <label class="mb-0" for="password">Senha</label>
-    <input class="caixaDeTexto shadow-sm" type="password">
+    <input class="caixaDeTexto shadow-sm" type="password" name="password" [(ngModel)]="form.password" required minlength="1" #password="ngModel">
 <!------------------------------------------------------------------------------ Check box "Manter conectado" ------------------------------------------------------------------>
     <div class="form-check mt-3 p-0">
         <label class="form-check-label d-inline-flex align-items-center justify-content-center align-contents-end" for="flexCheckDefault">
@@ -18,8 +18,9 @@
             <label class="labelCheckbox ms-2 mt-2" for="manterConectado" onclick="document.getElementById('flexCheckDefault').click()">Mantenha-me conectado</label>
         </label>
     </div>
+    {{ errorMessage }}
 <!------------------------------------------------------------------------------ Botão para realizar login --------------------------------------------------------------------->
-    <button class="botaoContinuar mt-3 text-white" type="button">Continuar</button>
+    <button class="botaoContinuar mt-3 text-white" type="submit">Continuar</button>
 </form>
 <!------------------------------------------------------------------------------- Parte do conecte-se com ---------------------------------------------------------------------->
 <div class="d-inline-flex container-fluid mt-4 p-1 justify-content-center align-items-center">
