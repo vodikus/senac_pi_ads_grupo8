@@ -189,5 +189,16 @@ class AssuntoTest extends TestCase
         
         $this->assertArrayHasKey('message', $assunto);
     } 
+    
+    public function testDeletarAssuntoInexistente()
+    {
+        $response = $this->http->getResponseAuth('DELETE', "http://clube-backend/api/assuntos/deletar/9999999999");
+
+        $this->assertEquals(200, $response->getStatusCode());
+        $this->assertJson($response->getBody()->__toString());
+        $assunto = (array) json_decode($response->getBody()->__toString(), true);
+        
+        $this->assertArrayHasKey('message', $assunto);
+    } 
  
 }

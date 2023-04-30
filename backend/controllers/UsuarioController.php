@@ -31,6 +31,13 @@ class UsuarioController extends BaseController
                             $this->httpResponse(401, MessageHelper::fmtMsgConst('ERR_NAO_AUTORIZADO'));
                         }
                         break;
+                    case 'meu-perfil':
+                        if ($this->isAuth()) {
+                            $this->buscar($this->getFieldFromToken('uid'));
+                        } else {
+                            $this->httpResponse(401, MessageHelper::fmtMsgConst('ERR_NAO_AUTORIZADO'));
+                        }
+                        break;
                     default:
                         $this->httpResponse(501, MessageHelper::fmtMsgConst('ERR_ACAO_INDISPONIVEL'));
                         break;
@@ -134,7 +141,7 @@ class UsuarioController extends BaseController
         try {
             if (is_numeric($id)) {
                 $usuarioModel = new UsuarioModel();
-                $arrUsuarios = (array) $usuarioModel->buscarUsuario($id);
+                $arrUsuarios = (array) $usuarioModel->buscarUsuario($id);                
                 $responseData = json_encode($arrUsuarios);
             } else {
                 $this->httpResponse(200, MessageHelper::fmtMsgConst('ERR_ID_INVALIDO'));

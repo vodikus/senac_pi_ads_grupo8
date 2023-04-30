@@ -90,7 +90,7 @@ class AutorController extends BaseController
             $autorModel = new AutorModel();
             $autorId = $autorModel->adicionarAutor($dados);
         } catch (Exception $e) {
-
+            $this->httpResponse(500, MessageHelper::fmtException($e));
         }
         $this->httpResponse(200, MessageHelper::fmtMsgConst('MSG_AUTOR_CADASTRO_SUCESSO'), ['autorId' => $autorId]);
     }

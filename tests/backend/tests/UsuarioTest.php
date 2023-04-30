@@ -73,8 +73,6 @@ class UsuarioTest extends TestCase
             $this->assertSame($outUsuario[0]['uid'], $inUsuario['saida']['usuarioId']);
             $this->assertSame($outUsuario[0]['email'], $inUsuario['entrada']['email']);
         }
-
-        // return $assuntoId;
     }
     
     /**
