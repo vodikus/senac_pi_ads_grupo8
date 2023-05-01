@@ -6,6 +6,7 @@ header("Access-Control-Allow-Headers: Content-Type, Authorization");
 include_once 'helpers/MessageHelper.php';
 include_once 'helpers/Constantes.php';
 include_once 'includes/CLException.php';
+include_once 'includes/CLConstException.php';
 include_once 'includes/BaseController.php';
 
 
