@@ -1,9 +1,10 @@
 *{
-    margin: 0;
+    margin: 0 auto;
     padding: 0;
     text-decoration: none;
     font-family: 'Manrope', sans-serif;
     user-select: none;
+    box-sizing: border-box;
 }
 
 .boxExterna{
