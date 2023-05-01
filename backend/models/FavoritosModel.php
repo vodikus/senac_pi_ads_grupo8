@@ -27,11 +27,11 @@ class FavoritosModel extends BaseModel
         switch ($e->getCode()) {
             case 23000:
                 if (stripos($e->getMessage(), 'PRIMARY')) {
-                    throw new CLException('ERR_AUTOR_VINCULO_EXISTE');
+                    throw new CLConstException('ERR_AUTOR_VINCULO_EXISTE');
                 }
                 break;
         }
-        throw new Exception($e->getMessage(), $e->getCode());
+        throw $e;
     }
 }
 
@@ -42,7 +42,7 @@ public function removerFavorito($uid, $entrada)
             return $this->query("DELETE FROM favoritos WHERE uid_usuario=:uid AND lid=:lid and uid_dono=:uid_dono", 
             ['uid' => $uid, 'lid' => $entrada['lid'], 'uid_dono' => $entrada['uid_dono'] ]);
         } catch (Exception $e) {
-            throw New Exception( $e->getMessage(), $e->getCode() );
+            throw $e;
         }
     }
 
