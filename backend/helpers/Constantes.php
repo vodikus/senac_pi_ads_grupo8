@@ -83,6 +83,7 @@ class Constantes
 
 
     /** Mensagens - Chamados  */
+    const MSG_CHAMADO_CADASTRO_SUCESSO = ['code' => 1500, 'message' => 'Chamado cadastrado com sucesso.'];
 
     /** Erros - Chamados */
     const ERR_CHAMADO_INCLUSAO = ['code' => 9500, 'message' => 'Erro ao incluir chamado'];

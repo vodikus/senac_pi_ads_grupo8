@@ -18,42 +18,42 @@ class ChamadoController extends BaseController
                         // $this->listar();
                         break;
                     default:
-                        $this->httpResponse(501, MessageHelper::fmtMsgConst('ERR_ACAO_INDISPONIVEL'));
+                        $this->httpRawResponse(501, MessageHelper::fmtMsgConstJson('ERR_ACAO_INDISPONIVEL'));
                         break;
                 }
                 break;
             case 'POST':
-                $dados = $this->pegarArrayPost();
+                $dados = $this->pegarArrayJson();
                 switch ($params['acao']) {
                     case 'adicionar':
                         if ($this->isAuth()) {
                             $this->adicionarChamado($this->getFieldFromToken('uid'), $dados);
                         } else {
-                            $this->httpResponse(401, MessageHelper::fmtMsgConst('ERR_NAO_AUTORIZADO'));
+                            $this->httpRawResponse(401, MessageHelper::fmtMsgConstJson('ERR_NAO_AUTORIZADO'));
                         }
                         break;
                     default:
-                        $this->httpResponse(501, MessageHelper::fmtMsgConst('ERR_ACAO_INDISPONIVEL'));
+                        $this->httpRawResponse(501, MessageHelper::fmtMsgConstJson('ERR_ACAO_INDISPONIVEL'));
                         break;
                 }
                 break;
             case 'PUT':
                 switch ($params['acao']) {
                     case 'atualizar':
-                        $dados = $this->pegarArrayPut();
+                        $dados = $this->pegarArrayJson();
                         if ($this->isAuth()) {
                             // $this->atualizar($params['param1'], $dados);
                         } else {
-                            $this->httpResponse(401, MessageHelper::fmtMsgConst('ERR_NAO_AUTORIZADO'));
+                            $this->httpRawResponse(401, MessageHelper::fmtMsgConstJson('ERR_NAO_AUTORIZADO'));
                         }
                         break;
                     default:
-                        $this->httpResponse(501, MessageHelper::fmtMsgConst('ERR_ACAO_INDISPONIVEL'));
+                        $this->httpRawResponse(501, MessageHelper::fmtMsgConstJson('ERR_ACAO_INDISPONIVEL'));
                         break;
                 }
                 break;
             default:
-                $this->httpResponse(405, MessageHelper::fmtMsgConst('ERR_METODO_NAO_PERMITIDO'));
+                $this->httpRawResponse(405, MessageHelper::fmtMsgConstJson('ERR_METODO_NAO_PERMITIDO'));
                 break;
         }
     }
@@ -64,12 +64,12 @@ class ChamadoController extends BaseController
             $chamadoModel = new ChamadoModel();
             $chamadoId = $chamadoModel->adicionarChamado($uid, $dados);
             if ($chamadoId <= 0) {
-                $this->httpResponse(200, MessageHelper::fmtMsgConst('ERR_CHAMADO_INCLUSAO'));
+                $this->httpRawResponse(200, MessageHelper::fmtMsgConstJson('ERR_CHAMADO_INCLUSAO'));
             }
         } catch (Exception $e) {
-            $this->httpResponse(200, MessageHelper::fmtException($e));
+            $this->httpRawResponse(200, MessageHelper::fmtException($e));
         }
-        $this->httpResponse(200, 'Chamado aberto com sucesso.', ['chamadoId' => $chamadoId]);
+        $this->httpRawResponse(200, MessageHelper::fmtMsgConstJson('MSG_CHAMADO_CADASTRO_SUCESSO', ['autorId' => $chamadoId]));
 
     }
 

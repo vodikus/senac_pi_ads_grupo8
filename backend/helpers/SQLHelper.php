@@ -98,10 +98,10 @@ class SQLHelper
     {
         switch ($chave) {
             case 'int':
-                $valido = is_null($valor) || is_int($valor);
+                $valido = is_null($valor) || filter_var($valor,FILTER_VALIDATE_INT);
                 break;
             case 'float':
-                $valido = is_null($valor) || is_float($valor);
+                $valido = is_null($valor) || filter_var($valor,FILTER_VALIDATE_FLOAT);
                 break;
             case 'varchar':
                 $valido = is_null($valor) || is_string($valor);

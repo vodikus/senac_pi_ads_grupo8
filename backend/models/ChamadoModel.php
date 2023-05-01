@@ -34,7 +34,7 @@ class ChamadoModel extends BaseModel
             );
 
         } catch (Exception $e) {
-            throw new Exception($e->getMessage(), $e->getCode());
+            throw $e;
         }
     }
 
