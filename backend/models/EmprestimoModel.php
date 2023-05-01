@@ -32,10 +32,10 @@ class EmprestimoModel extends BaseModel
     {
         try {
             if ($this->query("SELECT 1 FROM usuarios_livros WHERE lid=:lid AND uid=:uid AND status='D' ", ['uid' => $dados['uid_dono'], 'lid' => $dados['lid']]) <= 0) {
-                throw new CLException('ERR_LIVRO_NAO_DISPONIVEL');
+                throw new CLConstException('ERR_LIVRO_NAO_DISPONIVEL');
             }
         } catch (Exception $e) {
-            throw new Exception($e->getMessage(), $e->getCode());
+            throw $e;
         }
         return true;
     }
@@ -64,7 +64,7 @@ class EmprestimoModel extends BaseModel
                 return false;
             }
         } catch (Exception $e) {
-            throw new Exception($e->getMessage(), $e->getCode());
+            throw $e;
         }
         return true;
     }
@@ -76,10 +76,10 @@ class EmprestimoModel extends BaseModel
             if (count($emprestimo) > 0) {
                 return $emprestimo[0];
             } else {
-                throw new CLException('ERR_EMPRESTIMO_NAO_LOCALIZADO');
+                throw new CLConstException('ERR_EMPRESTIMO_NAO_LOCALIZADO');
             }
         } catch (Exception $e) {
-            throw new Exception($e->getMessage(), $e->getCode());
+            throw $e;
         }
     }
 
@@ -99,7 +99,7 @@ class EmprestimoModel extends BaseModel
             }
             return $emprestimos;
         } catch (Exception $e) {
-            throw new Exception($e->getMessage(), $e->getCode());
+            throw $e;
         }
     }
 
@@ -128,10 +128,10 @@ class EmprestimoModel extends BaseModel
                     array_merge(['uid_tomador' => $uid], $dados)
                 );
             } else {
-                throw new CLException('ERR_LIVRO_NAO_DISPONIVEL');
+                throw new CLConstException('ERR_LIVRO_NAO_DISPONIVEL');
             }
         } catch (Exception $e) {
-            throw new Exception($e->getMessage(), $e->getCode());
+            throw $e;
         }
     }
 
@@ -149,7 +149,7 @@ class EmprestimoModel extends BaseModel
             }
             return ($sqlSt > 0);
         } catch (Exception $e) {
-            throw new Exception($e->getMessage(), $e->getCode());
+            throw $e;
         }
     }
 
@@ -167,7 +167,7 @@ class EmprestimoModel extends BaseModel
             }
             return ($sqlSt > 0);
         } catch (Exception $e) {
-            throw new Exception($e->getMessage(), $e->getCode());
+            throw $e;
         }
     }
 
@@ -199,7 +199,7 @@ class EmprestimoModel extends BaseModel
             }
             return ($sqlSt > 0);
         } catch (Exception $e) {
-            throw new Exception($e->getMessage(), $e->getCode());
+            throw $e;
         }
     }
 
@@ -217,7 +217,7 @@ class EmprestimoModel extends BaseModel
             $dados = SQLHelper::validaCampos($campos, $emprestimo, 'UPDATE');
             if ($this->validaUsuarioLivro($dados) && $this->validaStatusLivro($uid, 'SOLI', $dados)) {
                 if (is_null($dados['retirada_prevista']) || is_null($dados['devolucao_prevista'])) {
-                    throw new CLException('ERR_EMPRESTIMO_DATA_DEVOLUCAO_REQUERIDA');
+                    throw new CLConstException('ERR_EMPRESTIMO_DATA_DEVOLUCAO_REQUERIDA');
                 } else {
                     $sqlSt = $this->query(
                         "UPDATE emprestimos SET " .
@@ -229,7 +229,7 @@ class EmprestimoModel extends BaseModel
             }
             return ($sqlSt > 0);
         } catch (Exception $e) {
-            throw new Exception($e->getMessage(), $e->getCode());
+            throw $e;
         }
     }
 
