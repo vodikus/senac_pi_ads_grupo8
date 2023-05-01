@@ -27,7 +27,14 @@ class UsuarioLivroModel extends BaseModel
                 array_merge(['uid' => $uid], $dados)
             );
         } catch (Exception $e) {
-            throw new Exception($e->getMessage(), $e->getCode());
+            switch ($e->getCode()) {
+                case 23000:
+                    if (stripos($e->getMessage(),'PRIMARY')) {
+                        throw new CLConstException('ERR_USUARIO_LIVRO_VINCULO_EXISTENTE', "lid: {$dados['lid']}");
+                    }
+                    break;
+            }            
+            throw $e;
         }
     }
 
@@ -41,7 +48,7 @@ class UsuarioLivroModel extends BaseModel
 
             return $this->query("DELETE FROM usuarios_livros WHERE uid=:uid AND lid=:lid", ['uid' => $uid, 'lid' => $dados['lid']]);
         } catch (Exception $e) {
-            throw new Exception($e->getMessage(), $e->getCode());
+            throw $e;
         }
     }
 
@@ -64,12 +71,12 @@ class UsuarioLivroModel extends BaseModel
             switch ($e->getCode()) {
                 case '01000':
                     if (stripos($e->getMessage(), "1265 Data truncated for column 'status") > 0) {
-                        throw new CLException('ERR_USUARIO_LIVRO_STATUS_INVALIDO');
+                        throw new CLConstException('ERR_USUARIO_LIVRO_STATUS_INVALIDO', $dados);
                     }
                     break;
 
                 default:
-                    throw new Exception($e->getMessage(), $e->getCode());
+                    throw $e;
             }
         }
     }

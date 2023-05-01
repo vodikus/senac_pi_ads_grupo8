@@ -24,11 +24,11 @@ class UsuarioAssuntoModel extends BaseModel
             switch ($e->getCode()) {
                 case 23000:
                     if (stripos($e->getMessage(),'PRIMARY')) {
-                        throw New CLException('ERR_USUARIO_ASSUNTO_VINCULO_EXISTENTE');
+                        throw new CLConstException('ERR_USUARIO_ASSUNTO_VINCULO_EXISTENTE', "iid: {$dados['iid']}");
                     }
                     break;
             }            
-            throw new Exception($e->getMessage(), $e->getCode());
+            throw $e;
         }
     }
 
@@ -39,7 +39,7 @@ class UsuarioAssuntoModel extends BaseModel
             (new AssuntoModel())->validaAssunto($dados['iid']);
             return $this->query("DELETE FROM usuarios_assuntos WHERE uid=:uid AND iid=:iid", ['uid' => $uid, 'iid' => $dados['iid']]);
         } catch (Exception $e) {
-            throw new Exception($e->getMessage(), $e->getCode());
+            throw $e;
         }
     }
 

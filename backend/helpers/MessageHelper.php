@@ -22,6 +22,7 @@ class MessageHelper
     }
 
     public static function fmtMsgConst($const, $showCode=true, $arr = []) {
+        $msg = '';
         if (count($arr) > 0) {
             $msg = sprintf(" (%s)", implode('|',array_map(['self','imprimeChaveValor'],array_keys($arr), array_values($arr))));
         }

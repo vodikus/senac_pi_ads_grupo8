@@ -22,7 +22,7 @@ class UsuarioModel extends BaseModel
     public function validaUsuario($uid)
     {
         if ($this->query("SELECT 1 FROM usuarios WHERE uid=:uid", ['uid' => $uid]) <= 0) {
-            throw new CLException('ERR_USUARIO_NAO_ENCONTRADO');
+            throw new CLConstException('ERR_USUARIO_NAO_ENCONTRADO');
         }
         return true;
     }
@@ -32,7 +32,7 @@ class UsuarioModel extends BaseModel
             $campos = SQLHelper::montaCamposSelect($this->campos, 'u');
             return $this->select("SELECT $campos FROM usuarios u");
         } catch (Exception $e) {
-            throw new Exception($e->getMessage(), $e->getCode());
+            throw $e;
         }
     }
     public function buscarUsuario($id = 0)
@@ -41,7 +41,7 @@ class UsuarioModel extends BaseModel
             $campos = SQLHelper::montaCamposSelect($this->campos, 'u');
             return $this->select("SELECT $campos FROM usuarios u WHERE uid=:uid", ['uid' => $id]);
         } catch (Exception $e) {
-            throw new Exception($e->getMessage(), $e->getCode());
+            throw $e;
         }
 
     }
@@ -50,7 +50,7 @@ class UsuarioModel extends BaseModel
         try {
             return $this->query("UPDATE usuarios SET status='D' WHERE uid=:uid", ['uid' => $id]);
         } catch (Exception $e) {
-            throw new Exception($e->getMessage(), $e->getCode());
+            throw $e;
         }
     }
     public function adicionarUsuario($entrada)
@@ -62,19 +62,21 @@ class UsuarioModel extends BaseModel
             switch ($e->getCode()) {
                 case 23000:
                     if (stripos($e->getMessage(),'email_uk')) {
-                        throw New CLException('ERR_EMAIL_EXISTENTE');
+                        throw new CLConstException('ERR_EMAIL_EXISTENTE');
                     }
                     if (stripos($e->getMessage(),'cpf_uk')) {
-                        throw New CLException('ERR_CPF_EXISTENTE');
+                        throw new CLConstException('ERR_CPF_EXISTENTE');
                     }
                     break;
             }            
-            throw new Exception($e->getMessage(), $e->getCode());
+            throw $e;
         }
     }
     public function atualizarUsuario($id, $entrada)
     {
         try {
+            $this->validaUsuario($id);
+
             $campos = array_filter(SQLHelper::sobrescrevePropriedades($this->campos, [
                 'email' => ['required' => false],
                 'nome' => ['required' => false],
@@ -82,6 +84,7 @@ class UsuarioModel extends BaseModel
                 'nascimento' => ['required' => false],
                 'sexo' => ['required' => false],
                 'apelido' => ['required' => false],
+                'senha' =>  ['required' => false]
             ]), ['SQLHelper', 'limpaCamposProtegidos']);
 
             $dados = SQLHelper::validaCampos($campos, $entrada, 'UPDATE');
@@ -91,14 +94,14 @@ class UsuarioModel extends BaseModel
             switch ($e->getCode()) {
                 case 23000:
                     if (stripos($e->getMessage(),'email_uk')) {
-                        throw New CLException('ERR_EMAIL_EXISTENTE');
+                        throw new CLConstException('ERR_EMAIL_EXISTENTE');
                     }
                     if (stripos($e->getMessage(),'cpf_uk')) {
-                        throw New CLException('ERR_CPF_EXISTENTE');
+                        throw new CLConstException('ERR_CPF_EXISTENTE');
                     }
                     break;
             }            
-            throw new Exception($e->getMessage(), $e->getCode());
+            throw $e;
         }
     }
     public function validarUsuarioSenha($email, $senha)

@@ -19,7 +19,7 @@ class TokenHelper
                 ]
                 );
         } else {
-            throw New \Exception( 'Campos email e roles são requeridos para gerar o token.' );
+            throw New \CLConstException('ERR_TOKEN_INVALIDO', 'Campos email e roles são requeridos para gerar o token.' );
         }
     }
 
@@ -68,7 +68,7 @@ class TokenHelper
     
             return ['header' => $header, 'payload' => $payload, 'signature' => $signTkn];
         } else {
-            throw New \Exception( 'Token inválido' );
+            throw New \CLConstException('ERR_TOKEN_INVALIDO');
         }
     }
 
@@ -97,10 +97,10 @@ class TokenHelper
             if (array_key_exists('payload', $arrToken) && array_key_exists($field, $arrToken['payload'])) {
                 return $arrToken['payload']->$field;
             } else {
-                throw New \Exception( "Campo $field não existe neste token" );
+                throw New \CLConstException('ERR_TOKEN_INVALIDO', "Campo $field não existe neste token" );
             }
         } else {
-            throw New \Exception( 'Token requerido' );
+            throw New \CLConstException('ERR_TOKEN_INVALIDO');
         }
         
     }

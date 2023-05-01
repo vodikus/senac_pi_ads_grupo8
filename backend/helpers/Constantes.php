@@ -36,7 +36,7 @@ class Constantes
     const ERR_USUARIO_ASSUNTO_VINCULO_EXISTENTE = ['code' => 9105, 'message' => 'Este assunto já está vinculado a este usuário'];
     const ERR_USUARIO_ASSUNTO_VINCULO_NAO_ENCONTRADO = ['code' => 9106, 'message' => 'Este usuário não está vinculado a este assunto'];
     const ERR_USUARIO_LIVRO_VINCULO_EXISTENTE = ['code' => 9107, 'message' => 'Este livro já está vinculado a este usuário'];
-    const ERR_USUARIO_LIVRO_VINCULO_NAO_ENCONTRADO = ['code' => 9108, 'message' => 'Este livro não está vinculado a este assunto'];
+    const ERR_USUARIO_LIVRO_VINCULO_NAO_ENCONTRADO = ['code' => 9108, 'message' => 'Este livro não está vinculado a este usuário'];
     const ERR_USUARIO_LIVRO_STATUS_INVALIDO = ['code' => 9130, 'message' => 'Status informado inválido'];
 
     /** Mensagens - Livros  */
