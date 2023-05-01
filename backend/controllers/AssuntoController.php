@@ -85,7 +85,12 @@ class AssuntoController extends BaseController
     /**
      * @apiDefine ERR_GENERICOS
      *
-     * @apiError (Erro 5xx) 9001 Identificador inválido.
+     * @apiError (Erro 4xx) 401 Não autorizado
+     * @apiError (Erro 4xx) 405 Método não permitido
+     * @apiError (Erro 5xx) 501 Ação Indisponível
+     * @apiError (Erro 5xx) 9000 Erro não definido
+     * @apiError (Erro 5xx) 9001 Identificador inválido
+     * @apiError (Erro 5xx) 9004 A entrada deve ser um JSON válido
      *
      */
 
@@ -119,6 +124,7 @@ class AssuntoController extends BaseController
      *       }
      *     ]
      *
+     * @apiUse ERR_GENERICOS
      * 
      */
     public function listar($uid = 0)
@@ -154,6 +160,7 @@ class AssuntoController extends BaseController
      *     }
      *
      * 
+     * @apiUse ERR_GENERICOS
      * @apiUse ERR_ASSUNTO_PADRAO
      * 
      * @apiErrorExample Error-Response:
@@ -206,6 +213,8 @@ class AssuntoController extends BaseController
      *       }
      *     ]
      * 
+     * @apiUse ERR_GENERICOS
+     * 
      */
     public function buscarPorNome($dados)
     {
@@ -242,6 +251,7 @@ class AssuntoController extends BaseController
      *         }
      *     }
      * 
+     * @apiUse ERR_GENERICOS
      * @apiUse ERR_ASSUNTO_PADRAO
      * 
      * @apiErrorExample Error-Response:
