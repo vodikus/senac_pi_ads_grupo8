@@ -27,11 +27,11 @@ class LivroAutorModel extends BaseModel
             switch ($e->getCode()) {
                 case 23000:
                     if (stripos($e->getMessage(), 'PRIMARY')) {
-                        throw new CLException('ERR_AUTOR_VINCULO_EXISTE');
+                        throw new CLConstException('ERR_AUTOR_VINCULO_EXISTE');
                     }
                     break;
             }
-            throw new Exception($e->getMessage(), $e->getCode());
+            throw $e;
         }
     }
 
@@ -45,7 +45,7 @@ class LivroAutorModel extends BaseModel
 
             return $this->query("DELETE FROM livros_autores WHERE lid=:lid AND aid=:aid", ['lid' => $dados['lid'], 'aid' => $dados['aid']]);
         } catch (Exception $e) {
-            throw new Exception($e->getMessage(), $e->getCode());
+            throw $e;
         }
     }
 

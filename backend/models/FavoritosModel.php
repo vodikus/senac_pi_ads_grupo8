@@ -2,6 +2,7 @@
 require_once "includes/BaseModel.php";
 require_once "models/LivroModel.php";
 require_once "models/UsuarioModel.php";
+require_once "models/UsuarioLivroModel.php";
 
 class FavoritosModel extends BaseModel
 {
@@ -17,7 +18,8 @@ class FavoritosModel extends BaseModel
             $dados = SQLHelper::validaCampos($this->campos, $entrada, 'INSERT');
 
             (new LivroModel())->validaLivro($dados['lid']);
-            (new UsuarioModel())->validaUsuario($dados['uid_dono']);            
+            (new UsuarioModel())->validaUsuario($dados['uid_dono']);
+            (new UsuarioLivroModel())->validaUsuarioLivro($dados['uid_dono'], $dados['lid']);
 
             return $this->query("INSERT INTO favoritos (uid_usuario, lid, uid_dono) VALUES " .
             " (:uid, :lid, :uid_dono)",
@@ -27,7 +29,7 @@ class FavoritosModel extends BaseModel
         switch ($e->getCode()) {
             case 23000:
                 if (stripos($e->getMessage(), 'PRIMARY')) {
-                    throw new CLConstException('ERR_AUTOR_VINCULO_EXISTE');
+                    throw new CLConstException('ERR_LIVRO_JA_FAVORITO');
                 }
                 break;
         }

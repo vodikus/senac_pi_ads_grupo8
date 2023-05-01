@@ -41,7 +41,7 @@ class LivroModel extends BaseModel
 
     public function validaLivro($lid) {
         if ( $this->query("SELECT 1 FROM livros WHERE lid=:lid",  ['lid' => $lid ]) <= 0  ) {
-            throw New CLException('ERR_LIVRO_NAO_ENCONTRADO');
+            throw new CLConstException('ERR_LIVRO_NAO_ENCONTRADO', "lid: $lid");
         }
         return true;
     }
@@ -116,11 +116,11 @@ class LivroModel extends BaseModel
             switch ($e->getCode()) {
                 case 23000:
                     if (stripos($e->getMessage(), 'livro_isbn_uk')) {
-                        throw New CLException('ERR_LIVRO_JA_EXISTENTE');
+                        throw new CLConstException('ERR_LIVRO_JA_EXISTENTE');
                     }
                     break;
             }
-            throw new Exception($e->getMessage(), $e->getCode());
+            throw $e;
         }
     }
 
@@ -129,25 +129,31 @@ class LivroModel extends BaseModel
         try {
             return $this->query("DELETE FROM livros WHERE lid=:lid", ['lid' => $lid]);
         } catch (Exception $e) {
-            throw new Exception($e->getMessage(), $e->getCode());
+            throw $e;
         }
     }
 
     public function atualizarLivro($lid, $entrada)
     {
         try {
-            $dados = SQLHelper::validaCampos($this->campos, $entrada, 'UPDATE');
-            $campos = SQLHelper::montaCamposUpdate($this->campos, $dados);
-            return $this->query("UPDATE livros SET $campos WHERE lid=:lid", array_merge(['lid' => $lid], $dados));
+
+            $this->validaLivro($lid);
+
+            $campos = SQLHelper::sobrescrevePropriedades($this->campos, [
+                'isbn' => ['required' => false]
+            ]);            
+            $dados = SQLHelper::validaCampos($campos, $entrada, 'UPDATE');
+            $camposUpdate = SQLHelper::montaCamposUpdate($this->campos, $dados);
+            return $this->query("UPDATE livros SET $camposUpdate WHERE lid=:lid", array_merge(['lid' => $lid], $dados));
         } catch (Exception $e) {
             switch ($e->getCode()) {
                 case 23000:
                     if (stripos($e->getMessage(), 'livro_isbn_uk')) {
-                        throw New CLException('ERR_LIVRO_JA_EXISTENTE');
+                        throw new CLConstException('ERR_LIVRO_JA_EXISTENTE');
                     }
                     break;
             }            
-            throw new Exception($e->getMessage(), $e->getCode());
+            throw $e;
         }
     }
 

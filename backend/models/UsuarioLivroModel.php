@@ -13,6 +13,13 @@ class UsuarioLivroModel extends BaseModel
         'dh_atualizacao' => ['protected' => 'all', 'type' => 'timestamp', 'transform' => 'current_timestamp', 'update' => 'always', 'visible' => true]
     );
 
+    public function validaUsuarioLivro($uid, $lid) {
+        if ( $this->query("SELECT 1 FROM usuarios_livros WHERE uid=:uid AND lid=:lid",  ['uid' => $uid, 'lid' => $lid]) <= 0  ) {
+            throw new CLConstException('ERR_USUARIO_LIVRO_VINCULO_NAO_ENCONTRADO', ['uid' => $uid, 'lid' => $lid]);
+        }
+        return true;
+    }
+
     public function adicionarUsuarioLivro($uid, $entrada)
     {
         try {

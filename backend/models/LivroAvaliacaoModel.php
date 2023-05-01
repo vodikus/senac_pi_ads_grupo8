@@ -21,11 +21,11 @@ class LivroAvaliacaoModel extends BaseModel
             switch ($e->getCode()) {
                 case 23000:
                     if (stripos($e->getMessage(), 'PRIMARY')) {
-                        throw New CLException('ERR_LIVRO_JA_AVALIADO');
+                        throw new CLConstException('ERR_LIVRO_JA_AVALIADO');
                     }
                     break;
             }            
-            throw new Exception($e->getMessage(), $e->getCode());
+            throw $e;
         }
     }
 }
