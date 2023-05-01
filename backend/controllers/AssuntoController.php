@@ -101,13 +101,8 @@ class AssuntoController extends BaseController
      *
      */
 
-
-
     /**
-     * @api {get} /assuntos/listar/ Lista os assuntos
-     * @apiName Listar
-     * @apiGroup Assuntos
-     * @apiVersion 1.0.0
+     * @apiDefine SAIDA_LISTA
      *
      * @apiSuccess {Object[]} assuntos Lista de assuntos
      * @apiSuccess {Number} assuntos.iid ID do assunto
@@ -124,6 +119,33 @@ class AssuntoController extends BaseController
      *       }
      *     ]
      *
+     */
+
+     /**
+     * @apiDefine SAIDA_PADRAO
+     *
+     * @apiSuccess {Number} codigo Código da mensagem
+     * @apiSuccess {String} mensagem Mensagem de retorno
+     * @apiSuccess {Object} detalhe Objeto contendo detalhes do retorno
+     * @apiSuccess {Number} detalhe.assuntoId  Id do assunto inserido
+     *
+     * @apiSuccessExample Success-Response:
+     *     HTTP/1.1 200 OK
+     *     {
+     *         "codigo": 1234,
+     *         "mensagem": "Sua operação foi realizada com sucesso",
+     *         "detalhe": ""
+     *     }
+     *
+     */
+
+    /**
+     * @api {get} /assuntos/listar/ Lista os assuntos
+     * @apiName Listar
+     * @apiGroup Assuntos
+     * @apiVersion 1.0.0
+     *
+     * @apiUse SAIDA_LISTA
      * @apiUse ERR_GENERICOS
      * 
      */
@@ -198,21 +220,7 @@ class AssuntoController extends BaseController
      *
      * @apiBody {String} nome_assunto Nome do assunto.
      *
-     * @apiSuccess {Object[]} assuntos Lista de assuntos
-     * @apiSuccess {Number} assuntos.iid ID do assunto
-     * @apiSuccess {String} assuntos.nome_assunto Nome do assunto
-     * @apiSuccess {Timestamp} assuntos.dh_atualizacao  Data/Hora de atualização
-     *
-     * @apiSuccessExample Success-Response:
-     *     HTTP/1.1 200 OK
-     *     [
-     *       {
-     *         "iid": "1",
-     *         "nome_assunto": "Fantasia",
-     *         "dh_atualizacao": "2023-04-15 20:45:26"
-     *       }
-     *     ]
-     * 
+     * @apiUse SAIDA_LISTA
      * @apiUse ERR_GENERICOS
      * 
      */
@@ -236,21 +244,7 @@ class AssuntoController extends BaseController
      *
      * @apiBody {String} nome_assunto Nome do assunto.
      * 
-     * @apiSuccess {Number} codigo Código da mensagem
-     * @apiSuccess {String} mensagem Mensagem de retorno
-     * @apiSuccess {Object} detalhe Objeto contendo detalhes do retorno
-     * @apiSuccess {Number} detalhe.assuntoId  Id do assunto inserido
-     *
-     * @apiSuccessExample Success-Response:
-     *     HTTP/1.1 200 OK
-     *     {
-     *         "codigo": "1600",
-     *         "mensagem": "Assunto cadastrado com sucesso.",
-     *         "detalhe": {
-     *             "assuntoId": "54"
-     *         }
-     *     }
-     * 
+     * @apiUse SAIDA_PADRAO
      * @apiUse ERR_GENERICOS
      * @apiUse ERR_ASSUNTO_PADRAO
      * 
@@ -281,19 +275,7 @@ class AssuntoController extends BaseController
      *
      * @apiParam {Number} id ID único do assunto.
      *
-     * @apiSuccess {Number} codigo Código da mensagem
-     * @apiSuccess {String} mensagem Mensagem de retorno
-     * @apiSuccess {Object} detalhe Objeto contendo detalhes do retorno
-     * @apiSuccess {Number} detalhe.assuntoId  Id do assunto inserido
-     *
-     * @apiSuccessExample Success-Response:
-     *     HTTP/1.1 200 OK
-     *     {
-     *         "codigo": "1601",
-     *         "mensagem": "Assunto deletado com sucesso.",
-     *         "detalhe": ""
-     *     }
-     * 
+     * @apiUse SAIDA_PADRAO
      * @apiUse ERR_GENERICOS
      * @apiUse ERR_ASSUNTO_PADRAO
      * @apiError (Erro 5xx) 9602 Um assunto não pode ser deletado devido estar vinculado a algum livro.
@@ -333,19 +315,7 @@ class AssuntoController extends BaseController
      * 
      * @apiBody {String} nome_assunto Nome do assunto.
      * 
-     * @apiSuccess {Number} codigo Código da mensagem
-     * @apiSuccess {String} mensagem Mensagem de retorno
-     * @apiSuccess {Object} detalhe Objeto contendo detalhes do retorno
-     * @apiSuccess {Number} detalhe.assuntoId  Id do assunto inserido
-     *
-     * @apiSuccessExample Success-Response:
-     *     HTTP/1.1 200 OK
-     *     {
-     *         "codigo": 1602,
-     *         "mensagem": "Assunto atualizado com sucesso.",
-     *         "detalhe": ""
-     *     }
-     * 
+     * @apiUse SAIDA_PADRAO
      * @apiUse ERR_GENERICOS
      * @apiUse ERR_ASSUNTO_PADRAO
      * @apiError (Erro 5xx) 9601 Um assunto com o mesmo nome já foi inserido.

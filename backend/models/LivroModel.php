@@ -103,6 +103,18 @@ class LivroModel extends BaseModel
         );
     }
 
+    public function buscarLivroPorTitulo($titulo = "")
+    {
+        $campos = SQLHelper::montaCamposSelect($this->campos, 'l');
+
+        return $this->select(
+            $this->montaSelectLivros($campos,
+            ' l.titulo LIKE :titulo ',
+            $campos),
+            ['titulo' => "%$titulo%"]
+        );
+    }
+
     public function adicionarLivro($entrada)
     {
         try {

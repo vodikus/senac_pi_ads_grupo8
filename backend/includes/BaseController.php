@@ -60,8 +60,9 @@ class BaseController
             $arrJson = json_decode($raw_data, true);
             error_log("ENTRADA: " . var_export($arrJson, true));                    
             return $arrJson;
+        } else {
+            $this->httpRawResponse(500, MessageHelper::fmtMsgConstJson('ERR_JSON_INVALIDO'));
         }
-        $this->httpResponse(500, MessageHelper::fmtMsgConst('ERR_JSON_INVALIDO'));
     }
 
     protected function pegarArrayPost($chave='dados')
@@ -116,7 +117,7 @@ class BaseController
         if ( $this->token ) {
             return TokenHelper::validateToken($this->token);
         } else {
-            $this->httpResponse(401, MessageHelper::fmtMsgConst('ERR_NAO_AUTORIZADO'));
+            $this->httpRawResponse(401, MessageHelper::fmtMsgConstJson('ERR_NAO_AUTORIZADO'));
         }  
     }
 
@@ -124,7 +125,7 @@ class BaseController
         if ( $this->token ) {
             return Helpers\TokenHelper::extractTokenField($this->token, $field);
         } else {
-            $this->httpResponse(401, MessageHelper::fmtMsgConst('ERR_NAO_AUTORIZADO'));
+            $this->httpRawResponse(401, MessageHelper::fmtMsgConstJson('ERR_NAO_AUTORIZADO'));
         }
     }
 
