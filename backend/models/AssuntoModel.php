@@ -11,7 +11,7 @@ class AssuntoModel extends BaseModel
 
     public function validaAssunto($id) {
         if ( $this->query("SELECT 1 FROM assuntos WHERE iid=:iid",  ['iid' => $id ]) <= 0  ) {
-            throw New CLException('ERR_ASSUNTO_NAO_ENCONTRADO');
+            throw new CLConstException('ERR_ASSUNTO_NAO_ENCONTRADO', "iid: $id");
         }
         return true;
     }
@@ -30,7 +30,7 @@ class AssuntoModel extends BaseModel
                 return $assunto[0];
             }
         } catch (Exception $e) {
-            throw new Exception($e->getMessage(), $e->getCode());
+            throw $e;
         }
     }
     public function buscarAssuntoPorNome($dados)
@@ -43,7 +43,7 @@ class AssuntoModel extends BaseModel
                 return $assuntos;
             }
         } catch (Exception $e) {
-            throw new Exception($e->getMessage(), $e->getCode());
+            throw $e;
         }
     }
 
@@ -60,11 +60,11 @@ class AssuntoModel extends BaseModel
             switch ($e->getCode()) {
                 case 23000:
                     if (stripos($e->getMessage(),'nome_assunto_uk')) {
-                        throw New CLException('ERR_ASSUNTO_JA_EXISTENTE');
+                        throw new CLConstException('ERR_ASSUNTO_JA_EXISTENTE');
                     }
                     break;
             }
-            throw new Exception($e->getMessage(), $e->getCode());
+            throw $e;
         }
     }
 
@@ -76,11 +76,11 @@ class AssuntoModel extends BaseModel
             switch ($e->getCode()) {
                 case 23000:
                     if (stripos($e->getMessage(),'fk_la_assuntos')) {
-                        throw New CLException('ERR_ASSUNTO_DELETAR_FK');
+                        throw new CLConstException('ERR_ASSUNTO_DELETAR_FK');
                     }
                     break;
             }            
-            throw new Exception($e->getMessage(), $e->getCode());
+            throw $e;
         }
     }
 
@@ -94,11 +94,11 @@ class AssuntoModel extends BaseModel
             switch ($e->getCode()) {
                 case 23000:
                     if (stripos($e->getMessage(),'nome_assunto_uk')) {
-                        throw New CLException('ERR_ASSUNTO_JA_EXISTENTE');
+                        throw new CLConstException('ERR_ASSUNTO_JA_EXISTENTE');
                     }
                     break;
             }
-            throw new Exception($e->getMessage(), $e->getCode());
+            throw $e;
         }
     }
 

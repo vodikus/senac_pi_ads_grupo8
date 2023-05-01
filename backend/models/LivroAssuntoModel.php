@@ -22,7 +22,14 @@ class LivroAssuntoModel extends BaseModel
                 $dados
             );
         } catch (Exception $e) {
-            throw new Exception($e->getMessage(), $e->getCode());
+            switch ($e->getCode()) {
+                case 23000:
+                    if (stripos($e->getMessage(), 'PRIMARY')) {
+                        throw new CLConstException('ERR_ASSUNTO_VINCULO_EXISTE');
+                    }
+                    break;
+            }
+            throw $e;
         }
     }
 
@@ -35,7 +42,7 @@ class LivroAssuntoModel extends BaseModel
 
             return $this->query("DELETE FROM livros_assuntos WHERE lid=:lid AND iid=:iid", ['lid' => $dados['lid'], 'iid' => $dados['iid']]);
         } catch (Exception $e) {
-            throw new Exception($e->getMessage(), $e->getCode());
+            throw $e;
         }
     }
 
