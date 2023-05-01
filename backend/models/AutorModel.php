@@ -11,7 +11,7 @@ class AutorModel extends BaseModel
 
     public function validaAutor($aid) {
         if ( $this->query("SELECT 1 FROM autores WHERE aid=:aid",  ['aid' => $aid ]) <= 0  ) {
-            throw New CLException('ERR_AUTOR_NAO_ENCONTRADO');
+            throw new CLConstException('ERR_AUTOR_NAO_ENCONTRADO');
         }
         return true;
     }
@@ -39,7 +39,7 @@ class AutorModel extends BaseModel
             switch ($e->getCode()) {
                 case 23000:
                     if (stripos($e->getMessage(),'nome_autor_uk')) {
-                        throw New CLException('ERR_AUTOR_JA_EXISTENTE');
+                        throw new CLConstException('ERR_AUTOR_JA_EXISTENTE');
                     }
                     break;
             }           
@@ -55,7 +55,7 @@ class AutorModel extends BaseModel
             switch ($e->getCode()) {
                 case 23000:
                     if (stripos($e->getMessage(),'fk_autores')) {
-                        throw New CLException('ERR_AUTOR_DELETAR_FK');
+                        throw new CLConstException('ERR_AUTOR_DELETAR_FK');
                     }
                     break;
             }            
@@ -73,7 +73,7 @@ class AutorModel extends BaseModel
             switch ($e->getCode()) {
                 case 23000:
                     if (stripos($e->getMessage(),'nome_autor_uk')) {
-                        throw New CLException('ERR_AUTOR_JA_EXISTENTE');
+                        throw new CLConstException('ERR_AUTOR_JA_EXISTENTE');
                     }
                     break;
             }           

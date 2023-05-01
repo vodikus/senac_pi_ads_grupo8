@@ -18,37 +18,37 @@ class AutorController extends BaseController
                         $this->listar();
                         break;
                     default:
-                        $this->httpResponse(501, MessageHelper::fmtMsgConst('ERR_ACAO_INDISPONIVEL'));
+                        $this->httpRawResponse(501, MessageHelper::fmtMsgConstJson('ERR_ACAO_INDISPONIVEL'));
                         break;
                 }
                 break;
             case 'POST':
-                $dados = $this->pegarArrayPost();
+                $dados = $this->pegarArrayJson();
                 switch ($params['acao']) {
                     case 'adicionar':
                         if ($this->isAuth()) {
                             $this->adicionar($dados);
                         } else {
-                            $this->httpResponse(401, MessageHelper::fmtMsgConst('ERR_NAO_AUTORIZADO'));
+                            $this->httpRawResponse(401, MessageHelper::fmtMsgConstJson('ERR_NAO_AUTORIZADO'));
                         }
                         break;
                     default:
-                        $this->httpResponse(501, MessageHelper::fmtMsgConst('ERR_ACAO_INDISPONIVEL'));
+                        $this->httpRawResponse(501, MessageHelper::fmtMsgConstJson('ERR_ACAO_INDISPONIVEL'));
                         break;
                 }
                 break;
             case 'PUT':
                 switch ($params['acao']) {
                     case 'atualizar':
-                        $dados = $this->pegarArrayPut();
+                        $dados = $this->pegarArrayJson();
                         if ($this->isAuth()) {
                             $this->atualizar($params['param1'], $dados);
                         } else {
-                            $this->httpResponse(401, MessageHelper::fmtMsgConst('ERR_NAO_AUTORIZADO'));
+                            $this->httpRawResponse(401, MessageHelper::fmtMsgConstJson('ERR_NAO_AUTORIZADO'));
                         }
                         break;
                     default:
-                        $this->httpResponse(501, MessageHelper::fmtMsgConst('ERR_ACAO_INDISPONIVEL'));
+                        $this->httpRawResponse(501, MessageHelper::fmtMsgConstJson('ERR_ACAO_INDISPONIVEL'));
                         break;
                 }
                 break;
@@ -58,16 +58,16 @@ class AutorController extends BaseController
                         if ($this->isAuth()) {
                             $this->deletar($params['param1']);
                         } else {
-                            $this->httpResponse(401, MessageHelper::fmtMsgConst('ERR_NAO_AUTORIZADO'));
+                            $this->httpRawResponse(401, MessageHelper::fmtMsgConstJson('ERR_NAO_AUTORIZADO'));
                         }
                         break;
                     default:
-                        $this->httpResponse(501, MessageHelper::fmtMsgConst('ERR_ACAO_INDISPONIVEL'));
+                        $this->httpRawResponse(501, MessageHelper::fmtMsgConstJson('ERR_ACAO_INDISPONIVEL'));
                         break;
                 }
                 break;
             default:
-                $this->httpResponse(405, MessageHelper::fmtMsgConst('ERR_METODO_NAO_PERMITIDO'));
+                $this->httpRawResponse(405, MessageHelper::fmtMsgConstJson('ERR_METODO_NAO_PERMITIDO'));
                 break;
         }
     }
@@ -79,7 +79,7 @@ class AutorController extends BaseController
             $arrAutores = $autorModel->listarAutores();
             $responseData = json_encode($arrAutores);
         } catch (Exception $e) {
-            $this->httpResponse(500, $e->getMessage());
+            $this->httpRawResponse(500, $e->getMessage());
         }
         $this->montarSaidaOk($responseData);
     }
@@ -90,9 +90,9 @@ class AutorController extends BaseController
             $autorModel = new AutorModel();
             $autorId = $autorModel->adicionarAutor($dados);
         } catch (Exception $e) {
-            $this->httpResponse(500, MessageHelper::fmtException($e));
+            $this->httpRawResponse(500, MessageHelper::fmtException($e));
         }
-        $this->httpResponse(200, MessageHelper::fmtMsgConst('MSG_AUTOR_CADASTRO_SUCESSO'), ['autorId' => $autorId]);
+        $this->httpRawResponse(200, MessageHelper::fmtMsgConstJson('MSG_AUTOR_CADASTRO_SUCESSO', ['autorId' => $autorId]));
     }
 
     public function deletar($aid)
@@ -101,15 +101,15 @@ class AutorController extends BaseController
             if (is_numeric($aid)) {
                 $autorModel = new AutorModel();
                 if ($autorModel->deletarAutor($aid) == 0) {
-                    $this->httpResponse(200, MessageHelper::fmtMsgConst('ERR_AUTOR_NAO_ENCONTRADO'));
+                    $this->httpRawResponse(200, MessageHelper::fmtMsgConstJson('ERR_AUTOR_NAO_ENCONTRADO'));
                 }
             } else {
-                $this->httpResponse(200, MessageHelper::fmtMsgConst('ERR_ID_INVALIDO'));
+                $this->httpRawResponse(200, MessageHelper::fmtMsgConstJson('ERR_ID_INVALIDO'));
             }
         } catch (Exception $e) {
-            $this->httpResponse(500, MessageHelper::fmtException($e));
+            $this->httpRawResponse(500, MessageHelper::fmtException($e));
         }
-        $this->httpResponse(200, MessageHelper::fmtMsgConst('MSG_AUTOR_DELETADO_SUCESSO', false));
+        $this->httpRawResponse(200, MessageHelper::fmtMsgConstJson('MSG_AUTOR_DELETADO_SUCESSO'));
     }
 
     public function atualizar($aid, $dados)
@@ -118,14 +118,14 @@ class AutorController extends BaseController
             if (is_numeric($aid)) {
                 $autorModel = new AutorModel();
                 if ($autorModel->atualizarAutor($aid, $dados) == 0) {
-                    $this->httpResponse(200, MessageHelper::fmtMsgConst('ERR_AUTOR_NAO_ENCONTRADO'));
+                    $this->httpRawResponse(200, MessageHelper::fmtMsgConstJson('ERR_AUTOR_NAO_ENCONTRADO'));
                 }
             } else {
-                $this->httpResponse(200, MessageHelper::fmtMsgConst('ERR_ID_INVALIDO'));
+                $this->httpRawResponse(200, MessageHelper::fmtMsgConstJson('ERR_ID_INVALIDO'));
             }
         } catch (Exception $e) {
-            $this->httpResponse(500, MessageHelper::fmtException($e));
+            $this->httpRawResponse(500, MessageHelper::fmtException($e));
         }
-        $this->httpResponse(200, MessageHelper::fmtMsgConst('MSG_AUTOR_ATUALIZADO_SUCESSO', false));
+        $this->httpRawResponse(200, MessageHelper::fmtMsgConstJson('MSG_AUTOR_ATUALIZADO_SUCESSO'));
     }
 }
