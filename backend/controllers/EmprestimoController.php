@@ -13,16 +13,17 @@ class EmprestimoController extends BaseController
     {
         switch ($metodo) {
             case 'GET':
+                $dados = $this->pegarArrayJson();
                 switch ($params['acao']) {
                     case 'meus-emprestimos':
                         if ($this->isAuth()) {
-                            $this->listarEmprestimos($this->getFieldFromToken('uid'), "TOMADOS");
+                            $this->listarEmprestimos($this->getFieldFromToken('uid'), "TOMADOS", $dados);
                         } else {
                             $this->httpRawResponse(401, MessageHelper::fmtMsgConstJson('ERR_NAO_AUTORIZADO'));
                         }
                     case 'meus-emprestados':
                         if ($this->isAuth()) {
-                            $this->listarEmprestimos($this->getFieldFromToken('uid'), "EMPRESTADOS");
+                            $this->listarEmprestimos($this->getFieldFromToken('uid'), "EMPRESTADOS", $dados);
                         } else {
                             $this->httpRawResponse(401, MessageHelper::fmtMsgConstJson('ERR_NAO_AUTORIZADO'));
                         }
@@ -104,30 +105,31 @@ class EmprestimoController extends BaseController
                 if (count($arrEmprestimo) > 0) {
                     $responseData = json_encode($arrEmprestimo);
                 } else {
-                    throw new CLConstException('ERR_EMPRESTIMO_NAO_LOCALIZADO');
+                    $this->httpRawResponse(500, MessageHelper::fmtMsgConstJson('ERR_EMPRESTIMO_NAO_LOCALIZADO'));
                 }
             } else {
-                $this->httpRawResponse(200, MessageHelper::fmtMsgConstJson('ERR_ID_INVALIDO'));
+                $this->httpRawResponse(500, MessageHelper::fmtMsgConstJson('ERR_ID_INVALIDO'));
             }
         } catch (Exception $e) {
-            $this->httpRawResponse(200, MessageHelper::fmtException($e));
+            $this->httpRawResponse(500, MessageHelper::fmtException($e));
         }
         $this->montarSaidaOk($responseData);
 
     }
 
-    public function listarEmprestimos($uid = 0, $tipo)
+    public function listarEmprestimos($uid = 0, $tipo, $filtro = [])
     {
         try {
             $emprestimoModel = new EmprestimoModel();
-            $arrEmprestimo = $emprestimoModel->listarEmprestimos($uid, $tipo);
+            $status = (array_key_exists('status', $filtro)) ? $filtro['status'] : '';
+            $arrEmprestimo = $emprestimoModel->listarEmprestimos($uid, $tipo, filter_var($status, FILTER_SANITIZE_STRING));
             if (count($arrEmprestimo) > 0) {
                 $responseData = json_encode($arrEmprestimo);
             } else {
-                throw new CLConstException('ERR_EMPRESTIMO_NAO_LOCALIZADO');
+                $this->httpRawResponse(404, MessageHelper::fmtMsgConstJson('ERR_EMPRESTIMO_NAO_LOCALIZADO'));
             }
         } catch (Exception $e) {
-            $this->httpRawResponse(200, MessageHelper::fmtException($e));
+            $this->httpRawResponse(500, MessageHelper::fmtException($e));
         }
         $this->montarSaidaOk($responseData);
 
@@ -140,7 +142,7 @@ class EmprestimoController extends BaseController
             $emprestimoId = $emprestimoModel->solicitarEmprestimo($uid, $dados);
 
         } catch (Exception $e) {
-            $this->httpRawResponse(200, MessageHelper::fmtException($e));
+            $this->httpRawResponse(500, MessageHelper::fmtException($e));
         }
         $this->httpRawResponse(200, MessageHelper::fmtMsgConstJson('MSG_EMPRESTIMO_SOLICITADO_SUCESSO', ['emprestimoId' => $emprestimoId]));
     }
@@ -154,7 +156,7 @@ class EmprestimoController extends BaseController
                     $this->httpRawResponse(200, MessageHelper::fmtMsgConstJson('ERR_EMPRESTIMO_NAO_DEVOLVIDO'));
                 }
             } else {
-                $this->httpRawResponse(200, MessageHelper::fmtMsgConstJson('ERR_ID_INVALIDO'));
+                $this->httpRawResponse(500, MessageHelper::fmtMsgConstJson('ERR_ID_INVALIDO'));
             }
         } catch (Exception $e) {
             $this->httpRawResponse(200, MessageHelper::fmtException($e));
@@ -171,7 +173,7 @@ class EmprestimoController extends BaseController
                     $this->httpRawResponse(200, MessageHelper::fmtMsgConstJson('ERR_EMPRESTIMO_NAO_CANCELADO'));
                 }
             } else {
-                $this->httpRawResponse(200, MessageHelper::fmtMsgConstJson('ERR_ID_INVALIDO'));
+                $this->httpRawResponse(500, MessageHelper::fmtMsgConstJson('ERR_ID_INVALIDO'));
             }
         } catch (Exception $e) {
             $this->httpRawResponse(200, MessageHelper::fmtException($e));
@@ -184,7 +186,7 @@ class EmprestimoController extends BaseController
         try {
             $emprestimoModel = new EmprestimoModel();
             if (!$emprestimoModel->previsaoEmprestimo($uid, $dados)) {
-                $this->httpRawResponse(200, MessageHelper::fmtMsgConstJson('ERR_EMPRESTIMO_NAO_PREVISAO'));
+                $this->httpRawResponse(500, MessageHelper::fmtMsgConstJson('ERR_EMPRESTIMO_NAO_PREVISAO'));
             }
         } catch (Exception $e) {
             $this->httpRawResponse(500, MessageHelper::fmtException($e));
@@ -201,7 +203,7 @@ class EmprestimoController extends BaseController
                     $this->httpRawResponse(200, MessageHelper::fmtMsgConstJson('ERR_EMPRESTIMO_NAO_RETIRADO'));
                 }
             } else {
-                $this->httpRawResponse(200, MessageHelper::fmtMsgConstJson('ERR_ID_INVALIDO'));
+                $this->httpRawResponse(500, MessageHelper::fmtMsgConstJson('ERR_ID_INVALIDO'));
             }
         } catch (Exception $e) {
             $this->httpRawResponse(500, MessageHelper::fmtException($e));

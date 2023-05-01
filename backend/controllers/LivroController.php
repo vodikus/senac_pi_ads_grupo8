@@ -37,6 +37,9 @@ class LivroController extends BaseController
                     case 'buscar-por-titulo':
                         $this->buscarTitulo($dados);
                         break;
+                    case 'buscar-por-usuario':
+                        $this->buscarUsuario($params['param1']);
+                        break;
                     default:
                         $this->httpRawResponse(501, MessageHelper::fmtMsgConstJson('ERR_ACAO_INDISPONIVEL'));
                         break;
@@ -320,6 +323,34 @@ class LivroController extends BaseController
             $entrada = (array_key_exists('titulo', $dados)) ? $dados['titulo'] : '';
             $arrLivros = (array) $livroModel->buscarLivroPorTitulo($entrada);
             $responseData = json_encode($arrLivros);
+        } catch (Exception $e) {
+            $this->httpRawResponse(500, MessageHelper::fmtException($e));
+        }
+        $this->montarSaidaOk($responseData);
+    }
+
+    /**
+     * @api {get} /livros/buscar-por-usuario/:id Busca livros pelo Usuario
+     * @apiName Buscar por Usuário
+     * @apiGroup Livros
+     * @apiVersion 1.0.0
+     *
+     * @apiParam {Number} id Id do usuário
+     *
+     * @apiUse SAIDA_LISTA
+     * @apiUse ERR_GENERICOS
+     * 
+     */
+    public function buscarUsuario($uid = 0)
+    {
+        try {
+            if (is_numeric($uid)) {
+                $livroModel = new LivroModel();
+                $arrLivros = (array) $livroModel->buscarLivroPorUsuario($uid);
+                $responseData = json_encode($arrLivros);
+            } else {
+                $this->httpRawResponse(200, MessageHelper::fmtMsgConstJson('ERR_ID_INVALIDO'));
+            }
         } catch (Exception $e) {
             $this->httpRawResponse(500, MessageHelper::fmtException($e));
         }

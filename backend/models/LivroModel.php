@@ -103,6 +103,19 @@ class LivroModel extends BaseModel
         );
     }
 
+    public function buscarLivroPorUsuario($uid = 0)
+    {
+        $campos = SQLHelper::montaCamposSelect($this->campos, 'l');
+
+        return $this->select(
+            "SELECT $campos FROM usuarios_livros ul " .
+            "INNER JOIN usuarios u USING (uid) " .
+            "INNER JOIN livros l USING (lid) " .
+            "WHERE ul.uid = :uid",
+            ['uid' => $uid]
+        );
+    }
+
     public function buscarLivroPorTitulo($titulo = "")
     {
         $campos = SQLHelper::montaCamposSelect($this->campos, 'l');

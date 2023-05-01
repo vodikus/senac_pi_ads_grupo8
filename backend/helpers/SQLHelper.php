@@ -78,9 +78,7 @@ class SQLHelper
     {
         $retorno = array();
 
-        error_log("ldp " . var_export($campos, true));
         foreach ($dados as $chave => $valor) {
-            error_log("$chave:" . var_export($valor, true));
             foreach ($tipos as $tipo) {
                 if (array_key_exists($chave, $campos) && $campos[$chave]['protected'] != $tipo) {
                     $retorno[$chave] = $valor;
@@ -129,4 +127,5 @@ class SQLHelper
     {
         return !(array_key_exists('protected', $valor) && $valor['protected'] == 'all');
     }
+
 }
