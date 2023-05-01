@@ -1,5 +1,9 @@
 <?php
 include_once 'includes/Connection.php';
+require_once "helpers/SQLHelper.php";
+require_once "helpers/TimeDateHelper.php";
+require_once "helpers/StringHelper.php";
+
 class BaseModel
 {
     private $database;
@@ -31,7 +35,7 @@ class BaseModel
             $this->errorLog($query,$parametros);
             return $sth->fetchAll();
         } catch (Exception $e) {
-            throw New Exception( $e->getMessage() );
+            throw $e;
         }
     }
 
@@ -49,7 +53,25 @@ class BaseModel
             return $rowCount;
         } catch (Exception $e) {
             error_log("Erro: " . $e->getMessage());
-            throw New Exception( $e->getMessage(), $e->getCode());
+            throw $e;
+        }
+    }
+
+    function insert($query = "", $params = []) {
+        try {
+            $this->errorLog($query,$params);
+            $sth = $this->db->prepare($query);
+            $parametros = $this->sanitizeParams($query,$params);
+            error_log("Clean: ".var_export($parametros, true));                        
+            
+            $stExec = $sth->execute($parametros);
+            $sqlId = $this->db->lastInsertId();
+            error_log("ReturnId: $sqlId");
+
+            return $sqlId;
+        } catch (Exception $e) {
+            error_log("Erro: " . $e->getMessage());
+            throw $e;
         }
     }
 

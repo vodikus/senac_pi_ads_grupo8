@@ -1,11 +1,10 @@
 <?php
 require_once "includes/BaseModel.php";
-require_once "helpers/SQLHelper.php";
-require_once "helpers/TimeDateHelper.php";
+require_once "models/AssuntoModel.php";
 
 class UsuarioAssuntoModel extends BaseModel
 {
-    public $campos = array (
+    public $campos = array(
         'uid' => ['protected' => 'none', 'type' => 'int', 'visible' => true],
         'iid' => ['protected' => 'none', 'type' => 'int', 'visible' => true, 'required' => true]
     );
@@ -14,26 +13,33 @@ class UsuarioAssuntoModel extends BaseModel
     {
         try {
             $dados = SQLHelper::validaCampos($this->campos, $entrada, 'INSERT');
-            if ( $this->query("SELECT 1 FROM assuntos WHERE iid=:iid",  ['iid' => $dados['iid'] ]) <= 0  ) {
-                    throw New Exception( "Assunto não encontrado");
-            }
+            (new AssuntoModel())->validaAssunto($dados['iid']);
 
-            return $this->query("INSERT INTO usuarios_assuntos (uid, iid) VALUES " .
-            " (:uid, :iid)",
-            array_merge(['uid' => $uid], $dados)
-        );
-    } catch (Exception $e) {
-        throw New Exception( $e->getMessage(), $e->getCode() );
-    }
-}
-
-public function deletarUsuarioAssunto($uid, $entrada)
-{
-        SQLHelper::validaCampos($this->campos, $entrada , 'DELETE');
-        try {
-            return $this->query("DELETE FROM usuarios_assuntos WHERE uid=:uid AND iid=:iid", ['uid' => $uid, 'iid' => $entrada['iid']]);
+            return $this->query(
+                "INSERT INTO usuarios_assuntos (uid, iid) VALUES " .
+                " (:uid, :iid)",
+                array_merge(['uid' => $uid], $dados)
+            );
         } catch (Exception $e) {
-            throw New Exception( $e->getMessage(), $e->getCode() );
+            switch ($e->getCode()) {
+                case 23000:
+                    if (stripos($e->getMessage(),'PRIMARY')) {
+                        throw new CLConstException('ERR_USUARIO_ASSUNTO_VINCULO_EXISTENTE', "iid: {$dados['iid']}");
+                    }
+                    break;
+            }            
+            throw $e;
+        }
+    }
+
+    public function deletarUsuarioAssunto($uid, $entrada)
+    {
+        try {
+            $dados = SQLHelper::validaCampos($this->campos, $entrada, 'DELETE');
+            (new AssuntoModel())->validaAssunto($dados['iid']);
+            return $this->query("DELETE FROM usuarios_assuntos WHERE uid=:uid AND iid=:iid", ['uid' => $uid, 'iid' => $dados['iid']]);
+        } catch (Exception $e) {
+            throw $e;
         }
     }
 

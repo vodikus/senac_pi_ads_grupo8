@@ -1,7 +1,6 @@
 <?php
 require_once "includes/BaseModel.php";
-require_once "helpers/SQLHelper.php";
-require_once "helpers/TimeDateHelper.php";
+require_once "models/LivroModel.php";
 
 class LivroAvaliacaoModel extends BaseModel
 {
@@ -15,12 +14,18 @@ class LivroAvaliacaoModel extends BaseModel
     {
         try {
             $dados = SQLHelper::validaCampos($this->campos, $entrada, 'INSERT');
-            if ( $this->query("SELECT 1 FROM livros WHERE lid=:lid", ['lid' => $dados['lid'] ]) <= 0 ) {
-                    throw New Exception( "Livro não encontrado");
-            }
+            (new LivroModel())->validaLivro($dados['lid']);
+
             return $this->query("INSERT INTO livros_avaliacoes (lid, uid, nota) VALUES (:lid, :uid, :nota)", array_merge(['uid' => $uid],$dados));
         } catch (Exception $e) {
-            throw New Exception( $e->getMessage(), $e->getCode() );
+            switch ($e->getCode()) {
+                case 23000:
+                    if (stripos($e->getMessage(), 'PRIMARY')) {
+                        throw new CLConstException('ERR_LIVRO_JA_AVALIADO');
+                    }
+                    break;
+            }            
+            throw $e;
         }
     }
 }

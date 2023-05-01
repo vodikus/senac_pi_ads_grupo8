@@ -1,7 +1,5 @@
 <?php
 require_once "includes/BaseModel.php";
-require_once "helpers/SQLHelper.php";
-require_once "helpers/TimeDateHelper.php";
 
 class AutorModel extends BaseModel
 {
@@ -10,6 +8,13 @@ class AutorModel extends BaseModel
         'nome_autor' => ['protected' => 'none', 'type' => 'varchar', 'visible' => true, 'required' => true],
         'dh_atualizacao' => ['protected' => 'all', 'type' => 'timestamp', 'transform' => 'current_timestamp', 'update' => 'always', 'visible' => true]
     );
+
+    public function validaAutor($aid) {
+        if ( $this->query("SELECT 1 FROM autores WHERE aid=:aid",  ['aid' => $aid ]) <= 0  ) {
+            throw new CLConstException('ERR_AUTOR_NAO_ENCONTRADO');
+        }
+        return true;
+    }
 
     public function listarAutores()
     {
@@ -26,11 +31,18 @@ class AutorModel extends BaseModel
     {
         try {
             $dados = SQLHelper::validaCampos($this->campos, $entrada, 'INSERT');
-            return $this->query("INSERT INTO autores (nome_autor) VALUES " .
+            return $this->insert("INSERT INTO autores (nome_autor) VALUES " .
                                 " (:nome_autor)",
                                 $dados
                             );
         } catch (Exception $e) {
+            switch ($e->getCode()) {
+                case 23000:
+                    if (stripos($e->getMessage(),'nome_autor_uk')) {
+                        throw new CLConstException('ERR_AUTOR_JA_EXISTENTE');
+                    }
+                    break;
+            }           
             throw New Exception( $e->getMessage(), $e->getCode() );
         }
     }
@@ -40,7 +52,14 @@ class AutorModel extends BaseModel
         try {
             return $this->query("DELETE FROM autores WHERE aid=:aid", ['aid' => $aid]);
         } catch (Exception $e) {
-            throw New Exception( $e->getMessage(), $e->getCode() );
+            switch ($e->getCode()) {
+                case 23000:
+                    if (stripos($e->getMessage(),'fk_autores')) {
+                        throw new CLConstException('ERR_AUTOR_DELETAR_FK');
+                    }
+                    break;
+            }            
+            throw new Exception ($e->getMessage(), $e->getCode() );
         }
     }
 
@@ -51,6 +70,13 @@ class AutorModel extends BaseModel
             $campos = SQLHelper::montaCamposUpdate($this->campos, $dados);
             return $this->query("UPDATE autores SET $campos WHERE aid=:aid", array_merge(['aid' => $aid], $dados));
         } catch (Exception $e) {
+            switch ($e->getCode()) {
+                case 23000:
+                    if (stripos($e->getMessage(),'nome_autor_uk')) {
+                        throw new CLConstException('ERR_AUTOR_JA_EXISTENTE');
+                    }
+                    break;
+            }           
             throw New Exception( $e->getMessage(), $e->getCode() );
         }
     }

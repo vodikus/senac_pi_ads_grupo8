@@ -1,6 +1,8 @@
 <?php
+use helpers\MessageHelper;
+use helpers\TokenHelper;
+
 include_once 'helpers/TokenHelper.php';
-include_once 'includes/BaseController.php';
 include_once 'models/UsuarioModel.php';
 
 class AuthController extends BaseController
@@ -10,43 +12,44 @@ class AuthController extends BaseController
         switch ($metodo) {
             case 'POST':
                 switch ($params['acao']) {
-                    case 'getToken':       
-                        if ( array_key_exists('username', $_POST) && array_key_exists('password', $_POST) ) {
+                    case 'getToken':  
+                        $entrada = $this->pegarArrayJson();     
+                        if ( array_key_exists('username', $entrada) && array_key_exists('password', $entrada) ) {
                             $usuarioModel = new UsuarioModel();
-                            if ( $usuarioModel->validarUsuarioSenha($_POST['username'], $_POST['password']) == 1 ) {
-                                $usuario = $usuarioModel->buscaPorEmail($_POST['username']);
+                            if ( $usuarioModel->validarUsuarioSenha($entrada['username'], $entrada['password']) == 1 ) {
+                                $usuario = $usuarioModel->buscaPorEmail($entrada['username']);
                                 $token = [ 
-                                    "access_token" => TokenHelper::generateToken($_POST['username'], $usuario['role'], $usuario['uid'], $this->expSeconds),
+                                    "access_token" => TokenHelper::generateToken($entrada['username'], $usuario['role'], $usuario['uid'], $this->expSeconds),
                                     "expires_in" => $this->expSeconds,
                                     "token_type" => "bearer"
                                 ];
-                                $this->httpRawResponse(200,$token);    
+                                $this->httpRawResponse(200,json_encode($token));
                             } else {
-                                $this->httpResponse(401,'E-mail ou senha não conferem');    
+                                $this->httpRawResponse(401, MessageHelper::fmtMsgConstJson('ERR_EMAIL_SENHA_INVALIDO'));
                             }
                         } else {
-                            $this->httpResponse(401,'É necessário informar e-mail e senha');
+                            $this->httpRawResponse(401,MessageHelper::fmtMsgConstJson('ERR_EMAIL_SENHA_REQUERIDO'));
                         }                        
                         break;
                     case 'authToken':       
                         $token = TokenHelper::extractToken( $this->pegarAutorizacao() );
                         if ( $token ) {
                             if ( TokenHelper::validateToken($token) ) {
-                                $this->httpResponse(200,'Token ok');
+                                $this->httpRawResponse(200,MessageHelper::fmtMsgConstJson('MSG_TOKEN_OK'));
                             } else {
-                                $this->httpResponse(401,'Token inválido');
+                                $this->httpRawResponse(401,MessageHelper::fmtMsgConstJson('ERR_TOKEN_INVALIDO'));
                             }
                         } else {
-                            $this->httpResponse(401,'É necessário informar o token');
+                            $this->httpRawResponse(401,MessageHelper::fmtMsgConstJson('ERR_TOKEN_REQUERIDO'));
                         }                        
                         break;
                     default:
-                        $this->httpResponse(501,'Ação Indisponível');
+                        $this->httpRawResponse(501,MessageHelper::fmtMsgConstJson('ERR_ACAO_INDISPONIVEL'));
                         break;
                 }
                 break;
             default:
-                $this->httpResponse(405,'Method Not Allowed');
+                $this->httpRawResponse(405,MessageHelper::fmtMsgConstJson('ERR_METODO_NAO_PERMITIDO'));
                 break;
         }      
     }

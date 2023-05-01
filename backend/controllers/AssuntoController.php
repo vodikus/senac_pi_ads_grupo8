@@ -1,167 +1,163 @@
 <?php
-include_once 'includes/BaseController.php';
+use helpers\MessageHelper;
+
 include_once 'models/AssuntoModel.php';
 
 class AssuntoController extends BaseController
 {
-    public function __construct() {
+    public function __construct()
+    {
         parent::__construct();
     }
-    public function processarRequisicao($metodo='', $params=[]) {
+    public function processarRequisicao($metodo = '', $params = [])
+    {
         switch ($metodo) {
             case 'GET':
                 switch ($params['acao']) {
                     case 'listar':
                         $this->listar();
                         break;
+                    case 'buscar':
+                        $this->buscarPorId($params['param1']);
+                        break;
                     default:
-                        $this->httpResponse(501,'Ação Indisponível');
+                        $this->httpResponse(501, MessageHelper::fmtMsgConst('ERR_ACAO_INDISPONIVEL'));
                         break;
                 }
                 break;
-                case 'POST':
-                    $dados = $this->pegarArrayPost();
-                    switch ($params['acao']) {
-                        case 'adicionar':
-                            if ( $this->isAuth() ) {
-                                $this->adicionar($dados);
-                            } else {
-                                $this->httpResponse(401,'Não autorizado');
-                            }
-                            break;
-                        default:
-                            $this->httpResponse(501,'Ação Indisponível');
-                            break;
-                    }
+            case 'POST':
+                $dados = $this->pegarArrayPost();
+                switch ($params['acao']) {
+                    case 'buscar':
+                        $this->buscarPorNome($dados);
+                        break;
+                    case 'adicionar':
+                        if ($this->isAuth()) {
+                            $this->adicionar($dados);
+                        } else {
+                            $this->httpResponse(401, MessageHelper::fmtMsgConst('ERR_NAO_AUTORIZADO'));
+                        }
+                        break;
+                    default:
+                        $this->httpResponse(501, MessageHelper::fmtMsgConst('ERR_ACAO_INDISPONIVEL'));
+                        break;
+                }
                 break;
             case 'PUT':
                 switch ($params['acao']) {
                     case 'atualizar':
                         $dados = $this->pegarArrayPut();
-                        if ( $this->isAuth() ) {
+                        if ($this->isAuth()) {
                             $this->atualizar($params['param1'], $dados);
                         } else {
-                            $this->httpResponse(401,'Não autorizado');
+                            $this->httpResponse(401, MessageHelper::fmtMsgConst('ERR_NAO_AUTORIZADO'));
                         }
                         break;
                     default:
-                        $this->httpResponse(501,'Ação Indisponível');
+                        $this->httpResponse(501, MessageHelper::fmtMsgConst('ERR_ACAO_INDISPONIVEL'));
                         break;
-                }                
+                }
                 break;
             case 'DELETE':
                 switch ($params['acao']) {
                     case 'deletar':
-                        if ( $this->isAuth() ) {
+                        if ($this->isAuth()) {
                             $this->deletar($params['param1']);
                         } else {
-                            $this->httpResponse(401,'Não autorizado');
+                            $this->httpResponse(401, MessageHelper::fmtMsgConst('ERR_NAO_AUTORIZADO'));
                         }
                         break;
                     default:
-                        $this->httpResponse(501,'Ação Indisponível');
+                        $this->httpResponse(501, MessageHelper::fmtMsgConst('ERR_ACAO_INDISPONIVEL'));
                         break;
-                }                
+                }
                 break;
             default:
-                $this->httpResponse(405,'Method Not Allowed');
+                $this->httpResponse(405, MessageHelper::fmtMsgConst('ERR_METODO_NAO_PERMITIDO'));
                 break;
-        }      
+        }
     }
 
     public function listar($uid = 0)
     {
         try {
             $assuntoModel = new AssuntoModel();
-            $arrAssuntos = $assuntoModel->listarAssuntos();
+            $arrAssuntos = (array) $assuntoModel->listarAssuntos();
             $responseData = json_encode($arrAssuntos);
         } catch (Exception $e) {
-            $this->httpResponse(500,$e->getMessage());
+            $this->httpResponse(500, MessageHelper::fmtException($e));
+        }
+        $this->montarSaidaOk($responseData);
+    }
+    public function buscarPorId($iid = 0)
+    {
+        try {
+            if (is_numeric($iid)) {
+                $assuntoModel = new AssuntoModel();
+                $arrAssunto = (array) $assuntoModel->buscarAssuntoPorId($iid);
+                $responseData = json_encode($arrAssunto);
+            } else {
+                $this->httpResponse(200, MessageHelper::fmtMsgConst('ERR_ID_INVALIDO'));
+            }
+        } catch (Exception $e) {
+            $this->httpResponse(200, MessageHelper::fmtException($e));
+        }
+        $this->montarSaidaOk($responseData);
+    }
+    public function buscarPorNome($dados)
+    {
+        try {
+            $assuntoModel = new AssuntoModel();
+            $arrAssunto = (array) $assuntoModel->buscarAssuntoPorNome($dados);
+            $responseData = json_encode($arrAssunto);
+        } catch (Exception $e) {
+            $this->httpResponse(200, MessageHelper::fmtException($e));
         }
         $this->montarSaidaOk($responseData);
     }
 
     public function adicionar($dados)
-    {       
+    {
         try {
             $assuntoModel = new AssuntoModel();
-            $assuntoModel->adicionarAssunto($dados);
+            $assuntoId = $assuntoModel->adicionarAssunto($dados);
         } catch (Exception $e) {
-            switch ($e->getCode()) {
-                case 23000:
-                    if (stripos($e->getMessage(),'nm_assunto_uk')) {
-                        $this->httpResponse(200,'Já existe um assunto com este nome');
-                    } else {
-                        $this->httpResponse(500,"Erro: " . $e->getCode() . " | " . $e->getMessage());
-                    }
-                    break;
-
-                default:
-                    $this->httpResponse(500,"Erro: " . $e->getCode() . " | " . $e->getMessage());
-                    break;
-            }
-        } finally {
-            $this->httpResponse(200,'Assunto cadastrado com sucesso.');
+            $this->httpResponse(500, MessageHelper::fmtException($e));
         }
+        $this->httpResponse(200, MessageHelper::fmtMsgConst('MSG_ASSUNTO_CADASTRO_SUCESSO', false), ['assuntoId' => $assuntoId]);
     }
 
     public function deletar($aid)
     {
         try {
-            if ( is_numeric($aid) ) {
-                $assuntoModel = new AssuntoModel();            
-                if ( $assuntoModel->deletarAssunto($aid) > 0 ) {
-                    $this->httpResponse(200,'Assunto deletado com sucesso.');
-                } else {
-                    $this->httpResponse(200,'Assunto não encontrado');
+            if (is_numeric($aid)) {
+                $assuntoModel = new AssuntoModel();
+                if ($assuntoModel->deletarAssunto($aid) == 0) {
+                    $this->httpResponse(200, MessageHelper::fmtMsgConst('ERR_ASSUNTO_NAO_ENCONTRADO'));
                 }
             } else {
-                $this->httpResponse(200,'Identificador inválido');
+                $this->httpResponse(200, MessageHelper::fmtMsgConst('ERR_ID_INVALIDO'));
             }
         } catch (Exception $e) {
-            switch ($e->getCode()) {
-                case 23000:
-                    if (stripos($e->getMessage(),'fk_la_assuntos')) {
-                        $this->httpResponse(200,'Este assunto não pode ser deletado pois está vinculado a um ou mais livros');
-                    } else {
-                        $this->httpResponse(500,"Erro: " . $e->getCode() . " | " . $e->getMessage());
-                    }
-                    break;
-
-                default:
-                    $this->httpResponse(500,"Erro: " . $e->getCode() . " | " . $e->getMessage());
-                    break;
-            }
+            $this->httpResponse(500, MessageHelper::fmtException($e));
         }
+        $this->httpResponse(200, MessageHelper::fmtMsgConst('MSG_ASSUNTO_DELETADO_SUCESSO', false));
     }
 
     public function atualizar($aid, $dados)
-    {       
+    {
         try {
-            if ( is_numeric($aid) ) {
-                $assuntoModel = new AssuntoModel();            
-                if ( $assuntoModel->atualizarAssunto($aid, $dados) == 0 ) {
-                    $this->httpResponse(200,'Assunto não localizado');
+            if (is_numeric($aid)) {
+                $assuntoModel = new AssuntoModel();
+                if ($assuntoModel->atualizarAssunto($aid, $dados) == 0) {
+                    $this->httpResponse(200, MessageHelper::fmtMsgConst('ERR_ASSUNTO_NAO_ENCONTRADO'));
                 }
             } else {
-                $this->httpResponse(200,'Identificador inválido');
-            }            
-        } catch (Exception $e) {
-            switch ($e->getCode()) {
-                case 23000:
-                    if (stripos($e->getMessage(),'nome_assunto_uk')) {
-                        $this->httpResponse(200,'Já existe um assunto com este nome');
-                    } else {
-                        $this->httpResponse(500,"Erro: " . $e->getCode() . " | " . $e->getMessage());
-                    }
-                    break;
-
-                default:
-                    $this->httpResponse(500,"Erro: " . $e->getCode() . " | " . $e->getMessage());
-                    break;
+                $this->httpResponse(200, MessageHelper::fmtMsgConst('ERR_ID_INVALIDO'));
             }
-        } finally {
-            $this->httpResponse(200,'Assunto atualizado com sucesso.');
+        } catch (Exception $e) {
+            $this->httpResponse(500, MessageHelper::fmtException($e));
         }
+        $this->httpResponse(200, MessageHelper::fmtMsgConst('MSG_ASSUNTO_ATUALIZADO_SUCESSO', false));
     }
 }

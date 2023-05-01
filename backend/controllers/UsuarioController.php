@@ -4,269 +4,294 @@ include_once 'models/UsuarioModel.php';
 include_once 'models/UsuarioAssuntoModel.php';
 include_once 'models/UsuarioLivroModel.php';
 
+use helpers\MessageHelper;
+
 class UsuarioController extends BaseController
 {
-    public function __construct() {
+    public function __construct()
+    {
         parent::__construct();
     }
-    public function processarRequisicao($metodo='', $params=[]) {
+    public function processarRequisicao($metodo = '', $params = [])
+    {
         switch ($metodo) {
             case 'GET':
                 switch ($params['acao']) {
                     case 'listar':
-                        if ( $this->isAuth() && $this->getFieldFromToken('roles') == 'admin' ) {
+                        if ($this->isAuth() && $this->getFieldFromToken('roles') == 'admin') {
                             $this->listar();
                         } else {
-                            $this->httpResponse(401,'Não autorizado');
+                            $this->httpRawResponse(401, MessageHelper::fmtMsgConstJson('ERR_NAO_AUTORIZADO'));
                         }
                         break;
                     case 'buscar':
-                        if ( $this->isAuth() ) {
+                        if ($this->isAuth()) {
                             $this->buscar($params['param1']);
                         } else {
-                            $this->httpResponse(401,'Não autorizado');
+                            $this->httpRawResponse(401, MessageHelper::fmtMsgConstJson('ERR_NAO_AUTORIZADO'));
+                        }
+                        break;
+                    case 'meu-perfil':
+                        if ($this->isAuth()) {
+                            $this->buscar($this->getFieldFromToken('uid'));
+                        } else {
+                            $this->httpRawResponse(401, MessageHelper::fmtMsgConstJson('ERR_NAO_AUTORIZADO'));
                         }
                         break;
                     default:
-                        $this->httpResponse(501,'Ação Indisponível');
+                        $this->httpRawResponse(501, MessageHelper::fmtMsgConstJson('ERR_ACAO_INDISPONIVEL'));
                         break;
                 }
                 break;
             case 'POST':
-                $dados = $this->pegarArrayPost();
+                $dados = $this->pegarArrayJson();
                 switch ($params['acao']) {
                     case 'adicionar':
                         $this->adicionar($dados);
                         break;
                     case 'vincularAssunto':
-                        if ( $this->isAuth() ) {
+                        if ($this->isAuth()) {
                             $this->vincularAssunto($this->getFieldFromToken('uid'), $dados);
                         } else {
-                            $this->httpResponse(401,'Não autorizado');
+                            $this->httpRawResponse(401, MessageHelper::fmtMsgConstJson('ERR_NAO_AUTORIZADO'));
                         }
                         break;
                     case 'desvincularAssunto':
-                        if ( $this->isAuth() ) {
+                        if ($this->isAuth()) {
                             $this->desvincularAssunto($this->getFieldFromToken('uid'), $dados);
                         } else {
-                            $this->httpResponse(401,'Não autorizado');
+                            $this->httpRawResponse(401, MessageHelper::fmtMsgConstJson('ERR_NAO_AUTORIZADO'));
                         }
                         break;
                     case 'vincularLivro':
-                        if ( $this->isAuth() ) {
+                        if ($this->isAuth()) {
                             $this->vincularLivro($this->getFieldFromToken('uid'), $dados);
                         } else {
-                            $this->httpResponse(401,'Não autorizado');
+                            $this->httpRawResponse(401, MessageHelper::fmtMsgConstJson('ERR_NAO_AUTORIZADO'));
                         }
                         break;
                     case 'desvincularLivro':
-                        if ( $this->isAuth() ) {
+                        if ($this->isAuth()) {
                             $this->desvincularLivro($this->getFieldFromToken('uid'), $dados);
                         } else {
-                            $this->httpResponse(401,'Não autorizado');
+                            $this->httpRawResponse(401, MessageHelper::fmtMsgConstJson('ERR_NAO_AUTORIZADO'));
+                        }
+                        break;
+                    case 'atualizarStatusLivro':
+                        if ($this->isAuth()) {
+                            $this->atualizarStatusLivro($this->getFieldFromToken('uid'), $dados);
+                        } else {
+                            $this->httpRawResponse(401, MessageHelper::fmtMsgConstJson('ERR_NAO_AUTORIZADO'));
                         }
                         break;
                     default:
-                        $this->httpResponse(501,'Ação Indisponível');
+                        $this->httpRawResponse(501, MessageHelper::fmtMsgConstJson('ERR_ACAO_INDISPONIVEL'));
                         break;
-                }                
+                }
                 break;
             case 'PUT':
+                $dados = $this->pegarArrayJson();
                 switch ($params['acao']) {
                     case 'atualizar':
-                        $dados = $this->pegarArrayPut();
-                        if ( $this->isAuth() ) {
+                        error_log($this->getFieldFromToken('roles'));
+                        if ($this->isAuth() && $this->getFieldFromToken('roles') == 'admin') {
                             $this->atualizar($params['param1'], $dados);
                         } else {
-                            $this->httpResponse(401,'Não autorizado');
+                            $this->httpRawResponse(401, MessageHelper::fmtMsgConstJson('ERR_NAO_AUTORIZADO'));
+                        }
+                        break;
+                    case 'meu-perfil':
+                        if ($this->isAuth()) {
+                            $this->atualizar($this->getFieldFromToken('uid'), $dados);
+                        } else {
+                            $this->httpRawResponse(401, MessageHelper::fmtMsgConstJson('ERR_NAO_AUTORIZADO'));
                         }
                         break;
                     default:
-                        $this->httpResponse(501,'Ação Indisponível');
+                        $this->httpRawResponse(501, MessageHelper::fmtMsgConstJson('ERR_ACAO_INDISPONIVEL'));
                         break;
-                }                 
+                }
                 break;
             case 'DELETE':
                 switch ($params['acao']) {
                     case 'deletar':
-                        if ( $this->isAuth() ) {
+                        if ($this->isAuth()) {
                             $this->deletar($params['param1']);
                         } else {
-                            $this->httpResponse(401,'Não autorizado');
+                            $this->httpRawResponse(401, MessageHelper::fmtMsgConstJson('ERR_NAO_AUTORIZADO'));
                         }
                         break;
                     default:
-                        $this->httpResponse(501,'Ação Indisponível');
+                        $this->httpRawResponse(501, MessageHelper::fmtMsgConstJson('ERR_ACAO_INDISPONIVEL'));
                         break;
-                }                
+                }
                 break;
             default:
-                $this->httpResponse(405,'Method Not Allowed');
+                $this->httpRawResponse(405, MessageHelper::fmtMsgConstJson('ERR_METODO_NAO_PERMITIDO'));
                 break;
-        }      
+        }
     }
 
     public function listar()
     {
         try {
             $usuarioModel = new UsuarioModel();
-            $arrUsuarios = $usuarioModel->buscarTodosUsuarios();
+            $arrUsuarios = (array) $usuarioModel->buscarTodosUsuarios();
             $responseData = json_encode($arrUsuarios);
         } catch (Exception $e) {
-            $this->httpResponse(500,'Erro');
+            $this->httpRawResponse(200, MessageHelper::fmtException($e));
         }
         $this->montarSaidaOk($responseData);
     }
- 
-    public function buscar($id=0)
-    {
-        try {
-            $usuarioModel = new UsuarioModel();
-            $arrUsuarios = $usuarioModel->buscarUsuario($id);
-            $responseData = json_encode($arrUsuarios);
-        } catch (Exception $e) {
-            $this->httpResponse(500,'Erro');
-        }
-        $this->montarSaidaOk($responseData);
-    }
- 
-    public function deletar($id=0)
+
+    public function buscar($id = 0)
     {
         try {
             if (is_numeric($id)) {
-                $usuarioModel = new UsuarioModel();            
-                if ($usuarioModel->deletarUsuario($id)>0) {
-                    $this->httpResponse(200,'Usuário deletado com sucesso.');
-                } else {
-                    $this->httpResponse(200,'Usuário não encontrado');
+                $usuarioModel = new UsuarioModel();
+                $arrUsuarios = (array) $usuarioModel->buscarUsuario($id);
+                $responseData = json_encode($arrUsuarios);
+            } else {
+                $this->httpRawResponse(200, MessageHelper::fmtMsgConstJson('ERR_ID_INVALIDO'));
+            }
+        } catch (Exception $e) {
+            $this->httpRawResponse(200, MessageHelper::fmtException($e));
+        }
+        $this->montarSaidaOk($responseData);
+    }
+
+    public function deletar($id = 0)
+    {
+        try {
+            if (is_numeric($id)) {
+                $usuarioModel = new UsuarioModel();
+                if ($usuarioModel->deletarUsuario($id) == 0) {
+                    $this->httpRawResponse(200, MessageHelper::fmtMsgConstJson('ERR_USUARIO_NAO_ENCONTRADO'));
                 }
             } else {
-                $this->httpResponse(200,'Identificador inválido');
+                $this->httpRawResponse(200, MessageHelper::fmtMsgConstJson('ERR_ID_INVALIDO'));
             }
         } catch (Exception $e) {
-            $this->httpResponse(500,'Erro');
+            $this->httpRawResponse(200, MessageHelper::fmtException($e));
         }
+        $this->httpRawResponse(200, MessageHelper::fmtMsgConstJson('MSG_USUARIO_DELETADO_SUCESSO'));
     }
- 
+
     public function adicionar($dados)
-    {       
+    {
         try {
             $usuarioModel = new UsuarioModel();
-            $usuarioModel->adicionarUsuario($dados);
+            $usuarioId = $usuarioModel->adicionarUsuario($dados);
         } catch (Exception $e) {
-            switch ($e->getCode()) {
-                case 23000:
-                    if (stripos($e->getMessage(),'email')) {
-                        $this->httpResponse(200,'E-mail já cadastrado.');
-                    } elseif (stripos($e->getMessage(),'cpf')) {
-                        $this->httpResponse(200,'CPF já cadastrado.');
-                    } else {
-                        $this->httpResponse(500,"Erro: " . $e->getCode() . " | " . $e->getMessage());
-                    }
-                    break;
-
-                default:
-                    $this->httpResponse(500,"Erro: " . $e->getCode() . " | " . $e->getMessage());
-                    break;
-            }
-        } finally {
-            $this->httpResponse(200,'Usuário cadastrado com sucesso.');
+            $this->httpRawResponse(200, MessageHelper::fmtException($e));
         }
+        $this->httpRawResponse(200, MessageHelper::fmtMsgConstJson('MSG_USUARIO_CADASTRO_SUCESSO', ['usuarioId' => $usuarioId]));
+
     }
- 
+
     public function atualizar($id, $dados)
-    {       
+    {
         try {
             if (is_numeric($id)) {
-                $usuarioModel = new UsuarioModel();            
+                $usuarioModel = new UsuarioModel();
                 $usuarioModel->atualizarUsuario($id, $dados);
             } else {
-                $this->httpResponse(200,'Identificador inválido');
-            }            
+                $this->httpRawResponse(200, MessageHelper::fmtMsgConstJson('ERR_ID_INVALIDO'));
+            }
         } catch (Exception $e) {
-            $this->httpResponse(500,"Erro: " . $e->getCode() . " | " . $e->getMessage());
-        } finally {
-            $this->httpResponse(200,'Usuário atualizado com sucesso.');
+            $this->httpRawResponse(200, MessageHelper::fmtException($e));
         }
+        $this->httpRawResponse(200, MessageHelper::fmtMsgConstJson('MSG_USUARIO_ATUALIZADO_SUCESSO'));
     }
 
     public function vincularAssunto($uid, $dados)
-    {       
+    {
         try {
             $usuarioAssuntoModel = new UsuarioAssuntoModel();
-            if ( $usuarioAssuntoModel->adicionarUsuarioAssunto($uid, $dados) <= 0 ) {
-                $this->httpResponse(200,'Assunto não encontrado');
+            if (is_array($dados) && count($dados) > 0) {
+                foreach ($dados as $dado) {
+                    $usuarioAssuntoModel->adicionarUsuarioAssunto($uid, $dado);
+                }
+            } else {
+                $this->httpResponse(500, MessageHelper::fmtMsgConst('ERR_JSON_INVALIDO'));
             }
-        } catch (Exception $e) {
-            switch ($e->getCode()) {
-                case 23000:
-                    if (stripos($e->getMessage(),'PRIMARY')) {
-                        $this->httpResponse(200,'Este Assunto já está vinculado a este usuário.');
-                    } else {
-                        $this->httpResponse(500,"Erro: " . $e->getCode() . " | " . $e->getMessage());
-                    }
-                    break;
-
-                default:
-                    $this->httpResponse(500,"Erro: " . $e->getCode() . " | " . $e->getMessage());
-                    break;
-            }
-        } finally {
-            $this->httpResponse(200,'Assunto vinculado ao usuário com sucesso.');
+        } catch (CLException | CLConstException $e) {
+            $this->httpRawResponse(200, MessageHelper::fmtException($e));
         }
+        $this->httpRawResponse(200, MessageHelper::fmtMsgConstJson('MSG_USUARIO_ASSUNTO_VINCULADO'));
     }
 
     public function desvincularAssunto($uid, $dados)
-    {       
+    {
         try {
             $usuarioAssuntoModel = new UsuarioAssuntoModel();
-            if ( $usuarioAssuntoModel->deletarUsuarioAssunto($uid, $dados) <= 0 ) {
-                $this->httpResponse(200,'Assunto não encontrado');
+            if (is_array($dados) && count($dados) > 0) {
+                foreach ($dados as $dado) {
+                    if ($usuarioAssuntoModel->deletarUsuarioAssunto($uid, $dado) == 0) {
+                        $this->httpRawResponse(200, MessageHelper::fmtMsgConstJson('ERR_USUARIO_ASSUNTO_VINCULO_NAO_ENCONTRADO', StringHelper::formataArrayChaveValor($dado)));
+                    }
+                }
+            } else {
+                $this->httpResponse(500, MessageHelper::fmtMsgConst('ERR_JSON_INVALIDO'));
             }
         } catch (Exception $e) {
-            $this->httpResponse(500,"Erro: " . $e->getCode() . " | " . $e->getMessage());
-        } finally {
-            $this->httpResponse(200,'Assunto desvinculado do usuário com sucesso.');
+            $this->httpRawResponse(200, MessageHelper::fmtException($e));
         }
+        $this->httpRawResponse(200, MessageHelper::fmtMsgConstJson('MSG_USUARIO_ASSUNTO_DESVINCULADO'));
     }
 
     public function vincularLivro($uid, $dados)
-    {       
+    {
         try {
             $usuarioLivroModel = new UsuarioLivroModel();
-            if ( $usuarioLivroModel->adicionarUsuarioLivro($uid, $dados) <= 0 ) {
-                $this->httpResponse(200,'Livro não encontrado');
+            if (is_array($dados) && count($dados) > 0) {
+                foreach ($dados as $dado) {
+                    $usuarioLivroModel->adicionarUsuarioLivro($uid, $dado);
+                }
+            } else {
+                $this->httpResponse(500, MessageHelper::fmtMsgConst('ERR_JSON_INVALIDO'));
             }
         } catch (Exception $e) {
-            switch ($e->getCode()) {
-                case 23000:
-                    if (stripos($e->getMessage(),'PRIMARY')) {
-                        $this->httpResponse(200,'Este Livro já está vinculado a este usuário.');
-                    } else {
-                        $this->httpResponse(500,"Erro: " . $e->getCode() . " | " . $e->getMessage());
-                    }
-                    break;
-
-                default:
-                    $this->httpResponse(500,"Erro: " . $e->getCode() . " | " . $e->getMessage());
-                    break;
-            }
-        } finally {
-            $this->httpResponse(200,'Livro vinculado ao usuário com sucesso.');
+            $this->httpRawResponse(200, MessageHelper::fmtException($e));
         }
+        $this->httpRawResponse(200, MessageHelper::fmtMsgConstJson('MSG_USUARIO_LIVRO_VINCULADO'));
     }
 
     public function desvincularLivro($uid, $dados)
-    {       
+    {
         try {
             $usuarioLivroModel = new UsuarioLivroModel();
-            if ( $usuarioLivroModel->deletarUsuarioLivro($uid, $dados) <= 0 ) {
-                $this->httpResponse(200,'Livro não encontrado');
+            if (is_array($dados) && count($dados) > 0) {
+                foreach ($dados as $dado) {
+                    if ($usuarioLivroModel->deletarUsuarioLivro($uid, $dado) == 0) {
+                        $this->httpRawResponse(200, MessageHelper::fmtMsgConstJson('ERR_USUARIO_LIVRO_VINCULO_NAO_ENCONTRADO', $dado));
+                    }
+                }
+            } else {
+                $this->httpResponse(500, MessageHelper::fmtMsgConst('ERR_JSON_INVALIDO'));
             }
         } catch (Exception $e) {
-            $this->httpResponse(500,"Erro: " . $e->getCode() . " | " . $e->getMessage());
-        } finally {
-            $this->httpResponse(200,'Livro desvinculado do usuário com sucesso.');
+            $this->httpRawResponse(200, MessageHelper::fmtException($e));
         }
+        $this->httpRawResponse(200, MessageHelper::fmtMsgConstJson('MSG_USUARIO_LIVRO_DESVINCULADO'));
+    }
+
+    public function atualizarStatusLivro($uid, $dados)
+    {
+        try {
+            $usuarioLivroModel = new UsuarioLivroModel();
+            if (is_array($dados) && count($dados) > 0) {
+                foreach ($dados as $dado) {
+                    if ($usuarioLivroModel->atualizarUsuarioLivro($uid, $dado) == 0) {
+                        $this->httpRawResponse(200, MessageHelper::fmtMsgConstJson('ERR_USUARIO_LIVRO_VINCULO_NAO_ENCONTRADO'));
+                    }
+                }
+            } else {
+                $this->httpResponse(500, MessageHelper::fmtMsgConst('ERR_JSON_INVALIDO'));
+            }
+        } catch (Exception $e) {
+            $this->httpRawResponse(200, MessageHelper::fmtException($e));
+        }
+        $this->httpRawResponse(200, MessageHelper::fmtMsgConstJson('MSG_USUARIO_LIVRO_STATUS_SUCESSO'));
     }
 }

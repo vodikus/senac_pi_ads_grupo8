@@ -1,5 +1,6 @@
 <?php
-include_once 'includes/BaseController.php';
+use helpers\MessageHelper;
+
 include_once 'models/EnderecoModel.php';
 
 class EnderecoController extends BaseController
@@ -15,41 +16,41 @@ class EnderecoController extends BaseController
                         if ( $this->isAuth() ) {
                             $this->listar($this->getFieldFromToken('uid'));
                         } else {
-                            $this->httpResponse(401,'Não autorizado');
+                            $this->httpRawResponse(401, MessageHelper::fmtMsgConstJson('ERR_NAO_AUTORIZADO'));
                         }
                         break;
                     default:
-                        $this->httpResponse(501,'Ação Indisponível');
+                        $this->httpRawResponse(501, MessageHelper::fmtMsgConstJson('ERR_ACAO_INDISPONIVEL'));
                         break;
                 }
                 break;
                 case 'POST':
-                    $dados = $this->pegarArrayPost();
+                    $dados = $this->pegarArrayJson();
                     switch ($params['acao']) {
                         case 'adicionar':
                             if ( $this->isAuth() ) {
                                 $this->adicionar($this->getFieldFromToken('uid'), $dados);
                             } else {
-                                $this->httpResponse(401,'Não autorizado');
+                                $this->httpRawResponse(401, MessageHelper::fmtMsgConstJson('ERR_NAO_AUTORIZADO'));
                             }
                             break;
                         default:
-                            $this->httpResponse(501,'Ação Indisponível');
+                            $this->httpRawResponse(501, MessageHelper::fmtMsgConstJson('ERR_ACAO_INDISPONIVEL'));
                             break;
                     }
                 break;
             case 'PUT':
                 switch ($params['acao']) {
                     case 'atualizar':
-                        $dados = $this->pegarArrayPut();
+                        $dados = $this->pegarArrayJson();
                         if ( $this->isAuth() ) {
                             $this->atualizar($params['param1'], $this->getFieldFromToken('uid'), $dados);
                         } else {
-                            $this->httpResponse(401,'Não autorizado');
+                            $this->httpRawResponse(401, MessageHelper::fmtMsgConstJson('ERR_NAO_AUTORIZADO'));
                         }
                         break;
                     default:
-                        $this->httpResponse(501,'Ação Indisponível');
+                        $this->httpRawResponse(501, MessageHelper::fmtMsgConstJson('ERR_ACAO_INDISPONIVEL'));
                         break;
                 }                
                 break;
@@ -59,16 +60,16 @@ class EnderecoController extends BaseController
                         if ( $this->isAuth() ) {
                             $this->deletar($params['param1'], $this->getFieldFromToken('uid'));
                         } else {
-                            $this->httpResponse(401,'Não autorizado');
+                            $this->httpRawResponse(401, MessageHelper::fmtMsgConstJson('ERR_NAO_AUTORIZADO'));
                         }
                         break;
                     default:
-                        $this->httpResponse(501,'Ação Indisponível');
+                        $this->httpRawResponse(501, MessageHelper::fmtMsgConstJson('ERR_ACAO_INDISPONIVEL'));
                         break;
                 }                
                 break;
             default:
-                $this->httpResponse(405,'Method Not Allowed');
+                $this->httpRawResponse(405, MessageHelper::fmtMsgConstJson('ERR_METODO_NAO_PERMITIDO'));
                 break;
         }      
     }
@@ -77,10 +78,10 @@ class EnderecoController extends BaseController
     {
         try {
             $enderecoModel = new EnderecoModel();
-            $arrEnderecos = $enderecoModel->buscarEnderecos($uid);
+            $arrEnderecos = (array) $enderecoModel->buscarEnderecos($uid);
             $responseData = json_encode($arrEnderecos);
         } catch (Exception $e) {
-            $this->httpResponse(500,$e->getMessage());
+            $this->httpRawResponse(500, MessageHelper::fmtException($e));
         }
         $this->montarSaidaOk($responseData);
     }
@@ -89,24 +90,11 @@ class EnderecoController extends BaseController
     {       
         try {
             $enderecoModel = new EnderecoModel();
-            $enderecoModel->adicionarEndereco($uid, $dados);
+            $enderecoId = $enderecoModel->adicionarEndereco($uid, $dados);
         } catch (Exception $e) {
-            switch ($e->getCode()) {
-                case 23000:
-                    if (stripos($e->getMessage(),'usu_ende_cep_uk')) {
-                        $this->httpResponse(200,'É permitido apenas um endereço com o mesmo CEP.');
-                    } else {
-                        $this->httpResponse(500,"Erro: " . $e->getCode() . " | " . $e->getMessage());
-                    }
-                    break;
-
-                default:
-                    $this->httpResponse(500,"Erro: " . $e->getCode() . " | " . $e->getMessage());
-                    break;
-            }
-        } finally {
-            $this->httpResponse(200,'Endereço cadastrado com sucesso.');
+            $this->httpRawResponse(500, MessageHelper::fmtException($e));
         }
+        $this->httpRawResponse(200, MessageHelper::fmtMsgConstJson('MSG_ENDERECO_CADASTRO_SUCESSO',['enderecoId' => $enderecoId]));
     }
 
     public function deletar($eid, $uid)
@@ -114,17 +102,16 @@ class EnderecoController extends BaseController
         try {
             if ( is_numeric($eid) && is_numeric($uid) ) {
                 $enderecoModel = new EnderecoModel();            
-                if ($enderecoModel->deletarEndereco($eid, $uid)>0) {
-                    $this->httpResponse(200,'Endereço deletado com sucesso.');
-                } else {
-                    $this->httpResponse(200,'Endereço não encontrado');
+                if ($enderecoModel->deletarEndereco($eid, $uid) == 0) {
+                    $this->httpRawResponse(200, MessageHelper::fmtMsgConstJson('ERR_ENDERECO_NAO_ENCONTRADO'));
                 }
             } else {
-                $this->httpResponse(200,'Identificador inválido');
+                $this->httpRawResponse(200, MessageHelper::fmtMsgConstJson('ERR_ID_INVALIDO'));
             }
         } catch (Exception $e) {
-            $this->httpResponse(500,'Erro');
+            $this->httpRawResponse(500, MessageHelper::fmtException($e));
         }
+        $this->httpRawResponse(200, MessageHelper::fmtMsgConstJson('MSG_ENDERECO_DELETADO_SUCESSO'));
     }
 
     public function atualizar($eid, $uid, $dados)
@@ -132,16 +119,15 @@ class EnderecoController extends BaseController
         try {
             if ( is_numeric($eid) && is_numeric($uid) ) {
                 $enderecoModel = new EnderecoModel();            
-                if ( $enderecoModel->atualizarEndereco($eid, $uid, $dados) <= 0) {
-                    $this->httpResponse(200,'Endereço não localizado');
+                if ( $enderecoModel->atualizarEndereco($eid, $uid, $dados) == 0) {
+                    $this->httpRawResponse(200, MessageHelper::fmtMsgConstJson('ERR_ENDERECO_NAO_ENCONTRADO'));
                 }
             } else {
-                $this->httpResponse(200,'Identificador inválido');
+                $this->httpRawResponse(200, MessageHelper::fmtMsgConstJson('ERR_ID_INVALIDO'));
             }            
         } catch (Exception $e) {
-            $this->httpResponse(500,"Erro: " . $e->getCode() . " | " . $e->getMessage());
-        } finally {
-            $this->httpResponse(200,'Endereço atualizado com sucesso.');
+            $this->httpRawResponse(500, MessageHelper::fmtException($e));
         }
+        $this->httpRawResponse(200, MessageHelper::fmtMsgConstJson('MSG_ENDERECO_ATUALIZADO_SUCESSO'));
     }
 }
