@@ -35,7 +35,7 @@ class BaseModel
             $this->errorLog($query,$parametros);
             return $sth->fetchAll();
         } catch (Exception $e) {
-            throw New Exception( $e->getMessage() );
+            throw $e;
         }
     }
 
@@ -53,7 +53,7 @@ class BaseModel
             return $rowCount;
         } catch (Exception $e) {
             error_log("Erro: " . $e->getMessage());
-            throw New Exception( $e->getMessage(), $e->getCode());
+            throw $e;
         }
     }
 
@@ -71,7 +71,7 @@ class BaseModel
             return $sqlId;
         } catch (Exception $e) {
             error_log("Erro: " . $e->getMessage());
-            throw New Exception( $e->getMessage(), $e->getCode());
+            throw $e;
         }
     }
 
