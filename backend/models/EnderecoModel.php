@@ -6,7 +6,7 @@ class EnderecoModel extends BaseModel
     public $campos = array (
         'enid' => ['protected' => 'all', 'type' => 'int', 'visible' => true],
         'uid' => ['protected' => 'all', 'type' => 'int', 'visible' => true],
-        'cep' => ['protected' => 'update', 'type' => 'int', 'visible' => true, 'required' => true],
+        'cep' => ['protected' => 'none', 'type' => 'varchar', 'visible' => true, 'required' => true],
         'logradouro' => ['protected' => 'none', 'type' => 'varchar', 'visible' => true, 'required' => true],
         'numero' => ['protected' => 'none', 'type' => 'varchar', 'visible' => true, 'required' => true],
         'complemento' => ['protected' => 'none', 'type' => 'varchar', 'visible' => true],
@@ -46,7 +46,7 @@ class EnderecoModel extends BaseModel
             switch ($e->getCode()) {
                 case 23000:
                     if (stripos($e->getMessage(),'usu_ende_cep_uk')) {
-                        throw New CLException('ERR_ENDERECO_JA_EXISTENTE');
+                        throw new CLConstException('ERR_ENDERECO_JA_EXISTENTE');
                     }
                     break;
             }            
@@ -63,7 +63,7 @@ class EnderecoModel extends BaseModel
             switch ($e->getCode()) {
                 case 23000:
                     if (stripos($e->getMessage(),'usu_ende_cep_uk')) {
-                        throw New CLException('ERR_ENDERECO_JA_EXISTENTE');
+                        throw new CLConstException('ERR_ENDERECO_JA_EXISTENTE');
                     }
                     break;
             }               

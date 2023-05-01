@@ -108,7 +108,7 @@ class Constantes
 
     /** Erros - Endereços  */
     const ERR_ENDERECO_NAO_ENCONTRADO = ['code' => 9700, 'message' => 'Endereço não encontrado'];
-    const ERR_ENDERECO_JA_EXISTENTE = ['code' => 9701, 'message' => 'Este endereçp já está cadastrado'];
+    const ERR_ENDERECO_JA_EXISTENTE = ['code' => 9701, 'message' => 'Este endereço já está cadastrado'];
 
 
     public static function getConst($const = "ERR_NAODEFINIDO")
