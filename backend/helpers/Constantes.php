@@ -16,7 +16,8 @@ class Constantes
     const ERR_ID_INVALIDO = ['code' => 9001, 'message' => 'Identificador inválido'];
     const ERR_TOKEN_INVALIDO = ['code' => 9002, 'message' => 'Token inválido'];
     const ERR_TOKEN_REQUERIDO = ['code' => 9003, 'message' => 'É necessário informar o token'];
-
+    const ERR_JSON_INVALIDO = ['code' => 9004, 'message' => 'A entrada deve ser um JSON válido'];
+    
     /** Mensagens - Usuários  */
     const MSG_USUARIO_CADASTRO_SUCESSO = ['code' => 1200, 'message' => 'Usuário cadastrado com sucesso'];
     const MSG_USUARIO_DELETADO_SUCESSO = ['code' => 1201, 'message' => 'Usuário deletado com sucesso'];
@@ -42,6 +43,7 @@ class Constantes
     const MSG_LIVRO_CADASTRO_SUCESSO = ['code' => 1200, 'message' => 'Livro cadastrado com sucesso.'];
     const MSG_LIVRO_DELETADO_SUCESSO = ['code' => 1201, 'message' => 'Livro deletado com sucesso.'];
     const MSG_LIVRO_ATUALIZADO_SUCESSO = ['code' => 1202, 'message' => 'Livro atualizado com sucesso.'];
+
     /** Erros - Livros  */
     const ERR_LIVRO_NAO_ENCONTRADO = ['code' => 9200, 'message' => 'Livro não encontrado'];
     const ERR_LIVRO_NAO_DISPONIVEL = ['code' => 9201, 'message' => 'Livro não disponivel'];
@@ -89,11 +91,14 @@ class Constantes
     const MSG_ASSUNTO_CADASTRO_SUCESSO = ['code' => 1600, 'message' => 'Assunto cadastrado com sucesso.'];
     const MSG_ASSUNTO_DELETADO_SUCESSO = ['code' => 1601, 'message' => 'Assunto deletado com sucesso.'];
     const MSG_ASSUNTO_ATUALIZADO_SUCESSO = ['code' => 1602, 'message' => 'Assunto atualizado com sucesso.'];
+    const MSG_LIVRO_ASSUNTO_VINCULADO_SUCESSO = ['code' => 1603, 'message' => 'Assunto vinculado ao livro com sucesso'];
+    const MSG_LIVRO_ASSUNTO_DESVINCULADO_SUCESSO = ['code' => 1604, 'message' => 'Assunto desvinculado ao livro com sucesso'];
 
     /** Erros - Assuntos  */
     const ERR_ASSUNTO_NAO_ENCONTRADO = ['code' => 9600, 'message' => 'Assunto não encontrado'];
     const ERR_ASSUNTO_JA_EXISTENTE = ['code' => 9601, 'message' => 'Já existe um assunto com este nome'];
     const ERR_ASSUNTO_DELETAR_FK = ['code' => 9602, 'message' => 'Este assunto não pode ser deletado pois está vinculado a um ou mais livros'];
+    const ERR_ASSUNTO_VINCULO_EXISTE = ['code' => 9602, 'message' => 'Este assunto já está vinculado a este livro'];
     const ERR_ASSUNTO_VINCULO_NAO_ENCONTRADO = ['code' => 9602, 'message' => 'Este assunto não está vinculado a este livro'];
     
     /** Mensagens - Endereços  */

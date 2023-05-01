@@ -1,13 +1,20 @@
 <?php
 
-use helpers\Constantes;
-
 class CLException extends Exception
 {
-    public function __construct( $const = "ERR_NAODEFINIDO") {
+    private $detalhe;
+
+    public function __construct( $mensagem="", $codigo=0, $detalhe="") {
+        $this->detalhe = $detalhe;
         parent::__construct(
-            Constantes::getMsg($const),
-            Constantes::getCode($const) 
+            $mensagem,
+            $codigo 
         );
     }
+
+    public function getDetalhe() {
+        return $this->detalhe;
+    }
+
+
 }

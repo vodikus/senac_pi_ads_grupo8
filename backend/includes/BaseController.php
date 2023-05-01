@@ -28,6 +28,11 @@ class BaseController
         $this->token = TokenHelper::extractToken( $this->pegarAutorizacao() );
     }
 
+    protected function validaJSON($str) {
+        json_decode($str);
+        return json_last_error() == JSON_ERROR_NONE;
+     }
+
     protected function pegarSegmentos()
     {
         $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
@@ -45,6 +50,18 @@ class BaseController
     {
         $requestHeaders = apache_request_headers();
         return (array_key_exists('Authorization', $requestHeaders)) ? $requestHeaders['Authorization'] : '';
+    }
+
+    protected function pegarArrayJson()
+    {
+        $raw_data = file_get_contents("php://input");
+
+        if (strlen($raw_data) > 0 && $this->validaJSON($raw_data)) {
+            $arrJson = json_decode($raw_data, true);
+            error_log("ENTRADA: " . var_export($arrJson, true));                    
+            return $arrJson;
+        }
+        $this->httpResponse(500, MessageHelper::fmtMsgConst('ERR_JSON_INVALIDO'));
     }
 
     protected function pegarArrayPost($chave='dados')
@@ -80,7 +97,7 @@ class BaseController
     protected function httpResponse($httpCode = 200, $msg='', $arrData=[])
     {        
         if (array_key_exists($httpCode,$this->httpCodes)) {
-            $this->montarSaida(json_encode(array_merge(['message' => $msg], $arrData)), 
+            $this->montarSaida(json_encode(array_merge(['mensagem' => $msg], $arrData)), 
                 array('Content-Type: application/json', $this->httpCodes[$httpCode] )
             );        
         }
@@ -89,7 +106,7 @@ class BaseController
     protected function httpRawResponse($httpCode = 200, $msg='')
     {        
         if (array_key_exists($httpCode,$this->httpCodes)) {
-            $this->montarSaida(json_encode($msg), 
+            $this->montarSaida($msg, 
                 array('Content-Type: application/json', $this->httpCodes[$httpCode] )
             );        
         }
