@@ -38,4 +38,40 @@ class ChamadoModel extends BaseModel
         }
     }
 
+    public function buscarChamados($filtro=[], $admin=false)
+    {
+        try {
+            
+            $dados = [];
+            $sql = "WHERE 1=1 ";
+            foreach ($filtro as $key => $value) {
+                switch ($key) {
+                    case 'uid_origem':                        
+                        (new UsuarioModel())->validaUsuario($value);
+                        $sql .= " AND uid_origem=:uid_origem";
+                        $dados['uid_origem'] = filter_var($value, FILTER_SANITIZE_STRING);
+                        break;
+                    case 'uid_destino':                        
+                        (new UsuarioModel())->validaUsuario($value);
+                        $sql .= " AND uid_destino=:uid_destino";
+                        $dados['uid_destino'] = filter_var($value, FILTER_SANITIZE_STRING);
+                        break;
+                    case 'status':
+                        $sql .= " AND status=:status";
+                        $dados['status'] = filter_var($value, FILTER_SANITIZE_STRING);
+                        break;
+                    case 'tipo':
+                        $sql .= " AND tipo=:tipo";
+                        $dados['tipo'] = filter_var($value, FILTER_SANITIZE_STRING);
+                        break;
+                }
+            }
+            $campos = SQLHelper::montaCamposSelect($this->campos, 'a');
+            $assuntos = $this->select("SELECT $campos FROM chamados a $sql", $dados);
+            return $assuntos;
+        } catch (Exception $e) {
+            throw $e;
+        }
+    }
+
 }
