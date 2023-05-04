@@ -145,19 +145,7 @@ class LivroController extends BaseController
     }
 
     /**
-     * @apiDefine ERR_GENERICOS
-     *
-     * @apiError (Erro 4xx) 401 Não autorizado
-     * @apiError (Erro 4xx) 405 Método não permitido
-     * @apiError (Erro 5xx) 501 Ação Indisponível
-     * @apiError (Erro 5xx) 9000 Erro não definido
-     * @apiError (Erro 5xx) 9001 Identificador inválido
-     * @apiError (Erro 5xx) 9004 A entrada deve ser um JSON válido
-     *
-     */
-
-    /**
-     * @apiDefine SAIDA_LISTA
+     * @apiDefine SAIDA_LISTA_LIVROS
      *
      * @apiSuccess {Object[]} livros Lista de livros
      * @apiSuccess {Number} livros.lid ID do assunto
@@ -197,7 +185,7 @@ class LivroController extends BaseController
      * @apiGroup Livros
      * @apiVersion 1.0.0
      *
-     * @apiUse SAIDA_LISTA
+     * @apiUse SAIDA_LISTA_LIVROS
      * @apiUse ERR_GENERICOS
      * 
      */
@@ -237,7 +225,7 @@ class LivroController extends BaseController
      *
      * @apiBody {String} isbn ISBN do livro.
      *
-     * @apiUse SAIDA_LISTA
+     * @apiUse SAIDA_LISTA_LIVROS
      * @apiUse ERR_GENERICOS
      * 
      */
@@ -262,7 +250,7 @@ class LivroController extends BaseController
      *
      * @apiBody {String} nome_assunto Assunto do livro.
      *
-     * @apiUse SAIDA_LISTA
+     * @apiUse SAIDA_LISTA_LIVROS
      * @apiUse ERR_GENERICOS
      * 
      */
@@ -287,7 +275,7 @@ class LivroController extends BaseController
      *
      * @apiBody {String} nome_autor Autor do livro.
      *
-     * @apiUse SAIDA_LISTA
+     * @apiUse SAIDA_LISTA_LIVROS
      * @apiUse ERR_GENERICOS
      * 
      */
@@ -312,7 +300,7 @@ class LivroController extends BaseController
      *
      * @apiBody {String} titulo Titulo do livro.
      *
-     * @apiUse SAIDA_LISTA
+     * @apiUse SAIDA_LISTA_LIVROS
      * @apiUse ERR_GENERICOS
      * 
      */
@@ -337,7 +325,7 @@ class LivroController extends BaseController
      *
      * @apiParam {Number} id Id do usuário
      *
-     * @apiUse SAIDA_LISTA
+     * @apiUse SAIDA_LISTA_LIVROS
      * @apiUse ERR_GENERICOS
      * 
      */

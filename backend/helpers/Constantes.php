@@ -3,6 +3,37 @@ namespace helpers;
 
 class Constantes
 {
+    /**
+     * @apiDefine ERR_GENERICOS
+     *
+     * @apiError (Erro 4xx) 401 Não autorizado
+     * @apiError (Erro 4xx) 405 Método não permitido
+     * @apiError (Erro 5xx) 501 Ação Indisponível
+     * @apiError (Erro 5xx) 9000 Erro não definido
+     * @apiError (Erro 5xx) 9001 Identificador inválido
+     * @apiError (Erro 5xx) 9004 A entrada deve ser um JSON válido
+     *
+     */
+
+    /**
+     * @apiDefine SAIDA_PADRAO
+     *
+     * @apiSuccess {Number} codigo Código da mensagem
+     * @apiSuccess {String} mensagem Mensagem de retorno
+     * @apiSuccess {Object} detalhe Objeto contendo detalhes do retorno
+     * @apiSuccess {Number} detalhe.chamadoId  Id do assunto inserido
+     *
+     * @apiSuccessExample Success-Response:
+     *     HTTP/1.1 200 OK
+     *     {
+     *         "codigo": 1234,
+     *         "mensagem": "Sua operação foi realizada com sucesso",
+     *         "detalhe": ""
+     *     }
+     *
+     */     
+
+
     /** Erros - HTTP */
     const ERR_NAO_AUTORIZADO = ['code' => 401, 'message' => 'Acesso não autorizado'];
     const ERR_METODO_NAO_PERMITIDO = ['code' => 405, 'message' => 'Método não permitido'];

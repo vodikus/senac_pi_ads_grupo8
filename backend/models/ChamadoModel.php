@@ -1,6 +1,7 @@
 <?php
 require_once "includes/BaseModel.php";
 require_once "models/UsuarioModel.php";
+require_once "models/ChamadoDetalheModel.php";
 
 class ChamadoModel extends BaseModel
 {
@@ -38,37 +39,51 @@ class ChamadoModel extends BaseModel
         }
     }
 
-    public function buscarChamados($filtro=[], $admin=false)
+    public function buscarChamados($filtro = [], $admin = false)
     {
         try {
-            
+
             $dados = [];
             $sql = "WHERE 1=1 ";
+            $detalhe = FALSE;
             foreach ($filtro as $key => $value) {
                 switch ($key) {
-                    case 'uid_origem':                        
+                    case 'uid_origem':
                         (new UsuarioModel())->validaUsuario($value);
-                        $sql .= " AND uid_origem=:uid_origem";
+                        $sql .= " AND c.uid_origem=:uid_origem";
                         $dados['uid_origem'] = filter_var($value, FILTER_SANITIZE_STRING);
                         break;
-                    case 'uid_destino':                        
+                    case 'uid_destino':
                         (new UsuarioModel())->validaUsuario($value);
-                        $sql .= " AND uid_destino=:uid_destino";
+                        $sql .= " AND c.uid_destino=:uid_destino";
                         $dados['uid_destino'] = filter_var($value, FILTER_SANITIZE_STRING);
                         break;
                     case 'status':
-                        $sql .= " AND status=:status";
+                        $sql .= " AND c.status=:status";
                         $dados['status'] = filter_var($value, FILTER_SANITIZE_STRING);
                         break;
                     case 'tipo':
-                        $sql .= " AND tipo=:tipo";
+                        $sql .= " AND c.tipo=:tipo";
                         $dados['tipo'] = filter_var($value, FILTER_SANITIZE_STRING);
+                        break;
+                    case 'detalhe':
+                        $detalhe = filter_var($value, FILTER_VALIDATE_BOOLEAN);
                         break;
                 }
             }
-            $campos = SQLHelper::montaCamposSelect($this->campos, 'a');
-            $assuntos = $this->select("SELECT $campos FROM chamados a $sql", $dados);
-            return $assuntos;
+            $campos = SQLHelper::montaCamposSelect($this->campos, 'c');
+            $chamados = $this->select("SELECT $campos, '' as detalhes FROM chamados c $sql", $dados);
+            if ($detalhe) {
+                error_log(var_export($chamados, true));
+                foreach ($chamados as $chave => $chamado) {
+                    error_log("ID $chave: " . var_export($chamado, true));
+                    $detalhes = (new ChamadoDetalheModel())->listarDetalhes($chamado["cid"]);
+                    error_log("Detalhes: " .var_export($detalhes, true));
+                    $chamados[$chave] = array_merge($chamado, ['detalhes' => $detalhes]);
+                    error_log("Novo chamado: " .var_export($chamados[$chave], true));
+                }
+            }
+            return $chamados;
         } catch (Exception $e) {
             throw $e;
         }

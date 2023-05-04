@@ -83,18 +83,6 @@ class AssuntoController extends BaseController
     }
 
     /**
-     * @apiDefine ERR_GENERICOS
-     *
-     * @apiError (Erro 4xx) 401 Não autorizado
-     * @apiError (Erro 4xx) 405 Método não permitido
-     * @apiError (Erro 5xx) 501 Ação Indisponível
-     * @apiError (Erro 5xx) 9000 Erro não definido
-     * @apiError (Erro 5xx) 9001 Identificador inválido
-     * @apiError (Erro 5xx) 9004 A entrada deve ser um JSON válido
-     *
-     */
-
-    /**
      * @apiDefine ERR_ASSUNTO_PADRAO
      *
      * @apiError (Erro 4xx) 9600 Assunto não encontrado.
@@ -102,7 +90,7 @@ class AssuntoController extends BaseController
      */
 
     /**
-     * @apiDefine SAIDA_LISTA
+     * @apiDefine SAIDA_LISTA_ASSUNTOS
      *
      * @apiSuccess {Object[]} assuntos Lista de assuntos
      * @apiSuccess {Number} assuntos.iid ID do assunto
@@ -121,31 +109,13 @@ class AssuntoController extends BaseController
      *
      */
 
-     /**
-     * @apiDefine SAIDA_PADRAO
-     *
-     * @apiSuccess {Number} codigo Código da mensagem
-     * @apiSuccess {String} mensagem Mensagem de retorno
-     * @apiSuccess {Object} detalhe Objeto contendo detalhes do retorno
-     * @apiSuccess {Number} detalhe.assuntoId  Id do assunto inserido
-     *
-     * @apiSuccessExample Success-Response:
-     *     HTTP/1.1 200 OK
-     *     {
-     *         "codigo": 1234,
-     *         "mensagem": "Sua operação foi realizada com sucesso",
-     *         "detalhe": ""
-     *     }
-     *
-     */
-
     /**
      * @api {get} /assuntos/listar/ Lista os assuntos
      * @apiName Listar
      * @apiGroup Assuntos
      * @apiVersion 1.0.0
      *
-     * @apiUse SAIDA_LISTA
+     * @apiUse SAIDA_LISTA_ASSUNTOS
      * @apiUse ERR_GENERICOS
      * 
      */
@@ -220,7 +190,7 @@ class AssuntoController extends BaseController
      *
      * @apiBody {String} nome_assunto Nome do assunto.
      *
-     * @apiUse SAIDA_LISTA
+     * @apiUse SAIDA_LISTA_ASSUNTOS
      * @apiUse ERR_GENERICOS
      * 
      */

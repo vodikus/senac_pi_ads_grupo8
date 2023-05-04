@@ -69,17 +69,7 @@ class ChamadoController extends BaseController
         }
     }
 
-    /**
-     * @apiDefine ERR_GENERICOS
-     *
-     * @apiError (Erro 4xx) 401 Não autorizado
-     * @apiError (Erro 4xx) 405 Método não permitido
-     * @apiError (Erro 5xx) 501 Ação Indisponível
-     * @apiError (Erro 5xx) 9000 Erro não definido
-     * @apiError (Erro 5xx) 9001 Identificador inválido
-     * @apiError (Erro 5xx) 9004 A entrada deve ser um JSON válido
-     *
-     */
+
 
     /**
      * @apiDefine ERR_CHAMADO_PADRAO
@@ -89,40 +79,50 @@ class ChamadoController extends BaseController
      */
 
     /**
-     * @apiDefine SAIDA_LISTA
+     * @apiDefine SAIDA_LISTA_CHAMADOS
      *
      * @apiSuccess {Object[]} chamados Lista de chamados
-     * @apiSuccess {Number} chamados.iid ID do assunto
-     * @apiSuccess {String} chamados.nome_assunto Nome do assunto
+     * @apiSuccess {Number} chamados.uid_origem Id do usuário reclamante
+     * @apiSuccess {Number} chamados.uid_origem Id do usuário reclamado
+     * @apiSuccess {Number} chamados.lid Id do livro
+     * @apiSuccess {String} chamados.tipo Tipo do chamado
+     * @apiSuccess {String} chamados.assunto Assunto do chamado
+     * @apiSuccess {String} chamados.motivo Motivo do chamado
+     * @apiSuccess {String} chamados.texto Texto do chamado
+     * @apiSuccess {Timestamp} chamados.dh_inclusao  Data/Hora de abertura do chamado
      * @apiSuccess {Timestamp} chamados.dh_atualizacao  Data/Hora de atualização
+     * @apiSuccess {String} chamados.status Status do chamado
+     * @apiSuccess {Object[]} chamados.detalhes Lista de interações dos chamado
+     * @apiSuccess {Number} chamados.detalhes.chid Id da interação
+     * @apiSuccess {Number} chamados.detalhes.uid Id do usuário
+     * @apiSuccess {String} chamados.detalhes.mensagem Mensagem
+     * @apiSuccess {Timestamp} chamados.detalhes.dh_atualizacao  Data/Hora de atualização
      *
      * @apiSuccessExample Success-Response:
      *     HTTP/1.1 200 OK
      *     [
-     *       {
-     *         "iid": "1",
-     *         "nome_assunto": "Fantasia",
-     *         "dh_atualizacao": "2023-04-15 20:45:26"
-     *       }
+     *         {
+     *             "cid": "2",
+     *             "uid_origem": "44",
+     *             "uid_destino": "39",
+     *             "lid": "6",
+     *             "tipo": "DENUNCIA",
+     *             "assunto": "Um assunto sério",
+     *             "motivo": "Fraude",
+     *             "texto": "Lorem ipsum...",
+     *             "dh_inclusao": "2023-04-23 18:03:34",
+     *             "dh_atualizacao": null,
+     *             "status": "FECHADO",
+     *             "detalhes": [
+     *                 {
+     *                     "chid": "7",
+     *                     "uid": "50",
+     *                     "mensagem": "Aqui fica a mensagem",
+     *                     "dh_atualizacao": "2023-05-03 22:49:03"
+     *                 }
+     *             ]
+     *         }
      *     ]
-     *
-     */
-
-    /**
-     * @apiDefine SAIDA_PADRAO
-     *
-     * @apiSuccess {Number} codigo Código da mensagem
-     * @apiSuccess {String} mensagem Mensagem de retorno
-     * @apiSuccess {Object} detalhe Objeto contendo detalhes do retorno
-     * @apiSuccess {Number} detalhe.chamadoId  Id do assunto inserido
-     *
-     * @apiSuccessExample Success-Response:
-     *     HTTP/1.1 200 OK
-     *     {
-     *         "codigo": 1234,
-     *         "mensagem": "Sua operação foi realizada com sucesso",
-     *         "detalhe": ""
-     *     }
      *
      */
 
@@ -172,12 +172,13 @@ class ChamadoController extends BaseController
      * @apiGroup Chamados
      * @apiVersion 1.0.0
      *
-     * @apiBody {String} uid_origem Id do usuário reclamante.
-     * @apiBody {String} uid_destino Id do usuário reclamado.
-     * @apiBody {String="ABERTO","FECHADO","CANCELADO","PENDENTE"} status Status do chamado.
-     * @apiBody {String="DENUNCIA","RECLAMACAO","SUGESTAO","BUG","SUPORTE"} tipo Tipo do chamado.
+     * @apiBody {String} [uid_origem] Id do usuário reclamante.
+     * @apiBody {String} [uid_destino] Id do usuário reclamado.
+     * @apiBody {String="ABERTO","FECHADO","CANCELADO","PENDENTE"} [status] Status do chamado.
+     * @apiBody {String="DENUNCIA","RECLAMACAO","SUGESTAO","BUG","SUPORTE"} [tipo] Tipo do chamado.
+     * @apiBody {Boolean} [detalhe=false] Traz detalhes do chamado.
 
-     * @apiUse SAIDA_LISTA
+     * @apiUse SAIDA_LISTA_CHAMADOS
      * @apiUse ERR_GENERICOS
      * 
      */
@@ -186,7 +187,7 @@ class ChamadoController extends BaseController
         try {
             $chamadoModel = new ChamadoModel();
             $arrChamados = [];
-            $arrChamados = (array) $chamadoModel->buscarChamados($filtro, $admin);
+            $arrChamados = (array) $chamadoModel->buscarChamados( (array) $filtro, $admin);
             $responseData = json_encode($arrChamados);
         } catch (Exception $e) {
             $this->httpRawResponse(500, MessageHelper::fmtException($e));
