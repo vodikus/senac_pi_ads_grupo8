@@ -43,6 +43,14 @@ class ChamadoController extends BaseController
                             $this->httpRawResponse(401, MessageHelper::fmtMsgConstJson('ERR_NAO_AUTORIZADO'));
                         }
                         break;
+                    case 'adicionarDetalhe':
+                        if ($this->isAuth()) {
+                            $dados['uid'] = $this->getFieldFromToken('uid');
+                            $this->adicionarChamadoDetalhe($dados);
+                        } else {
+                            $this->httpRawResponse(401, MessageHelper::fmtMsgConstJson('ERR_NAO_AUTORIZADO'));
+                        }
+                        break;
                     default:
                         $this->httpRawResponse(501, MessageHelper::fmtMsgConstJson('ERR_ACAO_INDISPONIVEL'));
                         break;
@@ -193,5 +201,41 @@ class ChamadoController extends BaseController
             $this->httpRawResponse(500, MessageHelper::fmtException($e));
         }
         $this->montarSaidaOk($responseData);
+    }
+
+    /**
+     * @api {post} /chamados/adicionarDetalhe/ Adiciona detalhe do chamado
+     * @apiName Adicionar Detalhe
+     * @apiGroup Chamados
+     * @apiVersion 1.0.0
+     *
+     * @apiBody {String} cid Id do chamado.
+     * @apiBody {String} mensagem Mensagem do detalhe do chamado.
+     * 
+     * @apiUse SAIDA_PADRAO
+     * @apiUse ERR_GENERICOS
+     * @apiUse ERR_CHAMADO_PADRAO
+     * 
+     * @apiErrorExample Error-Response:
+     *     HTTP/1.1 500 Internal Server Error
+     *     {
+     *         "codigo": "9501",
+     *         "mensagem": "Ocorreu um erro na criação do seu chamado",
+     *         "detalhe": ""
+     *     }
+     */
+    public function adicionarChamadoDetalhe($dados)
+    {
+        try {
+            $chamadoDetalheModel = new ChamadoDetalheModel();
+            $chamadoDetalheId = $chamadoDetalheModel->adicionarDetalhe($dados);
+            if ($chamadoDetalheId <= 0) {
+                $this->httpRawResponse(200, MessageHelper::fmtMsgConstJson('ERR_CHAMADO_DETALHE_INCLUSAO'));
+            }
+        } catch (Exception $e) {
+            $this->httpRawResponse(200, MessageHelper::fmtException($e));
+        }
+        $this->httpRawResponse(200, MessageHelper::fmtMsgConstJson('MSG_CHAMADO_DETALHE_CADASTRO_SUCESSO', ['chamadoDetalheId' => $chamadoDetalheId]));
+
     }
 }
