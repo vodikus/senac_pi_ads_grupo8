@@ -10,14 +10,21 @@ class ChamadoModel extends BaseModel
         'uid_origem' => ['protected' => 'update', 'type' => 'int', 'visible' => true],
         'uid_destino' => ['protected' => 'update', 'type' => 'int', 'visible' => true, 'required' => true],
         'lid' => ['protected' => 'update', 'type' => 'int', 'visible' => true, 'required' => true],
-        'tipo' => ['protected' => 'none', 'type' => 'varchar', 'visible' => true, 'required' => true],
-        'assunto' => ['protected' => 'none', 'type' => 'varchar', 'visible' => true, 'required' => true],
-        'motivo' => ['protected' => 'none', 'type' => 'varchar', 'visible' => true, 'required' => true],
-        'texto' => ['protected' => 'none', 'type' => 'varchar', 'visible' => true, 'required' => true],
+        'tipo' => ['protected' => 'update', 'type' => 'varchar', 'visible' => true, 'required' => true],
+        'assunto' => ['protected' => 'update', 'type' => 'varchar', 'visible' => true, 'required' => true],
+        'motivo' => ['protected' => 'update', 'type' => 'varchar', 'visible' => true, 'required' => true],
+        'texto' => ['protected' => 'update', 'type' => 'varchar', 'visible' => true, 'required' => true],
         'dh_inclusao' => ['protected' => 'all', 'type' => 'timestamp', 'update' => 'never', 'visible' => true],
         'dh_atualizacao' => ['protected' => 'all', 'type' => 'timestamp', 'transform' => 'current_timestamp', 'update' => 'always', 'visible' => true],
         'status' => ['protected' => 'none', 'type' => 'varchar', 'visible' => true]
     );
+
+    public function validaChamado($cid) {
+        if ( $this->query("SELECT 1 FROM chamados WHERE cid=:cid",  ['cid' => $cid ]) <= 0  ) {
+            throw new CLConstException('ERR_CHAMADO_NAO_ENCONTRADO', "cid: $cid");
+        }
+        return true;
+    }    
 
     public function adicionarChamado($uid, $entrada)
     {
@@ -89,4 +96,39 @@ class ChamadoModel extends BaseModel
         }
     }
 
+    public function atualizarChamado($uid, $entrada)
+    {
+        try {
+            $cid = $entrada['cid'];
+            unset($entrada['cid']);
+
+            $this->validaChamado($cid);
+
+            $campos = SQLHelper::sobrescrevePropriedades($this->campos, [
+                'uid_destino' => ['protected' => 'all','required' => false],
+                'lid' => ['protected' => 'all','required' => false],
+                'tipo' => ['protected' => 'all','required' => false],
+                'assunto' => ['protected' => 'all','required' => false],
+                'motivo' => ['protected' => 'all','required' => false],
+                'texto' => ['protected' => 'all','required' => false],
+                'status' => ['required' => true]
+            ]);  
+            $campos = array_filter($campos, ['SQLHelper', 'limpaCamposProtegidos']);
+
+            $dados = SQLHelper::validaCampos($campos, $entrada, 'UPDATE');
+            $dados['cid'] = $cid;
+
+            $camposUpdate = SQLHelper::montaCamposUpdate($this->campos, $dados);
+            return $this->query("UPDATE chamados SET $camposUpdate WHERE cid=:cid", $dados);
+        } catch (Exception $e) {    
+            switch ($e->getCode()) {
+                case 1000:
+                    if (stripos($e->getMessage(), 'Warning: 1265 Data truncated for column')) {
+                        throw new CLConstException('ERR_CHAMADO_STATUS_INVALIDO');
+                    }
+                    break;
+            }  
+            throw $e;
+        }
+    }
 }

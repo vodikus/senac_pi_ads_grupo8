@@ -118,11 +118,15 @@ class Constantes
 
     /** Mensagens - Chamados  */
     const MSG_CHAMADO_CADASTRO_SUCESSO = ['code' => 1500, 'message' => 'Chamado cadastrado com sucesso.'];
-    const MSG_CHAMADO_DETALHE_CADASTRO_SUCESSO = ['code' => 1501, 'message' => 'Detalhe do chamado cadastrado com sucesso.'];
+    const MSG_CHAMADO_ATUALIZADO_SUCESSO = ['code' => 1501, 'message' => 'Chamado atualizado com sucesso.'];
+    const MSG_CHAMADO_DETALHE_CADASTRO_SUCESSO = ['code' => 1510, 'message' => 'Detalhe do chamado cadastrado com sucesso.'];
 
     /** Erros - Chamados */
-    const ERR_CHAMADO_INCLUSAO = ['code' => 9500, 'message' => 'Erro ao incluir chamado'];
-    const ERR_CHAMADO_DETALHE_INCLUSAO = ['code' => 9501, 'message' => 'Erro ao incluir detalhe do chamado'];
+    const ERR_CHAMADO_NAO_ENCONTRADO = ['code' => 9501, 'message' => 'Chamado não encontrado'];
+    const ERR_CHAMADO_INCLUSAO = ['code' => 9501, 'message' => 'Erro ao incluir chamado'];
+    const ERR_CHAMADO_ALTERACAO = ['code' => 9502, 'message' => 'Erro ao alterar chamado'];
+    const ERR_CHAMADO_STATUS_INVALIDO = ['code' => 9503, 'message' => 'Status do chamado inválido'];
+    const ERR_CHAMADO_DETALHE_INCLUSAO = ['code' => 9510, 'message' => 'Erro ao incluir detalhe do chamado'];
 
     /** Mensagens - Assuntos  */
     const MSG_ASSUNTO_CADASTRO_SUCESSO = ['code' => 1600, 'message' => 'Assunto cadastrado com sucesso.'];

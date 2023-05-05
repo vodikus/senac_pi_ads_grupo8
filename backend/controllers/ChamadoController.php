@@ -51,6 +51,13 @@ class ChamadoController extends BaseController
                             $this->httpRawResponse(401, MessageHelper::fmtMsgConstJson('ERR_NAO_AUTORIZADO'));
                         }
                         break;
+                    case 'alterarChamado':
+                        if ($this->isAuth()) {
+                            $this->alterarChamado($this->getFieldFromToken('uid'), $dados);
+                        } else {
+                            $this->httpRawResponse(401, MessageHelper::fmtMsgConstJson('ERR_NAO_AUTORIZADO'));
+                        }
+                        break;
                     default:
                         $this->httpRawResponse(501, MessageHelper::fmtMsgConstJson('ERR_ACAO_INDISPONIVEL'));
                         break;
@@ -93,17 +100,18 @@ class ChamadoController extends BaseController
      * @apiSuccess {Number} chamados.uid_origem Id do usuário reclamante
      * @apiSuccess {Number} chamados.uid_origem Id do usuário reclamado
      * @apiSuccess {Number} chamados.lid Id do livro
-     * @apiSuccess {String} chamados.tipo Tipo do chamado
+     * @apiSuccess {String="SUPORTE","DUVIDA","RECLAMACAO","DENUNCIA"} chamados.tipo Tipo do chamado
      * @apiSuccess {String} chamados.assunto Assunto do chamado
      * @apiSuccess {String} chamados.motivo Motivo do chamado
      * @apiSuccess {String} chamados.texto Texto do chamado
      * @apiSuccess {Timestamp} chamados.dh_inclusao  Data/Hora de abertura do chamado
      * @apiSuccess {Timestamp} chamados.dh_atualizacao  Data/Hora de atualização
-     * @apiSuccess {String} chamados.status Status do chamado
+     * @apiSuccess {String="ABERTO","FECHADO","CANCELADO","PENDENTE"} chamados.status Status do chamado
      * @apiSuccess {Object[]} chamados.detalhes Lista de interações dos chamado
      * @apiSuccess {Number} chamados.detalhes.chid Id da interação
      * @apiSuccess {Number} chamados.detalhes.uid Id do usuário
      * @apiSuccess {String} chamados.detalhes.mensagem Mensagem
+     * @apiSuccess {String="AVISO","MENSAGEM"} chamados.detalhes.tipo Tipo da mensagem
      * @apiSuccess {Timestamp} chamados.detalhes.dh_atualizacao  Data/Hora de atualização
      *
      * @apiSuccessExample Success-Response:
@@ -228,7 +236,7 @@ class ChamadoController extends BaseController
     {
         try {
             $chamadoDetalheModel = new ChamadoDetalheModel();
-            $chamadoDetalheId = $chamadoDetalheModel->adicionarDetalhe($dados);
+            $chamadoDetalheId = $chamadoDetalheModel->adicionarDetalhe($dados,'MENSAGEM');
             if ($chamadoDetalheId <= 0) {
                 $this->httpRawResponse(200, MessageHelper::fmtMsgConstJson('ERR_CHAMADO_DETALHE_INCLUSAO'));
             }
@@ -236,6 +244,51 @@ class ChamadoController extends BaseController
             $this->httpRawResponse(200, MessageHelper::fmtException($e));
         }
         $this->httpRawResponse(200, MessageHelper::fmtMsgConstJson('MSG_CHAMADO_DETALHE_CADASTRO_SUCESSO', ['chamadoDetalheId' => $chamadoDetalheId]));
+
+    }
+
+    /**
+     * @api {post} /chamados/alterarChamado/ Altera status do chamado
+     * @apiName Alterar Status
+     * @apiGroup Chamados
+     * @apiVersion 1.0.0
+     *
+     * @apiBody {String} cid Id do chamado.
+     * @apiBody {String="ABERTO","FECHADO","CANCELADO","PENDENTE"} status Status do chamado.
+     * 
+     * @apiUse SAIDA_PADRAO
+     * @apiUse ERR_GENERICOS
+     * @apiUse ERR_CHAMADO_PADRAO
+     * 
+     * @apiErrorExample Error-Response:
+     *     HTTP/1.1 500 Internal Server Error
+     *     {
+     *         "codigo": "9501",
+     *         "mensagem": "Ocorreu um erro na criação do seu chamado",
+     *         "detalhe": ""
+     *     }
+     */
+    public function alterarChamado($uid, $dados)
+    {
+        try {
+            $chamadoModel = new ChamadoModel();
+            $chamadoDetalheModel = new ChamadoDetalheModel();
+            
+            if ( $chamadoModel->atualizarChamado($uid, $dados) == 0) {
+                $this->httpRawResponse(200, MessageHelper::fmtMsgConstJson('ERR_CHAMADO_NAO_ENCONTRADO'));
+            }
+            $dados['uid'] = $uid;
+            $dados['mensagem'] = "O status do chamado foi alterado para {$dados['status']}";
+            unset($dados['status']);
+            $chamadoDetalheId = $chamadoDetalheModel->adicionarDetalhe($dados,'AVISO');
+
+            if ($chamadoDetalheId <= 0) {
+                $this->httpRawResponse(200, MessageHelper::fmtMsgConstJson('ERR_CHAMADO_DETALHE_INCLUSAO'));
+            }
+        } catch (Exception $e) {
+            $this->httpRawResponse(200, MessageHelper::fmtException($e));
+        }
+        $this->httpRawResponse(200, MessageHelper::fmtMsgConstJson('MSG_CHAMADO_ATUALIZADO_SUCESSO'));
 
     }
 }
