@@ -25,6 +25,7 @@ class ChamadoDetalheModel extends BaseModel
             (new ChamadoModel())->validaChamado($dados['cid']);
             (new UsuarioModel())->validaUsuario($dados['uid']);
 
+            $this->query("UPDATE chamados SET dh_atualizacao=CURRENT_TIMESTAMP WHERE cid=:cid", ['cid' => $dados['cid']]);
             return $this->insert(
                 "INSERT INTO chamados_detalhe (cid, uid, mensagem, tipo) VALUES " .
                 " (:cid, :uid, :mensagem, :tipo)",
