@@ -59,6 +59,8 @@ class Constantes
     const MSG_USUARIO_LIVRO_VINCULADO = ['code' => 1205, 'message' => 'Livro vinculado ao usuário com sucesso'];
     const MSG_USUARIO_LIVRO_DESVINCULADO = ['code' => 1206, 'message' => 'Livro desvinculado ao usuário com sucesso'];
     const MSG_USUARIO_LIVRO_STATUS_SUCESSO = ['code' => 1207, 'message' => 'Status do livro alterado com sucesso'];
+    const MSG_USUARIO_BLOQUEIO_SUCESSO = ['code' => 1208, 'message' => 'Usuário bloqueado com sucesso'];
+    const MSG_USUARIO_DESBLOQUEIO_SUCESSO = ['code' => 1209, 'message' => 'Usuário desbloqueado com sucesso'];
     /** Erros - Usuários  */
     const ERR_USUARIO_NAO_ENCONTRADO = ['code' => 9100, 'message' => 'Usuário não encontrado'];
     const ERR_EMAIL_SENHA_INVALIDO = ['code' => 9101, 'message' => 'E-mail ou senha não conferem'];
@@ -66,6 +68,7 @@ class Constantes
     const ERR_EMAIL_EXISTENTE= ['code' => 9103, 'message' => 'E-mail já cadastrado'];
     const ERR_CPF_EXISTENTE= ['code' => 9104, 'message' => 'CPF já cadastrado'];
     const ERR_USUARIO_BLOQUEADO = ['code' => 9105, 'message' => 'Usuário bloqueado'];
+    const ERR_USUARIO_JA_BLOQUEADO = ['code' => 9106, 'message' => 'Usuário já está bloqueado'];
     const ERR_USUARIO_ASSUNTO_VINCULO_EXISTENTE = ['code' => 9105, 'message' => 'Este assunto já está vinculado a este usuário'];
     const ERR_USUARIO_ASSUNTO_VINCULO_NAO_ENCONTRADO = ['code' => 9106, 'message' => 'Este usuário não está vinculado a este assunto'];
     const ERR_USUARIO_LIVRO_VINCULO_EXISTENTE = ['code' => 9107, 'message' => 'Este livro já está vinculado a este usuário'];
@@ -161,9 +164,12 @@ class Constantes
 
     /** Mensagens - Amigos  */
     const MSG_AMIGO_ADICIONADO_SUCESSO = ['code' => 1900, 'message' => 'Amigo adicionado com sucesso'];
+    const MSG_AMIGO_REMOVIDO_SUCESSO = ['code' => 1901, 'message' => 'Amigo removido com sucesso'];
 
     /** Erros - Amigos  */
     const ERR_AMIGO_NAO_ENCONTRADO = ['code' => 9900, 'message' => 'Estes usuários não são amigos'];
+    const ERR_AMIGO_JA_EXISTENTE = ['code' => 9901, 'message' => 'Usuário já é seu amigo'];
+    const ERR_AMIGO_MESMO_USUARIO = ['code' => 9902, 'message' => 'Usuário inválido'];
 
 
     public static function getConst($const = "ERR_NAODEFINIDO")

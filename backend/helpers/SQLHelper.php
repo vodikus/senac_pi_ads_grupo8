@@ -57,7 +57,7 @@ class SQLHelper
                         throw new Exception("Campo $chave não pode ser alterado", 9990);
                     }
                 } else {
-                    if ($campos[$chave]['protected'] == 'none' || $acao == 'INSERT' || ($acao == 'UPDATE' && $campos[$chave]['protected'] != 'update')) {
+                    if ($campos[$chave]['protected'] == 'none' || $acao == 'DELETE' || $acao == 'INSERT' || ($acao == 'UPDATE' && $campos[$chave]['protected'] != 'update')) {
                         if (self::validaTipo($campos[$chave]['type'], $valor)) {
                             $retorno[$chave] = $valor;
                         } else {

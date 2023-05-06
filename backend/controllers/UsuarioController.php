@@ -3,6 +3,7 @@ include_once 'includes/BaseController.php';
 include_once 'models/UsuarioModel.php';
 include_once 'models/UsuarioAssuntoModel.php';
 include_once 'models/UsuarioLivroModel.php';
+include_once 'models/AmigoModel.php';
 
 use helpers\MessageHelper;
 
@@ -34,6 +35,13 @@ class UsuarioController extends BaseController
                     case 'meu-perfil':
                         if ($this->isAuth()) {
                             $this->buscar($this->getFieldFromToken('uid'));
+                        } else {
+                            $this->httpRawResponse(401, MessageHelper::fmtMsgConstJson('ERR_NAO_AUTORIZADO'));
+                        }
+                        break;
+                    case 'amigos':
+                        if ($this->isAuth()) {
+                            $this->listarAmigos($this->getFieldFromToken('uid'));
                         } else {
                             $this->httpRawResponse(401, MessageHelper::fmtMsgConstJson('ERR_NAO_AUTORIZADO'));
                         }
@@ -84,6 +92,20 @@ class UsuarioController extends BaseController
                             $this->httpRawResponse(401, MessageHelper::fmtMsgConstJson('ERR_NAO_AUTORIZADO'));
                         }
                         break;
+                    case 'bloquearUsuario':
+                        if ($this->isAuth()) {
+                            $this->bloquearUsuario($this->getFieldFromToken('uid'), $params['param1']);
+                        } else {
+                            $this->httpRawResponse(401, MessageHelper::fmtMsgConstJson('ERR_NAO_AUTORIZADO'));
+                        }
+                        break;
+                    case 'adicionarAmigo':
+                        if ($this->isAuth()) {
+                            $this->adicionarAmigo($this->getFieldFromToken('uid'), $params['param1']);
+                        } else {
+                            $this->httpRawResponse(401, MessageHelper::fmtMsgConstJson('ERR_NAO_AUTORIZADO'));
+                        }
+                        break;
                     default:
                         $this->httpRawResponse(501, MessageHelper::fmtMsgConstJson('ERR_ACAO_INDISPONIVEL'));
                         break;
@@ -117,6 +139,20 @@ class UsuarioController extends BaseController
                     case 'deletar':
                         if ($this->isAuth()) {
                             $this->deletar($params['param1']);
+                        } else {
+                            $this->httpRawResponse(401, MessageHelper::fmtMsgConstJson('ERR_NAO_AUTORIZADO'));
+                        }
+                        break;
+                    case 'desbloquear':
+                        if ($this->isAuth()) {
+                            $this->desbloquearUsuario($this->getFieldFromToken('uid'), $params['param1']);
+                        } else {
+                            $this->httpRawResponse(401, MessageHelper::fmtMsgConstJson('ERR_NAO_AUTORIZADO'));
+                        }
+                        break;
+                    case 'removerAmigo':
+                        if ($this->isAuth()) {
+                            $this->removerAmigo($this->getFieldFromToken('uid'), $params['param1']);
                         } else {
                             $this->httpRawResponse(401, MessageHelper::fmtMsgConstJson('ERR_NAO_AUTORIZADO'));
                         }
@@ -294,4 +330,86 @@ class UsuarioController extends BaseController
         }
         $this->httpRawResponse(200, MessageHelper::fmtMsgConstJson('MSG_USUARIO_LIVRO_STATUS_SUCESSO'));
     }
+
+    public function bloquearUsuario($uid = 0, $uid_blq = 0)
+    {
+        try {
+            if (is_numeric($uid) && is_numeric($uid_blq)) {
+                $usuarioModel = new UsuarioModel();
+                if ($usuarioModel->bloquearUsuario($uid,$uid_blq) == 0) {
+                    $this->httpRawResponse(200, MessageHelper::fmtMsgConstJson('ERR_USUARIO_NAO_ENCONTRADO'));
+                }
+            } else {
+                $this->httpRawResponse(200, MessageHelper::fmtMsgConstJson('ERR_ID_INVALIDO'));
+            }
+        } catch (Exception $e) {
+            $this->httpRawResponse(200, MessageHelper::fmtException($e));
+        }
+        $this->httpRawResponse(200, MessageHelper::fmtMsgConstJson('MSG_USUARIO_BLOQUEIO_SUCESSO'));
+    }    
+
+    public function desbloquearUsuario($uid = 0, $uid_blq = 0)
+    {
+        try {
+            if (is_numeric($uid) && is_numeric($uid_blq)) {
+                $usuarioModel = new UsuarioModel();
+                if ($usuarioModel->debloquearUsuario($uid,$uid_blq) == 0) {
+                    $this->httpRawResponse(200, MessageHelper::fmtMsgConstJson('ERR_USUARIO_NAO_ENCONTRADO'));
+                }
+            } else {
+                $this->httpRawResponse(200, MessageHelper::fmtMsgConstJson('ERR_ID_INVALIDO'));
+            }
+        } catch (Exception $e) {
+            $this->httpRawResponse(200, MessageHelper::fmtException($e));
+        }
+        $this->httpRawResponse(200, MessageHelper::fmtMsgConstJson('MSG_USUARIO_DESBLOQUEIO_SUCESSO'));
+    }    
+
+    public function adicionarAmigo($uid = 0, $uid_amigo = 0)
+    {
+        try {
+            if (is_numeric($uid) && is_numeric($uid_amigo)) {
+                $amigoModel = new AmigoModel();
+                $amigoModel->adicionarAmigo($uid, $uid_amigo);
+            } else {
+                $this->httpRawResponse(200, MessageHelper::fmtMsgConstJson('ERR_ID_INVALIDO'));
+            }
+        } catch (Exception $e) {
+            $this->httpRawResponse(200, MessageHelper::fmtException($e));
+        }
+        $this->httpRawResponse(200, MessageHelper::fmtMsgConstJson('MSG_AMIGO_ADICIONADO_SUCESSO'));
+    }    
+
+    public function removerAmigo($uid = 0, $uid_amigo = 0)
+    {
+        try {
+            if (is_numeric($uid) && is_numeric($uid_amigo)) {
+                $amigoModel = new AmigoModel();
+                if ($amigoModel->removerAmigo($uid, $uid_amigo) == 0) {
+                    $this->httpRawResponse(200, MessageHelper::fmtMsgConstJson('ERR_USUARIO_NAO_ENCONTRADO'));
+                }
+            } else {
+                $this->httpRawResponse(200, MessageHelper::fmtMsgConstJson('ERR_ID_INVALIDO'));
+            }
+        } catch (Exception $e) {
+            $this->httpRawResponse(200, MessageHelper::fmtException($e));
+        }
+        $this->httpRawResponse(200, MessageHelper::fmtMsgConstJson('MSG_AMIGO_REMOVIDO_SUCESSO'));
+    }    
+
+    public function listarAmigos($uid = 0)
+    {
+        try {
+            if (is_numeric($uid)) {
+                $amigoModel = new AmigoModel();
+                $arrUsuarios = (array) $amigoModel->listarAmigos($uid);
+                $responseData = json_encode($arrUsuarios);
+            } else {
+                $this->httpRawResponse(200, MessageHelper::fmtMsgConstJson('ERR_ID_INVALIDO'));
+            }
+        } catch (Exception $e) {
+            $this->httpRawResponse(200, MessageHelper::fmtException($e));
+        }
+        $this->montarSaidaOk($responseData);
+    }    
 }

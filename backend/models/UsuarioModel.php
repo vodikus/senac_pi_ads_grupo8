@@ -130,4 +130,28 @@ class UsuarioModel extends BaseModel
         }
     }
 
+    public function bloquearUsuario($uid, $uid_blq)
+    {
+        try {
+            return $this->insert("INSERT INTO usuarios_bloqueio (uid, uid_blq) VALUES (:uid,:uid_blq)", ['uid'=>$uid,'uid_blq'=>$uid_blq]);
+        } catch (Exception $e) {
+            switch ($e->getCode()) {
+                case 23000:
+                    if (stripos($e->getMessage(),'PRIMARY')) {
+                        throw new CLConstException('ERR_USUARIO_JA_BLOQUEADO');
+                    }
+                    break;
+            }            
+            throw $e;
+        }
+    }
+
+    public function debloquearUsuario($uid, $uid_blq)
+    {
+        try {
+            return $this->query("DELETE FROM usuarios_bloqueio WHERE uid=:uid AND uid_blq=:uid_blq", ['uid'=>$uid,'uid_blq'=>$uid_blq]);
+        } catch (Exception $e) {
+            throw $e;
+        }
+    }
 }

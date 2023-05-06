@@ -143,6 +143,26 @@
 					"response": []
 				},
 				{
+					"name": "Listar amigos",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://{{URL}}/api/usuarios/amigos",
+							"protocol": "http",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"usuarios",
+								"amigos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "Adicionar Usuário",
 					"request": {
 						"method": "POST",
@@ -391,6 +411,56 @@
 								"api",
 								"usuarios",
 								"atualizarStatusLivro"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Adicionar Amigo",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[\r\n    {\r\n        \"lid\": 8,\r\n        \"status\": \"D\"\r\n    }\r\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{URL}}/api/usuarios/atualizarStatusLivro",
+							"protocol": "http",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"usuarios",
+								"atualizarStatusLivro"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Remover Amigo",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://{{URL}}/api/usuarios/removerAmigo/44",
+							"protocol": "http",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"usuarios",
+								"removerAmigo",
+								"44"
 							]
 						}
 					},
@@ -1516,7 +1586,7 @@
 				{
 					"name": "Alterar status chamado",
 					"request": {
-						"method": "POST",
+						"method": "PUT",
 						"header": [],
 						"body": {
 							"mode": "raw",
@@ -1570,6 +1640,73 @@
 								"chamados",
 								"listar",
 								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Chat",
+			"item": [
+				{
+					"name": "Listar Mensagens",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"detalhe\": \"true\",\r\n    \"tipo\": \"DENUNCIA\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{URL}}/api/chat/listar/39",
+							"protocol": "http",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"chat",
+								"listar",
+								"39"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Enviar mensagem",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"uid_amigo\": \"47\",\r\n    \"mensagem\": \"Lorem ipsum 2...\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{URL}}/api/chat/enviar",
+							"protocol": "http",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"chat",
+								"enviar"
 							]
 						}
 					},
