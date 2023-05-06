@@ -105,7 +105,7 @@ class AutorController extends BaseController
      */
 
     /**
-     * @api {get} /autores/listar/ Lista os autores
+     * @api {get} /autores/listar/ Listar Autores
      * @apiName Listar
      * @apiGroup Autores
      * @apiVersion 1.0.0
@@ -127,7 +127,7 @@ class AutorController extends BaseController
     }
 
     /**
-     * @api {get} /autores/buscar-por-nome/ Busca autor pelo nome
+     * @api {get} /autores/buscar-por-nome/ Buscar Autor pelo Nome
      * @apiName Buscar por nome
      * @apiGroup Autores
      * @apiVersion 1.0.0
@@ -151,7 +151,7 @@ class AutorController extends BaseController
     }    
 
     /**
-     * @api {post} /autores/adicionar/ Adiciona autor
+     * @api {post} /autores/adicionar/ Adicionar Autor
      * @apiName Adicionar
      * @apiGroup Autores
      * @apiVersion 1.0.0
@@ -182,8 +182,8 @@ class AutorController extends BaseController
     }
 
     /**
-     * @api {delete} /autores/deletar/:id Deleta autor pelo Id
-     * @apiName Deletar por ID
+     * @api {delete} /autores/deletar/:id Deletar Autor
+     * @apiName Deletar 
      * @apiGroup Autores
      * @apiVersion 1.0.0
      *
@@ -220,7 +220,7 @@ class AutorController extends BaseController
     }
 
     /**
-     * @api {put} /AUTORES/atualizar/:id Atualiza autor
+     * @api {put} /AUTORES/atualizar/:id Atualizar Autor
      * @apiName Atualizar
      * @apiGroup Autores
      * @apiVersion 1.0.0

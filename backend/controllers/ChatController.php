@@ -76,7 +76,7 @@ class ChatController extends BaseController
      */
 
     /**
-     * @api {post} /chat/enviar/ Enviar mensagem
+     * @api {post} /chat/enviar/ Enviar Mensagem
      * @apiName Enviar Mensagem
      * @apiGroup Chat
      * @apiVersion 1.0.0
@@ -111,7 +111,7 @@ class ChatController extends BaseController
     }
 
     /**
-    * @api {get} /chat/listar/:uid Lista as mensagens de um usuário
+    * @api {get} /chat/listar/:uid Listar Mensagens do Usuário
     * @apiName Listar Mensagens
     * @apiGroup Chat
     * @apiVersion 1.0.0

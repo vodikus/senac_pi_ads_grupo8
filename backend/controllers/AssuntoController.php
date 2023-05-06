@@ -110,7 +110,7 @@ class AssuntoController extends BaseController
      */
 
     /**
-     * @api {get} /assuntos/listar/ Lista os assuntos
+     * @api {get} /assuntos/listar/ Listar Assuntos
      * @apiName Listar
      * @apiGroup Assuntos
      * @apiVersion 1.0.0
@@ -132,7 +132,7 @@ class AssuntoController extends BaseController
     }
 
     /**
-     * @api {get} /assuntos/buscar-por-id/:id Busca assuntos pelo Id
+     * @api {get} /assuntos/buscar-por-id/:id Buscar Assuntos pelo Id
      * @apiName Buscar por ID
      * @apiGroup Assuntos
      * @apiVersion 1.0.0
@@ -183,7 +183,7 @@ class AssuntoController extends BaseController
     }
 
     /**
-     * @api {get} /assuntos/buscar-por-nome/ Busca assuntos pelo nome
+     * @api {get} /assuntos/buscar-por-nome/ Buscar Assuntos pelo Nome
      * @apiName Buscar por nome
      * @apiGroup Assuntos
      * @apiVersion 1.0.0
@@ -207,7 +207,7 @@ class AssuntoController extends BaseController
     }
 
     /**
-     * @api {post} /assuntos/adicionar/ Adiciona assunto
+     * @api {post} /assuntos/adicionar/ Adicionar Assunto
      * @apiName Adicionar
      * @apiGroup Assuntos
      * @apiVersion 1.0.0
@@ -238,8 +238,8 @@ class AssuntoController extends BaseController
     }
 
     /**
-     * @api {delete} /assuntos/deletar/:id Deleta assunto pelo Id
-     * @apiName Deletar por ID
+     * @api {delete} /assuntos/deletar/:id Deletar Assunto
+     * @apiName Deletar
      * @apiGroup Assuntos
      * @apiVersion 1.0.0
      *
@@ -276,7 +276,7 @@ class AssuntoController extends BaseController
     }
 
     /**
-     * @api {put} /assuntos/atualizar/:id Atualiza assunto
+     * @api {put} /assuntos/atualizar/:id Atualizar Assunto
      * @apiName Atualizar
      * @apiGroup Assuntos
      * @apiVersion 1.0.0

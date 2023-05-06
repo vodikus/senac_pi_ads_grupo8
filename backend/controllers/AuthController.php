@@ -11,7 +11,7 @@ class AuthController extends BaseController
 
 
     /**
-     * @api {get} /auth/getToken/ Solicita um token
+     * @api {get} /auth/getToken/ Solicitar Token
      * @apiName Solicita Token
      * @apiGroup Autenticação
      * @apiVersion 1.0.0
@@ -33,7 +33,7 @@ class AuthController extends BaseController
      */
 
     /**
-     * @api {get} /auth/authToken/ Valida um token
+     * @api {get} /auth/authToken/ Validar Token
      * @apiName Valida Token
      * @apiGroup Autenticação
      * @apiVersion 1.0.0

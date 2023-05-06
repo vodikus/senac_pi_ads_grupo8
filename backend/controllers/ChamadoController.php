@@ -136,7 +136,7 @@ class ChamadoController extends BaseController
      */
 
     /**
-     * @api {post} /chamados/adicionar/ Adiciona chamado
+     * @api {post} /chamados/adicionar/ Adicionar Chamado
      * @apiName Adicionar
      * @apiGroup Chamados
      * @apiVersion 1.0.0
@@ -176,7 +176,7 @@ class ChamadoController extends BaseController
     }
 
     /**
-     * @api {get} /chamados/listar/ Lista os chamados
+     * @api {get} /chamados/listar/ Listar Chamados
      * @apiName Listar
      * @apiGroup Chamados
      * @apiVersion 1.0.0
@@ -205,7 +205,7 @@ class ChamadoController extends BaseController
     }
 
     /**
-     * @api {post} /chamados/adicionarDetalhe/ Adiciona detalhe do chamado
+     * @api {post} /chamados/adicionarDetalhe/ Adicionar detalhe do Chamado
      * @apiName Adicionar Detalhe
      * @apiGroup Chamados
      * @apiVersion 1.0.0
@@ -241,7 +241,7 @@ class ChamadoController extends BaseController
     }
 
     /**
-     * @api {put} /chamados/alterarChamado/ Altera status do chamado
+     * @api {put} /chamados/alterarChamado/ Alterar status do Chamado
      * @apiName Alterar Status
      * @apiGroup Chamados
      * @apiVersion 1.0.0
