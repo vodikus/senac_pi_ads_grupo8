@@ -2,6 +2,7 @@
 header("Access-Control-Allow-Origin: *");
 header('Access-Control-Allow-Methods: GET, POST, OPTIONS, DELETE, PUT');
 header("Access-Control-Allow-Headers: Content-Type, Authorization");
+header('Content-Type: application/json');
 
 include_once 'helpers/MessageHelper.php';
 include_once 'helpers/Constantes.php';
@@ -9,17 +10,19 @@ include_once 'includes/CLException.php';
 include_once 'includes/CLConstException.php';
 include_once 'includes/BaseController.php';
 
+use helpers\MessageHelper;
 
 define( 'INCLUDE_DIR', dirname( __FILE__ ) . '/controllers/' );
 
 // Regras de roteamento
 $rules = array( 
+    'AssuntoController'     => "assuntos/?(?'acao'[\w\-]*)\/?(?'param1'[\w\s]*)",
     'AuthController'        => "auth/?(?'acao'[\w\-]*)\/?(?'param1'[\w\s]*)",
     'AutorController'       => "autores/?(?'acao'[\w\-]*)\/?(?'param1'[\w\s]*)",
     'ChamadoController'     => "chamados/?(?'acao'[\w\-]*)\/?(?'param1'[\w\s]*)",
+    'ChatController'        => "chat/?(?'acao'[\w\-]*)\/?(?'param1'[\w\s]*)",
     'EmprestimoController'  => "emprestimos/?(?'acao'[\w\-]*)\/?(?'param1'[\w\s]*)\/?(?'param2'[\w\s]*)",
     'EnderecoController'    => "enderecos/?(?'acao'[\w\-]*)\/?(?'param1'[\w\s]*)",
-    'AssuntoController'     => "assuntos/?(?'acao'[\w\-]*)\/?(?'param1'[\w\s]*)",
     'LivroController'       => "livros/?(?'acao'[\w\-]*)\/?(?'param1'[\w\s]*)",
     'UsuarioController'     => "usuarios/?(?'acao'[\w\-]*)\/?(?'param1'[\w\s]*)"
 );
@@ -43,4 +46,4 @@ foreach ( $rules as $controller => $rule ) {
 }
 
 // Nenhuma regra foi encontrada.
-include( dirname( __FILE__ ) . '/404.php' );
+echo MessageHelper::fmtMsgConstJson('ERR_NAO_ENCONTRADO');

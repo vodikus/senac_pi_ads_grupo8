@@ -26,6 +26,14 @@ class UsuarioModel extends BaseModel
         }
         return true;
     }
+
+    public function validaBloqueio($uid, $uid_blq)
+    {
+        if ($this->query("SELECT 1 FROM usuarios_bloqueio WHERE uid=:uid AND uid_blq=:uid_blq", ['uid' => $uid, 'uid_blq' => $uid_blq]) > 0) {
+            throw new CLConstException('ERR_USUARIO_BLOQUEADO');
+        }
+        return false;
+    }
     public function buscarTodosUsuarios()
     {
         try {

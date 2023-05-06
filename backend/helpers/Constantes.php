@@ -36,6 +36,7 @@ class Constantes
 
     /** Erros - HTTP */
     const ERR_NAO_AUTORIZADO = ['code' => 401, 'message' => 'Acesso não autorizado'];
+    const ERR_NAO_ENCONTRADO = ['code' => 404, 'message' => 'Recurso não encontrado'];
     const ERR_METODO_NAO_PERMITIDO = ['code' => 405, 'message' => 'Método não permitido'];
     const ERR_ACAO_INDISPONIVEL = ['code' => 501, 'message' => 'Ação Indisponível'];
 
@@ -64,6 +65,7 @@ class Constantes
     const ERR_EMAIL_SENHA_REQUERIDO = ['code' => 9102, 'message' => 'É necessário informar e-mail e senha'];
     const ERR_EMAIL_EXISTENTE= ['code' => 9103, 'message' => 'E-mail já cadastrado'];
     const ERR_CPF_EXISTENTE= ['code' => 9104, 'message' => 'CPF já cadastrado'];
+    const ERR_USUARIO_BLOQUEADO = ['code' => 9105, 'message' => 'Usuário bloqueado'];
     const ERR_USUARIO_ASSUNTO_VINCULO_EXISTENTE = ['code' => 9105, 'message' => 'Este assunto já está vinculado a este usuário'];
     const ERR_USUARIO_ASSUNTO_VINCULO_NAO_ENCONTRADO = ['code' => 9106, 'message' => 'Este usuário não está vinculado a este assunto'];
     const ERR_USUARIO_LIVRO_VINCULO_EXISTENTE = ['code' => 9107, 'message' => 'Este livro já está vinculado a este usuário'];
@@ -143,13 +145,25 @@ class Constantes
     const ERR_ASSUNTO_VINCULO_NAO_ENCONTRADO = ['code' => 9602, 'message' => 'Este assunto não está vinculado a este livro'];
     
     /** Mensagens - Endereços  */
-    const MSG_ENDERECO_CADASTRO_SUCESSO = ['code' => 1700, 'message' => 'Endereço cadastrado com sucesso.'];
-    const MSG_ENDERECO_DELETADO_SUCESSO = ['code' => 1701, 'message' => 'Endereço deletado com sucesso.'];
-    const MSG_ENDERECO_ATUALIZADO_SUCESSO = ['code' => 1702, 'message' => 'Endereço atualizado com sucesso.'];
+    const MSG_ENDERECO_CADASTRO_SUCESSO = ['code' => 1700, 'message' => 'Endereço cadastrado com sucesso'];
+    const MSG_ENDERECO_DELETADO_SUCESSO = ['code' => 1701, 'message' => 'Endereço deletado com sucesso'];
+    const MSG_ENDERECO_ATUALIZADO_SUCESSO = ['code' => 1702, 'message' => 'Endereço atualizado com sucesso'];
 
     /** Erros - Endereços  */
     const ERR_ENDERECO_NAO_ENCONTRADO = ['code' => 9700, 'message' => 'Endereço não encontrado'];
     const ERR_ENDERECO_JA_EXISTENTE = ['code' => 9701, 'message' => 'Este endereço já está cadastrado'];
+
+    /** Mensagens - Chat  */
+    const MSG_CHAT_ENVIO_SUCESSO = ['code' => 1800, 'message' => 'Mensagem enviada com sucesso'];
+
+    /** Erros - Chat  */
+    const ERR_CHAT_ENVIO = ['code' => 9800, 'message' => 'Falha no envio da mensagem'];
+
+    /** Mensagens - Amigos  */
+    const MSG_AMIGO_ADICIONADO_SUCESSO = ['code' => 1900, 'message' => 'Amigo adicionado com sucesso'];
+
+    /** Erros - Amigos  */
+    const ERR_AMIGO_NAO_ENCONTRADO = ['code' => 9900, 'message' => 'Estes usuários não são amigos'];
 
 
     public static function getConst($const = "ERR_NAODEFINIDO")

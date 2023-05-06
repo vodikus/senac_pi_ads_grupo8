@@ -51,24 +51,17 @@ class ChamadoController extends BaseController
                             $this->httpRawResponse(401, MessageHelper::fmtMsgConstJson('ERR_NAO_AUTORIZADO'));
                         }
                         break;
-                    case 'alterarChamado':
-                        if ($this->isAuth()) {
-                            $this->alterarChamado($this->getFieldFromToken('uid'), $dados);
-                        } else {
-                            $this->httpRawResponse(401, MessageHelper::fmtMsgConstJson('ERR_NAO_AUTORIZADO'));
-                        }
-                        break;
                     default:
                         $this->httpRawResponse(501, MessageHelper::fmtMsgConstJson('ERR_ACAO_INDISPONIVEL'));
                         break;
                 }
                 break;
             case 'PUT':
+                $dados = $this->pegarArrayJson();
                 switch ($params['acao']) {
-                    case 'atualizar':
-                        $dados = $this->pegarArrayJson();
+                    case 'alterarChamado':
                         if ($this->isAuth()) {
-                            // $this->atualizar($params['param1'], $dados);
+                            $this->alterarChamado($this->getFieldFromToken('uid'), $dados);
                         } else {
                             $this->httpRawResponse(401, MessageHelper::fmtMsgConstJson('ERR_NAO_AUTORIZADO'));
                         }
@@ -248,7 +241,7 @@ class ChamadoController extends BaseController
     }
 
     /**
-     * @api {post} /chamados/alterarChamado/ Altera status do chamado
+     * @api {put} /chamados/alterarChamado/ Altera status do chamado
      * @apiName Alterar Status
      * @apiGroup Chamados
      * @apiVersion 1.0.0

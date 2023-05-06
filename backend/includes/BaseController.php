@@ -84,7 +84,7 @@ class BaseController
     {
         $this->montarSaida(
             $dados,
-            array('Content-Type: application/json', $this->httpCodes[200])
+            array($this->httpCodes[200])
         );
     }
     protected function montarSaida($dados = '', $headers = array())
@@ -104,7 +104,7 @@ class BaseController
         if (array_key_exists($httpCode, $this->httpCodes)) {
             $this->montarSaida(
                 json_encode(array_merge(['mensagem' => $msg], $arrData)),
-                array('Content-Type: application/json', $this->httpCodes[$httpCode])
+                array($this->httpCodes[$httpCode])
             );
         }
     }
@@ -114,7 +114,7 @@ class BaseController
         if (array_key_exists($httpCode, $this->httpCodes)) {
             $this->montarSaida(
                 $msg,
-                array('Content-Type: application/json', $this->httpCodes[$httpCode])
+                array($this->httpCodes[$httpCode])
             );
         }
     }
