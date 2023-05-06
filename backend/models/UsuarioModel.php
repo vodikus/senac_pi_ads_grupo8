@@ -43,11 +43,20 @@ class UsuarioModel extends BaseModel
             throw $e;
         }
     }
-    public function buscarUsuario($id = 0)
+    public function buscarUsuario($id = 0, $completo = false)
     {
         try {
-            $campos = SQLHelper::montaCamposSelect($this->campos, 'u');
-            return $this->select("SELECT $campos FROM usuarios u WHERE uid=:uid", ['uid' => $id]);
+            $campos = $this->campos;
+            if (!$completo) {
+                $campos = array_filter(SQLHelper::sobrescrevePropriedades($this->campos, [
+                    'email' => ['visible' => false],
+                    'cpf' => ['visible' => false],
+                    'nascimento' => ['visible' => false],
+                    'role' =>  ['visible' => false]
+                ]), ['SQLHelper', 'limpaCamposProtegidos']);                
+            }
+            $novosCampos = SQLHelper::montaCamposSelect($campos, 'u');
+            return $this->select("SELECT $novosCampos FROM usuarios u WHERE uid=:uid", ['uid' => $id]);
         } catch (Exception $e) {
             throw $e;
         }

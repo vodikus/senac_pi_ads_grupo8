@@ -27,7 +27,7 @@ class UsuarioController extends BaseController
                         break;
                     case 'buscar':
                         if ($this->isAuth()) {
-                            $this->buscar($params['param1']);
+                            $this->buscar($params['param1'], ($this->getFieldFromToken('roles') == 'admin') );
                         } else {
                             $this->httpRawResponse(401, MessageHelper::fmtMsgConstJson('ERR_NAO_AUTORIZADO'));
                         }
@@ -180,12 +180,12 @@ class UsuarioController extends BaseController
         $this->montarSaidaOk($responseData);
     }
 
-    public function buscar($id = 0)
+    public function buscar($id = 0, $completo = false)
     {
         try {
             if (is_numeric($id)) {
                 $usuarioModel = new UsuarioModel();
-                $arrUsuarios = (array) $usuarioModel->buscarUsuario($id);
+                $arrUsuarios = (array) $usuarioModel->buscarUsuario($id, $completo);
                 $responseData = json_encode($arrUsuarios);
             } else {
                 $this->httpRawResponse(200, MessageHelper::fmtMsgConstJson('ERR_ID_INVALIDO'));
