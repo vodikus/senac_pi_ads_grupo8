@@ -276,8 +276,8 @@ class AssuntoController extends BaseController
     }
 
     /**
-     * @api {put} /assuntos/atualizar/:id Adiciona assunto
-     * @apiName Adicionar
+     * @api {put} /assuntos/atualizar/:id Atualiza assunto
+     * @apiName Atualizar
      * @apiGroup Assuntos
      * @apiVersion 1.0.0
      *

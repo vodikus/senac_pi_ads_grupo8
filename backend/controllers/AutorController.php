@@ -13,9 +13,13 @@ class AutorController extends BaseController
     {
         switch ($metodo) {
             case 'GET':
+                $dados = $this->pegarArrayJson();
                 switch ($params['acao']) {
                     case 'listar':
                         $this->listar();
+                        break;
+                    case 'buscar-por-nome':
+                        $this->buscarPorNome($dados);
                         break;
                     default:
                         $this->httpRawResponse(501, MessageHelper::fmtMsgConstJson('ERR_ACAO_INDISPONIVEL'));
@@ -72,6 +76,44 @@ class AutorController extends BaseController
         }
     }
 
+    /**
+     * @apiDefine ERR_AUTOR_PADRAO
+     *
+     * @apiError (Erro 4xx) 9400 Autor não encontrado.
+     * @apiError (Erro 4xx) 9401 Já existe um autor com este nome.
+     *
+     */
+
+    /**
+     * @apiDefine SAIDA_LISTA_AUTORES
+     *
+     * @apiSuccess {Object[]} autores Lista de autores
+     * @apiSuccess {Number} autores.iid ID do autores
+     * @apiSuccess {String} autores.nome_autor Nome do autores
+     * @apiSuccess {Timestamp} autores.dh_atualizacao  Data/Hora de atualização
+     *
+     * @apiSuccessExample Success-Response:
+     *     HTTP/1.1 200 OK
+     *     [
+     *       {
+     *         "iid": "1",
+     *         "nome_autor": "Stephen King",
+     *         "dh_atualizacao": "2023-04-15 20:45:26"
+     *       }
+     *     ]
+     *
+     */
+
+    /**
+     * @api {get} /autores/listar/ Lista os autores
+     * @apiName Listar
+     * @apiGroup Autores
+     * @apiVersion 1.0.0
+     *
+     * @apiUse SAIDA_LISTA_AUTORES
+     * @apiUse ERR_GENERICOS
+     * 
+     */
     public function listar($uid = 0)
     {
         try {
@@ -84,6 +126,50 @@ class AutorController extends BaseController
         $this->montarSaidaOk($responseData);
     }
 
+    /**
+     * @api {get} /autores/buscar-por-nome/ Busca autor pelo nome
+     * @apiName Buscar por nome
+     * @apiGroup Autores
+     * @apiVersion 1.0.0
+     *
+     * @apiBody {String} nome_autor Nome do Autor
+     *
+     * @apiUse SAIDA_LISTA_AUTORES
+     * @apiUse ERR_GENERICOS
+     * 
+     */
+    public function buscarPorNome($dados)
+    {
+        try {
+            $autorModel = new AutorModel();
+            $arrAutores = (array) $autorModel->buscarAutorPorNome($dados);
+            $responseData = json_encode($arrAutores);
+        } catch (Exception $e) {
+            $this->httpRawResponse(500, MessageHelper::fmtException($e));
+        }
+        $this->montarSaidaOk($responseData);
+    }    
+
+    /**
+     * @api {post} /autores/adicionar/ Adiciona autor
+     * @apiName Adicionar
+     * @apiGroup Autores
+     * @apiVersion 1.0.0
+     *
+     * @apiBody {String} nome_autor Nome do Autor
+     * 
+     * @apiUse SAIDA_PADRAO
+     * @apiUse ERR_GENERICOS
+     * @apiUse ERR_AUTOR_PADRAO
+     * 
+     * @apiErrorExample Error-Response:
+     *     HTTP/1.1 500 Internal Server Error
+     *     {
+     *         "codigo": "9601",
+     *         "mensagem": "Já existe um autor com este nome",
+     *         "detalhe": ""
+     *     }
+     */    
     public function adicionar($dados)
     {
         try {
@@ -95,6 +181,27 @@ class AutorController extends BaseController
         $this->httpRawResponse(200, MessageHelper::fmtMsgConstJson('MSG_AUTOR_CADASTRO_SUCESSO', ['autorId' => $autorId]));
     }
 
+    /**
+     * @api {delete} /autores/deletar/:id Deleta autor pelo Id
+     * @apiName Deletar por ID
+     * @apiGroup Autores
+     * @apiVersion 1.0.0
+     *
+     * @apiParam {Number} id ID único do autor.
+     *
+     * @apiUse SAIDA_PADRAO
+     * @apiUse ERR_GENERICOS
+     * @apiUse ERR_AUTOR_PADRAO
+     * @apiError (Erro 5xx) 9402 Este autor não pode ser deletado pois está vinculado a um ou mais livros.
+     * 
+     * @apiErrorExample Error-Response:
+     *     HTTP/1.1 500 Internal Server Error
+     *     {
+     *         "codigo": "9602",
+     *         "mensagem": "Este AUTOR não pode ser deletado pois está vinculado a um ou mais livros",
+     *         "detalhe": ""
+     *     }
+     */  
     public function deletar($aid)
     {
         try {
@@ -112,6 +219,28 @@ class AutorController extends BaseController
         $this->httpRawResponse(200, MessageHelper::fmtMsgConstJson('MSG_AUTOR_DELETADO_SUCESSO'));
     }
 
+    /**
+     * @api {put} /AUTORES/atualizar/:id Atualiza autor
+     * @apiName Atualizar
+     * @apiGroup Autores
+     * @apiVersion 1.0.0
+     *
+     * @apiParam {Number} id ID único do autor.
+     * 
+     * @apiBody {String} nome_autor Nome do autor.
+     * 
+     * @apiUse SAIDA_PADRAO
+     * @apiUse ERR_GENERICOS
+     * @apiUse ERR_AUTOR_PADRAO
+     * 
+     * @apiErrorExample Error-Response:
+     *     HTTP/1.1 500 Internal Server Error
+     *     {
+     *         "codigo": "9401",
+     *         "mensagem": "Já existe um autor com este nome",
+     *         "detalhe": ""
+     *     }
+     */
     public function atualizar($aid, $dados)
     {
         try {
