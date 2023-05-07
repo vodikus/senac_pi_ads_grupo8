@@ -12,7 +12,11 @@
             </div>
         </div>
         <!-- Avaliação -->
-        <div><bar-rating [(rate)]=livro.avaliacao [max]="10" [readOnly]="true"></bar-rating></div>
+        <div class="caixaFlex">
+            <div class="vcenter caixaFlex grow2">Avaliação</div>
+            <div class="grow0 text-end"><bar-rating [(rate)]=livro.avaliacao [max]="5" [readOnly]="true" [theme]="'default'"></bar-rating></div>
+        </div>
+        
         <!-- Usuário -->
         <app-barra-usuario [uid]=livro.uid></app-barra-usuario>
         <!-- separador -->

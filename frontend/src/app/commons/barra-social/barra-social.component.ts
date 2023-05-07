@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 @Component({
   selector: 'app-barra-social',
   templateUrl: './barra-social.component.html',
-  styleUrls: ['./barra-social.component.css']
+  styleUrls: ['./barra-social.component.scss']
 })
 export class BarraSocialComponent implements OnInit {
 

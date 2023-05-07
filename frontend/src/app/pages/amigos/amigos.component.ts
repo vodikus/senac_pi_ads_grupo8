@@ -4,7 +4,7 @@ import { UsuarioService } from '../../_service/usuario.service';
 @Component({
   selector: 'app-amigos',
   templateUrl: './amigos.component.html',
-  styleUrls: ['./amigos.component.css']
+  styleUrls: ['./amigos.component.scss']
 })
 export class AmigosComponent implements OnInit {
   amigos: any;

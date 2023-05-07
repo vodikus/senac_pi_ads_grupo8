@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 @Component({
   selector: 'app-emprestimos',
   templateUrl: './emprestimos.component.html',
-  styleUrls: ['./emprestimos.component.css']
+  styleUrls: ['./emprestimos.component.scss']
 })
 export class EmprestimosComponent implements OnInit {
 

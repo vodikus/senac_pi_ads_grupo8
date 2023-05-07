@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 @Component({
   selector: 'app-dadospessoais',
   templateUrl: './dadospessoais.component.html',
-  styleUrls: ['./dadospessoais.component.css']
+  styleUrls: ['./dadospessoais.component.scss']
 })
 export class DadospessoaisComponent implements OnInit {
 

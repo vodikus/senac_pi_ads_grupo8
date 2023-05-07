@@ -5,7 +5,7 @@ import { UsuarioService } from 'src/app/_service/usuario.service';
 @Component({
   selector: 'app-barra-usuario',
   templateUrl: './barra-usuario.component.html',
-  styleUrls: ['./barra-usuario.component.css']
+  styleUrls: ['./barra-usuario.component.scss']
 })
 export class BarraUsuarioComponent implements OnInit {
   @Input('uid') uid!: number;

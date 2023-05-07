@@ -7,7 +7,7 @@ import { UsuarioService } from '../../../_service/usuario.service'
 @Component({
   selector: 'app-chat',
   templateUrl: './chat.component.html',
-  styleUrls: ['./chat.component.css']
+  styleUrls: ['./chat.component.scss']
 })
 export class ChatComponent implements OnInit {
   mensagens: any | undefined;

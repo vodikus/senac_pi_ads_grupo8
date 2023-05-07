@@ -1,3 +1,4 @@
+@import '../node_modules/ngx-bar-rating/themes/br-default-theme';
 
 * {
     color: #101828;
@@ -71,6 +72,14 @@
 	display: flex;
 }
 
+.vcenter {
+    align-items: center;
+}
+
+.flex {
+	flex: 1;
+}
+
 .livroBox {
     font-size: 12px;
     padding: 10px;
@@ -99,3 +108,4 @@
 .blocoDadosLivro {
     padding-left: 10px;
 }
+
