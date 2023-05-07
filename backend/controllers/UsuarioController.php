@@ -26,10 +26,10 @@ class UsuarioController extends BaseController
                         }
                         break;
                     case 'buscar':
-                        if ($this->isAuth()) {
+                        if ($this->isAuth(false)) {
                             $this->buscar($params['level1'], ($this->getFieldFromToken('roles') == 'admin'));
                         } else {
-                            $this->httpRawResponse(401, MessageHelper::fmtMsgConstJson('ERR_NAO_AUTORIZADO'));
+                            $this->buscar($params['level1'], false);
                         }
                         break;
                     case 'meu-perfil':

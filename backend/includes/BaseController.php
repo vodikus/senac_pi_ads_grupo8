@@ -119,12 +119,13 @@ class BaseController
         }
     }
 
-    protected function isAuth()
+    protected function isAuth($trataErro = true)
     {
         if ($this->token) {
             return TokenHelper::validateToken($this->token);
         } else {
-            $this->httpRawResponse(401, MessageHelper::fmtMsgConstJson('ERR_NAO_AUTORIZADO'));
+            if ($trataErro)
+                $this->httpRawResponse(401, MessageHelper::fmtMsgConstJson('ERR_NAO_AUTORIZADO'));
         }
     }
 

@@ -51,7 +51,7 @@ class LivroModel extends BaseModel
                 "SELECT $campos, " .
                 " group_concat(DISTINCT a.nome_autor ORDER BY a.nome_autor SEPARATOR ', ') autores, " .
                 " group_concat(DISTINCT i.nome_assunto ORDER BY i.nome_assunto SEPARATOR ', ') assuntos, " .
-                " u.nome, u.apelido, u.avatar " .
+                " u.nome, u.apelido, u.avatar, u.uid " .
                 " FROM usuarios_livros ul " .
                 " INNER JOIN livros l ON l.lid = ul.lid " .
                 " INNER JOIN usuarios u ON ul.uid = u.uid " .
