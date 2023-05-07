@@ -3,14 +3,14 @@
 <div>
     <div class="row chat-list" *ngFor="let amigo of amigos">
         <div class="col-2"><img src="{{ amigo.avatar }}" style="width: 36px; height: 36px;" class="img-round"/></div>
-        <div class="col-8">
+        <div class="col-7">
             <div class="chat-name">{{ amigo.nome }}</div>
             <div class="chat-status-{{amigo.status_chat}}">
                 <span *ngIf="amigo.status_chat==0">Offline</span>
                 <span *ngIf="amigo.status_chat==1">Online</span>
             </div>
         </div>
-        <div class="col-1">A</div>
-        <div class="col-1">B</div>        
+        <div class="col-1"><img src="assets/balao_chat.png" class="img-tiny"/></div>
+        <div class="col-1"><img src="assets/usuario.png" class="img-tiny"/></div>        
     </div>
 </div>

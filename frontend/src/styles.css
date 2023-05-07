@@ -11,3 +11,13 @@
     object-fit: cover;
     border-radius: 50%;    
 }
+
+.img-tiny {
+    width: 16px;
+    height: 16px;
+}
+
+.img-small {
+    width: 24px;
+    height: 24px;
+}
