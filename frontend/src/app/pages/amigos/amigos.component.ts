@@ -12,6 +12,10 @@ export class AmigosComponent implements OnInit {
   constructor(private usuarioService: UsuarioService) { }
 
   ngOnInit(): void {
+    this.carregaAmigos();
+  }
+
+  carregaAmigos(): void {
     this.usuarioService.buscarListaAmigos().subscribe({
       next: data => {
         this.amigos = data;
@@ -19,7 +23,7 @@ export class AmigosComponent implements OnInit {
       error: err => {
         console.log(err);
       }
-    });    
+    });     
   }
 
 }

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { LivroService } from '../../_service/livro.service';
 
 @Component({
   selector: 'app-home',
@@ -6,10 +7,22 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
+  livros: any;
 
-  constructor() { }
+  constructor(private livroService: LivroService) { }
 
   ngOnInit(): void {
+    this.carregaLivros();
   }
 
+  carregaLivros(): void {
+    this.livroService.buscarUltimasAtualizacoes().subscribe({
+      next: data => {
+        this.livros = data;
+      },
+      error: err => {
+        console.log(err);
+      }
+    });     
+  }
 }
