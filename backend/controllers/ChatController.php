@@ -17,7 +17,7 @@ class ChatController extends BaseController
                 switch ($params['acao']) {
                     case 'listar':
                         if ($this->isAuth()) {
-                            $this->listarMensagens($this->getFieldFromToken('uid'), $params['param1']);
+                            $this->listarMensagens($this->getFieldFromToken('uid'), $params['level1']);
                         } else {
                             $this->httpRawResponse(401, MessageHelper::fmtMsgConstJson('ERR_NAO_AUTORIZADO'));
                         }

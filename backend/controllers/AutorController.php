@@ -46,7 +46,7 @@ class AutorController extends BaseController
                     case 'atualizar':
                         $dados = $this->pegarArrayJson();
                         if ($this->isAuth()) {
-                            $this->atualizar($params['param1'], $dados);
+                            $this->atualizar($params['level1'], $dados);
                         } else {
                             $this->httpRawResponse(401, MessageHelper::fmtMsgConstJson('ERR_NAO_AUTORIZADO'));
                         }
@@ -60,7 +60,7 @@ class AutorController extends BaseController
                 switch ($params['acao']) {
                     case 'deletar':
                         if ($this->isAuth()) {
-                            $this->deletar($params['param1']);
+                            $this->deletar($params['level1']);
                         } else {
                             $this->httpRawResponse(401, MessageHelper::fmtMsgConstJson('ERR_NAO_AUTORIZADO'));
                         }

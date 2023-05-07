@@ -18,7 +18,7 @@ class AssuntoController extends BaseController
                         $this->listar();
                         break;
                     case 'buscar':
-                        $this->buscarPorId($params['param1']);
+                        $this->buscarPorId($params['level1']);
                         break;
                     case 'buscar-por-nome':
                         $dados = $this->pegarArrayJson();
@@ -52,7 +52,7 @@ class AssuntoController extends BaseController
                     case 'atualizar':
                         $dados = $this->pegarArrayJson();
                         if ($this->isAuth()) {
-                            $this->atualizar($params['param1'], $dados);
+                            $this->atualizar($params['level1'], $dados);
                         } else {
                             $this->httpRawResponse(401, MessageHelper::fmtMsgConstJson('ERR_NAO_AUTORIZADO'));
                         }
@@ -66,7 +66,7 @@ class AssuntoController extends BaseController
                 switch ($params['acao']) {
                     case 'deletar':
                         if ($this->isAuth()) {
-                            $this->deletar($params['param1']);
+                            $this->deletar($params['level1']);
                         } else {
                             $this->httpRawResponse(401, MessageHelper::fmtMsgConstJson('ERR_NAO_AUTORIZADO'));
                         }

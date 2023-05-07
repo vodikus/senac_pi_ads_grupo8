@@ -27,7 +27,7 @@ class UsuarioController extends BaseController
                         break;
                     case 'buscar':
                         if ($this->isAuth()) {
-                            $this->buscar($params['param1'], ($this->getFieldFromToken('roles') == 'admin'));
+                            $this->buscar($params['level1'], ($this->getFieldFromToken('roles') == 'admin'));
                         } else {
                             $this->httpRawResponse(401, MessageHelper::fmtMsgConstJson('ERR_NAO_AUTORIZADO'));
                         }
@@ -87,14 +87,14 @@ class UsuarioController extends BaseController
                         break;
                     case 'bloquearUsuario':
                         if ($this->isAuth()) {
-                            $this->bloquearUsuario($this->getFieldFromToken('uid'), $params['param1']);
+                            $this->bloquearUsuario($this->getFieldFromToken('uid'), $params['level1']);
                         } else {
                             $this->httpRawResponse(401, MessageHelper::fmtMsgConstJson('ERR_NAO_AUTORIZADO'));
                         }
                         break;
                     case 'adicionarAmigo':
                         if ($this->isAuth()) {
-                            $this->adicionarAmigo($this->getFieldFromToken('uid'), $params['param1']);
+                            $this->adicionarAmigo($this->getFieldFromToken('uid'), $params['level1']);
                         } else {
                             $this->httpRawResponse(401, MessageHelper::fmtMsgConstJson('ERR_NAO_AUTORIZADO'));
                         }
@@ -110,7 +110,7 @@ class UsuarioController extends BaseController
                     case 'atualizar':
                         error_log($this->getFieldFromToken('roles'));
                         if ($this->isAuth() && $this->getFieldFromToken('roles') == 'admin') {
-                            $this->atualizar($params['param1'], $dados);
+                            $this->atualizar($params['level1'], $dados);
                         } else {
                             $this->httpRawResponse(401, MessageHelper::fmtMsgConstJson('ERR_NAO_AUTORIZADO'));
                         }
@@ -131,21 +131,21 @@ class UsuarioController extends BaseController
                 switch ($params['acao']) {
                     case 'deletar':
                         if ($this->isAuth()) {
-                            $this->deletar($params['param1']);
+                            $this->deletar($params['level1']);
                         } else {
                             $this->httpRawResponse(401, MessageHelper::fmtMsgConstJson('ERR_NAO_AUTORIZADO'));
                         }
                         break;
                     case 'desbloquearUsuario':
                         if ($this->isAuth()) {
-                            $this->desbloquearUsuario($this->getFieldFromToken('uid'), $params['param1']);
+                            $this->desbloquearUsuario($this->getFieldFromToken('uid'), $params['level1']);
                         } else {
                             $this->httpRawResponse(401, MessageHelper::fmtMsgConstJson('ERR_NAO_AUTORIZADO'));
                         }
                         break;
                     case 'removerAmigo':
                         if ($this->isAuth()) {
-                            $this->removerAmigo($this->getFieldFromToken('uid'), $params['param1']);
+                            $this->removerAmigo($this->getFieldFromToken('uid'), $params['level1']);
                         } else {
                             $this->httpRawResponse(401, MessageHelper::fmtMsgConstJson('ERR_NAO_AUTORIZADO'));
                         }

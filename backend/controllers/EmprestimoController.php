@@ -30,7 +30,7 @@ class EmprestimoController extends BaseController
                         break;
                     case 'buscar':
                         if ($this->isAuth()) {
-                            $this->buscarEmprestimo($this->getFieldFromToken('uid'), $params['param1']);
+                            $this->buscarEmprestimo($this->getFieldFromToken('uid'), $params['level1']);
                         } else {
                             $this->httpRawResponse(401, MessageHelper::fmtMsgConstJson('ERR_NAO_AUTORIZADO'));
                         }
@@ -66,21 +66,21 @@ class EmprestimoController extends BaseController
                 switch ($params['acao']) {
                     case 'desistir':
                         if ($this->isAuth()) {
-                            $this->desistirEmprestimo($this->getFieldFromToken('uid'), $params['param1']);
+                            $this->desistirEmprestimo($this->getFieldFromToken('uid'), $params['level1']);
                         } else {
                             $this->httpRawResponse(401, MessageHelper::fmtMsgConstJson('ERR_NAO_AUTORIZADO'));
                         }
                         break;
                     case 'retirar':
                         if ($this->isAuth()) {
-                            $this->retirarEmprestimo($this->getFieldFromToken('uid'), $params['param1']);
+                            $this->retirarEmprestimo($this->getFieldFromToken('uid'), $params['level1']);
                         } else {
                             $this->httpRawResponse(401, MessageHelper::fmtMsgConstJson('ERR_NAO_AUTORIZADO'));
                         }
                         break;
                     case 'devolver':
                         if ($this->isAuth()) {
-                            $this->devolverEmprestimo($this->getFieldFromToken('uid'), $params['param1']);
+                            $this->devolverEmprestimo($this->getFieldFromToken('uid'), $params['level1']);
                         } else {
                             $this->httpRawResponse(401, MessageHelper::fmtMsgConstJson('ERR_NAO_AUTORIZADO'));
                         }

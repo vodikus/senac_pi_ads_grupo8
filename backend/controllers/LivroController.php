@@ -21,10 +21,13 @@ class LivroController extends BaseController
                 $dados = $this->pegarArrayJson();
                 switch ($params['acao']) {
                     case 'listar':
-                        $this->listar();
+                        $this->listar($params['params']);
+                        break;
+                    case 'listar-disponiveis':
+                        $this->listarLivrosDisponiveis($params['params']);
                         break;
                     case 'buscar-por-id':
-                        $this->buscarId($params['param1']);
+                        $this->buscarId($params['level1']);
                         break;
                     case 'buscar-por-isbn':
                         $this->buscarIsbn($dados);
@@ -39,7 +42,7 @@ class LivroController extends BaseController
                         $this->buscarTitulo($dados);
                         break;
                     case 'buscar-por-usuario':
-                        $this->buscarUsuario($params['param1']);
+                        $this->buscarUsuario($params['level1']);
                         break;
                     default:
                         $this->httpRawResponse(501, MessageHelper::fmtMsgConstJson('ERR_ACAO_INDISPONIVEL'));
@@ -122,7 +125,7 @@ class LivroController extends BaseController
                     case 'atualizar':
                         $dados = $this->pegarArrayJson();
                         if ($this->isAuth()) {
-                            $this->atualizar($params['param1'], $dados);
+                            $this->atualizar($params['level1'], $dados);
                         } else {
                             $this->httpRawResponse(401, MessageHelper::fmtMsgConstJson('ERR_NAO_AUTORIZADO'));
                         }
@@ -136,7 +139,7 @@ class LivroController extends BaseController
                 switch ($params['acao']) {
                     case 'deletar':
                         if ($this->isAuth()) {
-                            $this->deletar($params['param1']);
+                            $this->deletar($params['level1']);
                         } else {
                             $this->httpRawResponse(401, MessageHelper::fmtMsgConstJson('ERR_NAO_AUTORIZADO'));
                         }
@@ -204,11 +207,13 @@ class LivroController extends BaseController
      * @apiUse ERR_GENERICOS
      * 
      */
-    public function listar()
+    public function listar($entrada)
     {
         try {
+            parse_str(substr($entrada,1), $params);            
+            $ordem = (array_key_exists('ordem', $params)) ? $params['ordem'] : '';
             $livroModel = new LivroModel();
-            $arrLivros = (array) $livroModel->listarLivros();
+            $arrLivros = (array) $livroModel->listarLivros($ordem);
             $responseData = json_encode($arrLivros);
         } catch (Exception $e) {
             $this->httpRawResponse(500, MessageHelper::fmtException($e));
@@ -770,4 +775,28 @@ class LivroController extends BaseController
         }
         $this->httpRawResponse(200, MessageHelper::fmtMsgConstJson('MSG_USUARIO_LIVRO_STATUS_SUCESSO'));
     }
+
+    /**
+     * @api {get} /livros/listar/ Listar Livros
+     * @apiName Listar
+     * @apiGroup Livros
+     * @apiVersion 1.0.0
+     *
+     * @apiUse SAIDA_LISTA_LIVROS
+     * @apiUse ERR_GENERICOS
+     * 
+     */
+    public function listarLivrosDisponiveis($entrada)
+    {
+        try {
+            parse_str(substr($entrada,1), $params);            
+            $ordem = (array_key_exists('ordem', $params)) ? $params['ordem'] : '';
+            $livroModel = new LivroModel();
+            $arrLivros = (array) $livroModel->buscarLivrosDisponiveis($ordem);
+            $responseData = json_encode($arrLivros);
+        } catch (Exception $e) {
+            $this->httpRawResponse(500, MessageHelper::fmtException($e));
+        }
+        $this->montarSaidaOk($responseData);
+    }    
 }
