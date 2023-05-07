@@ -1,0 +1,29 @@
+.menu-bar {
+    clear:both;
+    margin-top: 10px;
+}
+
+.menu-bar > div {
+    float: left;
+    text-align: center;
+    vertical-align: middle;
+    font-size: 8px;
+    height: 44px;
+}
+
+.menu-bar > div:hover {
+    filter: invert(28%) sepia(43%) saturate(2522%) hue-rotate(138deg) brightness(96%) contrast(97%);
+    cursor: pointer;
+}
+
+.menu-btn-40 {
+    width: 40px;
+}
+
+.menu-btn-60 {
+    width: 60px;
+}
+
+.menu-btn-80 {
+    width: 80px;
+}

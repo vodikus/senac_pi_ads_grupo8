@@ -16,7 +16,7 @@ export class AuthService {
   constructor(private http: HttpClient) { }
 
   getToken(username: string, password: string): Observable<any> {
-    let body = `username=${username}&password=${password}`;
+    let body = `{"username":"${username}","password":"${password}"}`;
     return this.http.post(AUTH_API + 'getToken', body, httpOptions);
   }
 

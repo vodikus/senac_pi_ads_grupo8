@@ -1,9 +1,10 @@
 *{
-    margin: 0;
+    margin: 0 auto;
     padding: 0;
     text-decoration: none;
     font-family: 'Manrope', sans-serif;
     user-select: none;
+    box-sizing: border-box;
 }
 
 .boxExterna{
@@ -17,7 +18,7 @@
     width: 304px;
     height: 601px;
     border-radius: 35px;
-    cursor: grab;
+    /* cursor: grab; */
     overflow: auto;
 }
 
@@ -53,4 +54,8 @@
     font-stretch: ultra-expanded;
     color: #047857;
     margin-top: 5px;
+}
+
+.vh-95 {
+    height: 95vh!important;
 }
