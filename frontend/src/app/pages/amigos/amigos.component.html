@@ -10,7 +10,7 @@
                 <span *ngIf="amigo.status_chat==1">Online</span>
             </div>
         </div>
-        <div class="col-1"><img src="assets/balao_chat.png" class="img-tiny"/></div>
+        <div class="col-1"><img src="assets/balao_chat.png" class="img-tiny clickable" [routerLink]="['/chat/',amigo.uid_amigo]"/></div>
         <div class="col-1"><img src="assets/usuario.png" class="img-tiny"/></div>        
     </div>
 </div>

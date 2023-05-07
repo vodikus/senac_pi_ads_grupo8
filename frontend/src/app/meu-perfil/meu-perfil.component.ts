@@ -12,7 +12,7 @@ export class MeuPerfilComponent implements OnInit {
   constructor(private usuarioService: UsuarioService) { }
 
   ngOnInit(): void {
-    this.usuarioService.getUserProfile().subscribe({
+    this.usuarioService.buscarMeuPerfil().subscribe({
       next: data => {
         this.perfil = data[0];
       },

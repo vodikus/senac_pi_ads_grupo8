@@ -6,6 +6,7 @@ import { HomeComponent } from './pages/home/home.component';
 import { LoginComponent } from './login/login.component';
 import { MeuPerfilComponent } from './meu-perfil/meu-perfil.component';
 import { AmigosComponent } from './pages/amigos/amigos.component';
+import { ChatComponent } from './pages/amigos/chat/chat.component';
 import { EmprestadosComponent } from './pages/emprestados/emprestados.component';
 import { EmprestimosComponent } from './pages/emprestimos/emprestimos.component';
 import { FavoritosComponent } from './pages/favoritos/favoritos.component';
@@ -17,6 +18,10 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'meu-perfil', component: MeuPerfilComponent, canActivate: [AuthGuard] },
   { path: 'amigos', component: AmigosComponent, canActivate: [AuthGuard] },
+  { path: 'chat/:id', component: ChatComponent, canActivate: [AuthGuard] },
+  // { path: 'amigos', component: AmigosComponent, canActivate: [AuthGuard],children: [
+  //   {path: 'chat/:id', component: ChatComponent}
+  // ] },
   { path: 'emprestados', component: EmprestadosComponent, canActivate: [AuthGuard] },
   { path: 'emprestimos', component: EmprestimosComponent, canActivate: [AuthGuard] },
   { path: 'favoritos', component: FavoritosComponent, canActivate: [AuthGuard] },

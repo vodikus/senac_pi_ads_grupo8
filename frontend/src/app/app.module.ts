@@ -18,6 +18,7 @@ import { EmprestadosComponent } from './pages/emprestados/emprestados.component'
 import { PesquisaComponent } from './pages/pesquisa/pesquisa.component';
 import { FavoritosComponent } from './pages/favoritos/favoritos.component';
 import { SuporteComponent } from './pages/suporte/suporte.component';
+import { ChatComponent } from './pages/amigos/chat/chat.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { SuporteComponent } from './pages/suporte/suporte.component';
     EmprestadosComponent,
     PesquisaComponent,
     FavoritosComponent,
-    SuporteComponent
+    SuporteComponent,
+    ChatComponent
   ],
   imports: [
     BrowserModule,

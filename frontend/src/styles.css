@@ -2,6 +2,10 @@
     background-color: blueviolet;
 }
 
+.debug2 {
+    background-color: red;
+}
+
 .mensagemErro {
     color:#A5282C;
     font-size: 12px;
@@ -9,7 +13,7 @@
 
 .img-round {
     object-fit: cover;
-    border-radius: 50%;    
+    border-radius: 50%;
 }
 
 .img-tiny {
@@ -20,4 +24,24 @@
 .img-small {
     width: 24px;
     height: 24px;
+}
+
+.clickable {
+    cursor: pointer;
+}
+
+.texto-pequeno {
+    font-size: 10px;
+}
+
+.grow0 {
+	flex-grow: 0;
+}
+
+.grow1 {
+	flex-grow: 1;
+}
+
+.grow2 {
+	flex-grow: 2;
 }

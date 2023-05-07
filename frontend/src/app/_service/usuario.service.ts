@@ -12,8 +12,12 @@ export class UsuarioService {
 
   constructor(private http: HttpClient) {}
 
-  getUserProfile(): Observable<any> {
+  buscarMeuPerfil(): Observable<any> {
     return this.http.get(USER_API + 'meu-perfil');
+  }
+
+  buscarPerfil(id: Number): Observable<any> {
+    return this.http.get(USER_API + 'buscar/' + id);
   }
 
   buscarListaAmigos(): Observable<any> {

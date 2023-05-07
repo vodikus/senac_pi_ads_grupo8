@@ -16,6 +16,10 @@
     cursor: pointer;
 }
 
+.menu-selected {
+    filter: invert(28%) sepia(43%) saturate(2522%) hue-rotate(138deg) brightness(96%) contrast(97%);
+}
+
 .menu-btn-40 {
     width: 40px;
 }
