@@ -21,7 +21,7 @@ class AmigoModel extends BaseModel
     {
         try {
             $campos = SQLHelper::montaCamposSelect($this->campos, 'a');
-            $amigos = $this->select("SELECT $campos, u.nome, u.apelido, u.status FROM amigos a " .
+            $amigos = $this->select("SELECT $campos, u.nome, u.apelido, u.status_chat, u.avatar FROM amigos a " .
             "INNER JOIN usuarios u ON a.uid_amigo=u.uid " . 
             "WHERE a.uid=:uid ORDER BY u.nome", 
             ['uid' => $uid]);
