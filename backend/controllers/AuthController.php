@@ -7,7 +7,7 @@ include_once 'models/UsuarioModel.php';
 
 class AuthController extends BaseController
 {
-    private $expSeconds = 300;
+    private $expSeconds = 900;
 
 
     /**

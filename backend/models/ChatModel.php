@@ -38,7 +38,10 @@ class ChatModel extends BaseModel
     {
         try {
             $campos = SQLHelper::montaCamposSelect($this->campos, 'c');
-            $mensagens = $this->select("SELECT $campos FROM chat c WHERE (uid=:uid AND uid_amigo=:uid_amigo) OR (uid=:uid_amigo AND uid_amigo=:uid) ORDER BY dh_criacao ASC", ['uid' => $uid, 'uid_amigo' => $uid_amigo]);
+            $mensagens = $this->select("SELECT $campos, u.nome, u.apelido, u.avatar FROM chat c " . 
+            "INNER JOIN usuarios u ON c.uid_amigo = u.uid " . 
+            "WHERE (c.uid=:uid AND c.uid_amigo=:uid_amigo) OR (c.uid=:uid_amigo AND c.uid_amigo=:uid) " .
+            "ORDER BY c.dh_criacao ASC", ['uid' => $uid, 'uid_amigo' => $uid_amigo]);
             return $mensagens;
         } catch (Exception $e) {
             throw $e;
