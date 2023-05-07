@@ -50,7 +50,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1aWQiOiI0NCIsImVtYWlsIjoidGVzdGVAdGVzdGUuY29tLmJyIiwicm9sZXMiOiJhZG1pbiIsImV4cCI6MTY4MjkwMDkyMH0.S1hEMWFZM2xXLUhhM19YS2t3aFNOQzNnOEFHQnFYUG83dWh2dnlMcnNiMA",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1aWQiOiI0NCIsImVtYWlsIjoidGVzdGVAdGVzdGUuY29tLmJyIiwicm9sZXMiOiJhZG1pbiIsImV4cCI6MTY4MzM4ODY1OH0.UXRIWjBFcXp0bU1rTVoxSFp4cDJIN01rVk53M3ZPTm44dU4wSTJGR2Rlcw",
 									"type": "string"
 								}
 							]
@@ -107,7 +107,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://{{URL}}/api/usuarios/buscar/539",
+							"raw": "http://{{URL}}/api/usuarios/buscar/45",
 							"protocol": "http",
 							"host": [
 								"{{URL}}"
@@ -116,7 +116,7 @@
 								"api",
 								"usuarios",
 								"buscar",
-								"539"
+								"45"
 							]
 						}
 					},
@@ -336,7 +336,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "[\r\n    {\"lid\": 11}\r\n]",
+							"raw": "[\r\n    {\"lid\": 12}\r\n]",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -417,21 +417,12 @@
 					"response": []
 				},
 				{
-					"name": "Adicionar Amigo",
+					"name": "Bloquear Usuário",
 					"request": {
 						"method": "POST",
 						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "[\r\n    {\r\n        \"lid\": 8,\r\n        \"status\": \"D\"\r\n    }\r\n]",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
 						"url": {
-							"raw": "http://{{URL}}/api/usuarios/atualizarStatusLivro",
+							"raw": "http://{{URL}}/api/usuarios/bloquearUsuario/45",
 							"protocol": "http",
 							"host": [
 								"{{URL}}"
@@ -439,7 +430,50 @@
 							"path": [
 								"api",
 								"usuarios",
-								"atualizarStatusLivro"
+								"bloquearUsuario",
+								"45"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Desbloquear Usuário",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://{{URL}}/api/usuarios/desbloquearUsuario/45",
+							"protocol": "http",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"usuarios",
+								"desbloquearUsuario",
+								"45"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Adicionar Amigo",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://{{URL}}/api/usuarios/adicionarAmigo/45",
+							"protocol": "http",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"usuarios",
+								"adicionarAmigo",
+								"45"
 							]
 						}
 					},
@@ -451,7 +485,7 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "http://{{URL}}/api/usuarios/removerAmigo/44",
+							"raw": "http://{{URL}}/api/usuarios/removerAmigo/45",
 							"protocol": "http",
 							"host": [
 								"{{URL}}"
@@ -460,7 +494,7 @@
 								"api",
 								"usuarios",
 								"removerAmigo",
-								"44"
+								"45"
 							]
 						}
 					},
@@ -591,6 +625,38 @@
 								"api",
 								"autores",
 								"listar"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Buscar Autor por Nome",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nome_autor\": \"Jos\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{URL}}/api/autores/buscar-por-nome",
+							"protocol": "http",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"autores",
+								"buscar-por-nome"
 							]
 						}
 					},
@@ -848,7 +914,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://{{URL}}/api/livros/listar",
+							"raw": "http://{{URL}}/api/livros/listar?ordem=avaliacao,asc",
 							"protocol": "http",
 							"host": [
 								"{{URL}}"
@@ -857,6 +923,41 @@
 								"api",
 								"livros",
 								"listar"
+							],
+							"query": [
+								{
+									"key": "ordem",
+									"value": "avaliacao,asc"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Listar Livros Disponiveis",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://{{URL}}/api/livros/listar-disponiveis?ordem=dh_atualizacao,asc",
+							"protocol": "http",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"livros",
+								"listar-disponiveis"
+							],
+							"query": [
+								{
+									"key": "ordem",
+									"value": "dh_atualizacao,asc"
+								}
 							]
 						}
 					},
@@ -1051,7 +1152,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"lid\": 6,\r\n    \"nota\": 7.5\r\n}",
+							"raw": "{\r\n    \"lid\": 11,\r\n    \"nota\": 4.75\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1253,7 +1354,7 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "http://{{URL}}/api/livros/deletar/14",
+							"raw": "http://{{URL}}/api/livros/deletar/13",
 							"protocol": "http",
 							"host": [
 								"{{URL}}"
@@ -1262,7 +1363,7 @@
 								"api",
 								"livros",
 								"deletar",
-								"14"
+								"13"
 							]
 						}
 					},
@@ -1690,7 +1791,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"uid_amigo\": \"47\",\r\n    \"mensagem\": \"Lorem ipsum 2...\"\r\n}",
+							"raw": "{\r\n    \"uid_amigo\": \"45\",\r\n    \"mensagem\": \"Lorem ipsum 2...\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
