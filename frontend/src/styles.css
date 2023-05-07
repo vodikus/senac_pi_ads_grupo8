@@ -1,8 +1,13 @@
+.debug {
+    background-color: blueviolet;
+}
+
 .mensagemErro {
     color:#A5282C;
     font-size: 12px;
 }
 
-.debug {
-    background-color: blueviolet;
+.img-round {
+    object-fit: cover;
+    border-radius: 50%;    
 }

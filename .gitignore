@@ -1749,3 +1749,9 @@ tests/backend/vendor/zircote/swagger-php/src/Processors/Concerns/DocblockTrait.p
 tests/backend/vendor/zircote/swagger-php/src/Processors/Concerns/MergePropertiesTrait.php
 tests/backend/vendor/zircote/swagger-php/src/Processors/Concerns/RefTrait.php
 tests/backend/vendor/zircote/swagger-php/src/Processors/Concerns/TypesTrait.php
+backend/imagens/livros/neuromancer.png
+backend/imagens/usuarios/usuario1.jpg
+backend/imagens/usuarios/usuario2.png
+backend/imagens/usuarios/39.jpg
+backend/imagens/usuarios/46.png
+backend/imagens/usuarios/47.png
