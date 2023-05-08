@@ -5,7 +5,7 @@ import { AuthService } from '../_service/auth.service';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
   form: any = {
@@ -40,7 +40,7 @@ export class LoginComponent implements OnInit {
       },
       error: err => {
         console.log(err);
-        this.errorMessage = err.error.message;
+        this.errorMessage = err.error.mensagem;
         this.isLoginFailed = true;
       }
     });

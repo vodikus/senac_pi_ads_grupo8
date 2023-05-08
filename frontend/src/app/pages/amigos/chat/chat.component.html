@@ -1,0 +1,19 @@
+<p>Chat</p>
+
+<div *ngFor="let mensagem of mensagens">
+    <!-- Mensagem do próprio usuário -->
+    <div class="" *ngIf="mensagem.uid_amigo == usuario.uid">
+        <div class="col-12">
+            <div class="caixaFlex row-nowrap"><div class="texto-pequeno3 item grow2">Você</div><div class="texto-pequeno3 item grow1 text-end">{{ mensagem.dh_criacao }}</div></div>
+            <div class="mensagem-voce float-none" >{{ mensagem.mensagem }}</div>
+        </div>        
+    </div>
+    <!-- Mensagem do amigo -->
+    <div class="row-nowrap caixaFlex" *ngIf="mensagem.uid_amigo == usuario.uid">
+        <div class="grow0" style="padding-right: 5px;"><img src="{{ mensagem.avatar }}" style="width: 36px; height: 36px;" class="img-round"/></div>
+        <div class="grow2">
+            <div class="caixaFlex row-nowrap"><div class="texto-pequeno3 item grow2">{{mensagem.nome}}</div><div class="texto-pequeno3 item grow1 text-end">{{ mensagem.dh_criacao }}</div></div>
+            <div class="mensagem-amigo float-none">{{ mensagem.mensagem }}</div>
+        </div>        
+    </div>
+</div>

@@ -53,9 +53,13 @@ Para configurar o Apache, é necessário habilitar o módulo **mod_rewrite** e c
       </Directory>
   </VirtualHost>
 ```
-Onde *ServerName* e *ServerAlias* deverá conter o nome do servidor que irá responder a este diretório. Para facilitar a resolução do nome do host, pode-se criar uma entrada no arquivo *C:\Windows\System32\drivers\ETC\hosts* do Windows ou */etc/hosts* do Linux
+Onde *ServerName* e *ServerAlias* devem conter o nome do servidor que irá responder a este diretório. Para facilitar a resolução do nome do host, pode-se criar uma entrada no arquivo *C:\Windows\System32\drivers\ETC\hosts* do Windows ou */etc/hosts* do Linux:
 
 > 127.0.0.1	clube-backend clube-frontend
+
+"CAMINHO-DO-BACKEND" deve ser substituído pelo diretório do backend deste repositório. Por exemplo, "C:\projetos\senac_pi_ads_grupo8\backend"
+
+Alternativamente
 
 <br/>
 <br/>
@@ -98,7 +102,8 @@ Para a configuração do frontend, é necessário ter o NodeJS previamente insta
 
 **Através do código-fonte**
 
-O código-fonte está disponível no diretório *frontend* e após o download, digitar os seguintes comandos:
+O código-fonte está disponível no diretório *frontend*. Após o download do projeto, abra o prompt de comando e acesse o diretório \senac_pi_ads_grupo8\frontend. Digitar os seguintes comandos:
+
 1. npm install -g @angular/cli
 2. npm install
 3. ng serve

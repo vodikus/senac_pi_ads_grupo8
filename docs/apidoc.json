@@ -1,0 +1,7 @@
+{
+    "name": "Clube de Empréstimo de Livros",
+    "version": "1.0.0",
+    "description": "Documentação da API do Clube de Empréstimo de Livros",
+    "title": "Clube de Empréstimo de Livros",
+    "url" : "http://clube-livro.us-east-1.elasticbeanstalk.com/api"
+  }

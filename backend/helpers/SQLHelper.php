@@ -57,7 +57,7 @@ class SQLHelper
                         throw new Exception("Campo $chave não pode ser alterado", 9990);
                     }
                 } else {
-                    if ($campos[$chave]['protected'] == 'none' || $acao == 'INSERT' || ($acao == 'UPDATE' && $campos[$chave]['protected'] != 'update')) {
+                    if ($campos[$chave]['protected'] == 'none' || $acao == 'DELETE' || $acao == 'INSERT' || ($acao == 'UPDATE' && $campos[$chave]['protected'] != 'update')) {
                         if (self::validaTipo($campos[$chave]['type'], $valor)) {
                             $retorno[$chave] = $valor;
                         } else {
@@ -78,9 +78,7 @@ class SQLHelper
     {
         $retorno = array();
 
-        error_log("ldp " . var_export($campos, true));
         foreach ($dados as $chave => $valor) {
-            error_log("$chave:" . var_export($valor, true));
             foreach ($tipos as $tipo) {
                 if (array_key_exists($chave, $campos) && $campos[$chave]['protected'] != $tipo) {
                     $retorno[$chave] = $valor;
@@ -129,4 +127,5 @@ class SQLHelper
     {
         return !(array_key_exists('protected', $valor) && $valor['protected'] == 'all');
     }
+
 }

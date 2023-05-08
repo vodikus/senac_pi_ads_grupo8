@@ -69,10 +69,31 @@ class EmprestimoModel extends BaseModel
         return true;
     }
 
+    private function montaSelectEmprestimo($campos, $where = "", $groupBy = "")
+    {
+        if (!empty($campos)) {
+            $sql =
+                "SELECT $campos " .
+                " FROM emprestimos e";
+
+            if (!empty($where)) {
+                $sql .= " WHERE $where ";
+            }
+
+            if (!empty($groupBy)) {
+                $sql .= " GROUP BY $groupBy";
+            }
+
+            return $sql;
+        }
+        return 'SELECT * FROM livros l';
+    }
+
     public function buscaEmprestimo($uid = 0, $eid = 0)
     {
         try {
-            $emprestimo = $this->select("SELECT uid_dono, lid, uid_tomador, qtd_dias, retirada_prevista, retirada_efetiva, devolucao_prevista, devolucao_efetiva, status, dh_solicitacao, dh_atualizacao FROM emprestimos WHERE eid=:eid AND uid_tomador=:uid_tomador", ['uid_tomador' => $uid, 'eid' => $eid]);
+            $campos = SQLHelper::montaCamposSelect($this->campos, 'e');
+            $emprestimo = $this->select($this->montaSelectEmprestimo($campos, "eid=:eid AND uid_tomador=:uid_tomador"), ['uid_tomador' => $uid, 'eid' => $eid]);
             if (count($emprestimo) > 0) {
                 return $emprestimo[0];
             } else {
@@ -83,15 +104,22 @@ class EmprestimoModel extends BaseModel
         }
     }
 
-    public function listarEmprestimos($uid = 0, $tipo = 'TOMADOS')
+    public function listarEmprestimos($uid = 0, $tipo = 'TOMADOS', $status = "")
     {
         try {
+            $campos = SQLHelper::montaCamposSelect($this->campos, 'e');
+            $sql = "";
+            $dado = [];
+            if (!empty($status)) {
+                $sql = " AND status=:status";
+                $dado = ["status" => $status];
+            }
             switch ($tipo) {
                 case "TOMADOS":
-                    $emprestimos = $this->select("SELECT eid, uid_dono, lid, uid_tomador, qtd_dias, retirada_prevista, retirada_efetiva, devolucao_prevista, devolucao_efetiva, status, dh_solicitacao, dh_atualizacao FROM emprestimos WHERE uid_tomador=:uid_tomador", ['uid_tomador' => $uid]);
+                    $emprestimos = $this->select($this->montaSelectEmprestimo($campos, "uid_tomador=:uid_tomador $sql"), array_merge(['uid_tomador' => $uid],$dado));
                     break;
                 case "EMPRESTADOS":
-                    $emprestimos = $this->select("SELECT eid, uid_dono, lid, uid_tomador, qtd_dias, retirada_prevista, retirada_efetiva, devolucao_prevista, devolucao_efetiva, status, dh_solicitacao, dh_atualizacao FROM emprestimos WHERE uid_dono=:uid_dono", ['uid_dono' => $uid]);
+                    $emprestimos = $this->select($this->montaSelectEmprestimo($campos, "uid_dono=:uid_dono $sql"), array_merge(['uid_dono' => $uid],$dado));
                     break;
                 default:
                     $emprestimos = [];

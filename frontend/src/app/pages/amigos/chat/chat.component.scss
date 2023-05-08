@@ -1,0 +1,23 @@
+.mensagem-voce {
+    font-size: 12px;
+    padding: 10px;
+    margin-bottom: 15px;
+    border-radius: 5px;
+    background-color: #286D10;
+    box-shadow: 5px 5px 5px gray;
+    color: white;
+}
+
+.mensagem-amigo {
+    font-size: 12px;
+    padding: 10px;
+    margin-bottom: 15px;
+    border-radius: 5px;
+    background-color: lightgray;
+    box-shadow: 5px 5px 5px gray;
+    color: #101828;
+}
+
+.item {
+    flex: 1;
+}

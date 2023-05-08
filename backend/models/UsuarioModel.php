@@ -26,6 +26,14 @@ class UsuarioModel extends BaseModel
         }
         return true;
     }
+
+    public function validaBloqueio($uid, $uid_blq)
+    {
+        if ($this->query("SELECT 1 FROM usuarios_bloqueio WHERE uid=:uid AND uid_blq=:uid_blq", ['uid' => $uid, 'uid_blq' => $uid_blq]) > 0) {
+            throw new CLConstException('ERR_USUARIO_BLOQUEADO');
+        }
+        return false;
+    }
     public function buscarTodosUsuarios()
     {
         try {
@@ -35,11 +43,20 @@ class UsuarioModel extends BaseModel
             throw $e;
         }
     }
-    public function buscarUsuario($id = 0)
+    public function buscarUsuario($id = 0, $completo = false)
     {
         try {
-            $campos = SQLHelper::montaCamposSelect($this->campos, 'u');
-            return $this->select("SELECT $campos FROM usuarios u WHERE uid=:uid", ['uid' => $id]);
+            $campos = $this->campos;
+            if (!$completo) {
+                $campos = array_filter(SQLHelper::sobrescrevePropriedades($this->campos, [
+                    'email' => ['visible' => false],
+                    'cpf' => ['visible' => false],
+                    'nascimento' => ['visible' => false],
+                    'role' =>  ['visible' => false]
+                ]), ['SQLHelper', 'limpaCamposProtegidos']);                
+            }
+            $novosCampos = SQLHelper::montaCamposSelect($campos, 'u');
+            return $this->select("SELECT $novosCampos FROM usuarios u WHERE uid=:uid", ['uid' => $id]);
         } catch (Exception $e) {
             throw $e;
         }
@@ -122,4 +139,28 @@ class UsuarioModel extends BaseModel
         }
     }
 
+    public function bloquearUsuario($uid, $uid_blq)
+    {
+        try {
+            return $this->insert("INSERT INTO usuarios_bloqueio (uid, uid_blq) VALUES (:uid,:uid_blq)", ['uid'=>$uid,'uid_blq'=>$uid_blq]);
+        } catch (Exception $e) {
+            switch ($e->getCode()) {
+                case 23000:
+                    if (stripos($e->getMessage(),'PRIMARY')) {
+                        throw new CLConstException('ERR_USUARIO_JA_BLOQUEADO');
+                    }
+                    break;
+            }            
+            throw $e;
+        }
+    }
+
+    public function debloquearUsuario($uid, $uid_blq)
+    {
+        try {
+            return $this->query("DELETE FROM usuarios_bloqueio WHERE uid=:uid AND uid_blq=:uid_blq", ['uid'=>$uid,'uid_blq'=>$uid_blq]);
+        } catch (Exception $e) {
+            throw $e;
+        }
+    }
 }

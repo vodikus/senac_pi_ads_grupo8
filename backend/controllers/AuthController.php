@@ -7,7 +7,42 @@ include_once 'models/UsuarioModel.php';
 
 class AuthController extends BaseController
 {
-    private $expSeconds = 300;
+    private $expSeconds = 900;
+
+
+    /**
+     * @api {get} /auth/getToken/ Solicitar Token
+     * @apiName Solicita Token
+     * @apiGroup Autenticação
+     * @apiVersion 1.0.0
+     *
+     * @apiSuccess {String} access_token Token no formato JWT
+     * @apiSuccess {Number} expires_in Tempo de expiração do token (segundos)
+     * @apiSuccess {String} token_type Tipo do token
+     *
+     * @apiSuccessExample Success-Response:
+     *     HTTP/1.1 200 OK
+     *     {
+     *         "access_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.hjGaHgUSGShGSJShGSg.TRHtshfsegerGErg43t3gg",
+     *         "expires_in": 300,
+     *         "token_type": "bearer"
+     *     }
+     * 
+     * @apiUse ERR_GENERICOS
+     * 
+     */
+
+    /**
+     * @api {get} /auth/authToken/ Validar Token
+     * @apiName Valida Token
+     * @apiGroup Autenticação
+     * @apiVersion 1.0.0
+     * 
+     * @apiUse SAIDA_PADRAO
+     * @apiUse ERR_GENERICOS
+     * 
+     */     
+
     public function processarRequisicao($metodo='', $params=[]) {
         switch ($metodo) {
             case 'POST':

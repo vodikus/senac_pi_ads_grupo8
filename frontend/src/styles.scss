@@ -1,0 +1,111 @@
+@import '../node_modules/ngx-bar-rating/themes/br-default-theme';
+
+* {
+    color: #101828;
+}
+.debug {
+    background-color: blueviolet;
+}
+
+.debug1 {
+    background-color: aqua;
+}
+
+.debug2 {
+    background-color: red;
+}
+
+.mensagemErro {
+    color: #A5282C;
+    font-size: 12px;
+}
+
+.img-round {
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+.img-tiny0 {
+    width: 12px;
+    height: 12px;
+}
+
+.img-tiny1 {
+    width: 16px;
+    height: 16px;
+}
+
+.img-small {
+    width: 24px;
+    height: 24px;
+}
+
+.clickable {
+    cursor: pointer;
+}
+
+.texto-pequeno0 {
+    font-size: 8px;
+}
+
+.texto-pequeno1 {
+    font-size: 9px;
+}
+
+.texto-pequeno3 {
+    font-size: 10px;
+}
+
+.grow0 {
+    flex-grow: 0;
+}
+
+.grow1 {
+    flex-grow: 1;
+}
+
+.grow2 {
+    flex-grow: 2;
+}
+
+.caixaFlex {
+	display: flex;
+}
+
+.vcenter {
+    align-items: center;
+}
+
+.flex {
+	flex: 1;
+}
+
+.livroBox {
+    font-size: 12px;
+    padding: 10px;
+    margin-bottom: 15px;
+    border-radius: 5px;
+    box-shadow: 5px 5px 5px gray;
+}
+
+.livroCapa {
+    width: 64px;
+}
+
+.livroAutor {
+    text-transform: uppercase;
+    color:lightslategray;
+    font-size: 9px;
+}
+
+.livroDescricao {
+    padding-top: 5px;
+    color:lightslategray;
+    font-size: 9px;
+    text-align: justify;
+}
+
+.blocoDadosLivro {
+    padding-left: 10px;
+}
+

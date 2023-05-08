@@ -1,4 +1,5 @@
 RewriteEngine On
+RewriteRule ^imagens/.*$ - [L]
 RewriteRule ^api/.*$ api.php [QSA,L]
 RewriteRule ^controllers/.*$ api.php
 RewriteCond %{REQUEST_FILENAME} !-f

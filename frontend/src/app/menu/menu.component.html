@@ -1,0 +1,37 @@
+<div class="menu w-100">
+    <div class="menu-bar">
+        <div class="menu-btn-40" [routerLink]="['/']">
+            <img src="assets/Inicio.png" />
+            <div>Inicio</div>
+        </div>
+        <div class="menu-btn-60" [routerLink]="['/emprestimos']" *ngIf="autenticado"
+            [routerLinkActive]="['menu-selected']">
+            <img src="assets/Emprestimos.png" />
+            <div>Empréstimos</div>
+        </div>
+        <div class="menu-btn-60" [routerLink]="['/emprestados']" *ngIf="autenticado"
+            [routerLinkActive]="['menu-selected']">
+            <img src="assets/Emprestados.png" style="width: 24px; height: 24px;" />
+            <div>Emprestados</div>
+        </div>
+        <div class="menu-btn-60" [routerLink]="['/pesquisa']" [routerLinkActive]="['menu-selected']">
+            <img src="assets/Pesquisa.png" style="width: 24px; height: 24px;" />
+            <div>Pesquisa</div>
+        </div>
+        <div class="menu-btn-40" [routerLink]="['/amigos']" *ngIf="autenticado" [routerLinkActive]="['menu-selected']">
+            <img src="assets/Amigos.png" />
+            <div>Amigos</div>
+        </div>
+        <!-- </div>
+    <div class="menu-bar"> -->
+        <div class="menu-btn-40" [routerLink]="['/favoritos']" *ngIf="autenticado"
+            [routerLinkActive]="['menu-selected']">
+            <img src="assets/Favoritos.png" />
+            <div>Favoritos</div>
+        </div>
+        <div class="menu-btn-60" [routerLink]="['/suporte']" [routerLinkActive]="['menu-selected']">
+            <img src="assets/Suporte.png" />
+            <div>Suporte</div>
+        </div>
+    </div>
+</div>

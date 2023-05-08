@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 @Component({
   selector: 'app-endereco',
   templateUrl: './endereco.component.html',
-  styleUrls: ['./endereco.component.css']
+  styleUrls: ['./endereco.component.scss']
 })
 export class EnderecoComponent implements OnInit {
 

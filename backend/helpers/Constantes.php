@@ -3,8 +3,40 @@ namespace helpers;
 
 class Constantes
 {
+    /**
+     * @apiDefine ERR_GENERICOS
+     *
+     * @apiError (Erro 4xx) 401 Não autorizado
+     * @apiError (Erro 4xx) 405 Método não permitido
+     * @apiError (Erro 5xx) 501 Ação Indisponível
+     * @apiError (Erro 5xx) 9000 Erro não definido
+     * @apiError (Erro 5xx) 9001 Identificador inválido
+     * @apiError (Erro 5xx) 9004 A entrada deve ser um JSON válido
+     *
+     */
+
+    /**
+     * @apiDefine SAIDA_PADRAO
+     *
+     * @apiSuccess {Number} codigo Código da mensagem
+     * @apiSuccess {String} mensagem Mensagem de retorno
+     * @apiSuccess {Object} detalhe Objeto contendo detalhes do retorno
+     * @apiSuccess {Number} detalhe.chamadoId  Id do assunto inserido
+     *
+     * @apiSuccessExample Success-Response:
+     *     HTTP/1.1 200 OK
+     *     {
+     *         "codigo": 1234,
+     *         "mensagem": "Sua operação foi realizada com sucesso",
+     *         "detalhe": ""
+     *     }
+     *
+     */     
+
+
     /** Erros - HTTP */
     const ERR_NAO_AUTORIZADO = ['code' => 401, 'message' => 'Acesso não autorizado'];
+    const ERR_NAO_ENCONTRADO = ['code' => 404, 'message' => 'Recurso não encontrado'];
     const ERR_METODO_NAO_PERMITIDO = ['code' => 405, 'message' => 'Método não permitido'];
     const ERR_ACAO_INDISPONIVEL = ['code' => 501, 'message' => 'Ação Indisponível'];
 
@@ -27,12 +59,16 @@ class Constantes
     const MSG_USUARIO_LIVRO_VINCULADO = ['code' => 1205, 'message' => 'Livro vinculado ao usuário com sucesso'];
     const MSG_USUARIO_LIVRO_DESVINCULADO = ['code' => 1206, 'message' => 'Livro desvinculado ao usuário com sucesso'];
     const MSG_USUARIO_LIVRO_STATUS_SUCESSO = ['code' => 1207, 'message' => 'Status do livro alterado com sucesso'];
+    const MSG_USUARIO_BLOQUEIO_SUCESSO = ['code' => 1208, 'message' => 'Usuário bloqueado com sucesso'];
+    const MSG_USUARIO_DESBLOQUEIO_SUCESSO = ['code' => 1209, 'message' => 'Usuário desbloqueado com sucesso'];
     /** Erros - Usuários  */
     const ERR_USUARIO_NAO_ENCONTRADO = ['code' => 9100, 'message' => 'Usuário não encontrado'];
     const ERR_EMAIL_SENHA_INVALIDO = ['code' => 9101, 'message' => 'E-mail ou senha não conferem'];
     const ERR_EMAIL_SENHA_REQUERIDO = ['code' => 9102, 'message' => 'É necessário informar e-mail e senha'];
     const ERR_EMAIL_EXISTENTE= ['code' => 9103, 'message' => 'E-mail já cadastrado'];
     const ERR_CPF_EXISTENTE= ['code' => 9104, 'message' => 'CPF já cadastrado'];
+    const ERR_USUARIO_BLOQUEADO = ['code' => 9105, 'message' => 'Usuário bloqueado'];
+    const ERR_USUARIO_JA_BLOQUEADO = ['code' => 9106, 'message' => 'Usuário já está bloqueado'];
     const ERR_USUARIO_ASSUNTO_VINCULO_EXISTENTE = ['code' => 9105, 'message' => 'Este assunto já está vinculado a este usuário'];
     const ERR_USUARIO_ASSUNTO_VINCULO_NAO_ENCONTRADO = ['code' => 9106, 'message' => 'Este usuário não está vinculado a este assunto'];
     const ERR_USUARIO_LIVRO_VINCULO_EXISTENTE = ['code' => 9107, 'message' => 'Este livro já está vinculado a este usuário'];
@@ -87,9 +123,15 @@ class Constantes
 
     /** Mensagens - Chamados  */
     const MSG_CHAMADO_CADASTRO_SUCESSO = ['code' => 1500, 'message' => 'Chamado cadastrado com sucesso.'];
+    const MSG_CHAMADO_ATUALIZADO_SUCESSO = ['code' => 1501, 'message' => 'Chamado atualizado com sucesso.'];
+    const MSG_CHAMADO_DETALHE_CADASTRO_SUCESSO = ['code' => 1510, 'message' => 'Detalhe do chamado cadastrado com sucesso.'];
 
     /** Erros - Chamados */
-    const ERR_CHAMADO_INCLUSAO = ['code' => 9500, 'message' => 'Erro ao incluir chamado'];
+    const ERR_CHAMADO_NAO_ENCONTRADO = ['code' => 9501, 'message' => 'Chamado não encontrado'];
+    const ERR_CHAMADO_INCLUSAO = ['code' => 9501, 'message' => 'Erro ao incluir chamado'];
+    const ERR_CHAMADO_ALTERACAO = ['code' => 9502, 'message' => 'Erro ao alterar chamado'];
+    const ERR_CHAMADO_STATUS_INVALIDO = ['code' => 9503, 'message' => 'Status do chamado inválido'];
+    const ERR_CHAMADO_DETALHE_INCLUSAO = ['code' => 9510, 'message' => 'Erro ao incluir detalhe do chamado'];
 
     /** Mensagens - Assuntos  */
     const MSG_ASSUNTO_CADASTRO_SUCESSO = ['code' => 1600, 'message' => 'Assunto cadastrado com sucesso.'];
@@ -106,13 +148,28 @@ class Constantes
     const ERR_ASSUNTO_VINCULO_NAO_ENCONTRADO = ['code' => 9602, 'message' => 'Este assunto não está vinculado a este livro'];
     
     /** Mensagens - Endereços  */
-    const MSG_ENDERECO_CADASTRO_SUCESSO = ['code' => 1700, 'message' => 'Endereço cadastrado com sucesso.'];
-    const MSG_ENDERECO_DELETADO_SUCESSO = ['code' => 1701, 'message' => 'Endereço deletado com sucesso.'];
-    const MSG_ENDERECO_ATUALIZADO_SUCESSO = ['code' => 1702, 'message' => 'Endereço atualizado com sucesso.'];
+    const MSG_ENDERECO_CADASTRO_SUCESSO = ['code' => 1700, 'message' => 'Endereço cadastrado com sucesso'];
+    const MSG_ENDERECO_DELETADO_SUCESSO = ['code' => 1701, 'message' => 'Endereço deletado com sucesso'];
+    const MSG_ENDERECO_ATUALIZADO_SUCESSO = ['code' => 1702, 'message' => 'Endereço atualizado com sucesso'];
 
     /** Erros - Endereços  */
     const ERR_ENDERECO_NAO_ENCONTRADO = ['code' => 9700, 'message' => 'Endereço não encontrado'];
     const ERR_ENDERECO_JA_EXISTENTE = ['code' => 9701, 'message' => 'Este endereço já está cadastrado'];
+
+    /** Mensagens - Chat  */
+    const MSG_CHAT_ENVIO_SUCESSO = ['code' => 1800, 'message' => 'Mensagem enviada com sucesso'];
+
+    /** Erros - Chat  */
+    const ERR_CHAT_ENVIO = ['code' => 9800, 'message' => 'Falha no envio da mensagem'];
+
+    /** Mensagens - Amigos  */
+    const MSG_AMIGO_ADICIONADO_SUCESSO = ['code' => 1900, 'message' => 'Amigo adicionado com sucesso'];
+    const MSG_AMIGO_REMOVIDO_SUCESSO = ['code' => 1901, 'message' => 'Amigo removido com sucesso'];
+
+    /** Erros - Amigos  */
+    const ERR_AMIGO_NAO_ENCONTRADO = ['code' => 9900, 'message' => 'Estes usuários não são amigos'];
+    const ERR_AMIGO_JA_EXISTENTE = ['code' => 9901, 'message' => 'Usuário já é seu amigo'];
+    const ERR_AMIGO_MESMO_USUARIO = ['code' => 9902, 'message' => 'Usuário inválido'];
 
 
     public static function getConst($const = "ERR_NAODEFINIDO")
