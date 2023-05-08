@@ -2,16 +2,17 @@
 
 ## **Grupo 8**
 
-- [Clube de Empréstimo de Livros](#clube-de-empr-stimo-de-livros)
-  * [Apresentação](#apresenta--o)
-  * [Instalação](#instala--o)
-    + [Pré-requisitos](#pr--requisitos)
-    + [Banco de Dados](#banco-de-dados)
-    + [Backend](#backend)
-    + [Frontend](#frontend)
-  * [Visualização](#visualiza--o)
-  * [Componentes do Grupo](#componentes-do-grupo)
-  * [Tecnologias](#tecnologias)
+- [**Clube de Empréstimo de Livros**](#clube-de-empréstimo-de-livros)
+  - [**Grupo 8**](#grupo-8)
+  - [**Apresentação**](#apresentação)
+  - [**Instalação**](#instalação)
+    - [**Pré-requisitos**](#pré-requisitos)
+    - [**Banco de Dados**](#banco-de-dados)
+    - [**Backend**](#backend)
+    - [**Frontend**](#frontend)
+  - [**Visualização e Testes**](#visualização-e-testes)
+  - [**Componentes do Grupo**](#componentes-do-grupo)
+  - [**Tecnologias**](#tecnologias)
 
 ## **Apresentação**
 
@@ -58,8 +59,6 @@ Onde *ServerName* e *ServerAlias* devem conter o nome do servidor que irá respo
 > 127.0.0.1	clube-backend clube-frontend
 
 "CAMINHO-DO-BACKEND" deve ser substituído pelo diretório do backend deste repositório. Por exemplo, "C:\projetos\senac_pi_ads_grupo8\backend"
-
-Alternativamente
 
 <br/>
 <br/>
