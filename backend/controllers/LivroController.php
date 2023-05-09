@@ -27,7 +27,7 @@ class LivroController extends BaseController
                         $this->listarLivrosDisponiveis($params['params']);
                         break;
                     case 'buscar-por-id':
-                        $this->buscarId($params['level1']);
+                        $this->buscarId($params['params']);
                         break;
                     case 'buscar-por-isbn':
                         $this->buscarIsbn($dados);
@@ -221,9 +221,11 @@ class LivroController extends BaseController
         $this->montarSaidaOk($responseData);
     }
 
-    public function buscarId($lid = 0)
+    public function buscarId($entrada = 0)
     {
         try {
+            parse_str(substr($entrada,1), $params);
+            $lid = (array_key_exists('id', $params)) ? $params['id'] : '';
             if (is_numeric($lid)) {
                 $livroModel = new LivroModel();
                 $arrLivros = (array) $livroModel->buscarLivroPorId($lid);
