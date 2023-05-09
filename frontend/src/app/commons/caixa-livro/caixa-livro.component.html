@@ -1,0 +1,44 @@
+<div class="livroBox">
+    <!-- Caixa com a capa, titulo, autor e descrição -->
+    <div class="caixaFlex">
+        <div><img src="http://clube-backend/imagens/livros/neuromancer.png" class="livroCapa"></div>
+        <div class="blocoDadosLivro">
+            <div class="livroTitulo">{{ livro.titulo }}</div>
+            <div class="livroAutor">{{ livro.autores }}</div>
+            <div class="livroDescricao" *ngIf="!mostrarLivroDescricao">{{ livro.descricao }}</div>
+            <div class="emprestador" *ngIf="mostrarEmprestador">
+                <div class="texto-pequeno1">Emprestador</div>
+                <div><app-barra-usuario [uid]=uid *ngIf="mostrarEmprestador" [mostraChat]="false" [mostraPerfil]="false" [tamanho]="1"></app-barra-usuario></div>                
+            </div>
+            <div class="texto-pequeno1" *ngIf="mostrarDadosEmprestimo">
+                <div>
+                    <div>Retirada</div>
+                    <div>dd/mm/aaaa</div>
+                </div>
+                <div>
+                    <div>Devolução</div>
+                    <div>dd/mm/aaaa</div>
+                </div>
+                <div>
+                    <div>Status</div>
+                    <div>xx</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Avaliação -->
+    <div class="caixaFlex" *ngIf="mostrarBarraAvaliacao">
+        <div class="vcenter caixaFlex grow2">Avaliação</div>
+        <div class="grow0 text-end"><bar-rating [(rate)]=livro.avaliacao [max]="5" [readOnly]="true" [theme]="'default'"></bar-rating></div>
+    </div>
+    
+    <!-- Usuário -->
+    <app-barra-usuario [uid]=uid *ngIf="mostrarBarraUsuario"></app-barra-usuario>
+    <!-- separador -->
+    <hr/>
+    <!-- Barra de icones sociais -->
+    <app-barra-social *ngIf="mostrarBarraSocial"></app-barra-social>
+    <!-- Barra de icones ações-->
+    <app-barra-acoes *ngIf="mostrarBarraAcao"></app-barra-acoes>
+     
+</div>

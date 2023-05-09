@@ -1,30 +1,5 @@
 <p>Sugestões</p>
 
-<div>
-    <div class="livroBox" *ngFor="let livro of livros">
-        <!-- Caixa com a capa, titulo, autor e descrição -->
-        <div class="caixaFlex">
-            <div><img src="http://clube-backend/imagens/livros/neuromancer.png" class="livroCapa"></div>
-            <div class="blocoDadosLivro">
-                <div class="livroTitulo">{{ livro.titulo }}</div>
-                <div class="livroAutor">{{ livro.autores }}</div>
-                <div class="livroDescricao">{{ livro.descricao }}</div>
-            </div>
-        </div>
-        <!-- Avaliação -->
-        <div class="caixaFlex">
-            <div class="vcenter caixaFlex grow2">Avaliação</div>
-            <div class="grow0 text-end"><bar-rating [(rate)]=livro.avaliacao [max]="5" [readOnly]="true" [theme]="'default'"></bar-rating></div>
-        </div>
-        
-        <!-- Usuário -->
-        <app-barra-usuario [uid]=livro.uid></app-barra-usuario>
-        <!-- separador -->
-        <hr/>
-        <!-- Barra de icones sociais -->
-        <app-barra-social></app-barra-social>
-        <!-- Barra de icones ações-->
-        <app-barra-acoes></app-barra-acoes>
-         
-    </div>
+<div *ngFor="let livro of livros">
+    <app-caixa-livro [uid]=livro.uid [livro]=livro></app-caixa-livro>
 </div>

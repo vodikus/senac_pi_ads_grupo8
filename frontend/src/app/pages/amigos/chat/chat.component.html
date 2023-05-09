@@ -1,19 +1,46 @@
 <p>Chat</p>
 
-<div *ngFor="let mensagem of mensagens">
-    <!-- Mensagem do próprio usuário -->
-    <div class="" *ngIf="mensagem.uid_amigo == usuario.uid">
-        <div class="col-12">
-            <div class="caixaFlex row-nowrap"><div class="texto-pequeno3 item grow2">Você</div><div class="texto-pequeno3 item grow1 text-end">{{ mensagem.dh_criacao }}</div></div>
-            <div class="mensagem-voce float-none" >{{ mensagem.mensagem }}</div>
-        </div>        
-    </div>
-    <!-- Mensagem do amigo -->
-    <div class="row-nowrap caixaFlex" *ngIf="mensagem.uid_amigo == usuario.uid">
-        <div class="grow0" style="padding-right: 5px;"><img src="{{ mensagem.avatar }}" style="width: 36px; height: 36px;" class="img-round"/></div>
-        <div class="grow2">
-            <div class="caixaFlex row-nowrap"><div class="texto-pequeno3 item grow2">{{mensagem.nome}}</div><div class="texto-pequeno3 item grow1 text-end">{{ mensagem.dh_criacao }}</div></div>
-            <div class="mensagem-amigo float-none">{{ mensagem.mensagem }}</div>
-        </div>        
+<!-- Caso tenha mensagens a serem exibidas -->
+<div *ngIf="mensagens?.length > 0">
+    <div *ngFor="let mensagem of mensagens">
+        <!-- Mensagem do próprio usuário -->
+        <div class="" *ngIf="mensagem?.uid_amigo == usuario?.uid">
+            <div class="col-12">
+                <div class="caixaFlex row-nowrap">
+                    <div class="texto-pequeno3 item grow2">Você</div>
+                    <div class="texto-pequeno3 item grow1 text-end">{{ mensagem.dh_criacao }}</div>
+                </div>
+                <div class="mensagem-voce float-none">{{ mensagem.mensagem }}</div>
+            </div>
+        </div>
+        <!-- Mensagem do amigo -->
+        <div class="row-nowrap caixaFlex" *ngIf="mensagem?.uid == usuario?.uid">
+            <div class="grow0" style="padding-right: 5px;"><img src="{{ mensagem.avatar }}"
+                    style="width: 36px; height: 36px;" class="img-round" /></div>
+            <div class="grow2">
+                <div class="caixaFlex row-nowrap">
+                    <div class="texto-pequeno3 item grow2">{{mensagem.nome}}</div>
+                    <div class="texto-pequeno3 item grow1 text-end">{{ mensagem.dh_criacao }}</div>
+                </div>
+                <div class="mensagem-amigo float-none">{{ mensagem.mensagem }}</div>
+            </div>
+        </div>
     </div>
 </div>
+
+<!-- Caso não tenha nenhuma mensagem -->
+<div *ngIf="mensagens?.length <= 0" class="texto-pequeno3 text-center">
+    Vocês não tem nenhuma mensagem ainda! <br /> Se quiser iniciar uma conversa, envie uma mensagem!
+</div>
+<hr />
+<!-- Caixa de envio de mensagens -->
+<form name="form" (ngSubmit)="f.form.valid && enviarMensagem()" #f="ngForm" novalidate>
+    <div class="caixaFlex">
+        <div class="grow2">
+            <input class="caixaDeTexto shadow-sm" name="mensagem" [(ngModel)]="form.mensagem" required #mensagem="ngModel" type="text" placeholder="Mensagem">
+        </div>
+        <div class="grow0 mx-1">
+            <button class="botao p-2 px-3" type="submit"><i class="fa-solid fa-paper-plane text-white"></i></button>
+        </div>
+    </div>
+</form>

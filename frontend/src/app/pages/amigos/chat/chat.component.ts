@@ -12,6 +12,9 @@ import { UsuarioService } from '../../../_service/usuario.service'
 export class ChatComponent implements OnInit {
   mensagens: any | undefined;
   usuario: any | undefined;
+  form: any = {
+    mensagem: null
+  };
 
   constructor(
     private route: ActivatedRoute,
@@ -31,7 +34,28 @@ export class ChatComponent implements OnInit {
       .subscribe(data => this.mensagens = data);
   }
 
+  enviarMensagem(): void {
+    const { mensagem } = this.form;
+    const id = Number(this.route.snapshot.paramMap.get('id'));
+    console.log(mensagem)
+    console.log(id)
+    this.chatService.enviarMensagem(id, mensagem).subscribe({
+      next: data => {
+        console.log(data);
+        this.reloadPage();
+      },
+      error: err => {
+        console.log(err);
+      }
+    });
+  }
+
   voltar(): void {
     this.location.back();
   }
+
+    
+  reloadPage(): void {
+    window.location.reload();
+  }  
 }
