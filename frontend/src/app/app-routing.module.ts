@@ -17,18 +17,18 @@ import { DenunciaComponent } from './pages/denuncia/denuncia.component';
 const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'login', component: LoginComponent },
-  { path: 'meu-perfil', component: MeuPerfilComponent}, /*canActivate: [AuthGuard] },*/
-  { path: 'amigos', component: AmigosComponent}, /*canActivate: [AuthGuard] },*/
-  { path: 'chat/:id', component: ChatComponent}, /*canActivate: [AuthGuard] },*/
+  { path: 'meu-perfil', component: MeuPerfilComponent, canActivate: [AuthGuard] },
+  { path: 'amigos', component: AmigosComponent, canActivate: [AuthGuard] },
+  { path: 'chat/:id', component: ChatComponent, canActivate: [AuthGuard] },
   // { path: 'amigos', component: AmigosComponent, canActivate: [AuthGuard],children: [
   //   {path: 'chat/:id', component: ChatComponent}
   // ] },
-  { path: 'emprestados', component: EmprestadosComponent}, /*canActivate: [AuthGuard] },*/
-  { path: 'emprestimos', component: EmprestimosComponent}, /*canActivate: [AuthGuard] },*/
-  { path: 'favoritos', component: FavoritosComponent}, /*canActivate: [AuthGuard] },*/
-  { path: 'pesquisa', component: PesquisaComponent },
-  { path: 'suporte', component: SuporteComponent}, /*canActivate: [AuthGuard] },*/
-  { path: 'denuncia', component: DenunciaComponent} /*canActivate: [AuthGuard] },*/
+  { path: 'emprestados', component: EmprestadosComponent, canActivate: [AuthGuard] },
+  { path: 'emprestimos', component: EmprestimosComponent, canActivate: [AuthGuard] },
+  { path: 'favoritos', component: FavoritosComponent, canActivate: [AuthGuard] },
+  { path: 'pesquisa', component: PesquisaComponent}, 
+  { path: 'suporte', component: SuporteComponent, canActivate: [AuthGuard] },
+  { path: 'denuncia', component: DenunciaComponent, canActivate: [AuthGuard] },
   
   ];
 
