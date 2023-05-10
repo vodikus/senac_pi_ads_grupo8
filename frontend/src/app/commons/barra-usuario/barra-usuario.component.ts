@@ -14,7 +14,7 @@ export class BarraUsuarioComponent implements OnInit {
   @Input('tamanho') tamanho: number = 0;
 
 
-  usuario!: Usuario;
+  usuario: Usuario = new Usuario();
 
   constructor(private usuarioService: UsuarioService) { }
 

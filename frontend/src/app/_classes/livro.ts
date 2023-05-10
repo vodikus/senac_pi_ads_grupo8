@@ -6,7 +6,7 @@ export class Livro {
     capa: string = "/imagens/livros/sem-capa.png";
     isbn: string = "";
     status: string = "";
-    dh_atualizacao: number = 0;
+    dh_atualizacao: Date = new Date();
     autores: string = "";
     assuntos: string = "";
 }

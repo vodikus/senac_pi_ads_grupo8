@@ -1,9 +1,9 @@
 <div class="caixaFlex mt-1">
-    <div class="grow1 text-center">
+    <div class="grow1 text-center" *ngIf="mostrarDetalhes">
         <div><img src="assets/Pesquisa.png" class="img-tiny1"/></div>
         <div class="texto-pequeno3">Detalhes</div>
     </div>
-    <div class="grow1 text-center">
+    <div class="grow1 text-center" *ngIf="mostrarSolicitar">
         <div><img src="assets/solicitar.png" class="img-tiny1" /></div>
         <div class="texto-pequeno3">Solicitar</div>
     </div>
