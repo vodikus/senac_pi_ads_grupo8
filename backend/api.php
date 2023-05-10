@@ -22,7 +22,7 @@ $rules = array(
     'ChamadoController'     => "chamados/?(?'acao'[\w\-]*)\/?(?'level1'[\w\s]*)",
     'ChatController'        => "chat/?(?'acao'[\w\-]*)\/?(?'level1'[\w\s]*)",
     'EmprestimoController'  => "emprestimos/?(?'acao'[\w\-]*)\/?(?'level1'[\w\s]*)\/?(?'level2'[\w\s]*)",
-    'EnderecoController'    => "enderecos/?(?'acao'[\w\-]*)\/?(?'level1'[\w\s]*)",
+    'EnderecoController'    => "enderecos/?(?'acao'[\w\-]*)\/?(?'level1'[\w\s]*)\/?(?'params'[?\w[=,-.|&]*)",
     'LivroController'       => "livros/?(?'acao'[\w\-]*)\/?(?'level1'[\w\s]*)\/?(?'params'[?\w[=,-.|&]*)",
     'UsuarioController'     => "usuarios/?(?'acao'[\w\-]*)\/?(?'level1'[\w\s]*)"
 );
