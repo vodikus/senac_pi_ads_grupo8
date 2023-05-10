@@ -80,8 +80,8 @@ class Constantes
     const MSG_LIVRO_DELETADO_SUCESSO = ['code' => 1201, 'message' => 'Livro deletado com sucesso'];
     const MSG_LIVRO_ATUALIZADO_SUCESSO = ['code' => 1202, 'message' => 'Livro atualizado com sucesso'];
     const MSG_LIVRO_AVALIADO_SUCESSO = ['code' => 1203, 'message' => 'Livro avaliado com sucesso'];
-    const MSG_LIVRO_FAVORITO_SUCESSO = ['code' => 1203, 'message' => 'Livro adicionado a lista de favoritos'];
-    const MSG_LIVRO_DESFAVORITO_SUCESSO = ['code' => 1203, 'message' => 'Livro removido da lista de favoritos'];
+    const MSG_LIVRO_FAVORITO_SUCESSO = ['code' => 1204, 'message' => 'Livro adicionado a lista de favoritos'];
+    const MSG_LIVRO_DESFAVORITO_SUCESSO = ['code' => 1205, 'message' => 'Livro removido da lista de favoritos'];
 
     /** Erros - Livros  */
     const ERR_LIVRO_NAO_ENCONTRADO = ['code' => 9200, 'message' => 'Livro não encontrado'];
