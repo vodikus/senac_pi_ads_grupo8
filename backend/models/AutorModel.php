@@ -27,12 +27,11 @@ class AutorModel extends BaseModel
         return $this->select("SELECT $campos FROM autores a WHERE aid=:aid",  [ 'aid' => $id ] );
     }
 
-    public function buscarAutorPorNome($dados)
+    public function buscarAutorPorNome($nome)
     {
         try {
-            $nome_autor = $dados['nome_autor'];
             $campos = SQLHelper::montaCamposSelect($this->campos, 'a');
-            $autores = $this->select("SELECT $campos FROM autores a WHERE nome_autor LIKE :nome_autor", ['nome_autor' => "%$nome_autor%"]);
+            $autores = $this->select("SELECT $campos FROM autores a WHERE nome_autor LIKE :nome_autor", ['nome_autor' => "%$nome%"]);
             if (count($autores) > 0) {
                 return $autores;
             }

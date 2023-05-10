@@ -27,22 +27,22 @@ class LivroController extends BaseController
                         $this->listarLivrosDisponiveis($params['params']);
                         break;
                     case 'buscar-por-id':
-                        $this->buscarId($params['level1']);
+                        $this->buscarId($params['params']);
                         break;
                     case 'buscar-por-isbn':
-                        $this->buscarIsbn($dados);
+                        $this->buscarIsbn($params['params']);
                         break;
                     case 'buscar-por-assunto':
-                        $this->buscarAssunto($dados);
+                        $this->buscarAssunto($params['params']);
                         break;
                     case 'buscar-por-autor':
-                        $this->buscarAutor($dados);
+                        $this->buscarAutor($params['params']);
                         break;
                     case 'buscar-por-titulo':
-                        $this->buscarTitulo($dados);
+                        $this->buscarTitulo($params['params']);
                         break;
                     case 'buscar-por-usuario':
-                        $this->buscarUsuario($params['level1']);
+                        $this->buscarUsuario($params['params']);
                         break;
                     default:
                         $this->httpRawResponse(501, MessageHelper::fmtMsgConstJson('ERR_ACAO_INDISPONIVEL'));
@@ -221,9 +221,24 @@ class LivroController extends BaseController
         $this->montarSaidaOk($responseData);
     }
 
-    public function buscarId($lid = 0)
+    /**
+     * @api {get} /livros/buscar-por-id/:id Buscar Livros por id
+     * @apiName Buscar por id
+     * @apiGroup Livros
+     * @apiVersion 1.0.0
+     *
+     * @apiParam {String} id Id do livro.
+     *
+     * @apiUse SAIDA_LISTA_LIVROS
+     * @apiUse ERR_GENERICOS
+     *
+     */
+
+    public function buscarId($entrada = 0)
     {
         try {
+            parse_str(substr($entrada,1), $params);
+            $lid = (array_key_exists('id', $params)) ? $params['id'] : '';
             if (is_numeric($lid)) {
                 $livroModel = new LivroModel();
                 $arrLivros = (array) $livroModel->buscarLivroPorId($lid);
@@ -238,12 +253,12 @@ class LivroController extends BaseController
     }
 
     /**
-     * @api {get} /livros/buscar-por-isbn/ Buscar Livros por ISBN
+     * @api {get} /livros/buscar-por-isbn/:isbn Buscar Livros por ISBN
      * @apiName Buscar por ISBN
      * @apiGroup Livros
      * @apiVersion 1.0.0
      *
-     * @apiBody {String} isbn ISBN do livro.
+     * @apiParam {String} isbn ISBN do livro.
      *
      * @apiUse SAIDA_LISTA_LIVROS
      * @apiUse ERR_GENERICOS
@@ -252,9 +267,10 @@ class LivroController extends BaseController
     public function buscarIsbn($dados)
     {
         try {
+            parse_str(substr($dados,1), $params);
+            $isbn = (array_key_exists('isbn', $params)) ? $params['isbn'] : '';
             $livroModel = new LivroModel();
-            $entrada = (array_key_exists('isbn', $dados)) ? $dados['isbn'] : '';
-            $arrLivros = (array) $livroModel->buscarLivroPorIsbn($entrada);
+            $arrLivros = (array)$livroModel->buscarLivroPorIsbn(strval($isbn));
             $responseData = json_encode($arrLivros);
         } catch (Exception $e) {
             $this->httpRawResponse(500, MessageHelper::fmtException($e));
@@ -263,12 +279,12 @@ class LivroController extends BaseController
     }
 
     /**
-     * @api {get} /livros/buscar-por-assunto/ Buscar Livros por Assunto
+     * @api {get} /livros/buscar-por-assunto/:nome_assunto Buscar Livros por Assunto
      * @apiName Buscar por Assunto
      * @apiGroup Livros
      * @apiVersion 1.0.0
      *
-     * @apiBody {String} nome_assunto Assunto do livro.
+     * @apiParam  {String} nome_assunto Assunto do livro.
      *
      * @apiUse SAIDA_LISTA_LIVROS
      * @apiUse ERR_GENERICOS
@@ -277,9 +293,10 @@ class LivroController extends BaseController
     public function buscarAssunto($dados)
     {
         try {
+            parse_str(substr($dados,1), $params);
+            $assunto = (array_key_exists('nome_assunto', $params)) ? $params['nome_assunto'] : '';
             $livroModel = new LivroModel();
-            $entrada = (array_key_exists('nome_assunto', $dados)) ? $dados['nome_assunto'] : '';
-            $arrLivros = (array) $livroModel->buscarLivroPorAssunto($entrada);
+            $arrLivros = (array) $livroModel->buscarLivroPorAssunto($assunto);
             $responseData = json_encode($arrLivros);
         } catch (Exception $e) {
             $this->httpRawResponse(500, MessageHelper::fmtException($e));
@@ -288,12 +305,12 @@ class LivroController extends BaseController
     }
 
     /**
-     * @api {get} /livros/buscar-por-autor/ Buscar Livros por Autor
+     * @api {get} /livros/buscar-por-autor/:nome_autor Buscar Livros por Autor
      * @apiName Buscar por Autor
      * @apiGroup Livros
      * @apiVersion 1.0.0
      *
-     * @apiBody {String} nome_autor Autor do livro.
+     * @apiParam  {String} nome_autor Autor do livro.
      *
      * @apiUse SAIDA_LISTA_LIVROS
      * @apiUse ERR_GENERICOS
@@ -302,9 +319,10 @@ class LivroController extends BaseController
     public function buscarAutor($dados)
     {
         try {
+            parse_str(substr($dados,1), $params);
+            $autor = (array_key_exists('nome_autor', $params)) ? $params['nome_autor'] : '';
             $livroModel = new LivroModel();
-            $entrada = (array_key_exists('nome_autor', $dados)) ? $dados['nome_autor'] : '';
-            $arrLivros = (array) $livroModel->buscarLivroPorAutor($entrada);
+            $arrLivros = (array) $livroModel->buscarLivroPorAutor($autor);
             $responseData = json_encode($arrLivros);
         } catch (Exception $e) {
             $this->httpRawResponse(500, MessageHelper::fmtException($e));
@@ -313,12 +331,12 @@ class LivroController extends BaseController
     }
 
     /**
-     * @api {get} /livros/buscar-por-titulo/ Buscar Livros por Titulo
+     * @api {get} /livros/buscar-por-titulo/:titulo Buscar Livros por Titulo
      * @apiName Buscar por Titulo
      * @apiGroup Livros
      * @apiVersion 1.0.0
      *
-     * @apiBody {String} titulo Titulo do livro.
+     * @apiParam  {String} titulo Titulo do livro.
      *
      * @apiUse SAIDA_LISTA_LIVROS
      * @apiUse ERR_GENERICOS
@@ -327,9 +345,10 @@ class LivroController extends BaseController
     public function buscarTitulo($dados)
     {
         try {
+            parse_str(substr($dados,1), $params);
+            $titulo = (array_key_exists('titulo', $params)) ? $params['titulo'] : '';
             $livroModel = new LivroModel();
-            $entrada = (array_key_exists('titulo', $dados)) ? $dados['titulo'] : '';
-            $arrLivros = (array) $livroModel->buscarLivroPorTitulo($entrada);
+            $arrLivros = (array) $livroModel->buscarLivroPorTitulo($titulo);
             $responseData = json_encode($arrLivros);
         } catch (Exception $e) {
             $this->httpRawResponse(500, MessageHelper::fmtException($e));
@@ -349,9 +368,11 @@ class LivroController extends BaseController
      * @apiUse ERR_GENERICOS
      * 
      */
-    public function buscarUsuario($uid = 0)
+    public function buscarUsuario($entrada = 0)
     {
         try {
+            parse_str(substr($entrada,1), $params);
+            $uid = (array_key_exists('id', $params)) ? $params['id'] : '';
             if (is_numeric($uid)) {
                 $livroModel = new LivroModel();
                 $arrLivros = (array) $livroModel->buscarLivroPorUsuario($uid);

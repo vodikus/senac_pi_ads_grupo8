@@ -119,7 +119,7 @@ class LivroModel extends BaseModel
                 ' l.isbn=:isbn ',
                 $campos
             ),
-            ['lid' => $id]
+            ['isbn' => $id]
         );
     }
 
