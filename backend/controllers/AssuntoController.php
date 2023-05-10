@@ -18,11 +18,10 @@ class AssuntoController extends BaseController
                         $this->listar();
                         break;
                     case 'buscar':
-                        $this->buscarPorId($params['level1']);
+                        $this->buscarPorId($params['params']);
                         break;
                     case 'buscar-por-nome':
-                        $dados = $this->pegarArrayJson();
-                        $this->buscarPorNome($dados);
+                        $this->buscarPorNome($params['params']);
                         break;
                     default:
                         $this->httpRawResponse(501, MessageHelper::fmtMsgConstJson('ERR_ACAO_INDISPONIVEL'));
@@ -163,9 +162,11 @@ class AssuntoController extends BaseController
      *         "detalhe": ""
      *     }
      */
-    public function buscarPorId($iid = 0)
+    public function buscarPorId($entrada = 0)
     {
         try {
+            parse_str(substr($entrada,1), $params);
+            $iid = (array_key_exists('iid', $params)) ? $params['iid'] : '';
             if (is_numeric($iid)) {
                 $assuntoModel = new AssuntoModel();
                 $arrAssunto = (array) $assuntoModel->buscarAssuntoPorId($iid);
@@ -197,8 +198,10 @@ class AssuntoController extends BaseController
     public function buscarPorNome($dados)
     {
         try {
+            parse_str(substr($dados,1), $params);
+            $assunto = (array_key_exists('assunto', $params)) ? $params['assunto'] : '';
             $assuntoModel = new AssuntoModel();
-            $arrAssunto = (array) $assuntoModel->buscarAssuntoPorNome($dados);
+            $arrAssunto = (array) $assuntoModel->buscarAssuntoPorNome($assunto);
             $responseData = json_encode($arrAssunto);
         } catch (Exception $e) {
             $this->httpRawResponse(500, MessageHelper::fmtException($e));
