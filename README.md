@@ -2,16 +2,17 @@
 
 ## **Grupo 8**
 
-- [Clube de Empréstimo de Livros](#clube-de-empr-stimo-de-livros)
-  * [Apresentação](#apresenta--o)
-  * [Instalação](#instala--o)
-    + [Pré-requisitos](#pr--requisitos)
-    + [Banco de Dados](#banco-de-dados)
-    + [Backend](#backend)
-    + [Frontend](#frontend)
-  * [Visualização](#visualiza--o)
-  * [Componentes do Grupo](#componentes-do-grupo)
-  * [Tecnologias](#tecnologias)
+- [**Clube de Empréstimo de Livros**](#clube-de-empréstimo-de-livros)
+  - [**Grupo 8**](#grupo-8)
+  - [**Apresentação**](#apresentação)
+  - [**Instalação**](#instalação)
+    - [**Pré-requisitos**](#pré-requisitos)
+    - [**Banco de Dados**](#banco-de-dados)
+    - [**Backend**](#backend)
+    - [**Frontend**](#frontend)
+  - [**Visualização e Testes**](#visualização-e-testes)
+  - [**Componentes do Grupo**](#componentes-do-grupo)
+  - [**Tecnologias**](#tecnologias)
 
 ## **Apresentação**
 
@@ -28,6 +29,11 @@ Os pré-requisitos básicos para a utilização deste sistema é possuir os segu
 - **Servidor Frontend:**
   - NodeJS v18.16 ou superior
 
+Para rodar o sistema localmente, é recomendado utilizar:
+- UwAmp
+- MySQL Workbench
+- Postman ou Insomnia para realizar os requests
+
 ### **Banco de Dados**
 Este projeto utiliza o banco MySQL e para o funcionamento deste projeto é necessário efetuar os seguintes passos:
 
@@ -35,6 +41,13 @@ Este projeto utiliza o banco MySQL e para o funcionamento deste projeto é neces
 2. Executar o script *sql/02-Carga-Inicial.sql* para efetuar a carga dos dados iniciais.
 3. Executar o script *sql/03-Carga-Exemplo.sql* para efetuar a carga de dados de exemplo.
 
+Para subir o banco, é recomendado instalar o MySQL Workbench, realizar uma conexão com o banco de dados, e sincronizar.
+
+1. Abra o MySQL Workbench e crie uma nova conexão com o endereço 127.0.0.1 e porta 3306 (endereço do BD que sobe via UwAmp). 
+2. Se você nunca tenha trocado a senha, o login padrão é usuário e senha "root".
+3. No MySQL Workbench selecione o modelo  em docs/modelo-clube-livro.mwb
+4. Database -> Synchronize Model. Com isso deve funcionar.
+5. Se tiver problemas nesse processo, acesse o phpMyAdmin e crie um DB "clube_livros", e dentro do MySQL, execute o script gerado pelo Database -> Forward Engineer manualmente (corrija eventuais erros)
 
 ### **Backend**
 
@@ -58,8 +71,6 @@ Onde *ServerName* e *ServerAlias* devem conter o nome do servidor que irá respo
 > 127.0.0.1	clube-backend clube-frontend
 
 "CAMINHO-DO-BACKEND" deve ser substituído pelo diretório do backend deste repositório. Por exemplo, "C:\projetos\senac_pi_ads_grupo8\backend"
-
-Alternativamente
 
 <br/>
 <br/>
@@ -126,6 +137,8 @@ Baixar o release no caminho XXXXX, descompactar no diretório de destino e execu
 O acesso padrão ao frontend deverá ser feito utilizando a URL http://clube-frontend/
 
 Para realizar as chamadas da API pode importar a collection *Clube do Empréstimo de Livro.postman_collection.json*
+
+Para realização de testes, execute primeiro a chamada de autenticação no endpoint "api/auth/getToken" com os dados de usuário já cadastrado (você pode cadastrar um via MySQL Workbench). Com o token em mãos, valide-o no endpoint "api/auth/authToken". Após, ele poderá ser utilizado nos demais requests, passando na aba Authorization do Postman/Insomnia como Bearer Token.
 
 <br/>
 

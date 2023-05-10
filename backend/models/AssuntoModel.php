@@ -33,12 +33,11 @@ class AssuntoModel extends BaseModel
             throw $e;
         }
     }
-    public function buscarAssuntoPorNome($dados)
+    public function buscarAssuntoPorNome($assunto)
     {
         try {
-            $nome_assunto = $dados['nome_assunto'];
             $campos = SQLHelper::montaCamposSelect($this->campos, 'a');
-            $assuntos = $this->select("SELECT $campos FROM assuntos a WHERE nome_assunto LIKE :nome_assunto", ['nome_assunto' => "%$nome_assunto%"]);
+            $assuntos = $this->select("SELECT $campos FROM assuntos a WHERE nome_assunto LIKE :nome_assunto", ['nome_assunto' => "%$assunto%"]);
             if (count($assuntos) > 0) {
                 return $assuntos;
             }
