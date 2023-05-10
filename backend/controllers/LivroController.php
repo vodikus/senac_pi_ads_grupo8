@@ -42,7 +42,7 @@ class LivroController extends BaseController
                         $this->buscarTitulo($params['params']);
                         break;
                     case 'buscar-por-usuario':
-                        $this->buscarUsuario($params['level1']);
+                        $this->buscarUsuario($params['params']);
                         break;
                     default:
                         $this->httpRawResponse(501, MessageHelper::fmtMsgConstJson('ERR_ACAO_INDISPONIVEL'));
@@ -355,9 +355,11 @@ class LivroController extends BaseController
      * @apiUse ERR_GENERICOS
      * 
      */
-    public function buscarUsuario($uid = 0)
+    public function buscarUsuario($entrada = 0)
     {
         try {
+            parse_str(substr($entrada,1), $params);
+            $uid = (array_key_exists('uid', $params)) ? $params['uid'] : '';
             if (is_numeric($uid)) {
                 $livroModel = new LivroModel();
                 $arrLivros = (array) $livroModel->buscarLivroPorUsuario($uid);
