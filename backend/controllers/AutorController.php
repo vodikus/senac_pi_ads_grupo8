@@ -127,12 +127,12 @@ class AutorController extends BaseController
     }
 
     /**
-     * @api {get} /autores/buscar-por-nome/ Buscar Autor pelo Nome
+     * @api {get} /autores/buscar-por-nome/:nome Buscar Autor pelo Nome
      * @apiName Buscar por nome
      * @apiGroup Autores
      * @apiVersion 1.0.0
      *
-     * @apiBody {String} nome_autor Nome do Autor
+     * @apiParam {String} nome Nome do Autor
      *
      * @apiUse SAIDA_LISTA_AUTORES
      * @apiUse ERR_GENERICOS
