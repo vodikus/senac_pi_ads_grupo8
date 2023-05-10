@@ -184,12 +184,12 @@ class AssuntoController extends BaseController
     }
 
     /**
-     * @api {get} /assuntos/buscar-por-nome/ Buscar Assuntos pelo Nome
+     * @api {get} /assuntos/buscar-por-nome/:assunto Buscar Assuntos pelo Nome
      * @apiName Buscar por nome
      * @apiGroup Assuntos
      * @apiVersion 1.0.0
      *
-     * @apiBody {String} nome_assunto Nome do assunto.
+     * @apiParam {String} assunto Nome do assunto.
      *
      * @apiUse SAIDA_LISTA_ASSUNTOS
      * @apiUse ERR_GENERICOS
