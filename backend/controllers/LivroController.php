@@ -30,7 +30,7 @@ class LivroController extends BaseController
                         $this->buscarId($params['params']);
                         break;
                     case 'buscar-por-isbn':
-                        $this->buscarIsbn($dados);
+                        $this->buscarIsbn($params['params']);
                         break;
                     case 'buscar-por-assunto':
                         $this->buscarAssunto($params['params']);
@@ -254,9 +254,10 @@ class LivroController extends BaseController
     public function buscarIsbn($dados)
     {
         try {
+            parse_str(substr($dados,1), $params);
+            $isbn = (array_key_exists('isbn', $params)) ? $params['isbn'] : '';
             $livroModel = new LivroModel();
-            $entrada = (array_key_exists('isbn', $dados)) ? $dados['isbn'] : '';
-            $arrLivros = (array) $livroModel->buscarLivroPorIsbn($entrada);
+            $arrLivros = (array)$livroModel->buscarLivroPorIsbn(strval($isbn));
             $responseData = json_encode($arrLivros);
         } catch (Exception $e) {
             $this->httpRawResponse(500, MessageHelper::fmtException($e));
