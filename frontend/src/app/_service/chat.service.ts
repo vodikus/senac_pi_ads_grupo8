@@ -15,5 +15,10 @@ export class ChatService {
   buscarListaAmigos(id: Number): Observable<any> {
     return this.http.get(CHAT_API + 'listar/' + id);
   }
-    
+
+  enviarMensagem(id: Number, mensagem: string): Observable<any> {    
+    let body = { 'uid_amigo': id, 'mensagem': mensagem};
+    return this.http.post(CHAT_API + 'enviar', body);
+  }
+
 }

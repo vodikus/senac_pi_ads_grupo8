@@ -9,7 +9,12 @@ import { UsuarioService } from 'src/app/_service/usuario.service';
 })
 export class BarraUsuarioComponent implements OnInit {
   @Input('uid') uid!: number;
-  usuario!: Usuario;
+  @Input('mostraChat') mostraChat: boolean = true;
+  @Input('mostraPerfil') mostraPerfil: boolean = true;
+  @Input('tamanho') tamanho: number = 0;
+
+
+  usuario: Usuario = new Usuario();
 
   constructor(private usuarioService: UsuarioService) { }
 

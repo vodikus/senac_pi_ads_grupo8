@@ -464,7 +464,7 @@
 						"method": "POST",
 						"header": [],
 						"url": {
-							"raw": "http://{{URL}}/api/usuarios/adicionarAmigo/45",
+							"raw": "http://{{URL}}/api/usuarios/adicionarAmigo/3",
 							"protocol": "http",
 							"host": [
 								"{{URL}}"
@@ -473,7 +473,7 @@
 								"api",
 								"usuarios",
 								"adicionarAmigo",
-								"45"
+								"3"
 							]
 						}
 					},
@@ -1769,7 +1769,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://{{URL}}/api/chat/listar/39",
+							"raw": "http://{{URL}}/api/chat/listar/46",
 							"protocol": "http",
 							"host": [
 								"{{URL}}"
@@ -1778,7 +1778,7 @@
 								"api",
 								"chat",
 								"listar",
-								"39"
+								"46"
 							]
 						}
 					},

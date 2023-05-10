@@ -20,6 +20,14 @@ class EmprestimoModel extends BaseModel
         'dh_atualizacao' => ['protected' => 'all', 'type' => 'timestamp', 'transform' => 'current_timestamp', 'update' => 'always', 'visible' => true]
     );
 
+    public $statusDominio = array(
+        'SOLI' => 'Solicitado',
+        'CANC' => 'Cancelado',
+        'DEVO' => 'Devolvido',
+        'EMPR' => 'Emprestado',
+        'EXTR' => 'Extraviado'
+    );
+
     private function validaUsuarioLivro($dados)
     {
         (new LivroModel())->validaLivro($dados['lid']);
@@ -116,16 +124,41 @@ class EmprestimoModel extends BaseModel
             }
             switch ($tipo) {
                 case "TOMADOS":
-                    $emprestimos = $this->select($this->montaSelectEmprestimo($campos, "uid_tomador=:uid_tomador $sql"), array_merge(['uid_tomador' => $uid],$dado));
+                    $emprestimos = $this->select($this->montaSelectEmprestimo($campos, "uid_tomador=:uid_tomador $sql"), array_merge(['uid_tomador' => $uid], $dado));
                     break;
                 case "EMPRESTADOS":
-                    $emprestimos = $this->select($this->montaSelectEmprestimo($campos, "uid_dono=:uid_dono $sql"), array_merge(['uid_dono' => $uid],$dado));
+                    $emprestimos = $this->select($this->montaSelectEmprestimo($campos, "uid_dono=:uid_dono $sql"), array_merge(['uid_dono' => $uid], $dado));
                     break;
                 default:
                     $emprestimos = [];
                     break;
             }
-            return $emprestimos;
+            $saida = [];
+            foreach ($emprestimos as $emprestimo) {
+                $emprestimo["livro"] = (new LivroModel())->buscarLivroPorId($emprestimo["lid"])[0];
+                $emprestimo["situacao"] = "";
+                switch ($emprestimo["status"]) {
+                    case 'EMPR':
+                        if (strtotime("now") > strtotime($emprestimo["devolucao_prevista"]))
+                            $emprestimo["situacao"] = "Atrasado";
+                        else
+                            $emprestimo["situacao"] = "Em dia";
+                        break;
+                    case 'SOLI':
+                        if ($emprestimo["retirada_prevista"] != null && $emprestimo["devolucao_prevista"] != null)
+                            $emprestimo["situacao"] = "Em espera";
+                        else
+                            $emprestimo["situacao"] = "Solicitado";
+                        break;
+
+                    default:
+                        $emprestimo["situacao"] = $this->statusDominio[$emprestimo["status"]];
+                        break;
+                }
+
+                $saida[] = $emprestimo;
+            }
+            return $saida;
         } catch (Exception $e) {
             throw $e;
         }

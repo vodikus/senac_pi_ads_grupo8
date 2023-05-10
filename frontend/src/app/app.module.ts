@@ -23,6 +23,7 @@ import { ChatComponent } from './pages/amigos/chat/chat.component';
 import { BarraUsuarioComponent } from './commons/barra-usuario/barra-usuario.component';
 import { BarraAcoesComponent } from './commons/barra-acoes/barra-acoes.component';
 import { BarraSocialComponent } from './commons/barra-social/barra-social.component';
+import { CaixaLivroComponent } from './commons/caixa-livro/caixa-livro.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,8 @@ import { BarraSocialComponent } from './commons/barra-social/barra-social.compon
     ChatComponent,
     BarraUsuarioComponent,
     BarraAcoesComponent,
-    BarraSocialComponent
+    BarraSocialComponent,
+    CaixaLivroComponent
   ],
   imports: [
     BrowserModule,

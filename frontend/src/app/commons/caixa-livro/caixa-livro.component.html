@@ -1,0 +1,76 @@
+<div class="livroBox">
+    <!-- Caixa com a capa, titulo, autor e descrição -->
+    <div class="caixaFlex">
+        <div>
+            <img src="http://clube-backend/imagens/livros/neuromancer.png" class="livroCapa">
+            <span *ngIf="emprestimo?.situacao == 'Atrasado'; else tarjaSituacao">
+                <div class="bg-danger text-center texto-10 text-white">{{ emprestimo.situacao | uppercase }}</div>
+            </span>
+            <ng-template #tarjaSituacao>                
+                <div [ngClass]="{ 'bg-primary': emprestimo.status == 'DEVO', 'bg-success': emprestimo.status == 'EMPR', 'bg-warning': emprestimo.status == 'SOLI', 'bg-dark': emprestimo.status == 'CANC'}" 
+                class="text-center texto-10 text-white">{{ dominioStatus[emprestimo.status] | uppercase }}</div>
+            </ng-template>
+        </div>
+        <div class="blocoDadosLivro">
+            <div class="livroTitulo">{{ livro.titulo }}</div>
+            <div class="livroAutor">{{ livro.autores }}</div>
+            <div class="livroDescricao" *ngIf="mostrarLivroDescricao">{{ livro.descricao }}</div>
+            <div class="vcenter emprestador caixaFlex" *ngIf="mostrarEmprestador">
+                <div class="texto-pequeno1">Emprestador</div>
+                <div class="grow2 text-end"><app-barra-usuario [uid]=uid *ngIf="mostrarEmprestador" [mostraChat]="false"
+                        [mostraPerfil]="false" [tamanho]="1"></app-barra-usuario></div>
+            </div>
+            <div class="texto-pequeno1" *ngIf="mostrarDadosEmprestimo">
+                <div class=""
+                    *ngIf="emprestimo.status == 'SOLI' || emprestimo.status == 'CANC'; else otherStatus">
+                    <div class="caixaFlex">
+                        <div class="grow2">Previsão Retirada</div>
+                        <div class="text-end">{{ (emprestimo.retirada_prevista | date: 'dd/MM/yyyy') ?? '-' }}
+                        </div>
+                    </div>
+                    <div class="caixaFlex">
+                        <div class="grow0">Previsão Devolução</div>
+                        <div class="grow2 text-end">{{ (emprestimo.devolucao_prevista | date: 'dd/MM/yyyy') ?? '-' }}
+                        </div>
+                    </div>
+                </div>
+                <ng-template #otherStatus>
+                    <div class="">
+                        <div class="caixaFlex">
+                            <div class="grow0">Retirada</div>
+                            <div class="grow2 text-end">{{ (emprestimo.retirada_efetiva | date: 'dd/MM/yyyy') ?? '-' }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="">
+                        <div class="caixaFlex">
+                            <div class="grow0">Devolução</div>
+                            <div class="grow2 text-end">{{ (emprestimo.devolucao_efetiva | date: 'dd/MM/yyyy') ?? '-' }}
+                            </div>
+                        </div>
+                    </div>
+                </ng-template>
+                <div class="caixaFlex">
+                    <div class="grow2">Status</div>
+                    <div class="text-end">{{ emprestimo.situacao }}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Avaliação -->
+    <div class="caixaFlex" *ngIf="mostrarBarraAvaliacao">
+        <div class="vcenter caixaFlex grow2">Avaliação</div>
+        <div class="grow0 text-end"><bar-rating [(rate)]=livro.avaliacao [max]="5" [readOnly]="true"
+                [theme]="'default'"></bar-rating></div>
+    </div>
+
+    <!-- Usuário -->
+    <app-barra-usuario [uid]=uid *ngIf="mostrarBarraUsuario"></app-barra-usuario>
+    <!-- separador -->
+    <hr />
+    <!-- Barra de icones sociais -->
+    <app-barra-social *ngIf="mostrarBarraSocial" [usuarioId]=uid [livroId]=livro.lid></app-barra-social>
+    <!-- Barra de icones ações-->
+    <app-barra-acoes *ngIf="mostrarBarraAcao" [mostrarSolicitar]="mostrarBarraAcao_Solicitar"></app-barra-acoes>
+
+</div>
