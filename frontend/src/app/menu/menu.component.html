@@ -29,9 +29,13 @@
             <img src="assets/Favoritos.png" />
             <div>Favoritos</div>
         </div>
-        <div class="menu-btn-60" [routerLink]="['/suporte']" [routerLinkActive]="['menu-selected']">
+        <div class="menu-btn-60 ms-1" [routerLink]="['/suporte']" [routerLinkActive]="['menu-selected']">
             <img src="assets/Suporte.png" />
             <div>Suporte</div>
+        </div>
+        <div class="menu-btn-40 ms-2" [routerLink]="['/denuncia']" *ngIf="autenticado" [routerLinkActive]="['menu-selected']">
+            <img src="assets/denuncia.png" style="width: 26px; height: 26px;"  />
+            <div>Denúncia</div>
         </div>
     </div>
 </div>

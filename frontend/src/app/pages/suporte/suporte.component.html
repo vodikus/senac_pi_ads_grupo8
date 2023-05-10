@@ -1,1 +1,39 @@
-<p>suporte works!</p>
+<!------------------------------------------------------------------------------------ Parte do t�tulo ------------------------------------------------------------------------->
+<div class="cabecalho mt-3 d-flex flex-column justify-content-flex-start">
+    <h2 class="titulo mb-0">Suporte</h2>
+</div>
+<!-------------------------------------------------------------------------------- Parte pergunta e labels --------------------------------------------------------------------->
+<form action="" method="post">
+    <div class="divLbRadio form-check mt-3 p-0">
+        <label class="lbSituacao" for="nmEstaImpedindo">A situação está te impedindo de utilizar a ferramenta?</label>
+        <div class="divLabels d-flex justify-content-evenly mt-2">
+<!-------------------------------------------------------------------------------------- Label Sim ---------------------------------------------------------------------------->
+            <label class="formRdEstaImp form-check-label d-inline-flex align-items-center justify-content-center align-contents-end" for="idEstaImpedindo">
+                <input class="form-check-input" type="radio" value="" id="idEstaImpedindo" name="nmEstaImpedindo">                                    
+                <span class="mt-2"></span>
+                <label class="labelRadio ms-2 mt-2" for="idEstaImpedindo" onclick="document.getElementById('idEstaImpedindo').click()">Sim</label>
+            </label>
+<!-------------------------------------------------------------------------------------- Label N�o ---------------------------------------------------------------------------->
+            <label class="formRdEstaImp form-check-label d-inline-flex align-items-center justify-content-center align-contents-end" for="idNaoEstaImped">
+                <input class="form-check-input" type="radio" value="" id="idNaoEstaImped" name="nmEstaImpedindo">                                    
+                <span class="mt-2"></span>
+                <label class="labelRadio ms-2 mt-2" for="idNaoEstaImped" onclick="document.getElementById('idNaoEstaImped').click()">Não</label>
+            </label>
+        </div>
+    </div>
+<!-------------------------------------------------------------------------------- Caixa de texto assunto ---------------------------------------------------------------------->
+    <div class="divCaixasTexto mt-2">
+        <div class="divCxAssunto mb-3">
+            <label for="nmAssunto" class="form-label">Assunto</label>
+            <input type="text" class="caixaDeTexto form-control" id="idAssunto" name="nmAssunto" placeholder="Qual o t�tulo da sua d�vida">
+        </div>
+<!------------------------------------------------------------------------------- Caixa de texto mensagem ---------------------------------------------------------------------->
+        <div class="divCxMensagem mb-3">
+            <label for="nmMensagem" class="form-label">Mensagem</label>
+            <textarea class="caixaDeTexto form-control" id="idMensagem" name="nmMensagem" rows="3" placeholder="Descreva sua d�vida"></textarea>
+        </div>
+    </div>
+<!------------------------------------------------------------------------------------ div botao enviar ------------------------------------------------------------------------>
+    <button class="botaoEnviar text-white" type="submit">Enviar <img class="imgEnviar" src="../../../assets/enviar.png" alt="Flecha de envio"></button>
+</form>
+<!---------------------------------------------------------------------------------------- Fim c�digo -------------------------------------------------------------------------->
