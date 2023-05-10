@@ -39,7 +39,7 @@ class LivroController extends BaseController
                         $this->buscarAutor($params['params']);
                         break;
                     case 'buscar-por-titulo':
-                        $this->buscarTitulo($dados);
+                        $this->buscarTitulo($params['params']);
                         break;
                     case 'buscar-por-usuario':
                         $this->buscarUsuario($params['level1']);
@@ -332,9 +332,10 @@ class LivroController extends BaseController
     public function buscarTitulo($dados)
     {
         try {
+            parse_str(substr($dados,1), $params);
+            $titulo = (array_key_exists('titulo', $params)) ? $params['titulo'] : '';
             $livroModel = new LivroModel();
-            $entrada = (array_key_exists('titulo', $dados)) ? $dados['titulo'] : '';
-            $arrLivros = (array) $livroModel->buscarLivroPorTitulo($entrada);
+            $arrLivros = (array) $livroModel->buscarLivroPorTitulo($titulo);
             $responseData = json_encode($arrLivros);
         } catch (Exception $e) {
             $this->httpRawResponse(500, MessageHelper::fmtException($e));
