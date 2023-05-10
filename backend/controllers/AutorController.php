@@ -127,12 +127,12 @@ class AutorController extends BaseController
     }
 
     /**
-     * @api {get} /autores/buscar-por-nome/:nome Buscar Autor pelo Nome
+     * @api {get} /autores/buscar-por-nome/:nome_autor Buscar Autor pelo Nome
      * @apiName Buscar por nome
      * @apiGroup Autores
      * @apiVersion 1.0.0
      *
-     * @apiParam {String} nome Nome do Autor
+     * @apiParam {String} nome_autor Nome do Autor
      *
      * @apiUse SAIDA_LISTA_AUTORES
      * @apiUse ERR_GENERICOS
@@ -142,7 +142,7 @@ class AutorController extends BaseController
     {
         try {
             parse_str(substr($entrada,1), $params);
-            $nome = (array_key_exists('nome', $params)) ? $params['nome'] : '';
+            $nome = (array_key_exists('nome_autor', $params)) ? $params['nome_autor'] : '';
             $autorModel = new AutorModel();
             $arrAutores = (array) $autorModel->buscarAutorPorNome($nome);
             $responseData = json_encode($arrAutores);
