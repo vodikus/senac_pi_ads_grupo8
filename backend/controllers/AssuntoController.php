@@ -189,7 +189,7 @@ class AssuntoController extends BaseController
      * @apiGroup Assuntos
      * @apiVersion 1.0.0
      *
-     * @apiParam {String} assunto Nome do assunto.
+     * @apiParam {String} nome_assunto Nome do assunto.
      *
      * @apiUse SAIDA_LISTA_ASSUNTOS
      * @apiUse ERR_GENERICOS
@@ -199,7 +199,7 @@ class AssuntoController extends BaseController
     {
         try {
             parse_str(substr($dados,1), $params);
-            $assunto = (array_key_exists('assunto', $params)) ? $params['assunto'] : '';
+            $assunto = (array_key_exists('nome_assunto', $params)) ? $params['nome_assunto'] : '';
             $assuntoModel = new AssuntoModel();
             $arrAssunto = (array) $assuntoModel->buscarAssuntoPorNome($assunto);
             $responseData = json_encode($arrAssunto);
