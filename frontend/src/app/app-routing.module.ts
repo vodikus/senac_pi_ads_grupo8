@@ -12,6 +12,7 @@ import { EmprestimosComponent } from './pages/emprestimos/emprestimos.component'
 import { FavoritosComponent } from './pages/favoritos/favoritos.component';
 import { PesquisaComponent } from './pages/pesquisa/pesquisa.component';
 import { SuporteComponent } from './pages/suporte/suporte.component';
+import { DenunciaComponent } from './pages/denuncia/denuncia.component'; 
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -26,7 +27,8 @@ const routes: Routes = [
   { path: 'emprestimos', component: EmprestimosComponent}, /*canActivate: [AuthGuard] },*/
   { path: 'favoritos', component: FavoritosComponent}, /*canActivate: [AuthGuard] },*/
   { path: 'pesquisa', component: PesquisaComponent },
-  { path: 'suporte', component: SuporteComponent} /*canActivate: [AuthGuard] },*/
+  { path: 'suporte', component: SuporteComponent}, /*canActivate: [AuthGuard] },*/
+  { path: 'denuncia', component: DenunciaComponent} /*canActivate: [AuthGuard] },*/
   
   ];
 
