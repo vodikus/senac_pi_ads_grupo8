@@ -166,7 +166,7 @@ class AssuntoController extends BaseController
     {
         try {
             parse_str(substr($entrada,1), $params);
-            $iid = (array_key_exists('iid', $params)) ? $params['iid'] : '';
+            $iid = (array_key_exists('id', $params)) ? $params['id'] : '';
             if (is_numeric($iid)) {
                 $assuntoModel = new AssuntoModel();
                 $arrAssunto = (array) $assuntoModel->buscarAssuntoPorId($iid);
