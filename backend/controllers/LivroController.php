@@ -44,6 +44,13 @@ class LivroController extends BaseController
                     case 'buscar-por-usuario':
                         $this->buscarUsuario($params['params']);
                         break;
+                    case 'favoritos':
+                        if ($this->isAuth()) {
+                            $this->listarFavoritos($this->getFieldFromToken('uid'),$params['params']);
+                        } else {
+                            $this->httpRawResponse(401, MessageHelper::fmtMsgConstJson('ERR_NAO_AUTORIZADO'));
+                        }
+                        break;
                     default:
                         $this->httpRawResponse(501, MessageHelper::fmtMsgConstJson('ERR_ACAO_INDISPONIVEL'));
                         break;
@@ -210,7 +217,7 @@ class LivroController extends BaseController
     public function listar($entrada)
     {
         try {
-            parse_str(substr($entrada,1), $params);            
+            parse_str(substr($entrada, 1), $params);
             $ordem = (array_key_exists('ordem', $params)) ? $params['ordem'] : '';
             $livroModel = new LivroModel();
             $arrLivros = (array) $livroModel->listarLivros($ordem);
@@ -237,7 +244,7 @@ class LivroController extends BaseController
     public function buscarId($entrada = 0)
     {
         try {
-            parse_str(substr($entrada,1), $params);
+            parse_str(substr($entrada, 1), $params);
             $lid = (array_key_exists('id', $params)) ? $params['id'] : '';
             if (is_numeric($lid)) {
                 $livroModel = new LivroModel();
@@ -267,10 +274,10 @@ class LivroController extends BaseController
     public function buscarIsbn($dados)
     {
         try {
-            parse_str(substr($dados,1), $params);
+            parse_str(substr($dados, 1), $params);
             $isbn = (array_key_exists('isbn', $params)) ? $params['isbn'] : '';
             $livroModel = new LivroModel();
-            $arrLivros = (array)$livroModel->buscarLivroPorIsbn(strval($isbn));
+            $arrLivros = (array) $livroModel->buscarLivroPorIsbn(strval($isbn));
             $responseData = json_encode($arrLivros);
         } catch (Exception $e) {
             $this->httpRawResponse(500, MessageHelper::fmtException($e));
@@ -293,7 +300,7 @@ class LivroController extends BaseController
     public function buscarAssunto($dados)
     {
         try {
-            parse_str(substr($dados,1), $params);
+            parse_str(substr($dados, 1), $params);
             $assunto = (array_key_exists('nome_assunto', $params)) ? $params['nome_assunto'] : '';
             $livroModel = new LivroModel();
             $arrLivros = (array) $livroModel->buscarLivroPorAssunto($assunto);
@@ -319,7 +326,7 @@ class LivroController extends BaseController
     public function buscarAutor($dados)
     {
         try {
-            parse_str(substr($dados,1), $params);
+            parse_str(substr($dados, 1), $params);
             $autor = (array_key_exists('nome_autor', $params)) ? $params['nome_autor'] : '';
             $livroModel = new LivroModel();
             $arrLivros = (array) $livroModel->buscarLivroPorAutor($autor);
@@ -345,7 +352,7 @@ class LivroController extends BaseController
     public function buscarTitulo($dados)
     {
         try {
-            parse_str(substr($dados,1), $params);
+            parse_str(substr($dados, 1), $params);
             $titulo = (array_key_exists('titulo', $params)) ? $params['titulo'] : '';
             $livroModel = new LivroModel();
             $arrLivros = (array) $livroModel->buscarLivroPorTitulo($titulo);
@@ -371,7 +378,7 @@ class LivroController extends BaseController
     public function buscarUsuario($entrada = 0)
     {
         try {
-            parse_str(substr($entrada,1), $params);
+            parse_str(substr($entrada, 1), $params);
             $uid = (array_key_exists('id', $params)) ? $params['id'] : '';
             if (is_numeric($uid)) {
                 $livroModel = new LivroModel();
@@ -810,7 +817,7 @@ class LivroController extends BaseController
     public function listarLivrosDisponiveis($entrada)
     {
         try {
-            parse_str(substr($entrada,1), $params);            
+            parse_str(substr($entrada, 1), $params);
             $ordem = (array_key_exists('ordem', $params)) ? $params['ordem'] : '';
             $livroModel = new LivroModel();
             $arrLivros = (array) $livroModel->buscarLivrosDisponiveis($ordem);
@@ -819,5 +826,29 @@ class LivroController extends BaseController
             $this->httpRawResponse(500, MessageHelper::fmtException($e));
         }
         $this->montarSaidaOk($responseData);
-    }    
+    }
+
+    /**
+     * @api {get} /livros/favoritos/ Listar Favoritos
+     * @apiName Listar Favoritos
+     * @apiGroup Livros
+     * @apiVersion 1.0.0
+     *
+     * @apiUse SAIDA_LISTA_LIVROS
+     * @apiUse ERR_GENERICOS
+     * 
+     */
+    public function listarFavoritos($uid, $entrada)
+    {
+        try {
+            parse_str(substr($entrada, 1), $params);
+            $ordem = (array_key_exists('ordem', $params)) ? $params['ordem'] : '';
+            $favoritoModel = new FavoritosModel();
+            $arrLivros = (array) $favoritoModel->listarFavoritos($uid, $ordem);
+            $responseData = json_encode($arrLivros);
+        } catch (Exception $e) {
+            $this->httpRawResponse(500, MessageHelper::fmtException($e));
+        }
+        $this->montarSaidaOk($responseData);
+    }
 }

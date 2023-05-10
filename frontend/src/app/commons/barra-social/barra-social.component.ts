@@ -21,9 +21,7 @@ export class BarraSocialComponent implements OnInit {
   }
 
   alternarFavorito(): void {
-    console.log('af1: '+this.estadoFavorito);
     let retorno = this.chamarServico(!this.estadoFavorito);
-    console.log('af2: '+retorno);
     if ( retorno ) {
       this.favorito = "assets/FavoritosRed.png"
     } else {
@@ -33,39 +31,33 @@ export class BarraSocialComponent implements OnInit {
   }
 
   chamarServico(estado: boolean): boolean {
-    console.log('cs1: '+estado);
+    let retorno = estado;
     if (estado) {
-      console.log('cs2: '+!estado);
       this.livroService.adicionarFavorito(this.livroId, this.usuarioId).subscribe({
         next: data => {
           this.mensagem = <MensagemPadrao>data;
           if (this.mensagem.codigo == 1204) {
-            return true;
+            retorno = true;
           }
-          return false;
         },
         error: err => {
           console.log(err);
-          return false;
         }
       });
     } else {
-      console.log('cs3: '+estado);
       this.livroService.removerFavorito(this.livroId, this.usuarioId).subscribe({
         next: data => {
           this.mensagem = <MensagemPadrao>data;
           if (this.mensagem.codigo == 1205) {
-            return false;
+            retorno = false;
           }
-          return true;
         },
         error: err => {
           console.log(err);
-          return true;
         }
       });
     }
-    return true;
+    return retorno;
   }
 
 }
