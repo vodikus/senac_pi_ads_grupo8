@@ -211,6 +211,7 @@ select {
 }
 
 .botaoEnviar,
+.botaoContinuar,
 .botaoAnterior,
 .botaoProximo,
 .botaoFinalizar {
@@ -408,4 +409,18 @@ select {
     height: 24px;
     width: 24px;
     margin-left: 5px;
+}
+
+.linhaTextoRedes{
+    width: 14%;
+}
+
+.textoRedes{
+    font-size: 14px;
+    color: #4B5768;
+}
+
+.mensagemCadastro, .linkCadastro{
+    font-size: 14px;
+    text-decoration: none;
 }
