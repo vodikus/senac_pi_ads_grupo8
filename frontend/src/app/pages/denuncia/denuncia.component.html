@@ -1,0 +1,95 @@
+<!------------------------------------------------------------------------------------ Parte do título ------------------------------------------------------------------------->
+<div class="cabecalho mt-3 d-flex flex-column justify-content-flex-start">
+    <h2 class="titulo mb-0">Denúncia</h2>
+</div>
+<!-------------------------------------------------------------------------------- Parte pergunta e labels --------------------------------------------------------------------->
+<form action="" method="post">
+    <div class="divLbRadio form-check mt-3 p-0">
+        <label class="texto-14" for="nmSituacao">Qual a situação que você encontrou?</label>
+        <div class="divLabels d-flex flex-column align-items-start ms-5 mt-2 texto-13">
+            <!-------------------------------------------------------------------------------------- Label Spam ---------------------------------------------------------------------------->
+            <label
+                class="formRdSituacao form-check-label d-inline-flex align-items-center justify-content-center align-contents-end"
+                for="idSpam">
+                <input class="form-check-input" type="radio" value="" id="idSpam" name="nmSituacao">
+                <span class="mt-2"></span>
+                <label class="labelRadio ms-2 mt-2" for="idSpam"
+                    onclick="document.getElementById('idSpam').click()">Spam</label>
+            </label>
+            <!--------------------------------------------------------------------------------- Label Não devolucao ------------------------------------------------------------------------>
+            <label
+                class="formRdSituacao form-check-label d-inline-flex align-items-center justify-content-center align-contents-end"
+                for="idNaoDev">
+                <input class="form-check-input" type="radio" value="" id="idNaoDev" name="nmSituacao">
+                <span class="mt-2"></span>
+                <label class="labelRadio ms-2 mt-2" for="idNaoDev"
+                    onclick="document.getElementById('idNaoDev').click()">Não devolução</label>
+            </label>
+            <!-------------------------------------------------------------------------------- Label Livro danificado ---------------------------------------------------------------------->
+            <label
+                class="formRdSituacao form-check-label d-inline-flex align-items-center justify-content-center align-contents-end"
+                for="idLvDanif">
+                <input class="form-check-input" type="radio" value="" id="idLvDanif" name="nmSituacao">
+                <span class="mt-2"></span>
+                <label class="labelRadio ms-2 mt-2" for="idLvDanif"
+                    onclick="document.getElementById('idLvDanif').click()">Livro danificado</label>
+            </label>
+            <!-------------------------------------------------------------------------------------- Label Nudez --------------------------------------------------------------------------->
+            <label
+                class="formRdSituacao form-check-label d-inline-flex align-items-center justify-content-center align-contents-end"
+                for="idNudez">
+                <input class="form-check-input" type="radio" value="" id="idNudez" name="nmSituacao">
+                <span class="mt-2"></span>
+                <label class="labelRadio ms-2 mt-2" for="idNudez"
+                    onclick="document.getElementById('idNudez').click()">Nudez</label>
+            </label>
+            <!--------------------------------------------------------------------------------- Label Conteúdo Ilegal ---------------------------------------------------------------------->
+            <label
+                class="formRdSituacao form-check-label d-inline-flex align-items-center justify-content-center align-contents-end"
+                for="idCntIlegal">
+                <input class="form-check-input" type="radio" value="" id="idCntIlegal" name="nmSituacao">
+                <span class="mt-2"></span>
+                <label class="labelRadio ms-2 mt-2" for="idCntIlegal"
+                    onclick="document.getElementById('idCntIlegal').click()">Conteúdo ilegal</label>
+            </label>
+            <!------------------------------------------------------------------------------------ Label Violência ------------------------------------------------------------------------->
+            <label
+                class="formRdSituacao form-check-label d-inline-flex align-items-center justify-content-center align-contents-end"
+                for="idViolencia">
+                <input class="form-check-input" type="radio" value="" id="idViolencia" name="nmSituacao">
+                <span class="mt-2"></span>
+                <label class="labelRadio ms-2 mt-2" for="idViolencia"
+                    onclick="document.getElementById('idViolencia').click()">Violência</label>
+            </label>
+            <!--------------------------------------------------------------------------------- Label Informação falsa --------------------------------------------------------------------->
+            <label
+                class="formRdSituacao form-check-label d-inline-flex align-items-center justify-content-center align-contents-end"
+                for="idInfoFalsa">
+                <input class="form-check-input" type="radio" value="" id="idInfoFalsa" name="nmSituacao">
+                <span class="mt-2"></span>
+                <label class="labelRadio ms-2 mt-2" for="idInfoFalsa"
+                    onclick="document.getElementById('idInfoFalsa').click()">Informação falsa</label>
+            </label>
+        </div>
+    </div>
+    <!-------------------------------------------------------------- Div usuário, caixa de pesquisa e botoes de perfil usuário e chat ---------------------------------------------->
+    <div class="divPesquisaUsuario d-flex mt-3 flex-column mb-3 texto-13">
+        <div class="divLbPsqUsuario">
+            <label for="nmPesquisaUsuario" class="form-label">Usuário</label>
+        </div>
+        <div class="divCxPsq d-flex justify-content-between align-items-start">
+            <!-- Usuário -->
+            <app-barra-usuario [uid]=uid></app-barra-usuario>
+        </div>
+    </div>
+    <!--------------------------------------------------------------------------------- div caixa de descrição --------------------------------------------------------------------->
+    <div class="divDescricao mb-3 texto-13">
+        <label for="nmDescricao" class="form-label">Descrição</label>
+        <textarea class="caixaDeTexto form-control" id="idDescricao" name="nmDescricao" rows="3"
+            placeholder="Descreva sua denúncia"></textarea>
+    </div>
+    <!------------------------------------------------------------------------------------ div botao enviar ------------------------------------------------------------------------>
+    <button class="botaoEnviar text-white" type="submit">Enviar <img class="imgEnviar" src="assets/enviar.png"
+            alt="Flecha de envio"></button>
+</form>
+<!---------------------------------------------------------------------------------------- Fim código -------------------------------------------------------------------------->

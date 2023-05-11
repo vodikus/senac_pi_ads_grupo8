@@ -46,6 +46,16 @@
     height: 24px;
 }
 
+.img-medium0 {
+    width: 56px;
+    height: 56px;
+}
+
+.img-medium5 {
+    width: 100px;
+    height: 100px;
+}
+
 .clickable {
     cursor: pointer;
 }
@@ -84,6 +94,14 @@
 
 .texto-13 {
     font-size: 13px;
+}
+
+.texto-14 {
+    font-size: 14px;
+}
+
+.texto-15 {
+    font-size: 15px;
 }
 
 .grow0 {
@@ -141,7 +159,7 @@
 
 
 .titulo {
-    font-size: 22px;
+    font-size: 20px;
 }
 
 .subtitulo {
@@ -192,6 +210,8 @@ select {
     border: none;
 }
 
+.botaoEnviar,
+.botaoContinuar,
 .botaoAnterior,
 .botaoProximo,
 .botaoFinalizar {
@@ -352,7 +372,7 @@ select {
 }
 
 .caixaPesquisaForm::placeholder {
-    background-image: url(../../../../assets/lupaPesquisa.png);
+    background-image: url(assets/lupaPesquisa.png);
     background-repeat: no-repeat;
     background-size: 7%;
     background-position-y: center;
@@ -374,4 +394,33 @@ select {
 
 .favClicado {
     filter: invert(18%) sepia(85%) saturate(2768%) hue-rotate(343deg) brightness(79%) contrast(87%);
+}
+
+.botaoFiltro {
+    font-family: 'Inter', sans-serif;
+    background-color: #047857;
+    color: white;
+    border-radius: 5px;
+    border: none;
+    margin: 0 3px 0 3px;
+}
+
+.imgEnviar{
+    height: 24px;
+    width: 24px;
+    margin-left: 5px;
+}
+
+.linhaTextoRedes{
+    width: 14%;
+}
+
+.textoRedes{
+    font-size: 14px;
+    color: #4B5768;
+}
+
+.mensagemCadastro, .linkCadastro{
+    font-size: 14px;
+    text-decoration: none;
 }

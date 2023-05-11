@@ -3,46 +3,38 @@ import { NgModule } from '@angular/core';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { BarRatingModule } from "ngx-bar-rating";
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { LoginComponent } from './login/login.component';
+import { AmigosModule } from './pages/amigos/amigos.module';
 import { CadastroModule } from './pages/cadastro/cadastro.module';
-import { MeuPerfilComponent } from './meu-perfil/meu-perfil.component';
+import { EmprestimosModule } from './pages/emprestimos/emprestimos.module';
+import { PadraoModule } from './_shared/commons/padrao.module';
+import { UsuariosModule } from './pages/usuarios/usuarios.module';
+
 import { AuthInterceptor } from './_interceptor/auth.interceptor';
+
+import { LoginComponent } from './pages/login/login.component';
 import { MenuComponent } from './menu/menu.component';
-import { AmigosComponent } from './pages/amigos/amigos.component';
 import { HomeComponent } from './pages/home/home.component';
-import { EmprestimosComponent } from './pages/emprestimos/emprestimos.component';
 import { EmprestadosComponent } from './pages/emprestados/emprestados.component';
 import { PesquisaComponent } from './pages/pesquisa/pesquisa.component';
 import { FavoritosComponent } from './pages/favoritos/favoritos.component';
 import { SuporteComponent } from './pages/suporte/suporte.component';
-import { ChatComponent } from './pages/amigos/chat/chat.component';
-import { BarraUsuarioComponent } from './commons/barra-usuario/barra-usuario.component';
-import { BarraAcoesComponent } from './commons/barra-acoes/barra-acoes.component';
-import { BarraSocialComponent } from './commons/barra-social/barra-social.component';
-import { CaixaLivroComponent } from './commons/caixa-livro/caixa-livro.component';
+import { DenunciaComponent } from './pages/denuncia/denuncia.component';
+
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    MeuPerfilComponent,
     MenuComponent,
-    AmigosComponent,
     HomeComponent,
-    EmprestimosComponent,
     EmprestadosComponent,
     PesquisaComponent,
     FavoritosComponent,
     SuporteComponent,
-    ChatComponent,
-    BarraUsuarioComponent,
-    BarraAcoesComponent,
-    BarraSocialComponent,
-    CaixaLivroComponent
+    DenunciaComponent,
   ],
   imports: [
     BrowserModule,
@@ -50,7 +42,10 @@ import { CaixaLivroComponent } from './commons/caixa-livro/caixa-livro.component
     CadastroModule,
     FormsModule,
     HttpClientModule,
-    BarRatingModule
+    EmprestimosModule,
+    PadraoModule,
+    AmigosModule,
+    UsuariosModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }

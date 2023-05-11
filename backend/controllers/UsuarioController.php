@@ -34,7 +34,7 @@ class UsuarioController extends BaseController
                         break;
                     case 'meu-perfil':
                         if ($this->isAuth()) {
-                            $this->buscar($this->getFieldFromToken('uid'));
+                            $this->buscar($this->getFieldFromToken('uid'), true);
                         } else {
                             $this->httpRawResponse(401, MessageHelper::fmtMsgConstJson('ERR_NAO_AUTORIZADO'));
                         }

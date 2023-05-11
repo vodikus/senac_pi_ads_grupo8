@@ -15,6 +15,10 @@ export class LivroService {
   buscarUltimasAtualizacoes(): Observable<any> {
     return this.http.get(LIVRO_API + 'listar-disponiveis?ordem=dh_atualizacao,desc');
   }
+
+  listarFavoritos(): Observable<any> {
+    return this.http.get(LIVRO_API + 'favoritos');
+  }
   
   adicionarFavorito(lid: number, uid_dono: number) {
     let body = {'lid': lid, 'uid_dono': uid_dono };

@@ -9,4 +9,5 @@ export class Livro {
     dh_atualizacao: Date = new Date();
     autores: string = "";
     assuntos: string = "";
+    uid: number = 0;
 }

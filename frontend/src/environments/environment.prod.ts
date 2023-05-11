@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  apiUrl: "http://clube-livro.us-east-1.elasticbeanstalk.com/api"
+  apiUrl: "http://3.84.195.238:8080/api"
 };

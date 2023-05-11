@@ -1,0 +1,19 @@
+<div class="caixaFlex mt-1">
+    <div class="grow1 text-center" *ngIf="mostrarDetalhes">
+        <span [routerLink]="['/emprestimos/detalhe/',emprestimoId]" *ngIf="emprestimoId > 0; else detalheLivro">
+            <div><img src="assets/Pesquisa.png" class="img-tiny1" /></div>
+            <div class="texto-pequeno3">Detalhes</div>
+        </span>
+        <ng-template #detalheLivro>
+            <span>
+                <div><img src="assets/Pesquisa.png" class="img-tiny1" /></div>
+                <div class="texto-pequeno3">Detalhes</div>
+            </span>
+        </ng-template>
+    </div>
+    <div class="grow1 text-center" *ngIf="mostrarSolicitar"
+        [routerLink]="['/emprestimos/solicitar/',usuarioId,livroId]">
+        <div><img src="assets/solicitar.png" class="img-tiny1" /></div>
+        <div class="texto-pequeno3">Solicitar</div>
+    </div>
+</div>

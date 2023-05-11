@@ -19,7 +19,7 @@ class AutorController extends BaseController
                         $this->listar();
                         break;
                     case 'buscar-por-nome':
-                        $this->buscarPorNome($dados);
+                        $this->buscarPorNome($params['params']);
                         break;
                     default:
                         $this->httpRawResponse(501, MessageHelper::fmtMsgConstJson('ERR_ACAO_INDISPONIVEL'));
@@ -127,22 +127,24 @@ class AutorController extends BaseController
     }
 
     /**
-     * @api {get} /autores/buscar-por-nome/ Buscar Autor pelo Nome
+     * @api {get} /autores/buscar-por-nome/:nome_autor Buscar Autor pelo Nome
      * @apiName Buscar por nome
      * @apiGroup Autores
      * @apiVersion 1.0.0
      *
-     * @apiBody {String} nome_autor Nome do Autor
+     * @apiParam {String} nome_autor Nome do Autor
      *
      * @apiUse SAIDA_LISTA_AUTORES
      * @apiUse ERR_GENERICOS
      * 
      */
-    public function buscarPorNome($dados)
+    public function buscarPorNome($entrada)
     {
         try {
+            parse_str(substr($entrada,1), $params);
+            $nome = (array_key_exists('nome_autor', $params)) ? $params['nome_autor'] : '';
             $autorModel = new AutorModel();
-            $arrAutores = (array) $autorModel->buscarAutorPorNome($dados);
+            $arrAutores = (array) $autorModel->buscarAutorPorNome($nome);
             $responseData = json_encode($arrAutores);
         } catch (Exception $e) {
             $this->httpRawResponse(500, MessageHelper::fmtException($e));

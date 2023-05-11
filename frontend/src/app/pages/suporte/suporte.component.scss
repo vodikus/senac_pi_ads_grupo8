@@ -1,0 +1,15 @@
+// caixa suporte
+.form-check-label span{
+    border-radius: 100%;
+    width: 16px;
+    height: 16px;
+    display: block;
+    background-color: #fff;
+    border: 2px solid #047857;
+    margin: 0;
+}
+
+.form-check-label input:checked + span{
+    background-color: #047857;
+    background-size: 50%;
+}

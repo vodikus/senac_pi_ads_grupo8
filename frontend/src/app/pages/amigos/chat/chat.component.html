@@ -1,4 +1,4 @@
-<p>Chat</p>
+<p>Chat - {{ usuario.nome }} </p>
 
 <!-- Caso tenha mensagens a serem exibidas -->
 <div *ngIf="mensagens?.length > 0">
@@ -8,7 +8,7 @@
             <div class="col-12">
                 <div class="caixaFlex row-nowrap">
                     <div class="texto-pequeno3 item grow2">Você</div>
-                    <div class="texto-pequeno3 item grow1 text-end">{{ mensagem.dh_criacao }}</div>
+                    <div class="texto-pequeno3 item grow1 text-end">{{ mensagem.dh_criacao | date: 'dd/MM/yyyy HH:mm:ss' }}</div>
                 </div>
                 <div class="mensagem-voce float-none">{{ mensagem.mensagem }}</div>
             </div>
@@ -20,7 +20,7 @@
             <div class="grow2">
                 <div class="caixaFlex row-nowrap">
                     <div class="texto-pequeno3 item grow2">{{mensagem.nome}}</div>
-                    <div class="texto-pequeno3 item grow1 text-end">{{ mensagem.dh_criacao }}</div>
+                    <div class="texto-pequeno3 item grow1 text-end">{{ mensagem.dh_criacao | date: 'dd/MM/yyyy HH:mm:ss' }}</div>
                 </div>
                 <div class="mensagem-amigo float-none">{{ mensagem.mensagem }}</div>
             </div>

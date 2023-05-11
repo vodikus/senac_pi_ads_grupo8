@@ -1,1 +1,20 @@
-<p>emprestados works!</p>
+<p>Emprestados</p>
+
+<!-- Barra de filtros -->
+<app-barra-status></app-barra-status>
+
+<!-- Lista de livros emprestados -->
+<div *ngIf="emprestimos!.length > 0; else noDataBlock">
+    <div *ngFor="let emprestimo of emprestimos">
+        <app-caixa-livro [emprestimo]=emprestimo [mostrarLivroDescricao]="false" [mostrarEmprestador]="true"
+            [mostrarDadosEmprestimo]="true" [mostrarBarraUsuario]="false" [mostrarBarraAvaliacao]="false"
+            [mostrarBarraSocial]="false" [mostrarBarraAcao_Solicitar]="false"></app-caixa-livro>
+    </div>
+</div>
+
+<!-- Nenhum livro a ser exibido -->
+<ng-template #noDataBlock>
+    <div *ngIf="emprestimos!.length <= 0">
+        <div class="texto-13 text-center">Nenhum livro disponível</div>
+    </div>
+</ng-template>

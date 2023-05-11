@@ -1,1 +1,15 @@
-<p>favoritos works!</p>
+<p>Favoritos</p>
+
+<!-- Lista de sugestões de livros -->
+<div *ngIf="livros!.length > 0; else noDataBlock">
+    <div *ngFor="let livro of livros">
+        <app-caixa-livro [uid]=livro.uid [livro]=livro [mostrarDadosEmprestimo]="false" [mostrarEmprestador]="false" [mostrarBarraSocial_FlagFavoritos]="true"></app-caixa-livro>
+    </div>
+</div>
+
+<!-- Nenhum livro a ser exibido -->
+<ng-template #noDataBlock>
+    <div>
+        <div class="texto-13 text-center">Nenhum livro disponível</div>
+    </div>
+</ng-template>

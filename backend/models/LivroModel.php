@@ -58,10 +58,11 @@ class LivroModel extends BaseModel
                 " LEFT JOIN livros_autores la ON la.lid = l.lid " .
                 " LEFT JOIN autores a ON a.aid = la.aid " .
                 " LEFT JOIN livros_assuntos li ON li.lid = l.lid " .
-                " LEFT JOIN assuntos i ON i.iid = li.iid ";
+                " LEFT JOIN assuntos i ON i.iid = li.iid " . 
+                " WHERE ul.status='D' ";
 
             if (!empty($where)) {
-                $sql .= " WHERE ul.status='D' AND $where ";
+                $sql .= " AND $where ";
             }
 
             if (!empty($groupBy)) {
@@ -119,7 +120,7 @@ class LivroModel extends BaseModel
                 ' l.isbn=:isbn ',
                 $campos
             ),
-            ['lid' => $id]
+            ['isbn' => $id]
         );
     }
 
