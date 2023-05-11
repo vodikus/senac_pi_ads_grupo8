@@ -24,6 +24,7 @@ import { BarraUsuarioComponent } from './commons/barra-usuario/barra-usuario.com
 import { BarraAcoesComponent } from './commons/barra-acoes/barra-acoes.component';
 import { BarraSocialComponent } from './commons/barra-social/barra-social.component';
 import { DenunciaComponent } from './pages/denuncia/denuncia.component';
+import { PerfilUsuarioComponent } from './pages/amigos/perfil-usuario/perfil-usuario.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +43,8 @@ import { DenunciaComponent } from './pages/denuncia/denuncia.component';
     BarraUsuarioComponent,
     BarraAcoesComponent,
     BarraSocialComponent,
-    DenunciaComponent
+    DenunciaComponent,
+    PerfilUsuarioComponent
   ],
   imports: [
     BrowserModule,

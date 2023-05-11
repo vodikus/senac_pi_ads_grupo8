@@ -13,12 +13,14 @@ import { FavoritosComponent } from './pages/favoritos/favoritos.component';
 import { PesquisaComponent } from './pages/pesquisa/pesquisa.component';
 import { SuporteComponent } from './pages/suporte/suporte.component';
 import { DenunciaComponent } from './pages/denuncia/denuncia.component'; 
+import { PerfilUsuarioComponent } from './pages/amigos/perfil-usuario/perfil-usuario.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'login', component: LoginComponent },
   { path: 'meu-perfil', component: MeuPerfilComponent, canActivate: [AuthGuard] },
   { path: 'amigos', component: AmigosComponent, canActivate: [AuthGuard] },
+  { path: 'perfil/:user', component: PerfilUsuarioComponent, canActivate: [AuthGuard] },
   { path: 'chat/:id', component: ChatComponent, canActivate: [AuthGuard] },
   // { path: 'amigos', component: AmigosComponent, canActivate: [AuthGuard],children: [
   //   {path: 'chat/:id', component: ChatComponent}
