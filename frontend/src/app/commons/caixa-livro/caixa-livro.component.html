@@ -69,7 +69,7 @@
     <!-- separador -->
     <hr />
     <!-- Barra de icones sociais -->
-    <app-barra-social *ngIf="mostrarBarraSocial" [usuarioId]=uid [livroId]=livro.lid></app-barra-social>
+    <app-barra-social *ngIf="mostrarBarraSocial" [usuarioId]=uid [livroId]=livro.lid [flagFavoritos]=mostrarBarraSocial_FlagFavoritos></app-barra-social>
     <!-- Barra de icones ações-->
     <app-barra-acoes *ngIf="mostrarBarraAcao" [mostrarSolicitar]="mostrarBarraAcao_Solicitar"></app-barra-acoes>
 

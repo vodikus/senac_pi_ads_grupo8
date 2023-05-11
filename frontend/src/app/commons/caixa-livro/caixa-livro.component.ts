@@ -21,6 +21,8 @@ export class CaixaLivroComponent implements OnInit {
   @Input('mostrarBarraAcao') mostrarBarraAcao: boolean = true;
   
   @Input('mostrarBarraAcao_Solicitar') mostrarBarraAcao_Solicitar: boolean = true;
+  @Input('mostrarBarraSocial_Favoritos') mostrarBarraSocial_Favoritos: boolean = true;
+  @Input('mostrarBarraSocial_FlagFavoritos') mostrarBarraSocial_FlagFavoritos: boolean = false;
 
   dominioStatus: {[key: string]: string} = {
     SOLI: 'Solicitado',

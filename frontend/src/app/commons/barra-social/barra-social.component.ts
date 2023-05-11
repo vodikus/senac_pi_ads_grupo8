@@ -15,19 +15,28 @@ export class BarraSocialComponent implements OnInit {
   @Input('livroId') livroId: number = 0;
   @Input('usuarioId') usuarioId: number = 0;
 
+  @Input('mostrarFavoritos') mostrarFavoritos: boolean = true;
+  @Input('flagFavoritos') flagFavoritos: boolean = false;
+
   constructor(private livroService: LivroService) { }
 
   ngOnInit(): void {
+      this.estadoFavorito = this.flagFavoritos;
+      this.alternaIcone(this.flagFavoritos);
   }
 
   alternarFavorito(): void {
     let retorno = this.chamarServico(!this.estadoFavorito);
-    if ( retorno ) {
+    this.alternaIcone(retorno);
+    this.estadoFavorito = retorno;
+  }
+  
+  alternaIcone(estado: boolean): void {
+    if ( estado ) {
       this.favorito = "assets/FavoritosRed.png"
     } else {
       this.favorito = "assets/Favoritos.png"
     }
-    this.estadoFavorito = retorno;
   }
 
   chamarServico(estado: boolean): boolean {
