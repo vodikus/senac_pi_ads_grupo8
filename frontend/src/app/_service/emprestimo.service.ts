@@ -14,4 +14,8 @@ export class EmprestimoService {
   buscarEmprestimos(): Observable<any> {
     return this.http.get(EMPRESTIMO_API + 'meus-emprestimos');
   }
+
+  buscarEmprestados(): Observable<any> {
+    return this.http.get(EMPRESTIMO_API + 'meus-emprestados');
+  }
 }
