@@ -25,6 +25,7 @@ import { BarraAcoesComponent } from './commons/barra-acoes/barra-acoes.component
 import { BarraSocialComponent } from './commons/barra-social/barra-social.component';
 import { CaixaLivroComponent } from './commons/caixa-livro/caixa-livro.component';
 import { DenunciaComponent } from './pages/denuncia/denuncia.component';
+import { PopupComponent } from './commons/popup/popup.component';
 
 @NgModule({
   declarations: [
@@ -44,7 +45,8 @@ import { DenunciaComponent } from './pages/denuncia/denuncia.component';
     BarraAcoesComponent,
     BarraSocialComponent,
     CaixaLivroComponent,
-    DenunciaComponent
+    DenunciaComponent,
+    PopupComponent
   ],
   imports: [
     BrowserModule,
