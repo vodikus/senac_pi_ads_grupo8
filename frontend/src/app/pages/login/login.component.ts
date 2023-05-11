@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthService } from '../_service/auth.service';
+import { AuthService } from '../../_service/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -22,7 +22,7 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
     if (this.authService.isLoggedIn()) {
       this.isLoggedIn = true;
-      this.router.navigate(['/meu-perfil']);
+      this.router.navigate(['/usuarios']);
     }
   }
 
@@ -36,7 +36,7 @@ export class LoginComponent implements OnInit {
         this.isLoginFailed = false;
         this.isLoggedIn = true;
 
-        this.router.navigateByUrl('/meu-perfil');
+        this.router.navigateByUrl('/usuarios');
       },
       error: err => {
         console.log(err);

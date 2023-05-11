@@ -8,12 +8,14 @@ import { AuthService } from '../_service/auth.service';
   styleUrls: ['./menu.component.scss']
 })
 export class MenuComponent implements OnInit {
+  autenticado: boolean = false;
+  rota: string = "";
 
   constructor(private auth: AuthService, private router: Router) { }
 
-  autenticado: boolean = false;
-
   ngOnInit(): void {
+    this.rota = this.router.url;
+    console.log(this.rota);
     // this.autenticado = this.auth.isLoggedIn();
     this.autenticado = true;
   }

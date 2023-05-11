@@ -2,7 +2,7 @@
     <!-- Caixa com a capa, titulo, autor e descrição -->
     <div class="caixaFlex">
         <div>
-            <img src="http://clube-backend/imagens/livros/neuromancer.png" class="livroCapa">
+            <img src="{{ (livro.capa) || 'assets/sem-capa.png' }}" class="livroCapa">
             <span *ngIf="emprestimo?.situacao == 'Atrasado'; else tarjaSituacao">
                 <div class="bg-danger text-center texto-10 text-white">{{ emprestimo.situacao | uppercase }}</div>
             </span>
@@ -71,6 +71,6 @@
     <!-- Barra de icones sociais -->
     <app-barra-social *ngIf="mostrarBarraSocial" [usuarioId]=uid [livroId]=livro.lid [flagFavoritos]=mostrarBarraSocial_FlagFavoritos></app-barra-social>
     <!-- Barra de icones ações-->
-    <app-barra-acoes *ngIf="mostrarBarraAcao" [mostrarSolicitar]="mostrarBarraAcao_Solicitar"></app-barra-acoes>
+    <app-barra-acoes *ngIf="mostrarBarraAcao" [usuarioId]=uid [livroId]=livro.lid [mostrarSolicitar]="mostrarBarraAcao_Solicitar" [emprestimoId]=emprestimo.eid></app-barra-acoes>
 
 </div>

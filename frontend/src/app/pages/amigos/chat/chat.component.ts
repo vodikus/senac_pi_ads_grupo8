@@ -28,7 +28,7 @@ export class ChatComponent implements OnInit {
   }
 
   pegarMensagens(): void {
-    const id = Number(this.route.snapshot.paramMap.get('id'));
+    const id = Number(this.route.snapshot.paramMap.get('uid'));
     this.usuarioService.buscarPerfil(id).subscribe(data => this.usuario = data[0]);
     this.chatService.buscarListaAmigos(id)
       .subscribe(data => this.mensagens = data);
@@ -36,7 +36,7 @@ export class ChatComponent implements OnInit {
 
   enviarMensagem(): void {
     const { mensagem } = this.form;
-    const id = Number(this.route.snapshot.paramMap.get('id'));
+    const id = Number(this.route.snapshot.paramMap.get('uid'));
     console.log(mensagem)
     console.log(id)
     this.chatService.enviarMensagem(id, mensagem).subscribe({
