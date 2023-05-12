@@ -192,6 +192,36 @@
 					"response": []
 				},
 				{
+					"name": "Enviar Foto",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "imagem",
+									"type": "file",
+									"src": "/C:/Users/ivan.pereira/Documents/SENAC/ProjetoIntegrador/fotos/robert-godwin-cdksyTqEXzo-unsplash.jpg"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://{{URL}}/api/usuarios/enviarFoto",
+							"protocol": "http",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"usuarios",
+								"enviarFoto"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "Atualizar Usuário",
 					"request": {
 						"method": "PUT",
@@ -1419,6 +1449,42 @@
 								"api",
 								"livros",
 								"atualizarStatusLivro"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Enviar Capa",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "imagem",
+									"type": "file",
+									"src": "/C:/Users/ivan.pereira/Documents/SENAC/ProjetoIntegrador/fotos/2023-03-22 19_46_45-O mundo perdido _ Amazon.com.br.png"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://{{URL}}/api/livros/enviarCapa?id=12",
+							"protocol": "http",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"livros",
+								"enviarCapa"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "12"
+								}
 							]
 						}
 					},
