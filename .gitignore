@@ -2,5 +2,6 @@ ClubeEmprestimoLivro.code-workspace
 modelo-clube-livro.mwb.bak
 tests/backend/vendor/*
 tests/backend/.phpunit.result.cacheREADME.md.bak
-backend/imagens/*
+backend/imagens/livros/*
+backend/imagens/usuarios/*
 .idea/*
