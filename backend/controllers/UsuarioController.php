@@ -4,8 +4,11 @@ include_once 'models/UsuarioModel.php';
 include_once 'models/UsuarioAssuntoModel.php';
 include_once 'models/UsuarioLivroModel.php';
 include_once 'models/AmigoModel.php';
+include_once 'models/ImagemModel.php';
+require_once 'helpers/FileHelper.php';
 
 use helpers\MessageHelper;
+use helpers\FileHelper;
 
 class UsuarioController extends BaseController
 {
@@ -99,6 +102,13 @@ class UsuarioController extends BaseController
                             $this->httpRawResponse(401, MessageHelper::fmtMsgConstJson('ERR_NAO_AUTORIZADO'));
                         }
                         break;
+
+                    case 'enviarFoto':
+                        if ($this->isAuth()) {
+                            $this->enviarFoto($this->getFieldFromToken('uid'), $_FILES);
+                        } else {
+                            $this->httpRawResponse(401, MessageHelper::fmtMsgConstJson('ERR_NAO_AUTORIZADO'));
+                        }
                     default:
                         $this->httpRawResponse(501, MessageHelper::fmtMsgConstJson('ERR_ACAO_INDISPONIVEL'));
                         break;
@@ -776,5 +786,22 @@ class UsuarioController extends BaseController
             $this->httpRawResponse(200, MessageHelper::fmtException($e));
         }
         $this->montarSaidaOk($responseData);
+    }
+
+    public function enviarFoto($uid = 0, $files = 0)
+    {
+        if (FileHelper::validaImagem($files)) {
+            $imagemModel = new ImagemModel();
+            try {
+                $imagemModel->salvaFotoUsuario($uid, $files);
+                $this->httpRawResponse(200, MessageHelper::fmtMsgConstJson('', 'FOTO_USUARIO_SALVA_SUCESSO'));
+            }
+            catch (Exception $e){
+                $this->httpRawResponse(200, MessageHelper::fmtException($e));
+            }
+
+        } else {
+            $this->httpRawResponse(415, MessageHelper::fmtMsgConstJson('','Tipo de imagem não suportado'));
+        }
     }
 }
