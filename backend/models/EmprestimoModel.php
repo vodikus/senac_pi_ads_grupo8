@@ -275,6 +275,7 @@ class EmprestimoModel extends BaseModel
                 'dh_solicitacao' => ['protected' => 'none'],
                 'dh_atualizacao' => ['protected' => 'none']
             ]);
+            unset($emprestimo['eid']);
             $dados = SQLHelper::validaCampos($campos, $emprestimo, 'UPDATE');
             if ($this->validaUsuarioLivro($dados) && $this->validaStatusLivro($uid, 'SOLI', $dados)) {
                 if (is_null($dados['retirada_prevista']) || is_null($dados['devolucao_prevista'])) {
@@ -283,8 +284,8 @@ class EmprestimoModel extends BaseModel
                     $sqlSt = $this->query(
                         "UPDATE emprestimos SET " .
                         " retirada_efetiva=CURRENT_TIMESTAMP, status='EMPR', dh_atualizacao=CURRENT_TIMESTAMP " .
-                        " WHERE uid_dono=:uid_dono AND lid=:lid AND uid_tomador=:uid_tomador AND status = 'SOLI'",
-                        array_merge(['uid_tomador' => $uid], $dados)
+                        " WHERE eid=:eid AND uid_dono=:uid_dono AND lid=:lid AND uid_tomador=:uid_tomador AND status = 'SOLI'",
+                        array_merge(['uid_tomador' => $uid, 'eid' => $eid], $dados)
                     );
                 }
             }

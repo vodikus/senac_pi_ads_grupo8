@@ -27,7 +27,7 @@ class UsuarioController extends BaseController
                         break;
                     case 'buscar':
                         if ($this->isAuth(false)) {
-                            $this->buscar($params['level1'], ($this->getFieldFromToken('roles') == 'admin'));
+                            $this->buscar($params['level1'], ($this->getFieldFromToken('roles') == 'admin'), $this->getFieldFromToken('uid'));
                         } else {
                             $this->buscar($params['level1'], false);
                         }
@@ -287,12 +287,12 @@ class UsuarioController extends BaseController
      * @apiUse ERR_GENERICOS
      * 
      */
-    public function buscar($id = 0, $completo = false)
+    public function buscar($id = 0, $completo = false, $uid = 0)
     {
         try {
             if (is_numeric($id)) {
                 $usuarioModel = new UsuarioModel();
-                $arrUsuarios = (array) $usuarioModel->buscarUsuario($id, $completo);
+                $arrUsuarios = (array) $usuarioModel->buscarUsuario($id, $completo, $uid);
                 $responseData = json_encode($arrUsuarios);
             } else {
                 $this->httpRawResponse(200, MessageHelper::fmtMsgConstJson('ERR_ID_INVALIDO'));
