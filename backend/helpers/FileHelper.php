@@ -8,14 +8,14 @@ class FileHelper
     public static function validaImagem($files)
     {
 
-        if (!empty($files['foto'])) {
+        if (!empty($files['imagem'])) {
 
             $allowed_type = array('jpg', 'jpeg');
-            $filename = basename($files['foto']['name']);
+            $filename = basename($files['imagem']['name']);
             $filetype = pathinfo($filename, PATHINFO_EXTENSION);
 
             if (in_array($filetype, $allowed_type)) {
-                return $files['foto'];
+                return true;
             }
             return null;
         }

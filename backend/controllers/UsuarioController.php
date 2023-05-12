@@ -102,7 +102,6 @@ class UsuarioController extends BaseController
                             $this->httpRawResponse(401, MessageHelper::fmtMsgConstJson('ERR_NAO_AUTORIZADO'));
                         }
                         break;
-
                     case 'enviarFoto':
                         if ($this->isAuth()) {
                             $this->enviarFoto($this->getFieldFromToken('uid'), $_FILES);
