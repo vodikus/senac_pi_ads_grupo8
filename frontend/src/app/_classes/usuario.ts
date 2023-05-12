@@ -3,4 +3,6 @@ export class Usuario {
     nome: string = '';
     apelido: string = '';
     avatar: string = '';
+    amigo: number = 0;
+    bloqueado: number = 0;
 }

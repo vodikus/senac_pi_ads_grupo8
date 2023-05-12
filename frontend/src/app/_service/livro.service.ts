@@ -16,6 +16,10 @@ export class LivroService {
     return this.http.get(LIVRO_API + 'listar-disponiveis?ordem=dh_atualizacao,desc');
   }
 
+  buscarLivrosPorUsuario(uid: number): Observable<any> {
+    return this.http.get(LIVRO_API + 'buscar-por-usuario?id='+uid);
+  }
+
   listarFavoritos(): Observable<any> {
     return this.http.get(LIVRO_API + 'favoritos');
   }

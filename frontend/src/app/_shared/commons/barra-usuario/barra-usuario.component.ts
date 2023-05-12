@@ -21,7 +21,7 @@ export class BarraUsuarioComponent implements OnInit {
   ngOnInit(): void {
     this.usuarioService.buscarPerfil(this.uid).subscribe({
       next: data => {
-        this.usuario = data[0];
+        this.usuario = data;
       },
       error: err => {
         console.log(err);

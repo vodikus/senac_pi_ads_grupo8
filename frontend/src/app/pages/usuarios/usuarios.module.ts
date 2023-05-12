@@ -5,6 +5,7 @@ import { UsuariosRoutingModule } from './usuarios-routing.module';
 import { MeuPerfilComponent } from './meu-perfil/meu-perfil.component';
 import { UsuariosComponent } from './usuarios.component';
 import { PerfilComponent } from './perfil/perfil.component';
+import { PadraoModule } from 'src/app/_shared/commons/padrao.module';
 
 @NgModule({
   declarations: [
@@ -14,7 +15,8 @@ import { PerfilComponent } from './perfil/perfil.component';
   ],
   imports: [
     CommonModule,
-    UsuariosRoutingModule
+    UsuariosRoutingModule,
+    PadraoModule
   ]
 })
 export class UsuariosModule { }

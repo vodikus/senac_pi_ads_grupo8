@@ -14,10 +14,10 @@ export class MeuPerfilComponent implements OnInit {
   ngOnInit(): void {
     this.usuarioService.buscarMeuPerfil().subscribe({
       next: data => {
-        this.perfil = data[0];
+        this.perfil = data;
       },
       error: err => {
-        console.log(err);
+        console.log("Erro ao carregar perfil: " + err);
       }
     });
   }

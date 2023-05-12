@@ -29,7 +29,7 @@ export class ChatComponent implements OnInit {
 
   pegarMensagens(): void {
     const id = Number(this.route.snapshot.paramMap.get('uid'));
-    this.usuarioService.buscarPerfil(id).subscribe(data => this.usuario = data[0]);
+    this.usuarioService.buscarPerfil(id).subscribe(data => this.usuario = data);
     this.chatService.buscarListaAmigos(id)
       .subscribe(data => this.mensagens = data);
   }
