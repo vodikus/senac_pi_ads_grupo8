@@ -160,6 +160,12 @@ class UsuarioController extends BaseController
                             $this->httpRawResponse(401, MessageHelper::fmtMsgConstJson('ERR_NAO_AUTORIZADO'));
                         }
                         break;
+                    case 'removerFoto':
+                        if ($this->isAuth()) {
+                            $this->removerFoto($this->getFieldFromToken('uid'));
+                        } else {
+                            $this->httpRawResponse(401, MessageHelper::fmtMsgConstJson('ERR_NAO_AUTORIZADO'));
+                        }
                     default:
                         $this->httpRawResponse(501, MessageHelper::fmtMsgConstJson('ERR_ACAO_INDISPONIVEL'));
                         break;
@@ -802,6 +808,16 @@ class UsuarioController extends BaseController
 
         } else {
             $this->httpRawResponse(415, MessageHelper::fmtMsgConstJson('','Tipo de imagem não suportado'));
+        }
+    }
+
+    public function removerFoto($uid){
+        $imagemModel = new ImagemModel();
+        try {
+            $imagemModel->removeFotoUsuario($uid);
+            $this->httpRawResponse(200, MessageHelper::fmtMsgConstJson('', 'FOTO_USUARIO_REMOVIDA_SUCESSO'));
+        } catch (Exception $e) {
+            $this->httpRawResponse(200, MessageHelper::fmtException($e));
         }
     }
 }

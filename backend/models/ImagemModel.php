@@ -8,6 +8,10 @@ class ImagemModel extends BaseModel {
         return $this->query("UPDATE usuarios SET avatar=:imagem WHERE uid=:uid", array_merge(['imagem' => $imagem_conteudo, 'uid' => $uid]));
     }
 
+    public function removeFotoUsuario($uid){
+        return $this->query("UPDATE usuarios SET avatar='' WHERE uid=:uid", array_merge(['uid' => $uid]));
+    }
+
     private function pegaConteudoImagem($files) {
         $imagem = $files['foto']['tmp_name'];
         return addslashes(file_get_contents($imagem));
