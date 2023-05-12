@@ -10,7 +10,7 @@ class FileHelper
 
         if (!empty($files['imagem'])) {
 
-            $allowed_type = array('jpg', 'jpeg');
+            $allowed_type = array('jpg', 'jpeg', 'png');
             $filename = basename($files['imagem']['name']);
             $filetype = pathinfo($filename, PATHINFO_EXTENSION);
 

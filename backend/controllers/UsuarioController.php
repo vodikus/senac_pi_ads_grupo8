@@ -793,28 +793,47 @@ class UsuarioController extends BaseController
         $this->montarSaidaOk($responseData);
     }
 
+    /**
+     * @api {post} /usuarios/enviarFoto/ Enviar Foto
+     * @apiName Enviar Foto
+     * @apiGroup Usuários
+     * @apiVersion 1.0.0
+     *
+     * @apiParam {Image} imagem Stream de imagem
+     *
+     * @apiUse SAIDA_PADRAO
+     * @apiUse ERR_GENERICOS
+     * 
+     * @apiErrorExample Error-Response:
+     *     HTTP/1.1 500 Internal Server Error
+     *     {
+     *         "codigo": "9100",
+     *         "mensagem": "Usuário não encontrado",
+     *         "detalhe": ""
+     *     }
+     */
     public function enviarFoto($uid = 0, $files = 0)
     {
         if (FileHelper::validaImagem($files)) {
             $imagemModel = new ImagemModel();
             try {
                 $imagemModel->salvaFotoUsuario($uid, $files);
-                $this->httpRawResponse(200, MessageHelper::fmtMsgConstJson('', 'FOTO_USUARIO_SALVA_SUCESSO'));
-            }
-            catch (Exception $e){
+                $this->httpRawResponse(200, MessageHelper::fmtMsgConstJson('FOTO_USUARIO_SALVA_SUCESSO'));
+            } catch (Exception $e) {
                 $this->httpRawResponse(200, MessageHelper::fmtException($e));
             }
 
         } else {
-            $this->httpRawResponse(415, MessageHelper::fmtMsgConstJson('','Tipo de imagem não suportado'));
+            $this->httpRawResponse(415, MessageHelper::fmtMsgConstJson('TIPO_IMAGEM_NAO_SUPORTADO'));
         }
     }
 
-    public function removerFoto($uid){
+    public function removerFoto($uid)
+    {
         $imagemModel = new ImagemModel();
         try {
             $imagemModel->removeFotoUsuario($uid);
-            $this->httpRawResponse(200, MessageHelper::fmtMsgConstJson('', 'FOTO_USUARIO_REMOVIDA_SUCESSO'));
+            $this->httpRawResponse(200, MessageHelper::fmtMsgConstJson('FOTO_USUARIO_REMOVIDA_SUCESSO'));
         } catch (Exception $e) {
             $this->httpRawResponse(200, MessageHelper::fmtException($e));
         }

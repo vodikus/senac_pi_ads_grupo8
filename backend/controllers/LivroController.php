@@ -877,10 +877,10 @@ class LivroController extends BaseController
         try {
             parse_str(substr($entrada, 1), $params);
             $id = (array_key_exists('id', $params)) ? $params['id'] : '';
-            if ((is_numeric($id)) and (FileHelper::validaImagem($files))) {
+            if ((is_numeric($id)) && (FileHelper::validaImagem($files))) {
                 $imagemModel = new ImagemModel();
                 $imagemModel->salvaCapaLivro($id, $files);
-                $this->httpRawResponse(200, MessageHelper::fmtMsgConstJson('', 'CAPA_LIVRO_SALVA_SUCESSO'));
+                $this->httpRawResponse(200, MessageHelper::fmtMsgConstJson('CAPA_LIVRO_SALVA_SUCESSO'));
             } else {
                 $this->httpRawResponse(200, MessageHelper::fmtMsgConstJson('ERR_ID_INVALIDO'));
             }
@@ -896,7 +896,7 @@ class LivroController extends BaseController
             if (is_numeric($id)) {
                 $imagemModel = new ImagemModel();
                 $imagemModel->removeCapaLivro($id);
-                $this->httpRawResponse(200, MessageHelper::fmtMsgConstJson('', 'CAPA_LIVRO_REMOVIDA_SUCESSO'));
+                $this->httpRawResponse(200, MessageHelper::fmtMsgConstJson('CAPA_LIVRO_REMOVIDA_SUCESSO'));
             }
             else {
                 $this->httpRawResponse(200, MessageHelper::fmtMsgConstJson('ERR_ID_INVALIDO'));
