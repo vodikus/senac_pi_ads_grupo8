@@ -4,17 +4,14 @@ require_once "includes/BaseModel.php";
 class ImagemModel extends BaseModel {
 
     public function salvaFotoUsuario($uid, $files){
-        $imagem_conteudo = $this->pegaConteudoImagem($files);
-        return $this->query("UPDATE usuarios SET avatar=:imagem WHERE uid=:uid", array_merge(['imagem' => $imagem_conteudo, 'uid' => $uid]));
+        $filename = "uid-" . $uid . "-avatar.jpg";
+        $path = "../backend/imagens/usuarios/".$filename;
+        move_uploaded_file($files['foto']['tmp_name'], $path);
+        return $this->query("UPDATE usuarios SET avatar=:imagem WHERE uid=:uid", array_merge(['imagem' => $path, 'uid' => $uid]));
     }
 
     public function removeFotoUsuario($uid){
         return $this->query("UPDATE usuarios SET avatar='' WHERE uid=:uid", array_merge(['uid' => $uid]));
-    }
-
-    private function pegaConteudoImagem($files) {
-        $imagem = $files['foto']['tmp_name'];
-        return addslashes(file_get_contents($imagem));
     }
 
 }
