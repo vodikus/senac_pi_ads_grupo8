@@ -5,3 +5,4 @@ tests/backend/.phpunit.result.cacheREADME.md.bak
 backend/imagens/livros/*
 backend/imagens/usuarios/*
 .idea/*
+tests/backend/.phpunit.result.cache
