@@ -3,6 +3,8 @@ import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { ChatService } from '../../../_service/chat.service'
 import { UsuarioService } from '../../../_service/usuario.service'
+import { environment } from 'src/environments/environment';
+import { Usuario } from 'src/app/_classes/usuario';
 
 @Component({
   selector: 'app-chat',
@@ -10,8 +12,9 @@ import { UsuarioService } from '../../../_service/usuario.service'
   styleUrls: ['./chat.component.scss']
 })
 export class ChatComponent implements OnInit {
+  IMG_SERVER = environment.backendUrl;
   mensagens: any | undefined;
-  usuario: any | undefined;
+  usuario: Usuario = new Usuario();
   form: any = {
     mensagem: null
   };
@@ -37,8 +40,6 @@ export class ChatComponent implements OnInit {
   enviarMensagem(): void {
     const { mensagem } = this.form;
     const id = Number(this.route.snapshot.paramMap.get('uid'));
-    console.log(mensagem)
-    console.log(id)
     this.chatService.enviarMensagem(id, mensagem).subscribe({
       next: data => {
         console.log(data);

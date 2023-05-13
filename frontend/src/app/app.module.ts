@@ -34,7 +34,7 @@ import { DenunciaComponent } from './pages/denuncia/denuncia.component';
     PesquisaComponent,
     FavoritosComponent,
     SuporteComponent,
-    DenunciaComponent,
+    DenunciaComponent
   ],
   imports: [
     BrowserModule,

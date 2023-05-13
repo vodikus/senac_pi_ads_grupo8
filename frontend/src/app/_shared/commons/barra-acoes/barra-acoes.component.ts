@@ -11,6 +11,7 @@ export class BarraAcoesComponent implements OnInit {
   @Input('emprestimoId') emprestimoId: number = 0;
   @Input('mostrarDetalhes') mostrarDetalhes: boolean = true;
   @Input('mostrarSolicitar') mostrarSolicitar: boolean = true;
+  @Input('origem') origem: string = "";
 
   constructor() { }
 

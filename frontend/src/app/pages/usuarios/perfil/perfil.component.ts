@@ -4,7 +4,7 @@ import { UsuarioService } from '../../../_service/usuario.service';
 import { Usuario } from 'src/app/_classes/usuario';
 import { LivroService } from 'src/app/_service/livro.service';
 import { Livro } from 'src/app/_classes/livro';
-
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-perfil',
@@ -12,6 +12,7 @@ import { Livro } from 'src/app/_classes/livro';
   styleUrls: ['./perfil.component.scss']
 })
 export class PerfilComponent implements OnInit  {
+  IMG_SERVER = environment.backendUrl;
   livros: Array<Livro> = new Array<Livro>();
   perfil: Usuario = new Usuario();
   usuarioId: number = 0;

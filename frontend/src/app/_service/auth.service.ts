@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import * as moment from "moment";
 import { environment } from '../../environments/environment';
 
-const AUTH_API = environment.apiUrl + '/auth/';
+const AUTH_API = environment.backendUrl + '/api/auth/';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })

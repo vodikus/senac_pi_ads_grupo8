@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
 
-const LIVRO_API = environment.apiUrl + '/livros/';
+const LIVRO_API = environment.backendUrl + '/api/livros/';
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +17,11 @@ export class LivroService {
   }
 
   buscarLivrosPorUsuario(uid: number): Observable<any> {
-    return this.http.get(LIVRO_API + 'buscar-por-usuario?id='+uid);
+    return this.http.get(LIVRO_API + 'buscar-por-usuario?uid='+uid);
+  }
+
+  buscarLivrosPorId(id: number): Observable<any> {
+    return this.http.get(LIVRO_API + 'buscar-por-id?id='+id);
   }
 
   listarFavoritos(): Observable<any> {

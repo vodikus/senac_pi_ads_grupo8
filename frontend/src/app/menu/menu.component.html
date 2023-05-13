@@ -31,7 +31,7 @@
             <img src="assets/Suporte.png" />
             <div>Suporte</div>
         </div>
-        <div class="menu-btn-40 ms-2" [routerLinkActive]="['menu-selected']" *ngIf="rota == 'denuncia'">
+        <div class="menu-btn-40 ms-2" class="menu-selected" *ngIf=" pegarNivelUrl(0) == 'denuncia' ">
             <img src="assets/denuncia.png" style="width: 26px; height: 26px;"  />
             <div>Denúncia</div>
         </div>

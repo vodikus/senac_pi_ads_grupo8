@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { UsuarioService } from 'src/app/_service/usuario.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-lista-amigos',
@@ -7,6 +8,7 @@ import { UsuarioService } from 'src/app/_service/usuario.service';
   styleUrls: ['./lista-amigos.component.scss']
 })
 export class ListaAmigosComponent {
+  IMG_SERVER = environment.backendUrl;
   amigos: any;
 
   constructor(private usuarioService: UsuarioService) { }

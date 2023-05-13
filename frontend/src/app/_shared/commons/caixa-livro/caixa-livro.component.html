@@ -67,10 +67,11 @@
     <!-- Usuário -->
     <app-barra-usuario [uid]=uid *ngIf="mostrarBarraUsuario"></app-barra-usuario>
     <!-- separador -->
-    <hr />
+    <hr *ngIf="mostrarBarraSocial || mostrarBarraAcao"/>
     <!-- Barra de icones sociais -->
     <app-barra-social *ngIf="mostrarBarraSocial" [usuarioId]=uid [livroId]=livro.lid [flagFavoritos]=mostrarBarraSocial_FlagFavoritos></app-barra-social>
     <!-- Barra de icones ações-->
-    <app-barra-acoes *ngIf="mostrarBarraAcao" [usuarioId]=uid [livroId]=livro.lid [mostrarSolicitar]="mostrarBarraAcao_Solicitar" [emprestimoId]=emprestimo.eid></app-barra-acoes>
+    <app-barra-acoes *ngIf="mostrarBarraAcao" [usuarioId]=uid [livroId]=livro.lid [mostrarSolicitar]=mostrarBarraAcao_Solicitar [mostrarDetalhes]=mostrarBarraAcao_Detalhes 
+    [emprestimoId]=emprestimo.eid [origem]=origem></app-barra-acoes>
 
 </div>

@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  apiUrl: "http://clube-backend/api"
+  backendUrl: "http://clube-backend"
 };
 
 /*

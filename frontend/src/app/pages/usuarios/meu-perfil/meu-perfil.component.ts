@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UsuarioService } from '../../../_service/usuario.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-meu-perfil',
@@ -8,6 +9,7 @@ import { UsuarioService } from '../../../_service/usuario.service';
 })
 export class MeuPerfilComponent implements OnInit {
   perfil: any;
+  IMG_SERVER = environment.backendUrl;
 
   constructor(private usuarioService: UsuarioService) { }
 

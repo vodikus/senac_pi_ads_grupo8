@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Usuario } from 'src/app/_classes/usuario'
 import { UsuarioService } from 'src/app/_service/usuario.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-barra-usuario',
@@ -8,6 +9,7 @@ import { UsuarioService } from 'src/app/_service/usuario.service';
   styleUrls: ['./barra-usuario.component.scss']
 })
 export class BarraUsuarioComponent implements OnInit {
+  IMG_SERVER = environment.backendUrl;
   @Input('uid') uid!: number;
   @Input('mostraChat') mostraChat: boolean = true;
   @Input('mostraPerfil') mostraPerfil: boolean = true;

@@ -11,6 +11,7 @@ import { BarraAcoesComponent } from './barra-acoes/barra-acoes.component';
 import { BarraSocialComponent } from './barra-social/barra-social.component';
 import { CaixaLivroComponent } from './caixa-livro/caixa-livro.component';
 import { PopupComponent } from './popup/popup.component';
+import { CaixaUsuarioComponent } from './caixa-usuario/caixa-usuario.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { PopupComponent } from './popup/popup.component';
     BarraAcoesComponent,
     BarraSocialComponent,
     CaixaLivroComponent,
-    PopupComponent
+    PopupComponent,
+    CaixaUsuarioComponent
   ],
   imports: [
     CommonModule,
@@ -34,7 +36,8 @@ import { PopupComponent } from './popup/popup.component';
     BarraAcoesComponent,
     BarraSocialComponent,
     CaixaLivroComponent,
-    PopupComponent
+    PopupComponent,
+    CaixaUsuarioComponent
   ]
 })
 export class PadraoModule { }

@@ -15,7 +15,7 @@
         </div>
         <!-- Mensagem do amigo -->
         <div class="row-nowrap caixaFlex" *ngIf="mensagem?.uid == usuario?.uid">
-            <div class="grow0" style="padding-right: 5px;"><img src="{{ mensagem.avatar }}"
+            <div class="grow0" style="padding-right: 5px;"><img src="{{ IMG_SERVER + mensagem.avatar }}"
                     style="width: 36px; height: 36px;" class="img-round" /></div>
             <div class="grow2">
                 <div class="caixaFlex row-nowrap">
@@ -34,7 +34,7 @@
 </div>
 <hr />
 <!-- Caixa de envio de mensagens -->
-<form name="form" (ngSubmit)="f.form.valid && enviarMensagem()" #f="ngForm" novalidate>
+<form name="form" (ngSubmit)="f.form.valid && enviarMensagem()" #f="ngForm" novalidate *ngIf=" usuario.bloqueado == 0; else usuarioBloqueadoMsg">
     <div class="caixaFlex">
         <div class="grow2">
             <input class="caixaDeTexto shadow-sm" name="mensagem" [(ngModel)]="form.mensagem" required #mensagem="ngModel" type="text" placeholder="Mensagem">
@@ -44,3 +44,13 @@
         </div>
     </div>
 </form>
+
+<div>
+    <button class="botaoAnterior mt-3 text-white bg-primary" type="button" (click)="voltar()">&lt; Voltar</button>
+</div>
+
+<ng-template #usuarioBloqueadoMsg>
+    <div class="texto-pequeno3 text-center">
+        Usuário bloqueado. Para enviar mensagens, efetue o bloqueio antes.
+    </div>
+</ng-template>

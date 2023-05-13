@@ -1,12 +1,12 @@
 <div class="personal-image">
-    <span class="farol bg-success"></span>
+    <span class="farol farol-medium-2 bg-success"></span>
     <figure class="personal-figure">
-        <img src="{{ perfil.avatar }}" class="personal-avatar" alt="avatar">
+        <img src="{{ IMG_SERVER + perfil.avatar }}" class="img-round img-medium-2" alt="avatar">
     </figure>
     <output class="nome">{{ perfil.nome }}</output>
 </div>
 <div class="botoesPainel d-inline-flex justify-content-between align-items-end w-100 flex-wrap">
-    <div class="clickable" [routerLink]="['/amigos/chat/',perfil.uid]">
+    <div class="clickable" [routerLink]="['/amigos/chat/',perfil.uid]" *ngIf="perfil.bloqueado == 0">
         <img src="/assets/balao_chat.png" class="img-tiny2" alt="">
         <span class="mx-2 texto-13">Mensagem</span>
     </div>
@@ -34,7 +34,7 @@
     <div *ngIf="livros!.length > 0; else noDataBlock">
         <div *ngFor="let livro of livros">
             <app-caixa-livro [uid]=livro.uid [livro]=livro [mostrarDadosEmprestimo]="false"
-                [mostrarEmprestador]="false"></app-caixa-livro>
+                [mostrarEmprestador]="false" [mostrarBarraUsuario]="false"></app-caixa-livro>
         </div>
     </div>
 
