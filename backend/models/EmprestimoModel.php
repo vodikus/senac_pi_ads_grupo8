@@ -103,13 +103,37 @@ class EmprestimoModel extends BaseModel
             $campos = SQLHelper::montaCamposSelect($this->campos, 'e');
             $emprestimo = $this->select($this->montaSelectEmprestimo($campos, "eid=:eid AND uid_tomador=:uid_tomador"), ['uid_tomador' => $uid, 'eid' => $eid]);
             if (count($emprestimo) > 0) {
-                return $emprestimo[0];
+                return $this->complementaEmprestimo($emprestimo[0]);
             } else {
                 throw new CLConstException('ERR_EMPRESTIMO_NAO_LOCALIZADO');
             }
         } catch (Exception $e) {
             throw $e;
         }
+    }
+
+    private function complementaEmprestimo($emprestimo) {
+        $emprestimo["livro"] = (new LivroModel())->buscarLivroPorId($emprestimo["lid"]);
+        $emprestimo["situacao"] = "";
+        switch ($emprestimo["status"]) {
+            case 'EMPR':
+                if (strtotime("now") > strtotime($emprestimo["devolucao_prevista"]))
+                    $emprestimo["situacao"] = "Atrasado";
+                else
+                    $emprestimo["situacao"] = "Em dia";
+                break;
+            case 'SOLI':
+                if ($emprestimo["retirada_prevista"] != null && $emprestimo["devolucao_prevista"] != null)
+                    $emprestimo["situacao"] = "Em espera";
+                else
+                    $emprestimo["situacao"] = "Solicitado";
+                break;
+
+            default:
+                $emprestimo["situacao"] = $this->statusDominio[$emprestimo["status"]];
+                break;
+        }
+        return $emprestimo;
     }
 
     public function listarEmprestimos($uid = 0, $tipo = 'TOMADOS', $status = "")
@@ -135,28 +159,7 @@ class EmprestimoModel extends BaseModel
             }
             $saida = [];
             foreach ($emprestimos as $emprestimo) {
-                $emprestimo["livro"] = (new LivroModel())->buscarLivroPorId($emprestimo["lid"])[0];
-                $emprestimo["situacao"] = "";
-                switch ($emprestimo["status"]) {
-                    case 'EMPR':
-                        if (strtotime("now") > strtotime($emprestimo["devolucao_prevista"]))
-                            $emprestimo["situacao"] = "Atrasado";
-                        else
-                            $emprestimo["situacao"] = "Em dia";
-                        break;
-                    case 'SOLI':
-                        if ($emprestimo["retirada_prevista"] != null && $emprestimo["devolucao_prevista"] != null)
-                            $emprestimo["situacao"] = "Em espera";
-                        else
-                            $emprestimo["situacao"] = "Solicitado";
-                        break;
-
-                    default:
-                        $emprestimo["situacao"] = $this->statusDominio[$emprestimo["status"]];
-                        break;
-                }
-
-                $saida[] = $emprestimo;
+                $saida[] = $this->complementaEmprestimo($emprestimo);
             }
             return $saida;
         } catch (Exception $e) {

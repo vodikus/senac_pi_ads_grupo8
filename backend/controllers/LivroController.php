@@ -398,10 +398,11 @@ class LivroController extends BaseController
     {
         try {
             parse_str(substr($entrada, 1), $params);
-            $uid = (array_key_exists('id', $params)) ? $params['id'] : '';
-            if (is_numeric($uid)) {
+            $uid = (array_key_exists('uid', $params)) ? $params['uid'] : 0;
+            $lid = (array_key_exists('lid', $params)) ? $params['lid'] : 0;
+            if (is_numeric($uid) && is_numeric($lid)) {
                 $livroModel = new LivroModel();
-                $arrLivros = (array)$livroModel->buscarLivroPorUsuario($uid);
+                $arrLivros = (array)$livroModel->buscarLivroPorUsuario($uid, $lid);
                 $responseData = json_encode($arrLivros);
             } else {
                 $this->httpRawResponse(200, MessageHelper::fmtMsgConstJson('ERR_ID_INVALIDO'));

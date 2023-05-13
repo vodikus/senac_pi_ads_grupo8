@@ -16,7 +16,9 @@ class UsuarioModel extends BaseModel
         'avatar' => ['protected' => 'none', 'type' => 'varchar', 'visible' => true],
         'apelido' => ['protected' => 'none', 'type' => 'varchar', 'visible' => true, 'required' => true],
         'status' => ['protected' => 'none', 'type' => 'varchar', 'visible' => true],
-        'role' => ['protected' => 'all', 'type' => 'varchar', 'visible' => true]
+        'role' => ['protected' => 'all', 'type' => 'varchar', 'visible' => true],
+        'ultimo_login' => ['protected' => 'all', 'type' => 'timestamp', 'visible' => true],
+        'status_chat' => ['protected' => 'none', 'type' => 'int', 'visible' => true]
     );
 
     public function validaUsuario($uid)
