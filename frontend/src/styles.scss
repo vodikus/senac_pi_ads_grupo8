@@ -41,6 +41,11 @@
     height: 16px;
 }
 
+.img-tiny2 {
+    width: 20px;
+    height: 20px;
+}
+
 .img-small {
     width: 24px;
     height: 24px;
@@ -49,6 +54,11 @@
 .img-medium0 {
     width: 56px;
     height: 56px;
+}
+
+.img-medium-2 {
+    width: 74px;
+    height: 74px;
 }
 
 .img-medium5 {
@@ -104,6 +114,10 @@
     font-size: 15px;
 }
 
+.texto-16 {
+    font-size: 16px;
+}
+
 .grow0 {
     flex-grow: 0;
 }
@@ -122,6 +136,10 @@
 
 .vcenter {
     align-items: center;
+}
+
+.space-around {
+	justify-content: space-around;
 }
 
 .flex {
@@ -405,22 +423,121 @@ select {
     margin: 0 3px 0 3px;
 }
 
-.imgEnviar{
+.imgEnviar {
     height: 24px;
     width: 24px;
     margin-left: 5px;
 }
 
-.linhaTextoRedes{
+.linhaTextoRedes {
     width: 14%;
 }
 
-.textoRedes{
+.textoRedes {
     font-size: 14px;
     color: #4B5768;
 }
 
-.mensagemCadastro, .linkCadastro{
+.mensagemCadastro,
+.linkCadastro {
     font-size: 14px;
     text-decoration: none;
+}
+
+.personal-image {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.personal-figure {
+    width: 75px;
+    height: 75px;
+}
+
+.personal-figure-small {
+    width: 45px;
+    height: 45px;
+}
+
+.personal-avatar {
+    width: 75px;
+    height: 75px;
+    border-radius: 100%;
+    border: 2px solid transparent;
+    box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.2);
+}
+
+.farol-medium-0 {
+    top: 60px;
+    left: 20px;
+    width: 15px;
+    height: 15px;
+}
+
+.farol-medium-2 {
+    top: 74px;
+    left: 23px;
+    width: 18px;
+    height: 18px;
+}
+
+.farol {
+    position: relative;
+    border-radius: 100%;
+    border: 2px solid #ffffff;
+    margin: 0;
+    padding: 0;
+}
+
+.botoesPainel {
+    height: 70px;
+}
+
+.botoesPerfil {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: none;
+    background-color: #f8f9fa;
+    padding: 2px;
+}
+
+.botoesPerfil label {
+    color: #4B5768;
+    cursor: pointer;
+}
+
+.linksBotoes {
+    text-decoration: none;
+}
+
+.addAmigo {
+    font-size: 15px;
+}
+
+.mensagem img,
+.mensagem label {
+    margin-left: 2px;
+}
+
+.bloquear {
+    margin-right: 3px;
+}
+
+.botoesPerfil img {
+    margin-right: 3px;
+}
+
+.botaoDias {
+    border: 1px solid #9ba9be;
+    border-radius: 10px;
+    padding: 8px 24px;
+}
+
+.botaoDiasSelecionado {
+    border: 2px solid #047857;
+    border-radius: 10px;
+    padding: 8px 24px;
 }

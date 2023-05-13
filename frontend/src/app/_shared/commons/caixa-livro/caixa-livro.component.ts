@@ -11,6 +11,7 @@ export class CaixaLivroComponent implements OnInit {
   @Input('livro') livro: Livro = new Livro(); 
   @Input('emprestimo') emprestimo!: Emprestimo; 
   @Input('uid') uid: number = 0;
+  @Input('origem') origem: string = "";
     
   @Input('mostrarDadosEmprestimo') mostrarDadosEmprestimo: boolean = false;
   @Input('mostrarEmprestador') mostrarEmprestador: boolean = false;
@@ -21,6 +22,7 @@ export class CaixaLivroComponent implements OnInit {
   @Input('mostrarBarraAcao') mostrarBarraAcao: boolean = true;
   
   @Input('mostrarBarraAcao_Solicitar') mostrarBarraAcao_Solicitar: boolean = true;
+  @Input('mostrarBarraAcao_Detalhes') mostrarBarraAcao_Detalhes: boolean = true;
   @Input('mostrarBarraSocial_Favoritos') mostrarBarraSocial_Favoritos: boolean = true;
   @Input('mostrarBarraSocial_FlagFavoritos') mostrarBarraSocial_FlagFavoritos: boolean = false;
 

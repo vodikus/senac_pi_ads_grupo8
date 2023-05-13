@@ -39,6 +39,7 @@ class Constantes
     const ERR_NAO_ENCONTRADO = ['code' => 404, 'message' => 'Recurso não encontrado'];
     const ERR_METODO_NAO_PERMITIDO = ['code' => 405, 'message' => 'Método não permitido'];
     const ERR_ACAO_INDISPONIVEL = ['code' => 501, 'message' => 'Ação Indisponível'];
+    const TIPO_IMAGEM_NAO_SUPORTADO = ['code' => 415, 'message' => 'Tipo de imagem não suportado'];
 
     /** Mensagens - Genéricos  */
     const MSG_TOKEN_OK = ['code' => 1000, 'message' => 'Token OK'];
@@ -61,6 +62,8 @@ class Constantes
     const MSG_USUARIO_LIVRO_STATUS_SUCESSO = ['code' => 1207, 'message' => 'Status do livro alterado com sucesso'];
     const MSG_USUARIO_BLOQUEIO_SUCESSO = ['code' => 1208, 'message' => 'Usuário bloqueado com sucesso'];
     const MSG_USUARIO_DESBLOQUEIO_SUCESSO = ['code' => 1209, 'message' => 'Usuário desbloqueado com sucesso'];
+    const FOTO_USUARIO_SALVA_SUCESSO = ['code' => 1210, 'message' => 'Foto salva com sucesso'];
+    const FOTO_USUARIO_REMOVIDA_SUCESSO = ['code' => 1211, 'message' => 'Foto removida com sucesso'];
     /** Erros - Usuários  */
     const ERR_USUARIO_NAO_ENCONTRADO = ['code' => 9100, 'message' => 'Usuário não encontrado'];
     const ERR_EMAIL_SENHA_INVALIDO = ['code' => 9101, 'message' => 'E-mail ou senha não conferem'];
@@ -82,6 +85,8 @@ class Constantes
     const MSG_LIVRO_AVALIADO_SUCESSO = ['code' => 1203, 'message' => 'Livro avaliado com sucesso'];
     const MSG_LIVRO_FAVORITO_SUCESSO = ['code' => 1204, 'message' => 'Livro adicionado a lista de favoritos'];
     const MSG_LIVRO_DESFAVORITO_SUCESSO = ['code' => 1205, 'message' => 'Livro removido da lista de favoritos'];
+    const CAPA_LIVRO_SALVA_SUCESSO = ['code' => 1206, 'message' => 'Capa adicionada com sucesso'];
+    const CAPA_LIVRO_REMOVIDA_SUCESSO = ['code' => 1207, 'message' => 'Capa removida com sucesso'];
 
     /** Erros - Livros  */
     const ERR_LIVRO_NAO_ENCONTRADO = ['code' => 9200, 'message' => 'Livro não encontrado'];

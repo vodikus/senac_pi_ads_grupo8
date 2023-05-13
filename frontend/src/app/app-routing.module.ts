@@ -11,11 +11,11 @@ import { SuporteComponent } from './pages/suporte/suporte.component';
 import { DenunciaComponent } from './pages/denuncia/denuncia.component'; 
 
 const routes: Routes = [
-  { path: '', component: HomeComponent },
+  { path: '', component: HomeComponent, canActivate: [AuthGuard]  },
   { path: 'login', component: LoginComponent },
   { path: 'emprestados', component: EmprestadosComponent, canActivate: [AuthGuard] },
   { path: 'favoritos', component: FavoritosComponent, canActivate: [AuthGuard] },
-  { path: 'pesquisa', component: PesquisaComponent },
+  { path: 'pesquisa', component: PesquisaComponent, canActivate: [AuthGuard]  },
   { path: 'suporte', component: SuporteComponent, canActivate: [AuthGuard] },
   { path: 'denuncia/:id', component: DenunciaComponent, canActivate: [AuthGuard] },
   

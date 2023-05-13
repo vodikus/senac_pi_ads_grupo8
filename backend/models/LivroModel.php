@@ -107,7 +107,7 @@ class LivroModel extends BaseModel
                 $campos
             ),
             ['lid' => $id]
-        );
+        )[0];
     }
 
     public function buscarLivroPorIsbn($id = 0)
@@ -152,17 +152,27 @@ class LivroModel extends BaseModel
         );
     }
 
-    public function buscarLivroPorUsuario($uid = 0)
+    public function buscarLivroPorUsuario($uid = 0, $lid = 0)
     {
         $campos = SQLHelper::montaCamposSelect($this->campos, 'l');
 
-        return $this->select(
-            "SELECT $campos FROM usuarios_livros ul " .
-            "INNER JOIN usuarios u USING (uid) " .
-            "INNER JOIN livros l USING (lid) " .
-            "WHERE ul.uid = :uid",
-            ['uid' => $uid]
-        );
+        if ($lid == 0) {
+            return $this->select(
+                "SELECT $campos FROM usuarios_livros ul " .
+                "INNER JOIN usuarios u USING (uid) " .
+                "INNER JOIN livros l USING (lid) " .
+                "WHERE ul.uid = :uid",
+                ['uid' => $uid]
+            );
+        } else {
+            return $this->select(
+                "SELECT $campos FROM usuarios_livros ul " .
+                "INNER JOIN usuarios u USING (uid) " .
+                "INNER JOIN livros l USING (lid) " .
+                "WHERE ul.uid = :uid AND ul.lid = :lid",
+                ['uid' => $uid, 'lid' => $lid]
+            )[0];
+        }
     }
 
     public function buscarLivroPorTitulo($titulo = "")

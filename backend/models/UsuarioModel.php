@@ -16,7 +16,9 @@ class UsuarioModel extends BaseModel
         'avatar' => ['protected' => 'none', 'type' => 'varchar', 'visible' => true],
         'apelido' => ['protected' => 'none', 'type' => 'varchar', 'visible' => true, 'required' => true],
         'status' => ['protected' => 'none', 'type' => 'varchar', 'visible' => true],
-        'role' => ['protected' => 'all', 'type' => 'varchar', 'visible' => true]
+        'role' => ['protected' => 'all', 'type' => 'varchar', 'visible' => true],
+        'ultimo_login' => ['protected' => 'all', 'type' => 'timestamp', 'visible' => true],
+        'status_chat' => ['protected' => 'none', 'type' => 'int', 'visible' => true]
     );
 
     public function validaUsuario($uid)
@@ -43,7 +45,7 @@ class UsuarioModel extends BaseModel
             throw $e;
         }
     }
-    public function buscarUsuario($id = 0, $completo = false)
+    public function buscarUsuario($id = 0, $completo = false, $uid = 0)
     {
         try {
             $campos = $this->campos;
@@ -52,11 +54,18 @@ class UsuarioModel extends BaseModel
                     'email' => ['visible' => false],
                     'cpf' => ['visible' => false],
                     'nascimento' => ['visible' => false],
-                    'role' =>  ['visible' => false]
-                ]), ['SQLHelper', 'limpaCamposProtegidos']);                
+                    'role' => ['visible' => false]
+                ]), ['SQLHelper', 'limpaCamposProtegidos']);
             }
             $novosCampos = SQLHelper::montaCamposSelect($campos, 'u');
-            return $this->select("SELECT $novosCampos FROM usuarios u WHERE uid=:uid", ['uid' => $id]);
+            $usuario = $this->select("SELECT $novosCampos FROM usuarios u WHERE uid=:uid", ['uid' => $id])[0];
+
+            if ($uid > 0 && !empty($usuario)) {
+                $usuario["amigo"] = $this->query("SELECT 1 FROM amigos WHERE uid=:uid AND uid_amigo=:uid_amigo", ['uid' => $uid, 'uid_amigo' => $id]);
+                $usuario["bloqueado"] = $this->query("SELECT 1 FROM usuarios_bloqueio WHERE uid=:uid AND uid_blq=:uid_blq", ['uid' => $uid, 'uid_blq' => $id]);
+            }
+
+            return $usuario;
         } catch (Exception $e) {
             throw $e;
         }
@@ -78,14 +87,14 @@ class UsuarioModel extends BaseModel
         } catch (Exception $e) {
             switch ($e->getCode()) {
                 case 23000:
-                    if (stripos($e->getMessage(),'email_uk')) {
+                    if (stripos($e->getMessage(), 'email_uk')) {
                         throw new CLConstException('ERR_EMAIL_EXISTENTE');
                     }
-                    if (stripos($e->getMessage(),'cpf_uk')) {
+                    if (stripos($e->getMessage(), 'cpf_uk')) {
                         throw new CLConstException('ERR_CPF_EXISTENTE');
                     }
                     break;
-            }            
+            }
             throw $e;
         }
     }
@@ -101,7 +110,7 @@ class UsuarioModel extends BaseModel
                 'nascimento' => ['required' => false],
                 'sexo' => ['required' => false],
                 'apelido' => ['required' => false],
-                'senha' =>  ['required' => false]
+                'senha' => ['required' => false]
             ]), ['SQLHelper', 'limpaCamposProtegidos']);
 
             $dados = SQLHelper::validaCampos($campos, $entrada, 'UPDATE');
@@ -110,14 +119,14 @@ class UsuarioModel extends BaseModel
         } catch (Exception $e) {
             switch ($e->getCode()) {
                 case 23000:
-                    if (stripos($e->getMessage(),'email_uk')) {
+                    if (stripos($e->getMessage(), 'email_uk')) {
                         throw new CLConstException('ERR_EMAIL_EXISTENTE');
                     }
-                    if (stripos($e->getMessage(),'cpf_uk')) {
+                    if (stripos($e->getMessage(), 'cpf_uk')) {
                         throw new CLConstException('ERR_CPF_EXISTENTE');
                     }
                     break;
-            }            
+            }
             throw $e;
         }
     }
@@ -142,15 +151,15 @@ class UsuarioModel extends BaseModel
     public function bloquearUsuario($uid, $uid_blq)
     {
         try {
-            return $this->insert("INSERT INTO usuarios_bloqueio (uid, uid_blq) VALUES (:uid,:uid_blq)", ['uid'=>$uid,'uid_blq'=>$uid_blq]);
+            return $this->insert("INSERT INTO usuarios_bloqueio (uid, uid_blq) VALUES (:uid,:uid_blq)", ['uid' => $uid, 'uid_blq' => $uid_blq]);
         } catch (Exception $e) {
             switch ($e->getCode()) {
                 case 23000:
-                    if (stripos($e->getMessage(),'PRIMARY')) {
+                    if (stripos($e->getMessage(), 'PRIMARY')) {
                         throw new CLConstException('ERR_USUARIO_JA_BLOQUEADO');
                     }
                     break;
-            }            
+            }
             throw $e;
         }
     }
@@ -158,7 +167,7 @@ class UsuarioModel extends BaseModel
     public function debloquearUsuario($uid, $uid_blq)
     {
         try {
-            return $this->query("DELETE FROM usuarios_bloqueio WHERE uid=:uid AND uid_blq=:uid_blq", ['uid'=>$uid,'uid_blq'=>$uid_blq]);
+            return $this->query("DELETE FROM usuarios_bloqueio WHERE uid=:uid AND uid_blq=:uid_blq", ['uid' => $uid, 'uid_blq' => $uid_blq]);
         } catch (Exception $e) {
             throw $e;
         }

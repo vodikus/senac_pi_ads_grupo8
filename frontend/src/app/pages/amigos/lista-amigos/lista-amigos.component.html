@@ -2,7 +2,7 @@
 
 <div>
     <div class="row chat-list" *ngFor="let amigo of amigos">
-        <div class="col-2"><img src="{{ amigo.avatar }}" style="width: 36px; height: 36px;" class="img-round"/></div>
+        <div class="col-2"><img src="{{ IMG_SERVER + amigo.avatar }}" style="width: 36px; height: 36px;" class="img-round"/></div>
         <div class="col-7">
             <div class="chat-name">{{ amigo.nome }}</div>
             <div class="chat-status-{{amigo.status_chat}}">

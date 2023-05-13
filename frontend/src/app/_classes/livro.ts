@@ -3,7 +3,7 @@ export class Livro {
     titulo: string = "";
     descricao: string = "";
     avaliacao: number = 0;
-    capa: string = "/imagens/livros/sem-capa.png";
+    capa: string = "/assets/sem-capa.png";
     isbn: string = "";
     status: string = "";
     dh_atualizacao: Date = new Date();

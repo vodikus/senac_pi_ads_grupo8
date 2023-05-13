@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
 
-const CHAT_API = environment.apiUrl + '/chat/';
+const CHAT_API = environment.backendUrl + '/api/chat/';
 
 @Injectable({
   providedIn: 'root'

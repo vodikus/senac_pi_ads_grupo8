@@ -1,1 +1,24 @@
-<p>solicitar-emprestimo works!</p>
+<p>Solicitar Empréstimo</p>
+
+<div>
+    <app-caixa-livro [livro]=livro [uid]=usuarioId [mostrarDadosEmprestimo]="false" [mostrarBarraUsuario]="false" [mostrarBarraSocial]="false" [mostrarBarraAcao]="false"></app-caixa-livro>
+</div>
+
+<div>
+    <app-caixa-usuario [usuarioId]=usuarioId></app-caixa-usuario>
+</div>
+
+<div class="mt-3">
+    <div class="texto-13">Quantidade de Dias</div>
+    <div class="caixaFlex texto-13 w-100 space-around mt-2">
+        <div class="flex1 botaoDias clickable" (click)="selecionaQtdDias(7)" [ngClass]="{ 'botaoDiasSelecionado': qtdDias == 7}">7</div>
+        <div class="flex1 botaoDias clickable" (click)="selecionaQtdDias(15)" [ngClass]="{ 'botaoDiasSelecionado': qtdDias == 15}">15</div>
+        <div class="flex1 botaoDias clickable" (click)="selecionaQtdDias(30)" [ngClass]="{ 'botaoDiasSelecionado': qtdDias == 30}">30</div>
+        <div class="flex1 botaoDias clickable" (click)="selecionaQtdDias(45)" [ngClass]="{ 'botaoDiasSelecionado': qtdDias == 45}">45</div>
+    </div>
+</div>
+
+<div>
+    <button class="botaoAnterior mt-3 text-white" type="button" (click)="solicitarEmprestimo()">Solicitar Empréstimo <i class="fa-regular fa-calendar text-white"></i></button>
+    <button class="botaoAnterior mt-3 text-white bg-primary" type="button" (click)="voltar()">&lt; Voltar</button>
+</div>

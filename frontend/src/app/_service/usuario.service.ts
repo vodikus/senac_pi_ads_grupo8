@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
 
-const USER_API = environment.apiUrl + '/usuarios/';
+const USER_API = environment.backendUrl + '/api/usuarios/';
 
 @Injectable({
   providedIn: 'root'

@@ -103,13 +103,37 @@ class EmprestimoModel extends BaseModel
             $campos = SQLHelper::montaCamposSelect($this->campos, 'e');
             $emprestimo = $this->select($this->montaSelectEmprestimo($campos, "eid=:eid AND uid_tomador=:uid_tomador"), ['uid_tomador' => $uid, 'eid' => $eid]);
             if (count($emprestimo) > 0) {
-                return $emprestimo[0];
+                return $this->complementaEmprestimo($emprestimo[0]);
             } else {
                 throw new CLConstException('ERR_EMPRESTIMO_NAO_LOCALIZADO');
             }
         } catch (Exception $e) {
             throw $e;
         }
+    }
+
+    private function complementaEmprestimo($emprestimo) {
+        $emprestimo["livro"] = (new LivroModel())->buscarLivroPorId($emprestimo["lid"]);
+        $emprestimo["situacao"] = "";
+        switch ($emprestimo["status"]) {
+            case 'EMPR':
+                if (strtotime("now") > strtotime($emprestimo["devolucao_prevista"]))
+                    $emprestimo["situacao"] = "Atrasado";
+                else
+                    $emprestimo["situacao"] = "Em dia";
+                break;
+            case 'SOLI':
+                if ($emprestimo["retirada_prevista"] != null && $emprestimo["devolucao_prevista"] != null)
+                    $emprestimo["situacao"] = "Em espera";
+                else
+                    $emprestimo["situacao"] = "Solicitado";
+                break;
+
+            default:
+                $emprestimo["situacao"] = $this->statusDominio[$emprestimo["status"]];
+                break;
+        }
+        return $emprestimo;
     }
 
     public function listarEmprestimos($uid = 0, $tipo = 'TOMADOS', $status = "")
@@ -135,28 +159,7 @@ class EmprestimoModel extends BaseModel
             }
             $saida = [];
             foreach ($emprestimos as $emprestimo) {
-                $emprestimo["livro"] = (new LivroModel())->buscarLivroPorId($emprestimo["lid"])[0];
-                $emprestimo["situacao"] = "";
-                switch ($emprestimo["status"]) {
-                    case 'EMPR':
-                        if (strtotime("now") > strtotime($emprestimo["devolucao_prevista"]))
-                            $emprestimo["situacao"] = "Atrasado";
-                        else
-                            $emprestimo["situacao"] = "Em dia";
-                        break;
-                    case 'SOLI':
-                        if ($emprestimo["retirada_prevista"] != null && $emprestimo["devolucao_prevista"] != null)
-                            $emprestimo["situacao"] = "Em espera";
-                        else
-                            $emprestimo["situacao"] = "Solicitado";
-                        break;
-
-                    default:
-                        $emprestimo["situacao"] = $this->statusDominio[$emprestimo["status"]];
-                        break;
-                }
-
-                $saida[] = $emprestimo;
+                $saida[] = $this->complementaEmprestimo($emprestimo);
             }
             return $saida;
         } catch (Exception $e) {
@@ -275,6 +278,7 @@ class EmprestimoModel extends BaseModel
                 'dh_solicitacao' => ['protected' => 'none'],
                 'dh_atualizacao' => ['protected' => 'none']
             ]);
+            unset($emprestimo['eid']);
             $dados = SQLHelper::validaCampos($campos, $emprestimo, 'UPDATE');
             if ($this->validaUsuarioLivro($dados) && $this->validaStatusLivro($uid, 'SOLI', $dados)) {
                 if (is_null($dados['retirada_prevista']) || is_null($dados['devolucao_prevista'])) {
@@ -283,8 +287,8 @@ class EmprestimoModel extends BaseModel
                     $sqlSt = $this->query(
                         "UPDATE emprestimos SET " .
                         " retirada_efetiva=CURRENT_TIMESTAMP, status='EMPR', dh_atualizacao=CURRENT_TIMESTAMP " .
-                        " WHERE uid_dono=:uid_dono AND lid=:lid AND uid_tomador=:uid_tomador AND status = 'SOLI'",
-                        array_merge(['uid_tomador' => $uid], $dados)
+                        " WHERE eid=:eid AND uid_dono=:uid_dono AND lid=:lid AND uid_tomador=:uid_tomador AND status = 'SOLI'",
+                        array_merge(['uid_tomador' => $uid, 'eid' => $eid], $dados)
                     );
                 }
             }

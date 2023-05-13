@@ -4,8 +4,11 @@ include_once 'models/UsuarioModel.php';
 include_once 'models/UsuarioAssuntoModel.php';
 include_once 'models/UsuarioLivroModel.php';
 include_once 'models/AmigoModel.php';
+include_once 'models/ImagemModel.php';
+require_once 'helpers/FileHelper.php';
 
 use helpers\MessageHelper;
+use helpers\FileHelper;
 
 class UsuarioController extends BaseController
 {
@@ -27,7 +30,7 @@ class UsuarioController extends BaseController
                         break;
                     case 'buscar':
                         if ($this->isAuth(false)) {
-                            $this->buscar($params['level1'], ($this->getFieldFromToken('roles') == 'admin'));
+                            $this->buscar($params['level1'], ($this->getFieldFromToken('roles') == 'admin'), $this->getFieldFromToken('uid'));
                         } else {
                             $this->buscar($params['level1'], false);
                         }
@@ -99,6 +102,12 @@ class UsuarioController extends BaseController
                             $this->httpRawResponse(401, MessageHelper::fmtMsgConstJson('ERR_NAO_AUTORIZADO'));
                         }
                         break;
+                    case 'enviarFoto':
+                        if ($this->isAuth()) {
+                            $this->enviarFoto($this->getFieldFromToken('uid'), $_FILES);
+                        } else {
+                            $this->httpRawResponse(401, MessageHelper::fmtMsgConstJson('ERR_NAO_AUTORIZADO'));
+                        }
                     default:
                         $this->httpRawResponse(501, MessageHelper::fmtMsgConstJson('ERR_ACAO_INDISPONIVEL'));
                         break;
@@ -150,6 +159,12 @@ class UsuarioController extends BaseController
                             $this->httpRawResponse(401, MessageHelper::fmtMsgConstJson('ERR_NAO_AUTORIZADO'));
                         }
                         break;
+                    case 'removerFoto':
+                        if ($this->isAuth()) {
+                            $this->removerFoto($this->getFieldFromToken('uid'));
+                        } else {
+                            $this->httpRawResponse(401, MessageHelper::fmtMsgConstJson('ERR_NAO_AUTORIZADO'));
+                        }
                     default:
                         $this->httpRawResponse(501, MessageHelper::fmtMsgConstJson('ERR_ACAO_INDISPONIVEL'));
                         break;
@@ -287,12 +302,12 @@ class UsuarioController extends BaseController
      * @apiUse ERR_GENERICOS
      * 
      */
-    public function buscar($id = 0, $completo = false)
+    public function buscar($id = 0, $completo = false, $uid = 0)
     {
         try {
             if (is_numeric($id)) {
                 $usuarioModel = new UsuarioModel();
-                $arrUsuarios = (array) $usuarioModel->buscarUsuario($id, $completo);
+                $arrUsuarios = (array) $usuarioModel->buscarUsuario($id, $completo, $uid);
                 $responseData = json_encode($arrUsuarios);
             } else {
                 $this->httpRawResponse(200, MessageHelper::fmtMsgConstJson('ERR_ID_INVALIDO'));
@@ -776,5 +791,51 @@ class UsuarioController extends BaseController
             $this->httpRawResponse(200, MessageHelper::fmtException($e));
         }
         $this->montarSaidaOk($responseData);
+    }
+
+    /**
+     * @api {post} /usuarios/enviarFoto/ Enviar Foto
+     * @apiName Enviar Foto
+     * @apiGroup Usuários
+     * @apiVersion 1.0.0
+     *
+     * @apiParam {Image} imagem Stream de imagem
+     *
+     * @apiUse SAIDA_PADRAO
+     * @apiUse ERR_GENERICOS
+     * 
+     * @apiErrorExample Error-Response:
+     *     HTTP/1.1 500 Internal Server Error
+     *     {
+     *         "codigo": "9100",
+     *         "mensagem": "Usuário não encontrado",
+     *         "detalhe": ""
+     *     }
+     */
+    public function enviarFoto($uid = 0, $files = 0)
+    {
+        if (FileHelper::validaImagem($files)) {
+            $imagemModel = new ImagemModel();
+            try {
+                $imagemModel->salvaFotoUsuario($uid, $files);
+                $this->httpRawResponse(200, MessageHelper::fmtMsgConstJson('FOTO_USUARIO_SALVA_SUCESSO'));
+            } catch (Exception $e) {
+                $this->httpRawResponse(200, MessageHelper::fmtException($e));
+            }
+
+        } else {
+            $this->httpRawResponse(415, MessageHelper::fmtMsgConstJson('TIPO_IMAGEM_NAO_SUPORTADO'));
+        }
+    }
+
+    public function removerFoto($uid)
+    {
+        $imagemModel = new ImagemModel();
+        try {
+            $imagemModel->removeFotoUsuario($uid);
+            $this->httpRawResponse(200, MessageHelper::fmtMsgConstJson('FOTO_USUARIO_REMOVIDA_SUCESSO'));
+        } catch (Exception $e) {
+            $this->httpRawResponse(200, MessageHelper::fmtException($e));
+        }
     }
 }
