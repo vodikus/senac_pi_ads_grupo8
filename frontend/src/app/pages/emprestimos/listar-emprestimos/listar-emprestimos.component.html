@@ -1,4 +1,6 @@
-<p>Empréstimos</p>
+<div class="my-2">
+    <h2 class="tituloInteresses">Empréstimos</h2>
+</div>
 
 <!-- Barra de filtros -->
 <app-barra-status></app-barra-status>
@@ -8,7 +10,7 @@
     <div *ngFor="let emprestimo of emprestimos">
         <app-caixa-livro [emprestimo]=emprestimo [mostrarLivroDescricao]="false" [mostrarEmprestador]="true"
             [mostrarDadosEmprestimo]="true" [mostrarBarraUsuario]="false" [mostrarBarraAvaliacao]="false"
-            [mostrarBarraSocial]="false" [mostrarBarraAcao_Solicitar]="false" [origem]="'emprestimos'"></app-caixa-livro>
+            [mostrarBarraSocial]="false" [mostrarBarraAcao_Solicitar]="false" [origem]="'emprestimos'" [mostrarLivroStatus]="false"></app-caixa-livro>
     </div>
 </div>
 

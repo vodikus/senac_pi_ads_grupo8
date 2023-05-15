@@ -51,7 +51,7 @@ class LivroModel extends BaseModel
                 "SELECT $campos, " .
                 " group_concat(DISTINCT a.nome_autor ORDER BY a.nome_autor SEPARATOR ', ') autores, " .
                 " group_concat(DISTINCT i.nome_assunto ORDER BY i.nome_assunto SEPARATOR ', ') assuntos, " .
-                " u.nome, u.apelido, u.avatar, u.uid " .
+                " u.nome, u.apelido, u.avatar, u.uid, ul.status as status_livro " .
                 " FROM usuarios_livros ul " .
                 " INNER JOIN livros l ON l.lid = ul.lid " .
                 " INNER JOIN usuarios u ON ul.uid = u.uid " .
@@ -101,7 +101,8 @@ class LivroModel extends BaseModel
         $campos = SQLHelper::montaCamposSelect($this->campos, 'l');
 
         return $this->select(
-            $this->montaSelectLivros(
+            // $this->montaSelectLivros(
+            $this->montaSelectUsuariosLivros(
                 $campos,
                 ' l.lid=:lid ',
                 $campos
@@ -115,7 +116,8 @@ class LivroModel extends BaseModel
         $campos = SQLHelper::montaCamposSelect($this->campos, 'l');
 
         return $this->select(
-            $this->montaSelectLivros(
+            // $this->montaSelectLivros(
+            $this->montaSelectUsuariosLivros(
                 $campos,
                 ' l.isbn=:isbn ',
                 $campos
@@ -129,7 +131,8 @@ class LivroModel extends BaseModel
         $campos = SQLHelper::montaCamposSelect($this->campos, 'l');
 
         return $this->select(
-            $this->montaSelectLivros(
+            // $this->montaSelectLivros(
+            $this->montaSelectUsuariosLivros(
                 $campos,
                 ' i.nome_assunto LIKE :assunto ',
                 $campos
@@ -143,7 +146,8 @@ class LivroModel extends BaseModel
         $campos = SQLHelper::montaCamposSelect($this->campos, 'l');
 
         return $this->select(
-            $this->montaSelectLivros(
+            // $this->montaSelectLivros(
+            $this->montaSelectUsuariosLivros(
                 $campos,
                 ' a.nome_autor LIKE :autor ',
                 $campos
@@ -158,7 +162,7 @@ class LivroModel extends BaseModel
 
         if ($lid == 0) {
             return $this->select(
-                "SELECT $campos FROM usuarios_livros ul " .
+                "SELECT $campos, ul.status as status_livro FROM usuarios_livros ul " .
                 "INNER JOIN usuarios u USING (uid) " .
                 "INNER JOIN livros l USING (lid) " .
                 "WHERE ul.uid = :uid",
@@ -166,7 +170,7 @@ class LivroModel extends BaseModel
             );
         } else {
             return $this->select(
-                "SELECT $campos FROM usuarios_livros ul " .
+                "SELECT $campos, ul.status as status_livro FROM usuarios_livros ul " .
                 "INNER JOIN usuarios u USING (uid) " .
                 "INNER JOIN livros l USING (lid) " .
                 "WHERE ul.uid = :uid AND ul.lid = :lid",

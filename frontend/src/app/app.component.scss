@@ -1,4 +1,4 @@
-*{
+* {
     margin: 0 auto;
     padding: 0;
     text-decoration: none;
@@ -7,47 +7,47 @@
     box-sizing: border-box;
 }
 
-.boxExterna{
+.boxExterna {
     width: 328px;
     height: 624px;
     border-radius: 45px;
     border: 4px solid #A5282C;
 }
 
-.boxInterna{
+.boxInterna {
     width: 304px;
     height: 601px;
     border-radius: 35px;
-    /* cursor: grab; */
-    overflow: auto;
+    overflow: hidden;
 }
 
-.boxInterna::-webkit-scrollbar{
+.boxInterna::-webkit-scrollbar {
     width: 0;
 }
 
-.campoCamera{
+.campoCamera {
     width: 85px;
     height: 22px;
+    z-index: 99;
 }
 
-.cameraFrontal{
+.cameraFrontal {
     width: 15px;
     height: 15px;
     margin-right: 2px;
 }
 
-.rodape{
+.rodape {
     position: fixed;
-    bottom:0%;
+    bottom: 0%;
 }
 
-.iconeTitulo{
+.iconeTitulo {
     width: 48px;
     height: 20px;
 }
 
-.escritaTitulo{
+.escritaTitulo {
     font-size: 13.4px;
     font-weight: 800;
     font-family: 'Open Sans', sans-serif;
@@ -57,5 +57,30 @@
 }
 
 .vh-95 {
-    height: 95vh!important;
+    height: 95vh !important;
+}
+
+
+/* ===== Scrollbar CSS ===== */
+/* Firefox */
+.scrollbar-cb {
+    scrollbar-width: auto;
+    scrollbar-color: #047857 #ffffff;
+    overflow: auto;
+    margin-left: 5px;
+}
+
+/* Chrome, Edge, and Safari */
+.scrollbar-cb::-webkit-scrollbar {
+    width: 10px;
+}
+
+.scrollbar-cb::-webkit-scrollbar-track {
+    background: #ffffff;
+}
+
+.scrollbar-cb::-webkit-scrollbar-thumb {
+    background-color: #047857;
+    border-radius: 10px;
+    border: 3px solid #ffffff;
 }

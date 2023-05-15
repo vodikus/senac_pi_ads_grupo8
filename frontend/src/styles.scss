@@ -139,7 +139,7 @@
 }
 
 .space-around {
-	justify-content: space-around;
+    justify-content: space-around;
 }
 
 .flex {
@@ -192,7 +192,6 @@
     border: 2px solid black;
     border-width: thin;
     border-radius: 5px;
-    margin-bottom: 7%;
 }
 
 .form-group {
@@ -228,6 +227,9 @@ select {
     border: none;
 }
 
+
+
+.botaoVerde,
 .botaoEnviar,
 .botaoContinuar,
 .botaoAnterior,
@@ -235,6 +237,15 @@ select {
 .botaoFinalizar {
     font-family: 'Inter', sans-serif;
     background-color: #499F68;
+    height: 45px;
+    width: 100%;
+    border-radius: 5px;
+    border: none;
+}
+
+.botaoVermelho {
+    font-family: 'Inter', sans-serif;
+    background-color: #b84040;
     height: 45px;
     width: 100%;
     border-radius: 5px;
@@ -294,6 +305,11 @@ select {
 }
 
 .caixaDeTexto::placeholder {
+    color: rgb(168, 168, 168);
+    font-size: 12px;
+}
+
+.form-control::placeholder {
     color: rgb(168, 168, 168);
     font-size: 12px;
 }
@@ -382,7 +398,8 @@ select {
 
 .caixaPesquisaForm {
     font-size: 13px;
-    height: 2%;
+    height: 20px;
+    padding-left: 10px;
 }
 
 .caixaPesquisaForm:focus::-webkit-input-placeholder {
@@ -540,4 +557,39 @@ select {
     border: 2px solid #047857;
     border-radius: 10px;
     padding: 8px 24px;
+}
+
+.linhaBottom {
+    border-bottom: 1px solid black;
+}
+
+.popUp {
+    font-size: 12px;
+    padding: 10px;
+    margin-bottom: 15px;
+    border-radius: 5px;
+    box-shadow: 1px 1px 2.5px 0.5px gray;
+}
+
+.bg-verde-cl {
+    background-color: #047857;
+}
+
+.verde-cl {
+    color: #047857;
+}
+
+.modalPopup {
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px #333;
+    position: absolute;
+    width: 270px;
+    top: 35%;
+    padding: 24px;
+    z-index: 11;
+}
+
+.control-file > input {
+    display: none;
 }

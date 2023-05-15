@@ -9,6 +9,12 @@ class UsuarioAssuntoModel extends BaseModel
         'iid' => ['protected' => 'none', 'type' => 'int', 'visible' => true, 'required' => true]
     );
 
+
+    public function listarAssuntos($uid)
+    {
+        return $this->select("SELECT a.iid, a.nome_assunto FROM usuarios_assuntos ua INNER JOIN assuntos a ON a.iid = ua.iid WHERE uid=:uid", ['uid' => $uid]);
+    }
+
     public function adicionarUsuarioAssunto($uid, $entrada)
     {
         try {
@@ -23,11 +29,11 @@ class UsuarioAssuntoModel extends BaseModel
         } catch (Exception $e) {
             switch ($e->getCode()) {
                 case 23000:
-                    if (stripos($e->getMessage(),'PRIMARY')) {
+                    if (stripos($e->getMessage(), 'PRIMARY')) {
                         throw new CLConstException('ERR_USUARIO_ASSUNTO_VINCULO_EXISTENTE', "iid: {$dados['iid']}");
                     }
                     break;
-            }            
+            }
             throw $e;
         }
     }

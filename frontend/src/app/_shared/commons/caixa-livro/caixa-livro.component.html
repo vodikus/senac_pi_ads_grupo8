@@ -1,8 +1,8 @@
 <div class="livroBox">
     <!-- Caixa com a capa, titulo, autor e descrição -->
     <div class="caixaFlex">
-        <div>
-            <img src="{{ (livro.capa) || 'assets/sem-capa.png' }}" class="livroCapa">
+        <div *ngIf="mostrarCapa">
+            <img src="{{ livro.capa == undefined ? 'assets/sem-capa.png' : IMG_SERVER + livro.capa }}" class="livroCapa">
             <span *ngIf="emprestimo?.situacao == 'Atrasado'; else tarjaSituacao">
                 <div class="bg-danger text-center texto-10 text-white">{{ emprestimo.situacao | uppercase }}</div>
             </span>
@@ -15,6 +15,10 @@
             <div class="livroTitulo">{{ livro.titulo }}</div>
             <div class="livroAutor">{{ livro.autores }}</div>
             <div class="livroDescricao" *ngIf="mostrarLivroDescricao">{{ livro.descricao }}</div>
+            <div class="caixaFlex texto-10" *ngIf="mostrarLivroStatus">
+                <div class="grow2">Status do Livro</div>
+                <div class="text-end">{{ livro.status_livro == 'D' ? 'Disponivel' : 'Não Disponivel'}}</div>
+            </div>
             <div class="vcenter emprestador caixaFlex" *ngIf="mostrarEmprestador">
                 <div class="texto-pequeno1">Emprestador</div>
                 <div class="grow2 text-end"><app-barra-usuario [uid]=uid *ngIf="mostrarEmprestador" [mostraChat]="false"
@@ -51,6 +55,10 @@
                     </div>
                 </ng-template>
                 <div class="caixaFlex">
+                    <div class="grow2">Quantidade de Dias</div>
+                    <div class="text-end">{{ emprestimo.qtd_dias }}</div>
+                </div>
+                <div class="caixaFlex">
                     <div class="grow2">Status</div>
                     <div class="text-end">{{ emprestimo.situacao }}</div>
                 </div>
@@ -72,6 +80,6 @@
     <app-barra-social *ngIf="mostrarBarraSocial" [usuarioId]=uid [livroId]=livro.lid [flagFavoritos]=mostrarBarraSocial_FlagFavoritos></app-barra-social>
     <!-- Barra de icones ações-->
     <app-barra-acoes *ngIf="mostrarBarraAcao" [usuarioId]=uid [livroId]=livro.lid [mostrarSolicitar]=mostrarBarraAcao_Solicitar [mostrarDetalhes]=mostrarBarraAcao_Detalhes 
-    [emprestimoId]=emprestimo.eid [origem]=origem></app-barra-acoes>
+    [emprestimoId]=emprestimo.eid [origem]=origem [mostrarGerenciar]=mostrarBarraAcao_Gerenciar></app-barra-acoes>
 
 </div>

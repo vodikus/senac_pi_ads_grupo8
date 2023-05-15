@@ -1,3 +1,7 @@
+<app-popup #modal [tipo]="'alerta'" [botoes]="{'cancelar': true,'confirmar': true,'ok':false}" (retorno)="cancelarReserva($event)"
+[texto]="'Confirma o cancelamento da reserva?'" [titulo]="'Cancelamento'">
+</app-popup>
+
 <p>Detalhe do Empréstimo</p>
 
 <div *ngIf="emprestimoCarregado">
@@ -13,5 +17,5 @@
 
 
 <div class="mt-3" *ngIf="emprestimo.status=='SOLI'">
-    <button class="botaoAnterior mt-3 text-white bg-danger" type="button"><i class="fa-solid fa-x text-white"></i> Cancelar</button>
+    <button class="botaoAnterior mt-3 text-white bg-danger" type="button" (click)="modal.showPopup()"><i class="fa-solid fa-x text-white"></i> Cancelar</button>
 </div>

@@ -10,4 +10,5 @@ export class Livro {
     autores: string = "";
     assuntos: string = "";
     uid: number = 0;
+    status_livro: string = "";
 }

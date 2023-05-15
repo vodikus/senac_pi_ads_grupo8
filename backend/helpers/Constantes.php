@@ -43,6 +43,8 @@ class Constantes
 
     /** Mensagens - Genéricos  */
     const MSG_TOKEN_OK = ['code' => 1000, 'message' => 'Token OK'];
+    const MSG_EMAIL_OK = ['code' => 1001, 'message' => 'Email OK'];
+    const MSG_CPF_OK = ['code' => 1002, 'message' => 'CPF OK'];
 
     /** Erros - Genéricos  */
     const ERR_NAODEFINIDO = ['code' => 9000, 'message' => 'Erro não definido'];

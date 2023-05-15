@@ -1,0 +1,105 @@
+<!----------------------------------------------------------------------------- Parte do título e solicitação ------------------------------------------------------------------>
+<div class="cabecalho mt-3 d-flex flex-column justify-content-flex-start">
+    <h2 class="titulo mb-0">Endereço</h2>
+</div>
+<!------------------------------------------------------------------- Parte do formulário de solicitação de documento e nome --------------------------------------------------->
+<form class="formEndereco w-100 d-flex flex-column align-items-start" [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="divDados w-100 mt-3">
+        <div class="mb-3 w-100 texto-13">
+            <label class="mb-0" for="cep">CEP</label>
+            <input class="form-control" name="cep" type="text" formControlName="cep"
+                [ngClass]="{ 'is-invalid': enviado && f['cep'].errors }" (focusout)="buscaCep($event)"
+                placeholder="00000-000" maxlength="9" pattern="[0-9]{5}-[0-9]{3}">
+            <div *ngIf="enviado && f['cep'].errors" class="texto-11">
+                <div *ngIf="f['cep'].errors['required']" class="text-danger">É necessário informar o CEP</div>
+                <div *ngIf="f['cep'].errors['maxlength']" class="text-danger">Tamanho de CEP inválido</div>
+            </div>
+        </div>
+
+        <div class="mb-3 w-100 texto-13">
+            <label class="mb-0" for="logradouro">Logradouro</label>
+            <input class="form-control" name="logradouro" type="text" formControlName="logradouro"
+                [ngClass]="{ 'is-invalid': enviado && f['logradouro'].errors }">
+            <div *ngIf="enviado && f['cep'].errors" class="texto-11">
+                <div *ngIf="f['cep'].errors['required']" class="text-danger">É necessário informar o Logradouro</div>
+            </div>
+        </div>
+
+        <div class="mb-3 w-100 texto-13">
+            <label class="mb-0" for="numero">Número</label>
+            <input class="form-control" name="numero" type="text" formControlName="numero"
+                [ngClass]="{ 'is-invalid': enviado && f['numero'].errors }">
+            <div *ngIf="enviado && f['numero'].errors" class="texto-11">
+                <div *ngIf="f['numero'].errors['required']" class="text-danger">É necessário informar o Número</div>
+            </div>
+        </div>
+
+        <div class="mb-3 w-100 texto-13">
+            <label class="mb-0" for="complemento">Complemento</label>
+            <input class="form-control" name="complemento" type="text" formControlName="complemento">
+        </div>
+
+        <div class="mb-3 w-100 texto-13">
+            <label class="mb-0" for="bairro">Bairro</label>
+            <input class="form-control" name="bairro" type="text" formControlName="bairro"
+                [ngClass]="{ 'is-invalid': enviado && f['bairro'].errors }">
+            <div *ngIf="enviado && f['bairro'].errors" class="texto-11">
+                <div *ngIf="f['bairro'].errors['required']" class="text-danger">É necessário informar o Bairro</div>
+            </div>
+        </div>
+
+        <div class="mb-3 w-100 texto-13">
+            <label class="mb-0" for="cidade">Cidade</label>
+            <input class="form-control" name="cidade" type="text" formControlName="cidade"
+                [ngClass]="{ 'is-invalid': enviado && f['cidade'].errors }">
+            <div *ngIf="enviado && f['cidade'].errors" class="texto-11">
+                <div *ngIf="f['cidade'].errors['required']" class="text-danger">É necessário informar a Cidade</div>
+            </div>
+        </div>
+
+        <div class="mb-3 w-100 texto-13">
+            <label class="mb-0" for="estado">UF</label>
+            <select name="uf" class="form-select" formControlName="uf"
+                [ngClass]="{ 'is-invalid': enviado && f['uf'].errors }">
+                <option value="AC">AC - Acre</option>
+                <option value="AL">AL - Alagoas</option>
+                <option value="AM">AM - Amazonas</option>
+                <option value="AP">AP - Amapá</option>
+                <option value="BA">BA - Bahia</option>
+                <option value="CE">CE - Ceará</option>
+                <option value="DF">DF - Distrito Federal</option>
+                <option value="ES">ES - Espirito Santo</option>
+                <option value="GO">GO - Goiás</option>
+                <option value="MA">MA - Maranhão</option>
+                <option value="MG">MG - Minas Gerais</option>
+                <option value="MS">MS - Mato Grosso do Sul</option>
+                <option value="MT">MT - Mato Grosso</option>
+                <option value="PA">PA - Pará</option>
+                <option value="PB">PB - Paraába</option>
+                <option value="PE">PE - Pernambuco</option>
+                <option value="PI">PI - Piauí</option>
+                <option value="PR">PR - Paraná</option>
+                <option value="RJ">RJ - Rio de Janeiro</option>
+                <option value="RN">RN - Rio Grande do Norte</option>
+                <option value="RO">RO - Rondônia</option>
+                <option value="RR">RR - Roraima</option>
+                <option value="RS">RS - Rio Grande do Sul</option>
+                <option value="SC">SC - Santa Catarina</option>
+                <option value="SE">SE - Sergipe</option>
+                <option value="SP">SP - São Paulo</option>
+                <option value="TO">TO - Tocantins</option>
+            </select>
+            <div *ngIf="enviado && f['uf'].errors" class="texto-11">
+                <div *ngIf="f['uf'].errors['required']" class="text-danger">É necessário informar a UF</div>
+            </div>
+        </div>
+    </div>
+
+    <!------------------------------------------------------------ Botões para voltar para página anterior ou avançar para próxima ------------------------------------------------->
+    <div class="divBotoes d-inline-flex w-100">
+        <div class="divBotoes d-inline-flex w-100">
+            <button class="botaoProximo mt-3 text-white" type="submit">Cadastrar</button>
+        </div>
+    </div>
+</form>
+<!----------------------------------------------------------------------------------- Fim do código ---------------------------------------------------------------------------->

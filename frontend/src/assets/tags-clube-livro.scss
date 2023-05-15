@@ -1,0 +1,56 @@
+@import "../../node_modules/ngx-chips/core/styles/core/_core.scss";
+
+$tags-clube-primary: #7ac9b2;
+$tags-clube-primary-dark: darken($tags-clube-primary, 10%);
+$tag-color: #047857;
+
+// this is the container's theme
+$tags-clube-livro: (
+    container-border-bottom: 1px solid $tags-clube-primary
+);
+
+// this is the tag's theme
+$tags-clube-tag-theme: (
+    background: $tags-clube-primary,
+    background-focused: $tags-clube-primary-dark,
+    background-active: $tags-clube-primary-dark,
+    background-hover: $tags-clube-primary-dark,
+    color: #047857,
+    color-hover: #fff,
+    border-radius: 10px,
+    font-size: 12px
+);
+
+// this is the delete icon's theme
+$tags-clube-icon-theme: (
+    fill: #047857,
+    fill-focus: #eee,
+    transition: all 0.35s
+);
+
+// apply theme to the container
+::ng-deep tag-input .ng2-tag-input.tags-clube-livro {
+    @include tag-input-theme($tags-clube-livro);
+}
+
+// apply theme to the tags
+::ng-deep tag-input .ng2-tag-input.tags-clube-livro tag {
+    @include tag-theme($tags-clube-tag-theme);
+}
+
+// apply theme to the delete icon
+::ng-deep tag-input .ng2-tag-input.tags-clube-livro tag delete-icon {
+    @include icon-theme($tags-clube-icon-theme);
+}
+
+::ng-deep tag-input .ng2-tag-input__text-input {
+    margin-top: 20px;
+    border: 1px solid #ced4da !important;
+    border-radius: 10px;
+    width: 100% !important;
+}
+
+::ng-deep tag-input-form {
+    width: 100%;
+}
+

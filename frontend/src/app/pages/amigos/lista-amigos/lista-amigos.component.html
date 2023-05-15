@@ -1,6 +1,9 @@
-<p>Amigos</p>
+<div class="my-2">
+    <h2 class="tituloInteresses">Amigos</h2>
+</div>
 
-<div>
+
+<div *ngIf="amigos?.length > 0; else semAmigos">
     <div class="row chat-list" *ngFor="let amigo of amigos">
         <div class="col-2"><img src="{{ IMG_SERVER + amigo.avatar }}" style="width: 36px; height: 36px;" class="img-round"/></div>
         <div class="col-7">
@@ -14,3 +17,10 @@
         <div class="col-1"><img src="assets/usuario.png" class="img-tiny1 clickable" [routerLink]="['/usuarios/perfil/',amigo.uid_amigo]"/></div>
     </div>
 </div>
+
+<!-- Caso não tenha nenhuma mensagem -->
+<ng-template #semAmigos>
+    <div class="texto-pequeno3 text-center">
+        Vocês não tem nenhum amigo ainda
+    </div>
+</ng-template>

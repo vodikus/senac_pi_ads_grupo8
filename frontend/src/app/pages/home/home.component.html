@@ -1,9 +1,11 @@
-<p>Sugestões</p>
+<div class="my-2">
+    <h2 class="tituloInteresses">Sugestões</h2>
+</div>
 
 <!-- Lista de sugestões de livros -->
 <div *ngIf="livros?.length > 0; else noDataBlock">
     <div *ngFor="let livro of livros">
-        <app-caixa-livro [uid]=livro.uid [livro]=livro [mostrarDadosEmprestimo]="false" [mostrarEmprestador]="false"></app-caixa-livro>
+        <app-caixa-livro [uid]=livro.uid [livro]=livro [mostrarDadosEmprestimo]="false" [mostrarEmprestador]="false" [mostrarLivroStatus]="false"></app-caixa-livro>
     </div>
 </div>
 

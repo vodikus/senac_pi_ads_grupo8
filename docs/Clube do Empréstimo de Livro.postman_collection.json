@@ -4,7 +4,7 @@
 		"name": "Clube do Empréstimo de Livro",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "6732260",
-		"_collection_link": "https://dimensa-gcad.postman.co/workspace/SENAC~eadd709e-2b55-49f2-8a82-38ac5fb22564/collection/6732260-552bc50a-afae-45aa-a062-1a4a57e8002b?action=share&creator=6732260&source=collection_link"
+		"_collection_link": ""
 	},
 	"item": [
 		{
@@ -107,7 +107,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://{{URL}}/api/usuarios/buscar/46",
+							"raw": "http://{{URL}}/api/usuarios/buscar/39",
 							"protocol": "http",
 							"host": [
 								"{{URL}}"
@@ -116,7 +116,7 @@
 								"api",
 								"usuarios",
 								"buscar",
-								"46"
+								"39"
 							]
 						}
 					},
@@ -163,6 +163,26 @@
 					"response": []
 				},
 				{
+					"name": "Listar Assuntos",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://{{URL}}/api/usuarios/listar-assuntos",
+							"protocol": "http",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"usuarios",
+								"listar-assuntos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "Adicionar Usuário",
 					"request": {
 						"method": "POST",
@@ -186,6 +206,35 @@
 								"api",
 								"usuarios",
 								"adicionar"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Validar E-mail",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"teste@teste.com.br\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{URL}}/api/usuarios/validar",
+							"protocol": "http",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"usuarios",
+								"validar"
 							]
 						}
 					},
@@ -308,7 +357,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "[\r\n    {\"iid\":\"51\"}\r\n]",
+							"raw": "[\r\n    {\"iid\":\"52\"},\r\n    {\"iid\":\"55\"},\r\n    {\"iid\":\"60\"}\r\n]",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -465,7 +514,7 @@
 						"method": "POST",
 						"header": [],
 						"url": {
-							"raw": "http://{{URL}}/api/usuarios/adicionarAmigo/3",
+							"raw": "http://{{URL}}/api/usuarios/adicionarAmigo/103",
 							"protocol": "http",
 							"host": [
 								"{{URL}}"
@@ -474,7 +523,7 @@
 								"api",
 								"usuarios",
 								"adicionarAmigo",
-								"3"
+								"103"
 							]
 						}
 					},
@@ -486,7 +535,7 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "http://{{URL}}/api/usuarios/removerAmigo/45",
+							"raw": "http://{{URL}}/api/usuarios/removerAmigo/103",
 							"protocol": "http",
 							"host": [
 								"{{URL}}"
@@ -495,7 +544,7 @@
 								"api",
 								"usuarios",
 								"removerAmigo",
-								"45"
+								"103"
 							]
 						}
 					},
@@ -670,7 +719,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"nome_autor\": \"Arthur Conan Doyle\"\r\n}",
+							"raw": "{\r\n    \"nome_autor\": \"Harvey Deitel\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -791,23 +840,11 @@
 				},
 				{
 					"name": "Buscar Assunto por Nome",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
 					"request": {
 						"method": "GET",
 						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"nome_assunto\": \"te\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
 						"url": {
-							"raw": "http://{{URL}}/api/assuntos/buscar-por-nome",
+							"raw": "http://{{URL}}/api/assuntos/buscar-por-nome?nome_assunto=te",
 							"protocol": "http",
 							"host": [
 								"{{URL}}"
@@ -816,6 +853,12 @@
 								"api",
 								"assuntos",
 								"buscar-por-nome"
+							],
+							"query": [
+								{
+									"key": "nome_assunto",
+									"value": "te"
+								}
 							]
 						}
 					},
@@ -828,7 +871,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"nome_assunto\": \"Romance\"\r\n}",
+							"raw": "{\r\n    \"nome_assunto\": \"Suspense\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -915,7 +958,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://{{URL}}/api/livros/listar?ordem=avaliacao,asc",
+							"raw": "http://{{URL}}/api/livros/listar",
 							"protocol": "http",
 							"host": [
 								"{{URL}}"
@@ -928,7 +971,8 @@
 							"query": [
 								{
 									"key": "ordem",
-									"value": "avaliacao,asc"
+									"value": "avaliacao,asc",
+									"disabled": true
 								}
 							]
 						}
@@ -993,7 +1037,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://{{URL}}/api/livros/buscar-por-id/6",
+							"raw": "http://{{URL}}/api/livros/buscar-por-id?id=6",
 							"protocol": "http",
 							"host": [
 								"{{URL}}"
@@ -1001,8 +1045,13 @@
 							"path": [
 								"api",
 								"livros",
-								"buscar-por-id",
-								"6"
+								"buscar-por-id"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "6"
+								}
 							]
 						}
 					},
@@ -1117,7 +1166,7 @@
 					"response": []
 				},
 				{
-					"name": "Buscar Livro por Usuário",
+					"name": "Buscar Livros por Usuário",
 					"request": {
 						"method": "GET",
 						"header": [],
@@ -1143,13 +1192,64 @@
 					"response": []
 				},
 				{
+					"name": "Listar Meus Livros",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://{{URL}}/api/livros/meus-livros",
+							"protocol": "http",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"livros",
+								"meus-livros"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Buscar Livro do Usuário",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://{{URL}}/api/livros/buscar-por-usuario?uid=4",
+							"protocol": "http",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"livros",
+								"buscar-por-usuario"
+							],
+							"query": [
+								{
+									"key": "lid",
+									"value": "6",
+									"disabled": true
+								},
+								{
+									"key": "uid",
+									"value": "4"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "Adicionar Livro",
 					"request": {
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"titulo\": \"O assassinato no Expresso do Oriente 2\",\r\n    \"descricao\": \"A matança continua rolando solta no trenzão e Hercule Poirot tenta descobrir o assassino.\",\r\n    \"isbn\": \"5\"\r\n}",
+							"raw": "{\r\n    \"titulo\": \"Java®: Como Programar\",\r\n    \"descricao\": \"Milhões de alunos e profissionais aprenderam programação e desenvolvimento de software com os livros Deitel®. Java: como programar, 10ª edição, fornece uma introdução clara, simples, envolvente e divertida à programação Java com ênfase inicial em objetos.\",\r\n    \"isbn\": \"8543004799\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1178,7 +1278,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"lid\": 11,\r\n    \"nota\": 4.75\r\n}",
+							"raw": "{\r\n    \"lid\": 5,\r\n    \"nota\": 4\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1207,7 +1307,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "[\r\n    {\r\n        \"lid\": 6,\r\n        \"aid\": 1\r\n    },\r\n    {\r\n        \"lid\": 6,\r\n        \"aid\": 3\r\n    }    \r\n]",
+							"raw": "[\r\n    {\r\n        \"lid\": 5,\r\n        \"aid\": 4\r\n    },\r\n    {\r\n        \"lid\": 6,\r\n        \"aid\": 5\r\n    },\r\n    {\r\n        \"lid\": 7,\r\n        \"aid\": 3\r\n    },\r\n    {\r\n        \"lid\": 8,\r\n        \"aid\": 3\r\n    },\r\n    {\r\n        \"lid\": 9,\r\n        \"aid\": 2\r\n    },\r\n    {\r\n        \"lid\": 10,\r\n        \"aid\": 2\r\n    },\r\n    {\r\n        \"lid\": 11,\r\n        \"aid\": 7\r\n    },\r\n    {\r\n        \"lid\": 11,\r\n        \"aid\": 8\r\n    }\r\n]",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1265,7 +1365,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "[\r\n    {\r\n        \"lid\": 9,\r\n        \"iid\": 1\r\n    },\r\n    {\r\n        \"lid\": 9,\r\n        \"iid\": 10\r\n    }\r\n]",
+							"raw": "[\r\n    {\r\n        \"lid\": 4,\r\n        \"iid\": 20\r\n    }\r\n]",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1294,7 +1394,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "[\r\n    {\r\n        \"lid\": 9,\r\n        \"iid\": 1\r\n    }\r\n]",
+							"raw": "[\r\n    {\r\n        \"lid\": 4,\r\n        \"iid\": 10\r\n    }\r\n]",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1465,12 +1565,12 @@
 								{
 									"key": "imagem",
 									"type": "file",
-									"src": "/C:/Users/ivan.pereira/Documents/SENAC/ProjetoIntegrador/fotos/2023-03-22 19_46_45-O mundo perdido _ Amazon.com.br.png"
+									"src": "/C:/Users/ivan.pereira/Documents/SENAC/ProjetoIntegrador/fotos/livros/B00E9ALT20.01._SCLZZZZZZZ_SX500_.jpg"
 								}
 							]
 						},
 						"url": {
-							"raw": "http://{{URL}}/api/livros/enviarCapa?id=12",
+							"raw": "http://{{URL}}/api/livros/enviarCapa?id=5",
 							"protocol": "http",
 							"host": [
 								"{{URL}}"
@@ -1483,7 +1583,7 @@
 							"query": [
 								{
 									"key": "id",
-									"value": "12"
+									"value": "5"
 								}
 							]
 						}
@@ -1508,7 +1608,7 @@
 							"urlencoded": []
 						},
 						"url": {
-							"raw": "http://{{URL}}/api/emprestimos/buscar/19",
+							"raw": "http://{{URL}}/api/emprestimos/buscar/29",
 							"protocol": "http",
 							"host": [
 								"{{URL}}"
@@ -1517,7 +1617,7 @@
 								"api",
 								"emprestimos",
 								"buscar",
-								"19"
+								"29"
 							]
 						}
 					},
@@ -1589,7 +1689,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"uid_dono\": 1,\r\n    \"lid\": 3,\r\n    \"qtd_dias\": 15\r\n}",
+							"raw": "{\r\n    \"uid_dono\": 39,\r\n    \"lid\": 12,\r\n    \"qtd_dias\": 15\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1618,7 +1718,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"retirada_prevista\": \"2023-05-15 12:31:00\",\r\n    \"devolucao_prevista\": \"2023-05-30 12:31:00\",\r\n    \"eid\": 2\r\n}",
+							"raw": "{\r\n    \"retirada_prevista\": \"2023-05-15\",\r\n    \"devolucao_prevista\": \"2023-05-30\",\r\n    \"eid\": 16\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1647,7 +1747,7 @@
 						"method": "PUT",
 						"header": [],
 						"url": {
-							"raw": "http://{{URL}}/api/emprestimos/desistir/2",
+							"raw": "http://{{URL}}/api/emprestimos/desistir/5",
 							"protocol": "http",
 							"host": [
 								"{{URL}}"
@@ -1656,7 +1756,7 @@
 								"api",
 								"emprestimos",
 								"desistir",
-								"2"
+								"5"
 							]
 						}
 					},
@@ -1878,7 +1978,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"uid_amigo\": \"45\",\r\n    \"mensagem\": \"Lorem ipsum 2...\"\r\n}",
+							"raw": "{\r\n    \"uid_amigo\": \"4\",\r\n    \"mensagem\": \"Bom dia!\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"

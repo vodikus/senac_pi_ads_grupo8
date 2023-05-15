@@ -1,0 +1,28 @@
+<div class="mt-3">
+    <div class="w-100 mb-2">
+        <div>
+            <p>Alterar Foto</p>
+        </div>
+    </div>
+    <div class="w-100 mb-2 text-center">
+        <div>
+            <img src="{{ perfil?.avatar == undefined ? IMG_SERVER +'/imagens/usuarios/padrao.png' : IMG_SERVER + perfil?.avatar }}"
+                class="img-round text-center img-medium5" />
+            <div class="mt-2 text-center texto-10">Foto Atual</div>
+        </div>
+    </div>
+    <div class="control-file text-center">
+        <label for="arquivo" class="texto-12 clickable text-primary">Clique para selecionar uma nova foto</label>
+        <input id="arquivo" name="arquivo" type="file" (change)="selectFile($event)" accept="image/png, image/jpeg"/>
+    </div>
+    <div *ngIf="currentFile" class="progress my-3">
+        <div class="progress-bar progress-bar-info progress-bar-striped" role="progressbar"
+            attr.aria-valuenow="{{ progress }}" aria-valuemin="0" aria-valuemax="100"
+            [ngStyle]="{ width: progress + '%' }">
+            {{ progress }}%
+        </div>
+    </div>
+    <div class="w-100 mt-4 text-center">
+        <button class="btn btn-success btn-sm" [disabled]="!selectedFiles" (click)="upload()">Enviar</button>
+    </div>
+</div>

@@ -4,6 +4,9 @@ import { RouterModule } from '@angular/router';
 
 import { BarRatingModule } from "ngx-bar-rating";
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { TagInputModule } from 'ngx-chips';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MomentModule } from 'ngx-moment';
 
 import { BarraStatusComponent } from './barra-status/barra-status.component';
 import { BarraUsuarioComponent } from './barra-usuario/barra-usuario.component';
@@ -28,7 +31,10 @@ import { CaixaUsuarioComponent } from './caixa-usuario/caixa-usuario.component';
     RouterModule,
     BarRatingModule,
     ReactiveFormsModule, 
-    FormsModule
+    FormsModule,
+    TagInputModule, 
+    BrowserAnimationsModule,
+    MomentModule
   ],
   exports: [
     BarraStatusComponent,
@@ -37,7 +43,15 @@ import { CaixaUsuarioComponent } from './caixa-usuario/caixa-usuario.component';
     BarraSocialComponent,
     CaixaLivroComponent,
     PopupComponent,
-    CaixaUsuarioComponent
+    CaixaUsuarioComponent,
+    ReactiveFormsModule, 
+    FormsModule,
+    TagInputModule, 
+    BrowserAnimationsModule,
+    MomentModule
+  ],
+  providers: [
+     
   ]
 })
 export class PadraoModule { }

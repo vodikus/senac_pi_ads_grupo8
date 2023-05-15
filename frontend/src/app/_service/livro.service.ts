@@ -20,6 +20,22 @@ export class LivroService {
     return this.http.get(LIVRO_API + 'buscar-por-usuario?uid='+uid);
   }
 
+  buscarLivrosPorAssunto(termo: string): Observable<any> {
+    return this.http.get(LIVRO_API + 'buscar-por-assunto?nome_assunto='+termo);
+  }
+
+  buscarLivrosPorTitulo(termo: string): Observable<any> {
+    return this.http.get(LIVRO_API + 'buscar-por-titulo?titulo='+termo);
+  }
+
+  buscarLivrosPorAutor(termo: string): Observable<any> {
+    return this.http.get(LIVRO_API + 'buscar-por-autor?nome_autor='+termo);
+  }
+
+  buscarMeusLivros(): Observable<any> {
+    return this.http.get(LIVRO_API + 'meus-livros');
+  }
+
   buscarLivrosPorId(id: number): Observable<any> {
     return this.http.get(LIVRO_API + 'buscar-por-id?id='+id);
   }

@@ -49,6 +49,10 @@ class LivroController extends BaseController
                     case 'buscar-por-usuario':
                         $this->buscarUsuario($params['params']);
                         break;
+                    case 'meus-livros':
+                        $entrada = sprintf("?uid=%s",$this->getFieldFromToken('uid'));
+                        $this->buscarUsuario($entrada);
+                        break;
                     case 'favoritos':
                         if ($this->isAuth()) {
                             $this->listarFavoritos($this->getFieldFromToken('uid'), $params['params']);

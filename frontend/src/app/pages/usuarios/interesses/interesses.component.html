@@ -1,0 +1,16 @@
+<div class="segundoCabecalho mt-2 d-flex flex-column justify-content-flex-start">
+    <h2 class="tituloInteresses mb-0">Interesses</h2>
+    <p class="subtitulo mt-2 mb-2">Selecione um ou mais temas de interesse</p>
+</div>
+
+<div class="p-2 m-0 w-100">
+    <tag-input [ngModel]="assuntos" secondaryPlaceholder="Nenhum assunto encontrado" placeholder="Digite um assunto"
+        [theme]="'tags-clube-livro'" [identifyBy]="'iid'" [displayBy]="'nome_assunto'"
+        (onAdd)="adicionarAssunto($event)" (onRemove)="removerAssunto($event)">
+        <tag-input-dropdown [autocompleteObservable]='buscaAssunto' [identifyBy]="'iid'"
+            [displayBy]="'nome_assunto'"></tag-input-dropdown>
+    </tag-input>
+</div>
+<div class="divBotoes d-inline-flex w-100">
+    <button class="botaoFinalizar mt-3 text-white" type="button" [routerLink]="['/usuarios']">Finalizar</button>
+</div>

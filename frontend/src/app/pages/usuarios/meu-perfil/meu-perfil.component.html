@@ -1,18 +1,104 @@
-<p>Meu Perfil</p>
-
-<div>
-    <div class="caixaFlex">
-        <div><img src="{{ IMG_SERVER + perfil.avatar }}" class="img-round text-center img-medium5"/></div>
-        <div class="mx-2">
-            <div class="texto-8">Nome</div>
-            <div class="texto-11">{{ perfil.nome }}</div>
-            <div class="texto-8">E-mail</div>
-            <div class="texto-11">{{ perfil.email }}</div>
-            <div class="texto-8">CPF</div>
-            <div class="texto-11">{{ perfil.cpf }}</div>
-            <div class="texto-8">Apelido</div>
-            <div class="texto-11">{{ perfil.apelido }}</div>
+<div class="mt-3">
+    <div class="caixaFlex w-100 linhaBottom mb-2" style="height: 25px;">
+        <div class="grow0">
+            <p>Meu Perfil</p>
+        </div>
+        <div class="texto-10 grow2 text-end align-middle">
+            <div class="mt-2 text-primary"><i class="fa-regular fa-pen-to-square text-primary"></i> Editar</div>
+        </div>
+    </div>
+    <div>
+        <div class="caixaFlex">
+            <div>
+                <img src="{{ perfil?.avatar == undefined ? IMG_SERVER +'/imagens/usuarios/padrao.png' : IMG_SERVER + perfil?.avatar }}?data={{ agora }}"
+                    class="img-round text-center img-medium5" />
+                <div class="mt-2 text-center texto-10 clickable" [routerLink]="['/usuarios/avatar']"><i class="fa-solid fa-camera"></i> Alterar Foto</div>
+            </div>
+            <div class="mx-2">
+                <div class="texto-8">Nome</div>
+                <div class="texto-11">{{ perfil?.nome }}</div>
+                <div class="texto-8">E-mail</div>
+                <div class="texto-11">{{ perfil?.email }}</div>
+                <div class="texto-8">CPF</div>
+                <div class="texto-11">{{ perfil?.cpf }}</div>
+                <div class="texto-8">Apelido</div>
+                <div class="texto-11">{{ perfil?.apelido }}</div>
+            </div>
         </div>
     </div>
 </div>
 
+<div class="mt-3">
+    <div class="caixaFlex w-100 linhaBottom mb-2" style="height: 25px;">
+        <div class="grow0">
+            <p>Endereço</p>
+        </div>
+        <div class="texto-10 grow2 text-end align-middle">
+            <div class="mt-2 clickable text-primary" [routerLink]="['/usuarios/endereco']" *ngIf="enderecos!.length == 0"><i class="fa-solid fa-plus text-primary"></i> Adicionar</div>
+        </div>
+    </div>
+    <div *ngIf="enderecos!.length > 0; else semEndereco">
+        <div *ngFor="let endereco of enderecos" class="w-100">
+            <div class="texto-10">
+                <div class="caixaFlex">
+                    <div class="grow2">
+                        <div class=""><span><b>CEP:</b> {{ endereco.cep }}</span></div>
+                        <div class=""><span>{{ endereco.logradouro }}, {{ endereco.numero }} {{ endereco.complemento
+                                }}</span>
+                        </div>
+                        <div class=""><span>{{ endereco.bairro }} - {{ endereco.cidade }} - {{ endereco.uf }}</span>
+                        </div>
+                    </div>
+                    <div class="caixaFlex">
+                        <div class="mx-1 clickable" (click)="deletarEndereco(endereco.enid)"><i class="fa-regular fa-trash-can"></i></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <ng-template #semEndereco>
+        <div class="texto-10">Nenhum endereço cadastrado</div>
+    </ng-template>
+</div>
+
+<div class="mt-3">
+    <div class="caixaFlex w-100 linhaBottom mb-2" style="height: 25px;">
+        <div class="grow0">
+            <p>Assuntos de interesse</p>
+        </div>
+        <div class="texto-10 grow2 text-end align-middle">
+            <div class="mt-2 clickable text-primary" [routerLink]="['/usuarios/interesses']"><i class="fa-solid fa-pen-to-square text-primary"></i> Editar</div>
+        </div>
+    </div>
+    <div *ngIf="assuntos!.length > 0; else semAssunto" class="debug1">
+        <div *ngFor="let assunto of assuntos" class="w-100">
+            <span class="badge bg-success m-1" style="float: left;">{{assunto.nome_assunto}}</span>
+        </div>
+    </div>
+    <ng-template #semAssunto>
+        <div class="texto-10">Nenhum assunto cadastrado</div>
+    </ng-template>
+    <div style="clear: both;"></div>
+</div>
+
+
+<div class="mt-3">
+    <div class="caixaFlex w-100 linhaBottom mb-2" style="height: 25px;">
+        <div class="grow0">
+            <p>Meus Livros</p>
+        </div>
+        <div class="texto-10 grow2 text-end align-middle">
+            <div class="mt-2"><i class="fa-solid fa-plus"></i> Adicionar</div>
+        </div>
+    </div>
+    <div *ngIf="livros!.length > 0; else semLivro">
+        <div *ngFor="let livro of livros" class="w-100">
+            <app-caixa-livro [uid]=livro.uid [livro]=livro [mostrarDadosEmprestimo]="false" [mostrarEmprestador]="false"
+                [mostrarBarraUsuario]="false" [mostrarBarraSocial]="false" [mostrarBarraAvaliacao]="false"
+                [mostrarBarraAcao_Solicitar]="false" [mostrarBarraAcao_Gerenciar]="true" [mostrarLivroDescricao]="false" [mostrarCapa]="false"></app-caixa-livro>
+        </div>
+    </div>
+    <ng-template #semLivro>
+        <div class="texto-10">Nenhum livro cadastrado</div>
+    </ng-template>
+</div>

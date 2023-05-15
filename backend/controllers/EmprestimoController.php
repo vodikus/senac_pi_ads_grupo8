@@ -170,7 +170,7 @@ class EmprestimoController extends BaseController
         try {
             if (is_numeric($eid)) {
                 $emprestimoModel = new EmprestimoModel();
-                $arrEmprestimo = $emprestimoModel->buscaEmprestimo($uid, $eid);
+                $arrEmprestimo = $emprestimoModel->buscaEmprestimo($eid);
                 if (count($arrEmprestimo) > 0) {
                     $responseData = json_encode($arrEmprestimo);
                 } else {

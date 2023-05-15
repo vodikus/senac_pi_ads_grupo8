@@ -9,6 +9,7 @@ import { AppComponent } from './app.component';
 import { AmigosModule } from './pages/amigos/amigos.module';
 import { CadastroModule } from './pages/cadastro/cadastro.module';
 import { EmprestimosModule } from './pages/emprestimos/emprestimos.module';
+import { EmprestadosModule } from './pages/emprestados/emprestados.module';
 import { PadraoModule } from './_shared/commons/padrao.module';
 import { UsuariosModule } from './pages/usuarios/usuarios.module';
 
@@ -17,12 +18,10 @@ import { AuthInterceptor } from './_interceptor/auth.interceptor';
 import { LoginComponent } from './pages/login/login.component';
 import { MenuComponent } from './menu/menu.component';
 import { HomeComponent } from './pages/home/home.component';
-import { EmprestadosComponent } from './pages/emprestados/emprestados.component';
 import { PesquisaComponent } from './pages/pesquisa/pesquisa.component';
 import { FavoritosComponent } from './pages/favoritos/favoritos.component';
 import { SuporteComponent } from './pages/suporte/suporte.component';
 import { DenunciaComponent } from './pages/denuncia/denuncia.component';
-
 
 @NgModule({
   declarations: [
@@ -30,7 +29,6 @@ import { DenunciaComponent } from './pages/denuncia/denuncia.component';
     LoginComponent,
     MenuComponent,
     HomeComponent,
-    EmprestadosComponent,
     PesquisaComponent,
     FavoritosComponent,
     SuporteComponent,
@@ -42,6 +40,7 @@ import { DenunciaComponent } from './pages/denuncia/denuncia.component';
     CadastroModule,
     FormsModule,
     HttpClientModule,
+    EmprestadosModule,
     EmprestimosModule,
     PadraoModule,
     AmigosModule,

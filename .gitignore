@@ -3,6 +3,11 @@ modelo-clube-livro.mwb.bak
 tests/backend/vendor/*
 tests/backend/.phpunit.result.cacheREADME.md.bak
 backend/imagens/livros/*
-backend/imagens/usuarios/*
 .idea/*
 tests/backend/.phpunit.result.cache
+backend/imagens/usuarios/bob.jpg
+backend/imagens/usuarios/charlene.jpg
+backend/imagens/usuarios/dino.jpg
+backend/imagens/usuarios/fran.jpg
+backend/imagens/usuarios/uid-39-avatar.jpg
+backend/imagens/usuarios/uid-103-avatar.jpg
