@@ -2,17 +2,13 @@ import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
 
 import { CadastroComponent } from "./cadastro.component";
-import { DadosacessoComponent } from "./dadosacesso/dadosacesso.component";
-import { DadospessoaisComponent } from "./dadospessoais/dadospessoais.component";
-import { EnderecoComponent } from "./endereco/endereco.component";
-import { PerfilComponent } from "./perfil/perfil.component";
+import { AcessoComponent } from "./acesso/acesso.component";
+import { ConfirmacaoComponent } from "./confirmacao/confirmacao.component";
 
 const cadastroRoutes: Routes = [
     {path: 'cadastro', component: CadastroComponent, children: [
-        {path: 'dadosacesso', component: DadosacessoComponent},
-        {path: 'dadospessoais', component: DadospessoaisComponent},
-        {path: 'endereco', component: EnderecoComponent},
-        {path: 'perfil', component: PerfilComponent},
+        {path: 'acesso', component: AcessoComponent},
+        {path: 'confirmacao', component: ConfirmacaoComponent},
     ]}
 ];
 

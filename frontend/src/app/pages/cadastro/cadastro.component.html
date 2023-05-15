@@ -1,23 +1,27 @@
 <!--------------------------------------------------------------------- Menu superior com botões de página de navegação -------------------------------------------------------->
-<ul class="pagination d-inline-flex align-items-center mt-3 flex-nowrap nav-pills nav-fill">
+<div class="text-center">
+
+  <ul class="pagination d-inline-flex align-items-center mt-3 flex-nowrap nav-pills nav-fill">
     <li class="page-item">
-      <a routerLink="/cadastro/dadosacesso" class="page-link pagina1 active-success" rel="/dadosacesso/page-item" aria-current="page">1</a>
+      <span class="page-link pagina1" [routerLinkActive]="['active-success']">1</span>
     </li>
     <p class="separacaoBotoes">------------------------</p>
     <li class="page-item">
-      <a routerLink="/cadastro/dadospessoais" class="page-link pagina2" href="#">2</a>
+      <span class="page-link pagina2" [routerLinkActive]="['active-success']">2</span>
     </li>
-    <p class="separacaoBotoes">------------------------</p>
-    <li class="page-item">
-      <a routerLink="/cadastro/endereco" class="page-link pagina3" href="#">3</a>
-    </li>
-    <p class="separacaoBotoes">------------------------</p>
-    <li class="page-item">
-      <a routerLink="/cadastro/perfil" class="page-link pagina4" href="#">4</a>
-    </li>
+    <!-- <p class="separacaoBotoes">------------------------</p>
+      <li class="page-item">
+        <span [routerLink]="['/cadastro/endereco']" class="page-link pagina3"  [routerLinkActive]="['active-success']">3</span>
+      </li>
+      <p class="separacaoBotoes">------------------------</p>
+      <li class="page-item">
+        <span [routerLink]="['/cadastro/perfil']" class="page-link pagina4"  [routerLinkActive]="['active-success']">4</span>
+      </li> -->
   </ul>
+</div>
 <!----------------------------------------------------------------- Lugar onde irão aparecer as informações das rotas filhas --------------------------------------------------->
 <div>
-    <router-outlet></router-outlet>
+  <router-outlet></router-outlet>
 </div>
+
 <!--------------------------------------------------------------------------------------- Fim do código ------------------------------------------------------------------------>

@@ -1,27 +1,42 @@
 <div class="personal-image">
     <span class="farol farol-medium-2 bg-success"></span>
     <figure class="personal-figure">
-        <img src="{{ IMG_SERVER + perfil.avatar }}" class="img-round img-medium-2" alt="avatar">
+        <img src="{{ perfil.avatar == undefined ? IMG_SERVER +'/imagens/usuarios/padrao.png' : IMG_SERVER + perfil.avatar }}"
+            class="img-round img-medium-2" alt="avatar">
     </figure>
     <output class="nome">{{ perfil.nome }}</output>
 </div>
 <div class="botoesPainel d-inline-flex justify-content-between align-items-end w-100 flex-wrap">
-    <div class="clickable" [routerLink]="['/amigos/chat/',perfil.uid]" *ngIf="perfil.bloqueado == 0">
-        <img src="/assets/balao_chat.png" class="img-tiny2" alt="">
+    <div class="clickable" [routerLink]="['/amigos/chat/',usuarioId]">
+        <i class="fa-regular fa-comment fa-lg"></i>
         <span class="mx-2 texto-13">Mensagem</span>
     </div>
 
-    <div class="clickable">
-        <img src="/assets/bloquear.png" class="img-tiny2" alt="">
-        <span class="mx-2 texto-13">{{ perfil.bloqueado == 1 ? 'Desbloquear' : 'Bloquear' }}</span>
+    <div class="clickable" *ngIf="perfil.bloqueado == 0; else desbloquearUsuario" (click)="bloquearUsuario()">
+        <i class="fa-solid fa-lock"></i>
+        <span class="mx-2 texto-13">Bloquear</span>
     </div>
 
-    <div class="clickable">
-        <img src="/assets/adicionarAmigo.png" class="img-tiny2" alt="">
-        <span class="mx-2 texto-13">{{ perfil.amigo == 1 ? 'Remover amigo' : 'Adicionar amigo' }}</span>
+    <ng-template #desbloquearUsuario>
+        <div class="clickable" (click)="desbloqUsuario()">
+            <i class="fa-solid fa-unlock"></i>
+            <span class="mx-2 texto-13">Desbloquear</span>
+        </div>
+    </ng-template>
+
+    <div class="clickable" (click)="adicionarAmigo()" *ngIf="perfil.amigo == 0; else removerAmigo">
+        <i class="fa-solid fa-user-plus"></i>
+        <span class="mx-2 texto-13">Adicionar amigo</span>
     </div>
 
-    <div class="clickable" [routerLink]="['/denuncia/',perfil.uid]">
+    <ng-template #removerAmigo>
+        <div class="clickable" (click)="excluirAmigo()">
+            <i class="fa-solid fa-user-minus"></i>
+            <span class="mx-2 texto-13">Remover amigo</span>
+        </div>
+    </ng-template>
+
+    <div class="clickable" [routerLink]="['/denuncia/',usuarioId]">
         <img src="/assets/denuncia.png" class="img-tiny2" alt="">
         <span class="mx-2 texto-13">Denúncia</span>
     </div>
@@ -33,8 +48,8 @@
     <!-- Lista de sugestões de livros -->
     <div *ngIf="livros!.length > 0; else noDataBlock">
         <div *ngFor="let livro of livros">
-            <app-caixa-livro [uid]=livro.uid [livro]=livro [mostrarDadosEmprestimo]="false"
-                [mostrarEmprestador]="false" [mostrarBarraUsuario]="false"></app-caixa-livro>
+            <app-caixa-livro [uid]=livro.uid [livro]=livro [mostrarDadosEmprestimo]="false" [mostrarEmprestador]="false"
+                [mostrarBarraUsuario]="false" [mostrarLivroStatus]="false"></app-caixa-livro>
         </div>
     </div>
 

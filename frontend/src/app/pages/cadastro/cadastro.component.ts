@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
+type Detalhe = {usuarioId: number};
+
 @Component({
   selector: 'app-cadastro',
   templateUrl: './cadastro.component.html',
@@ -7,7 +9,6 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CadastroComponent implements OnInit {
 
-  constructor() { }
 
   ngOnInit(): void {
   }

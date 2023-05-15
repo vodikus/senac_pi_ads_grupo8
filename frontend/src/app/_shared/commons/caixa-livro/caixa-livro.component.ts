@@ -13,9 +13,11 @@ export class CaixaLivroComponent implements OnInit {
   @Input('uid') uid: number = 0;
   @Input('origem') origem: string = "";
     
+  @Input('mostrarCapa') mostrarCapa: boolean = true;
   @Input('mostrarDadosEmprestimo') mostrarDadosEmprestimo: boolean = false;
   @Input('mostrarEmprestador') mostrarEmprestador: boolean = false;
   @Input('mostrarLivroDescricao') mostrarLivroDescricao: boolean = true;
+  @Input('mostrarLivroStatus') mostrarLivroStatus: boolean = true;
   @Input('mostrarBarraAvaliacao') mostrarBarraAvaliacao: boolean = true;
   @Input('mostrarBarraUsuario') mostrarBarraUsuario: boolean = true;
   @Input('mostrarBarraSocial') mostrarBarraSocial: boolean = true;
@@ -23,6 +25,7 @@ export class CaixaLivroComponent implements OnInit {
   
   @Input('mostrarBarraAcao_Solicitar') mostrarBarraAcao_Solicitar: boolean = true;
   @Input('mostrarBarraAcao_Detalhes') mostrarBarraAcao_Detalhes: boolean = true;
+  @Input('mostrarBarraAcao_Gerenciar') mostrarBarraAcao_Gerenciar: boolean = false;
   @Input('mostrarBarraSocial_Favoritos') mostrarBarraSocial_Favoritos: boolean = true;
   @Input('mostrarBarraSocial_FlagFavoritos') mostrarBarraSocial_FlagFavoritos: boolean = false;
 

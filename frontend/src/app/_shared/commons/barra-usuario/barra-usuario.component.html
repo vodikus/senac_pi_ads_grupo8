@@ -1,5 +1,9 @@
-<div class="caixaFlex">
-    <div class="grow2" [ngClass]="{'texto-12': tamanho == 0, 'texto-pequeno1': tamanho == 1}"><img src="{{ IMG_SERVER + usuario.avatar }}" class="img-round" [ngClass]="{'img-small': tamanho == 0, 'img-tiny1': tamanho == 1}" /> {{ usuario.nome }}</div>
-    <div class="grow0" *ngIf="mostraChat"><img src="assets/balao_chat.png" class="img-tiny0 m-1 clickable" [routerLink]="['/amigos/chat/',usuario.uid]"/></div>
-    <div class="grow0" *ngIf="mostraPerfil"><img src="assets/usuario.png" class="img-tiny0 m-1 clickable" [routerLink]="['/usuarios/perfil/',usuario.uid]"/></div>
+<div class="caixaFlex w-100">
+        <div class="grow2" [ngClass]="{'texto-12': tamanho == 0, 'texto-pequeno1': tamanho == 1}"><img
+                        src="{{ usuario.avatar == undefined ? IMG_SERVER +'/imagens/usuarios/padrao.png' : IMG_SERVER + usuario.avatar }}"
+                        class="img-round" [ngClass]="{'img-small': tamanho == 0, 'img-tiny1': tamanho == 1}" />
+                {{ usuario.nome }}
+        </div>
+        <div class="grow0" *ngIf="mostraChat" class=" m-1 clickable" [routerLink]="['/amigos/chat/',uid]"><i class="fa-regular fa-comment"></i></div>
+        <div class="grow0" *ngIf="mostraPerfil" class="m-1 clickable" [routerLink]="['/usuarios/perfil/',uid]"><i class="fa-regular fa-user"></i></div>
 </div>

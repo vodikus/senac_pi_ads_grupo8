@@ -1,0 +1,61 @@
+<div class="segundoCabecalho mt-2 d-flex flex-column justify-content-flex-start">
+    <h2 class="tituloInteresses mb-0">Gerenciar Empréstimo</h2>
+</div>
+
+<div *ngIf="emprestimoCarregado">
+    <app-caixa-livro [emprestimo]=emprestimo [mostrarLivroDescricao]="false" [mostrarEmprestador]="false"
+        [mostrarDadosEmprestimo]="true" [mostrarBarraUsuario]="false" [mostrarBarraAvaliacao]="false"
+        [mostrarBarraSocial]="false" [mostrarBarraAcao]="false" [mostrarLivroStatus]="false"></app-caixa-livro>
+</div>
+
+<div *ngIf="emprestimoCarregado" class="mt-3">
+    <app-caixa-usuario [usuarioId]=emprestimo.uid_dono></app-caixa-usuario>
+</div>
+
+<div class="mt-3 w-100" *ngIf="erroCarregamento">
+    <div class="text-center text-danger texto-13">{{ mensagemErro.codigo }} - {{ mensagemErro.mensagem }}</div>
+</div>
+
+<div class="mt-3 w-100 border rounded-1 p-2" *ngIf="emprestimo.status=='SOLI'">
+    <div class="texto-14 mb-2">Previsão de Retirada e Devolução</div>
+    <form [formGroup]="form" (ngSubmit)="agendaEntrega()">
+        <div>
+            <div class="texto-12">
+                <label for="retirada_prevista">Retirada</label>
+                <input type="date" formControlName="retirada_prevista" min="{{ hoje | date: 'yyyy-MM-dd'}}"
+                    (change)="calculaDevolucao($event)" class="form-control"
+                    [ngClass]="{ 'is-invalid': enviado && f['retirada_prevista'].errors }">
+                <div *ngIf="enviado && f['retirada_prevista'].errors" class="texto-11">
+                    <div *ngIf="f['retirada_prevista'].errors['required']" class="text-danger">Data de Retirada
+                        obrigatória</div>
+                </div>
+            </div>
+        </div>
+        <div>
+            <div class="texto-12">
+                <label for="devolucao_prevista">Devolução</label>
+                <input type="date" formControlName="devolucao_prevista" min="{{ minDevolucao | date: 'yyyy-MM-dd'}}"
+                    class="form-control" [ngClass]="{ 'is-invalid': enviado && f['devolucao_prevista'].errors }">
+                <div *ngIf="enviado && f['devolucao_prevista'].errors" class="texto-11">
+                    <div *ngIf="f['devolucao_prevista'].errors['required']" class="text-danger">Data de Devolução
+                        obrigatória</div>
+                </div>
+            </div>
+
+
+        </div>
+        <div>
+            <button class="botaoAnterior mt-3 text-white bg-success" type="submit">
+                Agendar Entrega <i class="fa-solid fa-calendar text-white"></i></button>
+        </div>
+    </form>
+</div>
+
+<div class="mt-3">
+    <button class="botaoAnterior mt-3 text-white bg-success" type="button"
+        *ngIf="emprestimo.status=='SOLI' && emprestimo.retirada_prevista" (click)="confirmaEntrega()">
+        Confirmar Entrega <i class="fa-solid fa-check text-white"></i></button>
+
+    <button class="botaoAnterior mt-3 text-white bg-success" type="button" *ngIf="emprestimo.status=='EMPR'" (click)="confirmaDevolucao()">
+        Confirmar Devolução <i class="fa-solid fa-check text-white"></i></button>
+</div>

@@ -1,1 +1,21 @@
-<p>popup works!</p>
+<div class="popUp modalPopup" *ngIf="show">
+    <!-- Barra Topo -->
+    <div class="caixaFlex w-100">
+        <div class="mx-2">
+            <i class="fa-solid fa-circle-info fa-xl verde-cl" *ngIf="tipo == 'info'"></i>
+            <i class="fa-solid fa-triangle-exclamation fa-xl text-danger" *ngIf="tipo == 'alerta'"></i>
+        </div>
+        <div class="grow2 texto-12">{{ titulo }}</div>
+        <div class="text-end"><i class="fa-solid fa-xmark" (click)="enviaRetorno('fechar')"></i></div>
+    </div>
+    <!-- Corpo -->
+    <div class="mx-4 mt-2 px-2 texto-11">
+        {{ texto }}
+    </div>
+    <!-- Botões -->
+    <div class="caixaFlex">
+        <button class="botaoVermelho mt-3 mx-1 text-white" type="button" *ngIf="botoes['cancelar']" (click)="enviaRetorno('cancelar')"><i class="fa-solid fa-xmark fa-xl text-white"></i> Cancelar</button>
+        <button class="botaoVerde mt-3 mx-1 text-white" type="button" *ngIf="botoes['confirmar']" (click)="enviaRetorno('confirmar')">Confirmar <i class="fa-solid fa-check fa-xl text-white"></i></button>
+        <button class="botaoVerde mt-3 mx-1 text-white" type="button" *ngIf="botoes['ok']" (click)="enviaRetorno('ok')">Ok</button>
+    </div>
+</div>

@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { DadosacessoComponent } from './dadosacesso.component';
+import { InteressesComponent } from './interesses.component';
 
-describe('DadosacessoComponent', () => {
-  let component: DadosacessoComponent;
-  let fixture: ComponentFixture<DadosacessoComponent>;
+describe('InteressesComponent', () => {
+  let component: InteressesComponent;
+  let fixture: ComponentFixture<InteressesComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ DadosacessoComponent ]
+      declarations: [ InteressesComponent ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(DadosacessoComponent);
+    fixture = TestBed.createComponent(InteressesComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

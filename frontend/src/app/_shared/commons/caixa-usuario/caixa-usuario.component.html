@@ -1,34 +1,23 @@
-<div class="caixaFlex">
+<div class="caixaFlex ">
     <div class="personal-image" style="width: 120px; margin-top: -10px;">
         <span class="farol farol-medium-0"
             [ngClass]="{ 'bg-success': perfil.status_chat==1, 'bg-secondary': perfil.status_chat==0}"></span>
         <img src="{{ perfil.avatar == undefined ? IMG_SERVER +'/imagens/usuarios/padrao.png' : IMG_SERVER + perfil.avatar }}" class="img-round img-medium0" alt="avatar">
-        <div class="texto-10">{{ perfil.nome }}</div>
+        <div class="texto-10 text-center mt-1">{{ perfil.nome }}</div>
     </div>
-    <div class="botoesPainel d-inline-flex justify-content-between align-items-end w-100 flex-wrap">
-        <div class="clickable" [routerLink]="['/amigos/chat/',perfil.uid]">
-            <img src="/assets/balao_chat.png" class="img-tiny1" alt="">
+    <!-- <div class="botoesPainel d-inline-flex justify-content-between align-items-start w-100 flex-wrap"> -->
+    <div class="botoesPainel mt-1">
+        <div class="clickable" [routerLink]="['/amigos/chat/',uid]">
+            <i class="fa-regular fa-comment"></i>
             <span class="mx-2 texto-10">Mensagem</span>
         </div>
 
-        <div class="clickable">
-            <img src="/assets/bloquear.png" class="img-tiny1" alt="">
-            <span class="mx-2 texto-10">{{ perfil.bloqueado == 1 ? 'Desbloquear' : 'Bloquear' }}</span>
-        </div>
-
-        <div class="clickable" [routerLink]="['/usuarios/perfil',perfil.uid]">
-            <img src="/assets/usuario.png" class="img-tiny1" alt="">
+        <div class="clickable" [routerLink]="['/usuarios/perfil',uid]">
+            <!-- <img src="/assets/usuario.png" class="img-tiny1" alt=""> -->
+            <i class="fa-regular fa-user"></i>
             <span class="mx-2 texto-10">Perfil</span>
         </div>
 
-        <div class="clickable" [routerLink]="['/denuncia/',perfil.uid]">
-            <img src="/assets/denuncia.png" class="img-tiny1" alt="">
-            <span class="mx-2 texto-10">Denúncia</span>
-        </div>
 
-        <div class="clickable">
-            <img src="/assets/adicionarAmigo.png" class="img-tiny1" alt="">
-            <span class="mx-2 texto-10">{{ perfil.amigo == 1 ? 'Remover amigo' : 'Adicionar amigo' }}</span>
-        </div>
     </div>
 </div>

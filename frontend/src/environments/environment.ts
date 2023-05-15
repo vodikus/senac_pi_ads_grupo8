@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  backendUrl: "http://clube-backend"
+  backendUrl: "http://clube-backend",
+  cepProvider: "OPENCEP"
 };
 
 /*

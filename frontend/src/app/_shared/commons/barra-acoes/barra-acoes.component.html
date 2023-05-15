@@ -16,4 +16,9 @@
         <div><img src="assets/solicitar.png" class="img-tiny1" /></div>
         <div class="texto-pequeno3">Solicitar</div>
     </div>
+    <div class="grow1 text-center clickable" *ngIf="mostrarGerenciar && emprestimoId > 0"
+        [routerLink]="['/emprestimos/gerenciar/',emprestimoId]">
+        <div><i class="fa-solid fa-gear fa-lg"></i></div>
+        <div class="texto-pequeno3">Gerenciar</div>
+    </div>
 </div>

@@ -10,15 +10,7 @@
 
     <label class="mb-0" for="password">Senha</label>
     <input class="caixaDeTexto shadow-sm" type="password" name="password" [(ngModel)]="form.password" required minlength="1" #password="ngModel">
-<!------------------------------------------------------------------------------ Check box "Manter conectado" ------------------------------------------------------------------>
-    <div class="form-check mt-3 p-0">
-        <label class="form-check-label d-inline-flex align-items-center justify-content-center align-contents-end" for="flexCheckDefault">
-            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" name="manterConectado">                                    
-            <span class="mt-2"></span>
-            <label class="labelCheckbox ms-2 mt-2" for="manterConectado" onclick="document.getElementById('flexCheckDefault').click()">Mantenha-me conectado</label>
-        </label>
-    </div>
-    <div class="w-100 mensagemErro text-center">{{ errorMessage }}</div>
+    <div class="mt-1 w-100 mensagemErro text-center">{{ errorMessage }}</div>
 <!------------------------------------------------------------------------------ Botão para realizar login --------------------------------------------------------------------->
     <button class="botaoContinuar mt-3 text-white" type="submit">Continuar</button>
 </form>
@@ -50,6 +42,6 @@
 <!----------------------------------------------------------------- Mensagem caso não tenha cadastro e link para cadastro ------------------------------------------------------>
 <div class="mensagemCadastro w-100 d-inline-flex justify-content-center mt-4">
     <p>Não tem uma conta?</p>
-    <a routerLink="/cadastro/dadosacesso" class="linkCadastro text-success ms-2">Cadastre-se</a>
+    <a routerLink="/cadastro/acesso" class="linkCadastro text-success ms-2">Cadastre-se</a>
 </div>
 <!------------------------------------------------------------------------------------ Fim do código --------------------------------------------------------------------------->

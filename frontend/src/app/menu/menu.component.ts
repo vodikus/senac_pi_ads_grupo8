@@ -14,18 +14,24 @@ export class MenuComponent implements OnInit {
   constructor(private auth: AuthService, private router: Router) { }
 
   ngOnInit(): void {
-    // this.autenticado = this.auth.isLoggedIn();
-    this.autenticado = true;
+    this.auth.SendLogInStatusEvent.subscribe((data: boolean) => {
+      this.autenticado = data;
+    });
   }
 
   pegarNivelUrl(nivel: number): string {
     const arvoreUrl = this.router.parseUrl(this.router.url);
     arvoreUrl.queryParams = {};
     arvoreUrl.fragment = null;
-    if ( this.router.url != '/' ) {
+    if (this.router.url != '/') {
       return arvoreUrl.root.children['primary'].segments[nivel].toString();
     }
     return "";
+  }
+
+  logout(): void {
+    this.auth.logout();
+    this.router.navigateByUrl('/login');
   }
 
 }
