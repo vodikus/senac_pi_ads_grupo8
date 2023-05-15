@@ -719,7 +719,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"nome_autor\": \"Arthur Conan Doyle\"\r\n}",
+							"raw": "{\r\n    \"nome_autor\": \"Harvey Deitel\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -871,7 +871,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"nome_assunto\": \"Terrorismo\"\r\n}",
+							"raw": "{\r\n    \"nome_assunto\": \"Suspense\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -958,7 +958,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://{{URL}}/api/livros/listar?ordem=avaliacao,asc",
+							"raw": "http://{{URL}}/api/livros/listar",
 							"protocol": "http",
 							"host": [
 								"{{URL}}"
@@ -971,7 +971,8 @@
 							"query": [
 								{
 									"key": "ordem",
-									"value": "avaliacao,asc"
+									"value": "avaliacao,asc",
+									"disabled": true
 								}
 							]
 						}
@@ -1216,7 +1217,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://{{URL}}/api/livros/buscar-por-usuario?uid=39",
+							"raw": "http://{{URL}}/api/livros/buscar-por-usuario?uid=4",
 							"protocol": "http",
 							"host": [
 								"{{URL}}"
@@ -1234,7 +1235,7 @@
 								},
 								{
 									"key": "uid",
-									"value": "39"
+									"value": "4"
 								}
 							]
 						}
@@ -1248,7 +1249,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"titulo\": \"O assassinato no Expresso do Oriente 2\",\r\n    \"descricao\": \"A matança continua rolando solta no trenzão e Hercule Poirot tenta descobrir o assassino.\",\r\n    \"isbn\": \"5\"\r\n}",
+							"raw": "{\r\n    \"titulo\": \"Java®: Como Programar\",\r\n    \"descricao\": \"Milhões de alunos e profissionais aprenderam programação e desenvolvimento de software com os livros Deitel®. Java: como programar, 10ª edição, fornece uma introdução clara, simples, envolvente e divertida à programação Java com ênfase inicial em objetos.\",\r\n    \"isbn\": \"8543004799\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1277,7 +1278,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"lid\": 11,\r\n    \"nota\": 4.75\r\n}",
+							"raw": "{\r\n    \"lid\": 5,\r\n    \"nota\": 4\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1306,7 +1307,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "[\r\n    {\r\n        \"lid\": 6,\r\n        \"aid\": 1\r\n    },\r\n    {\r\n        \"lid\": 6,\r\n        \"aid\": 3\r\n    }    \r\n]",
+							"raw": "[\r\n    {\r\n        \"lid\": 5,\r\n        \"aid\": 4\r\n    },\r\n    {\r\n        \"lid\": 6,\r\n        \"aid\": 5\r\n    },\r\n    {\r\n        \"lid\": 7,\r\n        \"aid\": 3\r\n    },\r\n    {\r\n        \"lid\": 8,\r\n        \"aid\": 3\r\n    },\r\n    {\r\n        \"lid\": 9,\r\n        \"aid\": 2\r\n    },\r\n    {\r\n        \"lid\": 10,\r\n        \"aid\": 2\r\n    },\r\n    {\r\n        \"lid\": 11,\r\n        \"aid\": 7\r\n    },\r\n    {\r\n        \"lid\": 11,\r\n        \"aid\": 8\r\n    }\r\n]",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1364,7 +1365,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "[\r\n    {\r\n        \"lid\": 9,\r\n        \"iid\": 1\r\n    },\r\n    {\r\n        \"lid\": 9,\r\n        \"iid\": 10\r\n    }\r\n]",
+							"raw": "[\r\n    {\r\n        \"lid\": 4,\r\n        \"iid\": 20\r\n    }\r\n]",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1393,7 +1394,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "[\r\n    {\r\n        \"lid\": 9,\r\n        \"iid\": 1\r\n    }\r\n]",
+							"raw": "[\r\n    {\r\n        \"lid\": 4,\r\n        \"iid\": 10\r\n    }\r\n]",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1564,12 +1565,12 @@
 								{
 									"key": "imagem",
 									"type": "file",
-									"src": "/C:/Users/ivan.pereira/Documents/SENAC/ProjetoIntegrador/fotos/2023-03-22 19_46_45-O mundo perdido _ Amazon.com.br.png"
+									"src": "/C:/Users/ivan.pereira/Documents/SENAC/ProjetoIntegrador/fotos/livros/B00E9ALT20.01._SCLZZZZZZZ_SX500_.jpg"
 								}
 							]
 						},
 						"url": {
-							"raw": "http://{{URL}}/api/livros/enviarCapa?id=12",
+							"raw": "http://{{URL}}/api/livros/enviarCapa?id=5",
 							"protocol": "http",
 							"host": [
 								"{{URL}}"
@@ -1582,7 +1583,7 @@
 							"query": [
 								{
 									"key": "id",
-									"value": "12"
+									"value": "5"
 								}
 							]
 						}
@@ -1746,7 +1747,7 @@
 						"method": "PUT",
 						"header": [],
 						"url": {
-							"raw": "http://{{URL}}/api/emprestimos/desistir/18",
+							"raw": "http://{{URL}}/api/emprestimos/desistir/5",
 							"protocol": "http",
 							"host": [
 								"{{URL}}"
@@ -1755,7 +1756,7 @@
 								"api",
 								"emprestimos",
 								"desistir",
-								"18"
+								"5"
 							]
 						}
 					},
@@ -1977,7 +1978,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"uid_amigo\": \"46\",\r\n    \"mensagem\": \"Lorem ipsum 2...\"\r\n}",
+							"raw": "{\r\n    \"uid_amigo\": \"4\",\r\n    \"mensagem\": \"Bom dia!\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"

@@ -35,19 +35,20 @@ Para rodar o sistema localmente, é recomendado utilizar:
 - Postman ou Insomnia para realizar os requests
 
 ### **Banco de Dados**
-Este projeto utiliza o banco MySQL e para o funcionamento deste projeto é necessário efetuar os seguintes passos:
+Este projeto utiliza o banco MySQL e para o funcionamento deste projeto é necessário executar os scripts de DDL e DML listados abaixo:
 
-1. Executar o script *sql/01-Estrutura-Inicial.sql* para a criação das tabelas, views e triggers.
-2. Executar o script *sql/02-Carga-Inicial.sql* para efetuar a carga dos dados iniciais.
-3. Executar o script *sql/03-Carga-Exemplo.sql* para efetuar a carga de dados de exemplo.
+1. Arquivo **sql/01-Estrutura-Inicial.sql** contendo os comandos de criação das tabelas e triggers.
+2. Arquivo **sql/02-Carga-Dados.sql** para efetuar a carga dos dados de exemplo.
 
-Para subir o banco, é recomendado instalar o MySQL Workbench, realizar uma conexão com o banco de dados, e sincronizar.
+Para efetuar a instalação do banco de dados da aplicação, é necessário utilizar um cliente para se conectar ao MySQL, como PHPMyAdmin, DBeaver ou o MySQL Workbench, configurar a conexão com o banco de dados e executar os scripts.
 
-1. Abra o MySQL Workbench e crie uma nova conexão com o endereço 127.0.0.1 e porta 3306 (endereço do BD que sobe via UwAmp). 
-2. Se você nunca tenha trocado a senha, o login padrão é usuário e senha "root".
-3. No MySQL Workbench selecione o modelo  em docs/modelo-clube-livro.mwb
-4. Database -> Synchronize Model. Com isso deve funcionar.
-5. Se tiver problemas nesse processo, acesse o phpMyAdmin e crie um DB "clube_livros", e dentro do MySQL, execute o script gerado pelo Database -> Forward Engineer manualmente (corrija eventuais erros)
+O processo de criação do banco de dados também é possivel ser executado através do MySQL Workbench seguindo os seguintes passos:
+
+1. Crie uma nova conexão com o endereço 127.0.0.1 e porta 3306, caso esteja usando UwAmp ou similar. 
+2. Caso não tenha trocado a senha, o login padrão é usuário e senha "root".
+3. No MySQL Workbench selecione o modelo em docs/modelo-clube-livro.mwb
+4. Em seguida, clique no menu Database -> Forward Engineer, selecione a conexão com o servidor MySQL e clique em Next até finalizar o processo.
+5. Após o término da criação dos objetos, basta executar o script **sql/02-Carga-Dados.sql** para realizar a inserção dos dados.
 
 ### **Backend**
 
@@ -70,7 +71,7 @@ Onde *ServerName* e *ServerAlias* devem conter o nome do servidor que irá respo
 
 > 127.0.0.1	clube-backend clube-frontend
 
-"CAMINHO-DO-BACKEND" deve ser substituído pelo diretório do backend deste repositório. Por exemplo, "C:\projetos\senac_pi_ads_grupo8\backend"
+*CAMINHO-DO-BACKEND* deve ser substituído pelo diretório do backend deste repositório. Por exemplo, **C:\projetos\senac_pi_ads_grupo8\backend**
 
 <br/>
 <br/>
@@ -113,28 +114,40 @@ Para a configuração do frontend, é necessário ter o NodeJS previamente insta
 
 **Através do código-fonte**
 
-O código-fonte está disponível no diretório *frontend*. Após o download do projeto, abra o prompt de comando e acesse o diretório \senac_pi_ads_grupo8\frontend. Digitar os seguintes comandos:
+O código-fonte está disponível no diretório **frontend**. Após o download do projeto,
+é necessário editar a variável *backendUrl* contida no arquivo *environment.ts*, localizado no caminho **frontend\src\environments**, preenchendo com a URL onde está executando o servidor de backend. Após o ajuste, abra o prompt de comando e acesse o diretório **frontend**. Em seguida, digite os comandos abaixo para instalar as dependências necessárias e iniciar o servidor de desenvolvimento:
 
 1. npm install -g @angular/cli
 2. npm install
-3. ng serve
+3. ng serve --host clube-frontend
 
 <br/>
 
 **Através do release**
 
-Baixar o release no caminho XXXXX, descompactar no diretório de destino e executar os procedimentos abaixo:
+Baixar o arquivo **frontend.zip** contendo o release, disponibilizado no caminho https://github.com/vodikus/senac_pi_ads_grupo8/releases/tag/v1.0.0, descompactar no diretório de destino e executar os procedimentos abaixo:
 1. npm install -g serve
-3. serve -l 80
+3. serve -s -l 80 CAMINHO-DO-FRONTEND
 
 <br/>
 
-> :memo: **Nota:**  O release tem fixo como padrão acessar o backend através da URL ZZZZZ
+> :memo: **Nota:**  O release tem fixo como padrão acessar o backend através da URL http://3.84.195.238:8080/
 
 <br/>
 
 ## **Visualização e Testes**
-O acesso padrão ao frontend deverá ser feito utilizando a URL http://clube-frontend/
+O acesso padrão ao frontend deverá ser feito utilizando a URL http://clube-frontend:4200/. Há também uma versão online disponível na URL http://3.84.195.238/.
+
+**Logins pré-cadastrados**
+
+> Usuário: *teste@teste.com.br* Senha: *1234*
+>
+> Usuário: *teste2@teste.com.br* Senha: *1234*
+>
+> Usuário: *teste3@teste.com.br* Senha: *1234*
+>
+> Usuário: *teste4@teste.com.br* Senha: *1234*
+
 
 Para realizar as chamadas da API pode importar a collection *Clube do Empréstimo de Livro.postman_collection.json*
 
