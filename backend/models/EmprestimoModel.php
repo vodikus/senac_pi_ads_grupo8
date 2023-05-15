@@ -11,8 +11,8 @@ class EmprestimoModel extends BaseModel
         'lid' => ['protected' => 'none', 'type' => 'int', 'visible' => true, 'required' => true],
         'uid_tomador' => ['protected' => 'none', 'type' => 'int', 'visible' => true],
         'qtd_dias' => ['protected' => 'none', 'type' => 'int', 'visible' => true, 'required' => true],
-        'retirada_prevista' => ['protected' => 'none', 'type' => 'timestamp', 'visible' => true],
-        'devolucao_prevista' => ['protected' => 'none', 'type' => 'timestamp', 'visible' => true],
+        'retirada_prevista' => ['protected' => 'none', 'type' => 'date', 'visible' => true],
+        'devolucao_prevista' => ['protected' => 'none', 'type' => 'date', 'visible' => true],
         'retirada_efetiva' => ['protected' => 'none', 'type' => 'timestamp', 'visible' => true],
         'devolucao_efetiva' => ['protected' => 'none', 'type' => 'timestamp', 'visible' => true],
         'status' => ['protected' => 'none', 'type' => 'varchar', 'visible' => true],
@@ -63,8 +63,8 @@ class EmprestimoModel extends BaseModel
                 $this->query(
                     $sql,
                     [
-                        'uid_dono' => $dados['uid_dono'],
-                        'uid_tomador' => $uid,
+                        'uid_dono' => $uid,
+                        'uid_tomador' => $dados['uid_tomador'],
                         'lid' => $dados['lid']
                     ]
                 ) <= 0
@@ -97,11 +97,11 @@ class EmprestimoModel extends BaseModel
         return 'SELECT * FROM livros l';
     }
 
-    public function buscaEmprestimo($uid = 0, $eid = 0)
+    public function buscaEmprestimo($eid = 0)
     {
         try {
             $campos = SQLHelper::montaCamposSelect($this->campos, 'e');
-            $emprestimo = $this->select($this->montaSelectEmprestimo($campos, "eid=:eid AND uid_tomador=:uid_tomador"), ['uid_tomador' => $uid, 'eid' => $eid]);
+            $emprestimo = $this->select($this->montaSelectEmprestimo($campos, "eid=:eid"), ['eid' => $eid]);
             if (count($emprestimo) > 0) {
                 return $this->complementaEmprestimo($emprestimo[0]);
             } else {
@@ -203,7 +203,7 @@ class EmprestimoModel extends BaseModel
     {
         $sqlSt = 0;
         try {
-            $dados = $this->buscaEmprestimo($uid, $eid);
+            $dados = $this->buscaEmprestimo($eid);
             if ($this->validaUsuarioLivro($dados) && $this->validaStatusLivro($uid, 'EMPR', $dados)) {
                 $sqlSt = $this->query(
                     "UPDATE emprestimos SET status='DEVO', devolucao_efetiva=CURRENT_TIMESTAMP, dh_atualizacao=CURRENT_TIMESTAMP " .
@@ -221,7 +221,7 @@ class EmprestimoModel extends BaseModel
     {
         $sqlSt = 0;
         try {
-            $dados = $this->buscaEmprestimo($uid, $eid);
+            $dados = $this->buscaEmprestimo($eid);
             if ($this->validaUsuarioLivro($dados) && $this->validaStatusLivro($uid, 'SOLI', $dados)) {
                 $sqlSt = $this->query(
                     "UPDATE emprestimos SET status='CANC', dh_atualizacao=CURRENT_TIMESTAMP " .
@@ -239,7 +239,7 @@ class EmprestimoModel extends BaseModel
     {
         $sqlSt = 0;
         try {
-            $emprestimo = $this->buscaEmprestimo($uid, $entrada['eid']);
+            $emprestimo = $this->buscaEmprestimo($entrada['eid']);
             $campos = array_filter(SQLHelper::sobrescrevePropriedades($this->campos, [
                 'qtd_dias' => ['required' => false],
                 'retirada_prevista' => ['required' => true],
@@ -257,8 +257,8 @@ class EmprestimoModel extends BaseModel
                 $sqlSt = $this->query(
                     "UPDATE emprestimos SET " .
                     " retirada_prevista=:retirada_prevista, devolucao_prevista=:devolucao_prevista, dh_atualizacao=CURRENT_TIMESTAMP " .
-                    " WHERE uid_dono=:uid_dono AND lid=:lid AND uid_tomador=:uid_tomador AND status = 'SOLI'",
-                    array_merge(['uid_tomador' => $uid], $dadosLimpos)
+                    " WHERE eid=:eid AND status = 'SOLI'",
+                    array_merge(['eid' => $entrada['eid']], $dadosLimpos)
                 );
             }
             return ($sqlSt > 0);
@@ -271,14 +271,18 @@ class EmprestimoModel extends BaseModel
     {
         $sqlSt = 0;
         try {
-            $emprestimo = $this->buscaEmprestimo($uid, $eid);
+            $emprestimo = $this->buscaEmprestimo($eid);
             $campos = SQLHelper::sobrescrevePropriedades($this->campos, [
                 'eid' => ['required' => false],
                 'qtd_dias' => ['required' => false],
+                'retirada_prevista' => ['required' => false],
+                'devolucao_prevista' => ['required' => false],
                 'dh_solicitacao' => ['protected' => 'none'],
                 'dh_atualizacao' => ['protected' => 'none']
             ]);
             unset($emprestimo['eid']);
+            unset($emprestimo['livro']);
+            unset($emprestimo['situacao']);
             $dados = SQLHelper::validaCampos($campos, $emprestimo, 'UPDATE');
             if ($this->validaUsuarioLivro($dados) && $this->validaStatusLivro($uid, 'SOLI', $dados)) {
                 if (is_null($dados['retirada_prevista']) || is_null($dados['devolucao_prevista'])) {

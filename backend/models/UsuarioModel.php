@@ -28,6 +28,16 @@ class UsuarioModel extends BaseModel
         }
         return true;
     }
+    
+    public function validaUsuarioPorEmail($email = "")
+    {
+        return $this->query("SELECT 1 FROM usuarios WHERE email=:email", ['email' => $email]);
+    }
+    
+    public function validaUsuarioPorCpf($cpf = "")
+    {
+        return $this->query("SELECT 1 FROM usuarios WHERE cpf=:cpf", ['cpf' => $cpf]);
+    }
 
     public function validaBloqueio($uid, $uid_blq)
     {
@@ -71,6 +81,7 @@ class UsuarioModel extends BaseModel
         }
 
     }
+
     public function deletarUsuario($id = 0)
     {
         try {

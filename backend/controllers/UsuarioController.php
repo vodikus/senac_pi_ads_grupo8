@@ -49,6 +49,13 @@ class UsuarioController extends BaseController
                             $this->httpRawResponse(401, MessageHelper::fmtMsgConstJson('ERR_NAO_AUTORIZADO'));
                         }
                         break;
+                    case 'listar-assuntos':
+                        if ($this->isAuth()) {
+                            $this->listarAssuntos($this->getFieldFromToken('uid'));
+                        } else {
+                            $this->httpRawResponse(401, MessageHelper::fmtMsgConstJson('ERR_NAO_AUTORIZADO'));
+                        }
+                        break;
                     default:
                         $this->httpRawResponse(501, MessageHelper::fmtMsgConstJson('ERR_ACAO_INDISPONIVEL'));
                         break;
@@ -59,6 +66,9 @@ class UsuarioController extends BaseController
                 switch ($params['acao']) {
                     case 'adicionar':
                         $this->adicionar($dados);
+                        break;
+                    case 'validar':
+                        $this->validar($dados);
                         break;
                     case 'vincularAssunto':
                         if ($this->isAuth()) {
@@ -837,5 +847,87 @@ class UsuarioController extends BaseController
         } catch (Exception $e) {
             $this->httpRawResponse(200, MessageHelper::fmtException($e));
         }
+    }
+
+    /**
+     * @api {post} /usuarios/validar/ Validar Usuário
+     * @apiName Validar
+     * @apiGroup Usuários
+     * @apiVersion 1.0.0
+     *
+     * @apiBody {String} email E-mail
+     * 
+     * @apiUse SAIDA_PADRAO
+     * @apiUse ERR_GENERICOS
+     * 
+     * @apiErrorExample Error-Response:
+     *     HTTP/1.1 500 Internal Server Error
+     *     {
+     *         "codigo": "9103",
+     *         "mensagem": "E-mail já cadastrado",
+     *         "detalhe": ""
+     *     }
+     */
+    public function validar($dados)
+    {
+        try {
+            $usuarioModel = new UsuarioModel();
+            if (array_key_exists('email', $dados)) {
+                if ($usuarioModel->validaUsuarioPorEmail($dados['email'])) {
+                    $this->httpRawResponse(200, MessageHelper::fmtMsgConstJson('ERR_EMAIL_EXISTENTE'));
+                } else {
+                    $this->httpRawResponse(200, MessageHelper::fmtMsgConstJson('MSG_EMAIL_OK'));
+                }
+            } else if (array_key_exists('cpf', $dados)) {
+                if ($usuarioModel->validaUsuarioPorCpf($dados['cpf'])) {
+                    $this->httpRawResponse(200, MessageHelper::fmtMsgConstJson('ERR_CPF_EXISTENTE'));
+                } else {
+                    $this->httpRawResponse(200, MessageHelper::fmtMsgConstJson('MSG_CPF_OK'));
+                }
+            } else {
+                $this->httpRawResponse(500, MessageHelper::fmtMsgConstJson('ERR_ID_INVALIDO'));
+            }
+        } catch (Exception $e) {
+            $this->httpRawResponse(200, MessageHelper::fmtException($e));
+        }
+    }
+
+
+    /**
+     * @api {get} /usuarios/listarAssuntos/ Listar Assuntos
+     * @apiName Listar Assuntos
+     * @apiGroup Usuários
+     * @apiVersion 1.0.0
+     *
+     *
+     * @apiSuccess {Object[]} lista Lista dos assuntos
+     * @apiSuccess {Number} lista.iid ID do Assunto
+     * @apiSuccess {String} lista.nome_assunto Nome do Assunto
+     *
+     * @apiSuccessExample Success-Response:
+     *     HTTP/1.1 200 OK
+     *     [
+     *       {
+     *          "iid": "1",
+     *          "nome_assunto": "Aventura",
+     *       }
+     *     ]
+     *
+     * @apiUse ERR_GENERICOS
+     * 
+     */
+    public function listarAssuntos($uid = 0)
+    {
+        try {
+            if (is_numeric($uid)) {
+                $arrAssuntos = (array) (new UsuarioAssuntoModel())->listarAssuntos($uid);
+                $responseData = json_encode($arrAssuntos);
+            } else {
+                $this->httpRawResponse(200, MessageHelper::fmtMsgConstJson('ERR_ID_INVALIDO'));
+            }
+        } catch (Exception $e) {
+            $this->httpRawResponse(200, MessageHelper::fmtException($e));
+        }
+        $this->montarSaidaOk($responseData);
     }
 }
