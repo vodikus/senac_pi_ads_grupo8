@@ -9,7 +9,7 @@
 </div>
 
 <div *ngIf="emprestimoCarregado" class="mt-3">
-    <app-caixa-usuario [usuarioId]=emprestimo.uid_dono></app-caixa-usuario>
+    <app-caixa-usuario [usuarioId]=emprestimo.uid_tomador></app-caixa-usuario>
 </div>
 
 <div class="mt-3 w-100" *ngIf="erroCarregamento">
