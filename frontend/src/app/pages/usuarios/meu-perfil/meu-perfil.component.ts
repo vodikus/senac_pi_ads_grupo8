@@ -19,6 +19,7 @@ export class MeuPerfilComponent implements OnInit {
   assuntos: Array<Assunto> = new Array<Assunto>();
   enderecos: Array<Endereco> = new Array<Endereco>();
   livros: Array<Livro> = new Array<Livro>();
+  agora: Date = new Date();
 
   IMG_SERVER = environment.backendUrl;
 

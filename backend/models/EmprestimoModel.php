@@ -63,7 +63,7 @@ class EmprestimoModel extends BaseModel
                 $this->query(
                     $sql,
                     [
-                        'uid_dono' => $uid,
+                        'uid_dono' => $dados['uid_dono'],
                         'uid_tomador' => $dados['uid_tomador'],
                         'lid' => $dados['lid']
                     ]
@@ -185,7 +185,8 @@ class EmprestimoModel extends BaseModel
             $campos = array_filter($this->campos, ['SQLHelper', 'limpaCamposProtegidos']);
 
             $dados = SQLHelper::validaCampos($campos, $entrada, 'INSERT');
-            if ($this->validaUsuarioLivro($dados) && $this->validaDisponibilidadeLivro($dados) && !$this->validaStatusLivro($uid, ['SOLI', 'EMPR'], $dados)) {
+            // if ($this->validaUsuarioLivro($dados) && $this->validaDisponibilidadeLivro($dados) && !$this->validaStatusLivro($uid, ['SOLI', 'EMPR'], $dados)) {
+            if ( $this->validaUsuarioLivro($dados) && $this->validaDisponibilidadeLivro($dados) ) {
                 return $this->insert(
                     "INSERT INTO emprestimos (uid_dono, lid, uid_tomador, qtd_dias) VALUES " .
                     " (:uid_dono, :lid, :uid_tomador, :qtd_dias)",
@@ -204,7 +205,8 @@ class EmprestimoModel extends BaseModel
         $sqlSt = 0;
         try {
             $dados = $this->buscaEmprestimo($eid);
-            if ($this->validaUsuarioLivro($dados) && $this->validaStatusLivro($uid, 'EMPR', $dados)) {
+            // if ($this->validaUsuarioLivro($dados) && $this->validaStatusLivro($uid, 'EMPR', $dados)) {
+            if ( $this->validaUsuarioLivro($dados) ) {
                 $sqlSt = $this->query(
                     "UPDATE emprestimos SET status='DEVO', devolucao_efetiva=CURRENT_TIMESTAMP, dh_atualizacao=CURRENT_TIMESTAMP " .
                     " WHERE uid_dono=:uid_dono AND lid=:lid AND uid_tomador=:uid_tomador AND status='EMPR' ",
@@ -222,7 +224,8 @@ class EmprestimoModel extends BaseModel
         $sqlSt = 0;
         try {
             $dados = $this->buscaEmprestimo($eid);
-            if ($this->validaUsuarioLivro($dados) && $this->validaStatusLivro($uid, 'SOLI', $dados)) {
+            // if ($this->validaUsuarioLivro($dados) && $this->validaStatusLivro($uid, 'SOLI', $dados)) {
+            if ( $this->validaUsuarioLivro($dados) ) {
                 $sqlSt = $this->query(
                     "UPDATE emprestimos SET status='CANC', dh_atualizacao=CURRENT_TIMESTAMP " .
                     " WHERE uid_dono=:uid_dono AND lid=:lid AND uid_tomador=:uid_tomador AND status='SOLI' ",

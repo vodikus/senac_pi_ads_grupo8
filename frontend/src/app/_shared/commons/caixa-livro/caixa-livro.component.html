@@ -2,7 +2,7 @@
     <!-- Caixa com a capa, titulo, autor e descrição -->
     <div class="caixaFlex">
         <div *ngIf="mostrarCapa">
-            <img src="{{ (livro.capa) || 'assets/sem-capa.png' }}" class="livroCapa">
+            <img src="{{ livro.capa == undefined ? 'assets/sem-capa.png' : IMG_SERVER + livro.capa }}" class="livroCapa">
             <span *ngIf="emprestimo?.situacao == 'Atrasado'; else tarjaSituacao">
                 <div class="bg-danger text-center texto-10 text-white">{{ emprestimo.situacao | uppercase }}</div>
             </span>

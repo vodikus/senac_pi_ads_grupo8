@@ -10,7 +10,7 @@
     <div>
         <div class="caixaFlex">
             <div>
-                <img src="{{ perfil?.avatar == undefined ? IMG_SERVER +'/imagens/usuarios/padrao.png' : IMG_SERVER + perfil?.avatar }}"
+                <img src="{{ perfil?.avatar == undefined ? IMG_SERVER +'/imagens/usuarios/padrao.png' : IMG_SERVER + perfil?.avatar }}?data={{ agora }}"
                     class="img-round text-center img-medium5" />
                 <div class="mt-2 text-center texto-10 clickable" [routerLink]="['/usuarios/avatar']"><i class="fa-solid fa-camera"></i> Alterar Foto</div>
             </div>
