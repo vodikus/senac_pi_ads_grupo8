@@ -1,5 +1,5 @@
 export const environment = {
   production: true,
-  backendUrl: "http://3.84.195.238:8080",
+  backendUrl: "http://34.66.190.253",
   cepProvider: "OPENCEP"
 };
