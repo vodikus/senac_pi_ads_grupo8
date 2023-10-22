@@ -1,4 +1,4 @@
-<div class="livroBox">
+<div class="livroBox container-sm">
     <!-- Caixa com a capa, titulo, autor e descrição -->
     <div class="caixaFlex">
         <div *ngIf="mostrarCapa">
@@ -14,7 +14,7 @@
         <div class="blocoDadosLivro">
             <div class="livroTitulo">{{ livro.titulo }}</div>
             <div class="livroAutor">{{ livro.autores }}</div>
-            <div class="livroDescricao" *ngIf="mostrarLivroDescricao">{{ livro.descricao }}</div>
+            <div class="livroDescricao" style="width: 19rem;" *ngIf="mostrarLivroDescricao">{{ livro.descricao }}</div>
             <div class="caixaFlex texto-10" *ngIf="mostrarLivroStatus">
                 <div class="grow2">Status do Livro</div>
                 <div class="text-end">{{ livro.status_livro == 'D' ? 'Disponivel' : 'Não Disponivel'}}</div>
