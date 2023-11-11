@@ -29,7 +29,7 @@ Os pré-requisitos básicos para a utilização deste sistema é possuir os segu
 Para rodar o sistema localmente e contribuir com o projeto, é recomendado utilizar:
 - [`UwAmp`](https://www.uwamp.com/en/)
 - [`MySQL Workbench`](https://www.mysql.com/products/workbench/)
-- [`Postman`](https://www.postman.com/) ou [`Insomnia`](https://insomnia.rest/) para realizar os requests
+- [`Postman`](https://www.postman.com/)para realizar os requests
 - [`PhpStorm`](https://www.jetbrains.com/pt-br/phpstorm/) como IDE de desenvolvimento
 - Como alternativa ao PhpStorm, recomendamos a utilização do [`Visual Studio Code`](https://code.visualstudio.com/)
 
@@ -164,7 +164,7 @@ Para realizar as chamadas diretamente ao backend, o endpoint utilizado será o d
 
 Pode-se importar a collection *Clube do Empréstimo de Livro.postman_collection.json*
 
-> :warning: **Alerta:**  Para realização de testes, execute primeiro a chamada de autenticação no endpoint "api/auth/getToken" com os dados de usuário já cadastrado (da listagem acima, ou você pode cadastrar um novo via MySQL Workbench). Com o token em mãos, valide-o no endpoint "api/auth/authToken". Após, ele poderá ser utilizado nos demais requests, passando na aba ``Authorization`` do Postman/Insomnia como ``Bearer Token``.
+> :warning: **Alerta:**  Para realização de testes, execute primeiro a chamada de autenticação no endpoint "api/auth/getToken" com os dados de usuário já cadastrado (da listagem acima, ou você pode cadastrar um novo via MySQL Workbench). Com o token em mãos, valide-o no endpoint "api/auth/authToken". Após, ele poderá ser utilizado nos demais requests, passando na aba ``Authorization`` do Postman como ``Bearer Token``.
 
 <br/>
 
