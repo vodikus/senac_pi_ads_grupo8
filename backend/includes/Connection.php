@@ -9,7 +9,7 @@ Class Connection {
       $dbName = (getenv('DBNAME')) ? getenv('DBNAME') : 'clube_livros';
       $dbUser = (getenv('DBUSER')) ? getenv('DBUSER') : 'clube_livros';
       $dbPass = (getenv('DBPASS')) ? getenv('DBPASS') : 'senha';
-      $server = "mysql:host=$dbHost;dbname=$dbName";
+      $server = "mysql:host=$dbHost;dbname=$dbName;charset=utf8";
 
       $this->con = new PDO($server, $dbUser,$dbPass,$this->options);
       return $this->con;

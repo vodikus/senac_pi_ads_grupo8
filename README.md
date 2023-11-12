@@ -22,17 +22,16 @@ Este projeto consiste em uma aplicação de uma rede social para empréstimo de 
 
 ### **Pré-requisitos**
 Os pré-requisitos básicos para a utilização deste sistema é possuir os seguintes servidores disponíveis:
-- **Banco de Dados:** 
-  - Servidor MySQL versão 5.7 ou superior;
-- **Servidor Backend:** 
-  - Apache 2.4 ou superior com o PHP 7.2 ou superior instalado.
-- **Servidor Frontend:**
-  - NodeJS v18.16 ou superior
+- **Banco de Dados**: [`Servidor MySQL`](https://dev.mysql.com/downloads/installer/) versão 5.7 ou superior;
+- **Servidor Backend**: Apache 2.4 ou superior com o PHP 7.2 ou superior instalado.
+- **Servidor Frontend**: [`NodeJS`](https://nodejs.org/en/download/current) v18.16 ou superior
 
-Para rodar o sistema localmente, é recomendado utilizar:
-- UwAmp
-- MySQL Workbench
-- Postman ou Insomnia para realizar os requests
+Para rodar o sistema localmente e contribuir com o projeto, é recomendado utilizar:
+- [`UwAmp`](https://www.uwamp.com/en/)
+- [`MySQL Workbench`](https://www.mysql.com/products/workbench/)
+- [`Postman`](https://www.postman.com/)para realizar os requests
+- [`PhpStorm`](https://www.jetbrains.com/pt-br/phpstorm/) como IDE de desenvolvimento
+- Como alternativa ao PhpStorm, recomendamos a utilização do [`Visual Studio Code`](https://code.visualstudio.com/)
 
 ### **Banco de Dados**
 Este projeto utiliza o banco MySQL e para o funcionamento deste projeto é necessário executar os scripts de DDL e DML listados abaixo:
@@ -54,7 +53,11 @@ O processo de criação do banco de dados também é possivel ser executado atra
 
 **Configurações do Apache**
 
-Para configurar o Apache, é necessário habilitar o módulo **mod_rewrite** e criar um *VirtualHost* direcionando para o caminho onde o diretório backend foi baixado no servidor. Este *VirtualHost* deverá ter as opções abaixo:
+As configurações do Apache podem ser realizar através do UwAmp.
+
+A primeira coisa que deve ser feita é habilitar o módulo **mod_rewrite**. No UwAmp isso é feito através do menu "Apache Config". Na janela que for aberta, clicar na aba Modules. Na lista de módulos, selecionar o **mod_rewrite**, que pode estar listado também como **rewrite_module**.
+
+A seguir, deve-se criar um *VirtualHost* direcionando para o caminho onde o diretório backend foi baixado no servidor. Este *VirtualHost* deverá ter as opções abaixo:
 
 ```
   <VirtualHost *:8080>
@@ -67,18 +70,27 @@ Para configurar o Apache, é necessário habilitar o módulo **mod_rewrite** e c
       </Directory>
   </VirtualHost>
 ```
-Onde *ServerName* e *ServerAlias* devem conter o nome do servidor que irá responder a este diretório. Para facilitar a resolução do nome do host, pode-se criar uma entrada no arquivo *C:\Windows\System32\drivers\ETC\hosts* do Windows ou */etc/hosts* do Linux:
+Onde *ServerName* e *ServerAlias* devem conter o nome do servidor que irá responder a este diretório. Já *CAMINHO-DO-BACKEND* deve ser substituído pelo diretório do backend deste repositório. Por exemplo, **C:\projetos\senac_pi_ads_grupo8\backend**
+
+Na interface do UwAmp, essa configuração pode ser feita na mesma janela do Apache Config, na aba "Virtual Server". Clique no botão **+** e preencha da seguinte forma:
+
+```Host Ip: *
+Port: 8080
+Server Name: clube-backend
+Server Alias: clube-backend
+Document Root: [Caminho para a basta "backend" do projeto]
+Alias: deixe em branco
+Folder: [Caminho para a basta "backend" do projeto], **marque All na opção Allow Override**
+Others: deixe em branco
+```
+
+Para facilitar a resolução do nome do host, pode-se criar uma entrada no arquivo *C:\Windows\System32\drivers\ETC\hosts* do Windows ou */etc/hosts* do Linux:
 
 > 127.0.0.1	clube-backend clube-frontend
 
-*CAMINHO-DO-BACKEND* deve ser substituído pelo diretório do backend deste repositório. Por exemplo, **C:\projetos\senac_pi_ads_grupo8\backend**
-
-<br/>
-<br/>
-
 **Configurações do PHP**
 
-O servidor de backend necessita que o PHP esteja instalado corretamente e com o módulo **pdo_mysql** habilitado.
+O servidor de backend necessita que o PHP esteja instalado corretamente e com o módulo **pdo_mysql** habilitado. No UwAmp isso pode ser feito clicando em PHP Config e, na aba PHP Extensions, selecionando a extensão ``php_pdo_mysql``.
 
 Dentro da classe *backend/includes/Connection.php* estão as configurações padrões de conexão do sistema, entretanto não é recomendado alterar diretamente os dados ali. Por padrão, os dados de conexão configurados são os seguintes:
 
@@ -102,20 +114,18 @@ Caso os dados de conexão sejam diferentes dos padrões, é necessário criar as
 >
 >**DBPASS** - *Senha do Banco de Dados*
 
-<br/>
-<br/>
-
 > :warning: **Alerta:**  As variáveis de ambiente deversão ser criadas no escopo visivel apenas para o usuário que executa o Apache / PHP. Criar estas variáveis de ambiente global pode expor os dados de conexão, bem como usuário e senha para qualquer usuário que consiga acesso ao sistema operacional.
 
 <br/>
 
+A partir dessas configurações, é possível executar o backend no endpoint ``http://localhost:8080/``
+
 ### **Frontend**
-Para a configuração do frontend, é necessário ter o NodeJS previamente instalado e há 2 modos de conseguir testar a aplicação. 
+Para a configuração do frontend, é necessário ter o [`NodeJS`](https://nodejs.org/en) previamente instalado. Há 2 modos de conseguir testar a aplicação: 
 
 **Através do código-fonte**
 
-O código-fonte está disponível no diretório **frontend**. Após o download do projeto,
-é necessário editar a variável *backendUrl* contida no arquivo *environment.ts*, localizado no caminho **frontend\src\environments**, preenchendo com a URL onde está executando o servidor de backend. Após o ajuste, abra o prompt de comando e acesse o diretório **frontend**. Em seguida, digite os comandos abaixo para instalar as dependências necessárias e iniciar o servidor de desenvolvimento:
+O código-fonte está disponível no diretório **frontend**. Após o download do projeto, é necessário editar a variável *backendUrl* contida no arquivo *environment.ts*, localizado no caminho **frontend\src\environments**, preenchendo com a URL onde está executando o servidor de backend. Após o ajuste, abra o prompt de comando e acesse o diretório **frontend**. Em seguida, digite os comandos abaixo para instalar as dependências necessárias e iniciar o servidor de desenvolvimento:
 
 1. npm install -g @angular/cli
 2. npm install
@@ -148,10 +158,13 @@ O acesso padrão ao frontend deverá ser feito utilizando a URL http://clube-fro
 >
 > Usuário: *teste4@teste.com.br* Senha: *1234*
 
+**Chamadas para o backend**
 
-Para realizar as chamadas da API pode importar a collection *Clube do Empréstimo de Livro.postman_collection.json*
+Para realizar as chamadas diretamente ao backend, o endpoint utilizado será o do UwAmp: ``http://localhost:8080``, seguido pelo path definido na aplicação. 
 
-Para realização de testes, execute primeiro a chamada de autenticação no endpoint "api/auth/getToken" com os dados de usuário já cadastrado (você pode cadastrar um via MySQL Workbench). Com o token em mãos, valide-o no endpoint "api/auth/authToken". Após, ele poderá ser utilizado nos demais requests, passando na aba Authorization do Postman/Insomnia como Bearer Token.
+Pode-se importar a collection *Clube do Empréstimo de Livro.postman_collection.json*
+
+> :warning: **Alerta:**  Para realização de testes, execute primeiro a chamada de autenticação no endpoint "api/auth/getToken" com os dados de usuário já cadastrado (da listagem acima, ou você pode cadastrar um novo via MySQL Workbench). Com o token em mãos, valide-o no endpoint "api/auth/authToken". Após, ele poderá ser utilizado nos demais requests, passando na aba ``Authorization`` do Postman como ``Bearer Token``.
 
 <br/>
 
