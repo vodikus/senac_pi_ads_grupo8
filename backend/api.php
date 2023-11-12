@@ -17,14 +17,14 @@ define('BACKEND_URL', (getenv('BACKEND_URL')) ? getenv('BACKEND_URL') : 'http://
 
 // Regras de roteamento
 $rules = array(
-    'AssuntoController' => "assuntos/?(?'acao'[\w\-]*)\/?(?'level1'[\w\s]*)\/?(?'params'[?\w[=,-.|&A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ ]*)",
+    'AssuntoController' => "assuntos/?(?'acao'[\w\-]*)\/?(?'level1'[\w\s]*)\/?(?'params'[?\w[=,-.|&A-Za-zÃ¡Ã Ã¢Ã£Ã©Ã¨ÃªÃ­Ã¯Ã³Ã´ÃµÃ¶ÃºÃ§Ã±ÃÃ€Ã‚ÃƒÃ‰ÃˆÃÃÃ“Ã”Ã•Ã–ÃšÃ‡Ã‘ ]*)",
     'AuthController' => "auth/?(?'acao'[\w\-]*)\/?(?'level1'[\w\s]*)",
-    'AutorController' => "autores/?(?'acao'[\w\-]*)\/?(?'level1'[\w\s]*)\/?(?'params'[?\w[=,-.|&A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ ]*)",
+    'AutorController' => "autores/?(?'acao'[\w\-]*)\/?(?'level1'[\w\s]*)\/?(?'params'[?\w[=,-.|&A-Za-zÃ¡Ã Ã¢Ã£Ã©Ã¨ÃªÃ­Ã¯Ã³Ã´ÃµÃ¶ÃºÃ§Ã±ÃÃ€Ã‚ÃƒÃ‰ÃˆÃÃÃ“Ã”Ã•Ã–ÃšÃ‡Ã‘ ]*)",
     'ChamadoController' => "chamados/?(?'acao'[\w\-]*)\/?(?'level1'[\w\s]*)",
     'ChatController' => "chat/?(?'acao'[\w\-]*)\/?(?'level1'[\w\s]*)",
     'EmprestimoController' => "emprestimos/?(?'acao'[\w\-]*)\/?(?'level1'[\w\s]*)\/?(?'level2'[\w\s]*)",
     'EnderecoController' => "enderecos/?(?'acao'[\w\-]*)\/?(?'level1'[\w\s]*)\/?(?'params'[?\w[=,-.|&]*)",
-    'LivroController' => "livros/?(?'acao'[\w\-]*)\/?(?'level1'[\w\s]*)\/?(?'params'[?\w[=,-.|&A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ ]*)",
+    'LivroController' => "livros/?(?'acao'[\w\-]*)\/?(?'level1'[\w\s]*)\/?(?'params'[?\w[=,-.|&A-Za-zÃ¡Ã Ã¢Ã£Ã©Ã¨ÃªÃ­Ã¯Ã³Ã´ÃµÃ¶ÃºÃ§Ã±ÃÃ€Ã‚ÃƒÃ‰ÃˆÃÃÃ“Ã”Ã•Ã–ÃšÃ‡Ã‘ ]*)",
     'UsuarioController' => "usuarios/?(?'acao'[\w\-]*)\/?(?'level1'[\w\s]*)"
 );
 
