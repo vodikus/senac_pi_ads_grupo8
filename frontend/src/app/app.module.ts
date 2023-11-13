@@ -22,6 +22,7 @@ import { PesquisaComponent } from './pages/pesquisa/pesquisa.component';
 import { FavoritosComponent } from './pages/favoritos/favoritos.component';
 import { SuporteComponent } from './pages/suporte/suporte.component';
 import { DenunciaComponent } from './pages/denuncia/denuncia.component';
+import { LivrosModule } from './pages/livros/livros.module';
 
 @NgModule({
   declarations: [
@@ -44,7 +45,8 @@ import { DenunciaComponent } from './pages/denuncia/denuncia.component';
     EmprestimosModule,
     PadraoModule,
     AmigosModule,
-    UsuariosModule
+    UsuariosModule,
+    LivrosModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
