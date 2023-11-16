@@ -101,7 +101,6 @@ class LivroModel extends BaseModel
         $campos = SQLHelper::montaCamposSelect($this->campos, 'l');
 
         return $this->select(
-            // $this->montaSelectLivros(
             $this->montaSelectUsuariosLivros(
                 $campos,
                 ' l.lid=:lid ',
@@ -116,8 +115,7 @@ class LivroModel extends BaseModel
         $campos = SQLHelper::montaCamposSelect($this->campos, 'l');
 
         return $this->select(
-            // $this->montaSelectLivros(
-            $this->montaSelectUsuariosLivros(
+            $this->montaSelectLivros(
                 $campos,
                 ' l.isbn=:isbn ',
                 $campos
@@ -131,7 +129,6 @@ class LivroModel extends BaseModel
         $campos = SQLHelper::montaCamposSelect($this->campos, 'l');
 
         return $this->select(
-            // $this->montaSelectLivros(
             $this->montaSelectUsuariosLivros(
                 $campos,
                 ' i.nome_assunto LIKE :assunto ',
@@ -146,7 +143,6 @@ class LivroModel extends BaseModel
         $campos = SQLHelper::montaCamposSelect($this->campos, 'l');
 
         return $this->select(
-            // $this->montaSelectLivros(
             $this->montaSelectUsuariosLivros(
                 $campos,
                 ' a.nome_autor LIKE :autor ',
