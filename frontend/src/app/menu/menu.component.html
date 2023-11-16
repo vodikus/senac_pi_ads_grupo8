@@ -1,5 +1,5 @@
-<div class="menu w-100">
-    <div class="menu-bar"  *ngIf="pegarNivelUrl(0) != '' && pegarNivelUrl(0) != 'login' && pegarNivelUrl(0) != 'cadastro'  ">
+<div class="menu-bar">
+    <div class="d-flex flex-row justify-content-center justify-content-lg-start flex-wrap"  *ngIf="pegarNivelUrl(0) != '' && pegarNivelUrl(0) != 'login' && pegarNivelUrl(0) != 'cadastro'  ">
         <div class="menu-btn-40" [routerLink]="['/home']" [routerLinkActive]="['menu-selected']">
             <img src="assets/Inicio.png" />
             <div>Inicio</div>
@@ -27,19 +27,24 @@
             <img src="assets/Favoritos.png" />
             <div>Favoritos</div>
         </div>
-        <div class="menu-btn-60 ms-1" [routerLink]="['/suporte']" [routerLinkActive]="['menu-selected']">
+        <div class="menu-btn-60" [routerLink]="['/livros/buscar']" 
+            [routerLinkActive]="['menu-selected']">
+            <img src="assets/menuLivro.png"  style="width: 26px; "/>
+            <div>Novo Livro</div>
+        </div>
+        <div class="menu-btn-60" [routerLink]="['/suporte']" [routerLinkActive]="['menu-selected']">
             <img src="assets/Suporte.png" />
             <div>Suporte</div>
         </div>
-        <div class="menu-btn-40 ms-1" class="menu-selected" *ngIf=" pegarNivelUrl(0) == 'denuncia' ">
+        <div class="menu-btn-60" class="menu-selected" *ngIf=" pegarNivelUrl(0) == 'denuncia' ">
             <img src="assets/denuncia.png" style="width: 26px; height: 26px;"  />
             <div>Denúncia</div>
         </div>
-        <div class="menu-btn-40 ms-1" [routerLink]="['/usuarios']" [routerLinkActive]="['menu-selected']">
+        <div class="menu-btn-60" [routerLink]="['/usuarios']" [routerLinkActive]="['menu-selected']">
             <img src="assets/profile.png"  style="width: 25px;" />
             <div>Meu Perfil</div>
         </div>
-        <div class="menu-btn-40" (click)="logout()">
+        <div class="menu-btn-60" (click)="logout()">
             <img src="assets/logout.png"  style="width: 24px;"  />
             <div>Logout</div>
         </div>        

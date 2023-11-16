@@ -5,7 +5,7 @@
             <div class="texto-pequeno3">Detalhes</div>
         </span>
         <ng-template #detalheLivro>
-            <span>
+            <span [routerLink]="['/livros/detalhe/',livroId]">
                 <div><img src="assets/Pesquisa.png" class="img-tiny1" /></div>
                 <div class="texto-pequeno3">Detalhes</div>
             </span>
@@ -15,6 +15,11 @@
         [routerLink]="['/emprestimos/solicitar/',usuarioId,livroId]">
         <div><img src="assets/solicitar.png" class="img-tiny1" /></div>
         <div class="texto-pequeno3">Solicitar</div>
+    </div>
+    <div class="grow1 text-center clickable" *ngIf="mostrarCadastrar"
+        [routerLink]="['/livros/adicionar/',livroId]">
+        <div><img src="assets/adicionarLivro.png" class="img-tiny1" /></div>
+        <div class="texto-pequeno3">Cadastrar</div>
     </div>
     <div class="grow1 text-center clickable" *ngIf="mostrarGerenciar && emprestimoId > 0"
         [routerLink]="['/emprestimos/gerenciar/',emprestimoId]">

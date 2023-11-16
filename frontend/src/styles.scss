@@ -1,3 +1,4 @@
+@import "../node_modules/bootstrap/scss/bootstrap";
 @import '../node_modules/ngx-bar-rating/themes/br-default-theme';
 
 * {
@@ -150,13 +151,31 @@
     flex: 1;
 }
 
-.livroBox {
-    font-size: 12px;
-    padding: 10px;
-    margin-bottom: 15px;
-    border-radius: 5px;
-    box-shadow: 5px 5px 5px gray;
+
+
+@include media-breakpoint-down(lg) { 
+    .livroBox {
+        font-size: 12px;
+        padding: 10px;
+        margin-bottom: 15px;
+        border-radius: 5px;
+        box-shadow: 5px 5px 5px gray;
+    }
 }
+@include media-breakpoint-up(lg) { 
+    .livroBox {
+        font-size: 12px;
+        padding: 10px;
+        margin-left: 20px;
+        margin-right: 20px;
+        margin-bottom: 15px;
+        border-radius: 5px;
+        box-shadow: 5px 5px 5px gray;
+        width: 350px;
+        height: 320px;
+    }
+}
+
 
 .livroCapa {
     width: 64px;

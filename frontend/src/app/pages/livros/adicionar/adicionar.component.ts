@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { LivroService } from 'src/app/_service/livro.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 
 @Component({
@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./adicionar.component.scss']
 })
 export class AdicionarComponent {
-  
+  livroId: number = 0;
   form: FormGroup = new FormGroup({
     titulo: new FormControl(''),
     descricao: new FormControl(''),
@@ -18,7 +18,7 @@ export class AdicionarComponent {
   });
   enviado = false;
 
-  constructor(private formBuilder: FormBuilder, private livroService: LivroService, private router: Router) { }
+  constructor(private formBuilder: FormBuilder, private livroService: LivroService, private router: Router, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
     this.form = this.formBuilder.group(
@@ -28,6 +28,8 @@ export class AdicionarComponent {
         isbn: ['', [Validators.required, Validators.maxLength(20)]],
       }
     );
+
+    this.livroId = Number(this.route.snapshot.paramMap.get('lid'));
   }
 
   get f(): { [key: string]: AbstractControl } {
@@ -62,5 +64,5 @@ export class AdicionarComponent {
   onReset(): void {
     this.enviado = false;
     this.form.reset();
-  }  
+  }
 }

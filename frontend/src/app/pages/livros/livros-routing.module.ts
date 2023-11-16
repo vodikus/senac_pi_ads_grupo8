@@ -4,12 +4,15 @@ import { AdicionarComponent } from './adicionar/adicionar.component';
 import { LivrosComponent } from './livros.component';
 import { AuthGuard } from 'src/app/_shared/auth.guard';
 import { BuscarComponent } from './buscar/buscar.component';
+import { DetalheComponent } from './detalhe/detalhe.component';
 
 const routes: Routes = [
   {
     path: 'livros', component: LivrosComponent, canActivate: [AuthGuard], children: [
       { path: 'adicionar', component: AdicionarComponent },
-      { path: 'buscar', component: BuscarComponent }
+      { path: 'adicionar/:lid', component: AdicionarComponent },
+      { path: 'buscar', component: BuscarComponent },
+      { path: 'detalhe/:lid', component: DetalheComponent}
     ]
   }
 ];

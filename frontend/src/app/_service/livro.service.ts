@@ -40,6 +40,10 @@ export class LivroService {
     return this.http.get(LIVRO_API + 'buscar-por-id?id='+id);
   }
 
+  buscarLivrosPorIsbn(isbn: string): Observable<any> {
+    return this.http.get(LIVRO_API + 'buscar-por-isbn?id='+isbn);
+  }
+
   listarFavoritos(): Observable<any> {
     return this.http.get(LIVRO_API + 'favoritos');
   }

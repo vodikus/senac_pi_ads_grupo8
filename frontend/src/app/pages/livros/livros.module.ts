@@ -6,13 +6,15 @@ import { AdicionarComponent } from './adicionar/adicionar.component';
 import { LivrosComponent } from './livros.component';
 import { PadraoModule } from 'src/app/_shared/commons/padrao.module';
 import { BuscarComponent } from './buscar/buscar.component';
+import { DetalheComponent } from './detalhe/detalhe.component';
 
 
 @NgModule({
   declarations: [
     AdicionarComponent,
     LivrosComponent,
-    BuscarComponent
+    BuscarComponent,
+    DetalheComponent
   ],
   imports: [
     CommonModule,

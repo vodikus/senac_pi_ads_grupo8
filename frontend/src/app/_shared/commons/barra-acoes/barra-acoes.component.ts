@@ -12,6 +12,7 @@ export class BarraAcoesComponent implements OnInit {
   @Input('mostrarDetalhes') mostrarDetalhes: boolean = true;
   @Input('mostrarSolicitar') mostrarSolicitar: boolean = true;
   @Input('mostrarGerenciar') mostrarGerenciar: boolean = true;
+  @Input('mostrarCadastrar') mostrarCadastrar: boolean = false;
   @Input('origem') origem: string = "";
 
   constructor() { }

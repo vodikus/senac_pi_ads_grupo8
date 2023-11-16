@@ -1,4 +1,4 @@
-<div class="livroBox container-sm">
+<div class="livroBox"> <!-- container-sm -->
     <!-- Caixa com a capa, titulo, autor e descrição -->
     <div class="caixaFlex">
         <div *ngIf="mostrarCapa">
@@ -14,7 +14,7 @@
         <div class="blocoDadosLivro">
             <div class="livroTitulo">{{ livro.titulo }}</div>
             <div class="livroAutor">{{ livro.autores }}</div>
-            <div class="livroDescricao w-95"  *ngIf="mostrarLivroDescricao">{{ livro.descricao }}</div>
+            <div class="livroDescricao w-95"  *ngIf="mostrarLivroDescricao">{{ livro.descricao | slice: 0:350 }}...</div>
             <div class="caixaFlex texto-10" *ngIf="mostrarLivroStatus">
                 <div class="grow2">Status do Livro</div>
                 <div class="text-end">{{ livro.status_livro == 'D' ? 'Disponivel' : 'Não Disponivel'}}</div>
@@ -80,6 +80,6 @@
     <app-barra-social *ngIf="mostrarBarraSocial" [usuarioId]=uid [livroId]=livro.lid [flagFavoritos]=mostrarBarraSocial_FlagFavoritos></app-barra-social>
     <!-- Barra de icones ações-->
     <app-barra-acoes *ngIf="mostrarBarraAcao" [usuarioId]=uid [livroId]=livro.lid [mostrarSolicitar]=mostrarBarraAcao_Solicitar [mostrarDetalhes]=mostrarBarraAcao_Detalhes 
-    [emprestimoId]=emprestimo.eid [origem]=origem [mostrarGerenciar]=mostrarBarraAcao_Gerenciar></app-barra-acoes>
+    [emprestimoId]=emprestimo.eid [origem]=origem [mostrarGerenciar]=mostrarBarraAcao_Gerenciar [mostrarCadastrar]=mostrarBarraAcao_Adicionar></app-barra-acoes>
 
 </div>

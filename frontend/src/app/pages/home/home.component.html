@@ -4,7 +4,7 @@
 
 <!-- Lista de sugestões de livros -->
 <div *ngIf="livros?.length > 0; else noDataBlock" class="container-sm">
-    <div *ngFor="let livro of livros">
+    <div *ngFor="let livro of livros" class="d-inline-flex flex-row flex-wrap">
         <app-caixa-livro [uid]=livro.uid [livro]=livro [mostrarDadosEmprestimo]="false" [mostrarEmprestador]="false" [mostrarLivroStatus]="false"></app-caixa-livro>
     </div>
 </div>

@@ -1,17 +1,58 @@
 <!----------------------------------------------------------------------------- Parte do título e solicitação ------------------------------------------------------------------>
 <div class="cabecalho mt-3 d-flex flex-column justify-content-flex-start">
-    <h2 class="titulo mb-0">Livro</h2>
+    <h2 class="titulo mb-0">Cadastrar Livro</h2>
+    <p class="subtitulo mt-2 mb-2">Para facilitar sua experiência de utilização,
+        digite abaixo o título ou o ISBN do livro que quer cadastrar. </p>
+    <p class="subtitulo mt-2 mb-2">Caso o livro conste em nossa base de dados,
+        você não precisará digitar todas as informações novamente.</p>
 </div>
-<!------------------------------------------------------------------- Parte do formulário de solicitação de documento e nome --------------------------------------------------->
-<form class="formLivro w-100 d-flex flex-column align-items-start" >
-    <div class="divDados w-100 mt-3">
-        <div class="mb-3 w-100 texto-13">
-            <label class="mb-0" for="titulo">Título ou ISBN</label>
-            <input class="form-control" name="titulo" type="text" formControlName="titulo">
+<!------------------------------------------------------------------- Formulário de Busca --------------------------------------------------->
+<div class="mt-3">
+    <form [formGroup]="form" (ngSubmit)="buscar()">
+        <div class="caixaFlex w-100">
+            <div class="grow1 texto-12">Buscar por </div>
+            <div class="grow2">
+                <select class="form-select form-select-sm"
+                    formControlName="tipo_busca">
+                    <option value="titulo">Título</option>
+                    <option value="isbn">ISBN</option>
+                </select>
+            </div>
+        </div>
+        <div class="mt-2">
+            <input type="search"
+                class="caixaPesquisaForm border rounded-1 mb-2 py-3 w-100"
+                placeholder="Digite o termo de busca" formControlName="pesquisa">
+        </div>
+        <button class="botaoProximo mt-3 text-white" type="submit">Buscar</button>
+    </form>
+</div>
+<!------------------------------------------------------------------- Caixa de resultados --------------------------------------------------->
+<div class="mt-2">
+    <!-- Lista de sugestões de livros -->
+    <div *ngIf="livros!.length > 0; else noDataBlock">
+        <div *ngFor="let livro of livros">
+            <app-caixa-livro [uid]=livro.uid [livro]=livro
+                [mostrarDadosEmprestimo]="false" [mostrarEmprestador]="false"
+                [mostrarLivroStatus]="false" [mostrarBarraSocial]="false"
+                [mostrarBarraUsuario]="false"
+                [mostrarBarraAcao_Solicitar]="false"
+                [mostrarBarraAcao_Detalhes]="false"
+                [mostrarBarraAcao_Adicionar]="true"></app-caixa-livro>
         </div>
     </div>
-    <!------------------------------------------------------------ Botões para voltar para página anterior ou avançar para próxima ------------------------------------------------->
-</form>
+
+    <!-- Nenhum livro a ser exibido -->
+    <ng-template #noDataBlock>
+        <div>
+            <div class="texto-13 text-center">
+                Nenhum livro localizado<br />
+            </div>
+            <div *ngIf="hasResult==0">
+                Deseja cadastrar um novo livro?
+                <button class="botaoProximo mt-3 text-white" type="submit" [routerLink]="['/livros/adicionar']">Cadastrar</button>
+            </div>
+        </div>
+    </ng-template>
+</div>
 <!----------------------------------------------------------------------------------- Fim do código ---------------------------------------------------------------------------->
-
-
