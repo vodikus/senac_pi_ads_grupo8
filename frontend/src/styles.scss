@@ -104,15 +104,15 @@
 }
 
 .texto-12 {
-    font-size: 12px;
+    font-size: 12px !important;
 }
 
 .texto-13 {
-    font-size: 13px;
+    font-size: 13px !important;
 }
 
 .texto-14 {
-    font-size: 14px;
+    font-size: 14px !important;
 }
 
 .texto-15 {
@@ -172,8 +172,19 @@
         border-radius: 5px;
         box-shadow: 5px 5px 5px gray;
         width: 350px;
-        height: 320px;
     }
+
+    .media-w-50 {
+        width: 50% !important;
+    }
+
+    .media-w-75 {
+        width: 75% !important;
+    }
+}
+
+.h-320 {
+    height: 320px;
 }
 
 
@@ -250,8 +261,6 @@ select {
     border: none;
 }
 
-
-
 .botaoVerde,
 .botaoEnviar,
 .botaoContinuar,
@@ -282,45 +291,6 @@ select {
 .textoRedes {
     font-size: 14px;
     color: #4B5768;
-}
-
-.botoesVinculo button {
-    width: 100%;
-    height: 30px;
-    border-width: thin;
-    border-style: solid;
-    border-color: #D0D5DD;
-    margin-right: 3px;
-    border-radius: 5px;
-    padding: 5px;
-}
-
-.botaoGoogle img {
-    width: 16px;
-    height: 16px;
-    text-decoration: none;
-    margin-top: 2px;
-    margin-left: 3px;
-}
-
-.botaoGoogle p,
-.botaoApple p,
-.botaoFacebook p {
-    margin-top: 6px;
-    font-size: 12px;
-}
-
-.botaoApple img {
-    width: 28px;
-    height: 22px;
-    margin-left: 8px;
-}
-
-.botaoFacebook img {
-    width: 22px;
-    height: 20px;
-    margin-left: 1px;
-    margin-top: 2px;
 }
 
 .linhaTextoPreencha {
@@ -598,4 +568,28 @@ select {
 
 .control-file > input {
     display: none;
+}
+
+.btn-social {
+    width: 100%;
+    height: 30px;
+    border-width: thin;
+    border-style: solid;
+    border-color: #D0D5DD;
+    margin-right: 3px;
+    border-radius: 5px;
+}
+
+.escritaTituloGrande {
+    font-size: x-large;
+    font-weight: 800;
+    font-family: 'Open Sans', sans-serif;
+    font-stretch: ultra-expanded;
+    color: #047857;
+    margin-top: 5px;
+}
+
+.iconeTituloGrande {
+    width: 100%;
+    height: auto;
 }

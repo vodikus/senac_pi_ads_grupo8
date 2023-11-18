@@ -24,16 +24,17 @@
             </div>
         </div>
         <div class="mb-3 w-100 texto-13">
-            <label class="mb-0" for="isbn">ISBN</label>
-            <input class="form-control" name="isbn" type="text" formControlName="isbn"
-                [ngClass]="{ 'is-invalid': enviado && f['isbn'].errors }" maxlength="20">
+            <label class="mb-0" for="isbn">ISBN-10</label>
+            <input class="form-control" name="isbn" type="number" formControlName="isbn"
+                [ngClass]="{ 'is-invalid': enviado && f['isbn'].errors }" (focusout)="buscaPorIsbn($event)">
             <div *ngIf="enviado && f['isbn'].errors" class="texto-11">
                 <div *ngIf="f['isbn'].errors['required']" class="text-danger">É necessário informar o ISBN do livro</div>
-                <div *ngIf="f['isbn'].errors['maxlength']" class="text-danger">Tamanho do ISBN inválido</div>
+                <div *ngIf="f['isbn'].errors['existe']" class="text-danger">Este ISBN pertence a este livro: <br/>{{ livros[0].titulo }} - {{ livros[0].autores}}</div>
+                <div *ngIf="f['isbn'].errors['min'] || f['isbn'].errors['max']" class="text-danger">O ISBN deve conter 10 dígitos</div>
             </div>
         </div>
     </div>
-    <b>{{livroId}}</b>
+    <b>{{temResultado}} | {{ form.invalid }}</b>
     <!------------------------------------------------------------ Botões para voltar para página anterior ou avançar para próxima ------------------------------------------------->
     <div class="divBotoes d-inline-flex w-100">
         <div class="divBotoes d-inline-flex w-100">

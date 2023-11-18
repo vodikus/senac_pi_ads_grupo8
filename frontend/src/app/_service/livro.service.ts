@@ -41,7 +41,7 @@ export class LivroService {
   }
 
   buscarLivrosPorIsbn(isbn: string): Observable<any> {
-    return this.http.get(LIVRO_API + 'buscar-por-isbn?id='+isbn);
+    return this.http.get(LIVRO_API + 'buscar-por-isbn?isbn='+isbn);
   }
 
   listarFavoritos(): Observable<any> {

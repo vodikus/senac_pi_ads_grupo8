@@ -32,6 +32,8 @@ export class CaixaLivroComponent implements OnInit {
   @Input('mostrarBarraSocial_Favoritos') mostrarBarraSocial_Favoritos: boolean = true;
   @Input('mostrarBarraSocial_FlagFavoritos') mostrarBarraSocial_FlagFavoritos: boolean = false;
 
+  @Input('alturaVariavel') alturaVariavel: boolean = false;
+
   dominioStatus: {[key: string]: string} = {
     SOLI: 'Solicitado',
     CANC: 'Cancelado',

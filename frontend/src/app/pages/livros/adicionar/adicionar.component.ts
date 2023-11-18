@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Livro } from 'src/app/_classes/livro';
 import { LivroService } from 'src/app/_service/livro.service';
 import { ActivatedRoute, Router } from '@angular/router';
 
@@ -11,6 +12,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class AdicionarComponent {
   livroId: number = 0;
+  livros: Array<Livro> = new Array<Livro>();
+  temResultado = false;
   form: FormGroup = new FormGroup({
     titulo: new FormControl(''),
     descricao: new FormControl(''),
@@ -25,7 +28,7 @@ export class AdicionarComponent {
       {
         titulo: ['', [Validators.required, Validators.maxLength(255)]],
         descricao: ['', [Validators.required, Validators.maxLength(1000)]],
-        isbn: ['', [Validators.required, Validators.maxLength(20)]],
+        isbn: ['', [Validators.required, Validators.min(1111111111), Validators.max(9999999999)]],
       }
     );
 
@@ -59,10 +62,34 @@ export class AdicionarComponent {
     //     console.log(err);
     //   }
     // });
+    console.log("go go go");
   }
 
   onReset(): void {
     this.enviado = false;
     this.form.reset();
   }
+  
+  buscaPorIsbn(event: any): void {
+    if (event.target.value.length < 10 || event.target.value.length > 10 ) {
+      this.form.controls['isbn'].setErrors({'min': true, 'max': true})
+      this.enviado = true;
+      return;
+    } else {
+      this.enviado = false;
+    }
+    this.livroService.buscarLivrosPorIsbn(event.target.value).subscribe({
+      next: data => {
+        this.livros = data;
+        this.temResultado = (data.length > 0);
+        this.enviado = (data.length > 0);
+        if (this.temResultado) {
+          this.form.controls['isbn'].setErrors({'existe': true})          
+        }
+      },
+      error: err => {
+        console.log(err);
+      }
+    });     
+  }  
 }

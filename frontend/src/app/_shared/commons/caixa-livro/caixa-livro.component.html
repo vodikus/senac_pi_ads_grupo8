@@ -1,4 +1,4 @@
-<div class="livroBox"> <!-- container-sm -->
+<div [ngClass]="{'livroBox': true,'h-320': !alturaVariavel}"> <!-- container-sm -->
     <!-- Caixa com a capa, titulo, autor e descrição -->
     <div class="caixaFlex">
         <div *ngIf="mostrarCapa">

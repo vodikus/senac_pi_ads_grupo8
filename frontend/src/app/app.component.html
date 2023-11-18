@@ -2,7 +2,7 @@
     class="d-flex justify-content-center align-items-flex-start container w-100">
     <section class="main-section">
         <!----------------------------------------------------------------------- Parte do Ícone e título do aplicativo ---------------------------------------------------------------->
-        <div class="logo d-inline-flex m-2 ms-1 mb-0">
+        <div class="logo d-inline-flex m-2 ms-1 mb-0" *ngIf="showHeader">
             <img class="iconeTitulo me-2" src="../assets/livroIcone.png"
                 alt="Icone de um livro representando o tema do aplicativo">
             <h1 class="escritaTitulo"> Clube de Empréstimo de Livros</h1>
