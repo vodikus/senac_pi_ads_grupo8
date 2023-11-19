@@ -1,9 +1,9 @@
 # **Clube de Empréstimo de Livros**
 
-## **Grupo 8**
+## **Grupo 4**
 
 - [**Clube de Empréstimo de Livros**](#clube-de-empréstimo-de-livros)
-  - [**Grupo 8**](#grupo-8)
+  - [**Grupo 4**](#grupo-4)
   - [**Apresentação**](#apresentação)
   - [**Instalação**](#instalação)
     - [**Pré-requisitos**](#pré-requisitos)
@@ -16,7 +16,7 @@
 
 ## **Apresentação**
 
-Este projeto consiste em uma aplicação de uma rede social para empréstimo de livros entre os participantes, elaborado para a disciplina **Projeto Integrador: Desenvolvimento de Sistemas Orientado a dispositivos móveis e baseados na Web** do curso de Análise e Desenvolvimento de Sistemas da Faculdade SENAC.
+Este projeto foi inicialmente concebido para ser uma rede social para empréstimo de livros entre os participantes, elaborado para a disciplina **Projeto Integrador: Desenvolvimento de Sistemas Orientado a dispositivos móveis e baseados na Web** e foi dado continuidade na disciplina **Projeto Integrador: Análise de Soluções Integradas para Organizações** do curso de Análise e Desenvolvimento de Sistemas da Faculdade SENAC. 
 
 ## **Instalação**
 
@@ -90,7 +90,7 @@ Para facilitar a resolução do nome do host, pode-se criar uma entrada no arqui
 
 **Configurações do PHP**
 
-O servidor de backend necessita que o PHP esteja instalado corretamente e com o módulo **pdo_mysql** habilitado. No UwAmp isso pode ser feito clicando em PHP Config e, na aba PHP Extensions, selecionando a extensão ``php_pdo_mysql``.
+O servidor de backend necessita que o PHP esteja instalado corretamente e com o módulo **pdo_mysql** e **curl** habilitado. No UwAmp isso pode ser feito clicando em PHP Config e, na aba PHP Extensions, selecionando a extensão ``php_pdo_mysql`` e ``php_curl``.
 
 Dentro da classe *backend/includes/Connection.php* estão as configurações padrões de conexão do sistema, entretanto não é recomendado alterar diretamente os dados ali. Por padrão, os dados de conexão configurados são os seguintes:
 
@@ -135,18 +135,18 @@ O código-fonte está disponível no diretório **frontend**. Após o download d
 
 **Através do release**
 
-Baixar o arquivo **frontend.zip** contendo o release, disponibilizado no caminho https://github.com/vodikus/senac_pi_ads_grupo8/releases/tag/v1.0.0, descompactar no diretório de destino e executar os procedimentos abaixo:
+Baixar o arquivo **frontend.zip** contendo o release, disponibilizado no caminho https://github.com/vodikus/senac_pi_ads_grupo8/releases/tag/v2.0.0, descompactar no diretório de destino e executar os procedimentos abaixo:
 1. npm install -g serve
 3. serve -s -l 80 CAMINHO-DO-FRONTEND
 
 <br/>
 
-> :memo: **Nota:**  O release tem fixo como padrão acessar o backend através da URL http://3.84.195.238:8080/
+> :memo: **Nota:**  O release tem fixo como padrão acessar o backend através da URL http://35.226.114.124/
 
 <br/>
 
 ## **Visualização e Testes**
-O acesso padrão ao frontend deverá ser feito utilizando a URL http://clube-frontend:4200/. Há também uma versão online disponível na URL http://3.84.195.238/.
+O acesso padrão ao frontend deverá ser feito utilizando a URL http://clube-frontend:4200/. Há também uma versão online disponível na URL http://35.226.114.124/.
 
 **Logins pré-cadastrados**
 
