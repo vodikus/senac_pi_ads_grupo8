@@ -7,6 +7,7 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { TagInputModule } from 'ngx-chips';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MomentModule } from 'ngx-moment';
+import { NgSelectModule } from '@ng-select/ng-select';
 
 import { BarraStatusComponent } from './barra-status/barra-status.component';
 import { BarraUsuarioComponent } from './barra-usuario/barra-usuario.component';
@@ -15,6 +16,7 @@ import { BarraSocialComponent } from './barra-social/barra-social.component';
 import { CaixaLivroComponent } from './caixa-livro/caixa-livro.component';
 import { PopupComponent } from './popup/popup.component';
 import { CaixaUsuarioComponent } from './caixa-usuario/caixa-usuario.component';
+import { DetalheLivroComponent } from './detalhe-livro/detalhe-livro.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +26,8 @@ import { CaixaUsuarioComponent } from './caixa-usuario/caixa-usuario.component';
     BarraSocialComponent,
     CaixaLivroComponent,
     PopupComponent,
-    CaixaUsuarioComponent
+    CaixaUsuarioComponent,
+    DetalheLivroComponent
   ],
   imports: [
     CommonModule,
@@ -34,7 +37,8 @@ import { CaixaUsuarioComponent } from './caixa-usuario/caixa-usuario.component';
     FormsModule,
     TagInputModule, 
     BrowserAnimationsModule,
-    MomentModule
+    MomentModule,
+    NgSelectModule
   ],
   exports: [
     BarraStatusComponent,
@@ -44,11 +48,13 @@ import { CaixaUsuarioComponent } from './caixa-usuario/caixa-usuario.component';
     CaixaLivroComponent,
     PopupComponent,
     CaixaUsuarioComponent,
+    DetalheLivroComponent,
     ReactiveFormsModule, 
     FormsModule,
     TagInputModule, 
     BrowserAnimationsModule,
-    MomentModule
+    MomentModule,
+    NgSelectModule
   ],
   providers: [
      

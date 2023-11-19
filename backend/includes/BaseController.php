@@ -51,9 +51,8 @@ class BaseController
 
     protected function pegarAutorizacao()
     {
-        $requestHeaders = apache_request_headers();
-        $requestKeys = array_map("strtolower", array_keys($requestHeaders));
-        return (array_search('authorization', $requestKeys)) ? $requestHeaders['authorization'] : '';
+        $requestHeaders = array_change_key_case(apache_request_headers(), CASE_UPPER);
+        return (array_key_exists('AUTHORIZATION', $requestHeaders)) ? $requestHeaders['AUTHORIZATION'] : '';
     }
 
     protected function pegarArrayJson()

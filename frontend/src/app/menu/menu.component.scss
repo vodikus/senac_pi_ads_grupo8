@@ -3,16 +3,9 @@
 }
 
 .menu-bar {
-    clear:both;
     margin-top: 10px;
-}
-
-.menu-bar > div {
-    float: left;
     text-align: center;
-    vertical-align: middle;
-    font-size: 8px;
-    height: 44px;
+    font-size: 8px;    
 }
 
 .menu-bar > div:hover {
@@ -25,10 +18,12 @@
 }
 
 .menu-btn-40 {
+    padding: 4px;
     width: 40px;
 }
 
 .menu-btn-60 {
+    padding: 4px;
     width: 60px;
 }
 

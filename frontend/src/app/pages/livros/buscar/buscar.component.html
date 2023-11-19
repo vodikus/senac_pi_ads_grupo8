@@ -1,0 +1,79 @@
+<!----------------------------------------------------------------------------- Parte do título e solicitação ------------------------------------------------------------------>
+<div class="cabecalho mt-3 d-flex flex-column justify-content-flex-start">
+    <h2 class="titulo mb-0">Cadastrar Livro</h2>
+    <p class="subtitulo mt-2 mb-2">Para facilitar sua experiência de utilização,
+        digite abaixo o título ou o ISBN do livro que quer cadastrar. </p>
+    <p class="subtitulo mt-2 mb-2">Caso o livro conste em nossa base de dados,
+        você não precisará digitar todas as informações novamente.</p>
+</div>
+<!------------------------------------------------------------------- Formulário de Busca --------------------------------------------------->
+<div class="mt-3">
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        <div class="caixaFlex w-100">
+            <div class="grow1 texto-12">Buscar por </div>
+            <div class="grow2">
+                <select class="form-select form-select-sm"
+                    formControlName="tipo_busca"
+                    [ngClass]="{ 'is-invalid': enviado && f['tipo_busca'].errors }">
+                    <option value="titulo">Título</option>
+                    <option value="isbn">ISBN</option>
+                </select>
+                <div *ngIf="enviado && f['tipo_busca'].errors" class="texto-11">
+                    <div *ngIf="f['tipo_busca'].errors['required']"
+                        class="text-danger">É necessário informar o tipo de
+                        busca</div>
+                </div>
+            </div>
+        </div>
+        <div class="mt-2">
+            <input type="search"
+                class="form-control "
+                placeholder="Digite o termo de pesquisa"
+                formControlName="pesquisa"
+                [ngClass]="{ 'is-invalid': enviado && f['pesquisa'].errors }">
+            <div *ngIf="enviado && f['pesquisa'].errors" class="texto-11">
+                <div *ngIf="f['pesquisa'].errors['required']"
+                    class="text-danger">É necessário informar o termo de
+                    pesquisa</div>
+            </div>
+        </div>
+        <button class="botaoProximo mt-3 text-white" type="submit">Buscar</button>
+
+    </form>
+</div>
+<!------------------------------------------------------------------- Caixa de resultados --------------------------------------------------->
+<div class="mt-2" *ngIf="temResultado">
+    <div class="texto-13 text-center">
+        Não encontrou seu livro? Clique em <span class="clickable"
+            [routerLink]="['/livros/adicionar']"><u>Cadastrar</u></span> para
+        adicionar um novo livro.
+    </div>
+</div>
+<div class="mt-5">
+    <!-- Lista de sugestões de livros -->
+    <div *ngIf="livros!.length > 0; else noDataBlock">
+        <div *ngFor="let livro of livros"
+            class="d-inline-flex flex-row flex-wrap">
+            <app-caixa-livro [uid]=livro.uid [livro]=livro
+                [mostrarDadosEmprestimo]="false" [mostrarEmprestador]="false"
+                [mostrarLivroStatus]="false" [mostrarBarraSocial]="false"
+                [mostrarBarraUsuario]="false"
+                [mostrarBarraAcao_Solicitar]="false"
+                [mostrarBarraAcao_Detalhes]="false"
+                [mostrarBarraAcao_Adicionar]="true"
+                [alturaVariavel]="true"></app-caixa-livro>
+        </div>
+    </div>
+
+    <!-- Nenhum livro a ser exibido -->
+    <ng-template #noDataBlock>
+        <div>
+            <div class="texto-13 text-center" *ngIf="enviado">
+                Nenhum livro localizado. Clique em <span class="clickable"
+                    [routerLink]="['/livros/adicionar']"><u>Cadastrar</u></span>
+                para adicionar um novo livro.
+            </div>
+        </div>
+    </ng-template>
+</div>
+<!----------------------------------------------------------------------------------- Fim do código ---------------------------------------------------------------------------->
