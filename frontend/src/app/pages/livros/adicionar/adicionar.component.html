@@ -1,40 +1,93 @@
 <!----------------------------------------------------------------------------- Parte do título e solicitação ------------------------------------------------------------------>
 <div class="cabecalho mt-3 d-flex flex-column justify-content-flex-start">
-    <h2 class="titulo mb-0">Livro</h2>
+    <h2 class="titulo mb-0">Cadastrar Livro</h2>
 </div>
 <!------------------------------------------------------------------- Parte do formulário de solicitação de documento e nome --------------------------------------------------->
-<form class="formLivro w-100 d-flex flex-column align-items-start" [formGroup]="form" (ngSubmit)="onSubmit()">
+<form class="formLivro w-100 d-flex flex-column align-items-start"
+    [formGroup]="form" (ngSubmit)="onSubmit()">
     <div class="divDados w-100 mt-3">
         <div class="mb-3 w-100 texto-13">
+            <label class="mb-0" for="isbn">ISBN</label>
+            <input class="form-control" name="isbn" type="text"
+                formControlName="isbn" minlength="1" maxlength="13"
+                [ngClass]="{ 'is-invalid': enviado && f['isbn'].errors }"
+                (focusout)="buscaPorIsbn($event)">
+            <div *ngIf="enviado && f['isbn'].errors" class="texto-11">
+                <div *ngIf="f['isbn'].errors['required']" class="text-danger">É
+                    necessário informar o ISBN do livro</div>
+                <div *ngIf="f['isbn'].errors['existe']" class="text-danger">Este
+                    ISBN pertence ao livro: <br />{{ livros[0].titulo }} -
+                    {{ livros[0].autores}}</div>
+                <div
+                    *ngIf="f['isbn'].errors['minLength'] || f['isbn'].errors['maxLength']"
+                    class="text-danger">O ISBN deve conter até 13 dígitos</div>
+            </div>
+        </div>
+        <div class="mb-3 w-100 texto-13">
             <label class="mb-0" for="titulo">Título</label>
-            <input class="form-control" name="titulo" type="text" formControlName="titulo"
-                [ngClass]="{ 'is-invalid': enviado && f['titulo'].errors }" maxlength="255">
+            <input class="form-control" name="titulo" type="text"
+                formControlName="titulo"
+                [ngClass]="{ 'is-invalid': enviado && f['titulo'].errors }"
+                maxlength="255">
             <div *ngIf="enviado && f['titulo'].errors" class="texto-11">
-                <div *ngIf="f['titulo'].errors['required']" class="text-danger">É necessário informar o título do livro</div>
-                <div *ngIf="f['titulo'].errors['maxlength']" class="text-danger">Tamanho do título inválido</div>
+                <div *ngIf="f['titulo'].errors['required']" class="text-danger">É
+                    necessário informar o título do livro</div>
+                <div *ngIf="f['titulo'].errors['maxlength']" class="text-danger">Tamanho
+                    do título inválido</div>
             </div>
         </div>
         <div class="mb-3 w-100 texto-13">
             <label class="mb-0" for="descricao">Descrição</label>
-            <textarea class="form-control" name="descricao" type="text" formControlName="descricao"
-                [ngClass]="{ 'is-invalid': enviado && f['descricao'].errors }" maxlength="1000"></textarea>
+            <textarea class="form-control" name="descricao" type="text"
+                formControlName="descricao"
+                [ngClass]="{ 'is-invalid': enviado && f['descricao'].errors }"
+                maxlength="1000"></textarea>
             <div *ngIf="enviado && f['descricao'].errors" class="texto-11">
-                <div *ngIf="f['descricao'].errors['required']" class="text-danger">É necessário informar a descrição do livro</div>
-                <div *ngIf="f['descricao'].errors['maxlength']" class="text-danger">Tamanho da descrição inválida</div>
+                <div *ngIf="f['descricao'].errors['required']"
+                    class="text-danger">É necessário informar a descrição do
+                    livro</div>
+                <div *ngIf="f['descricao'].errors['maxlength']"
+                    class="text-danger">Tamanho da descrição inválida</div>
             </div>
         </div>
         <div class="mb-3 w-100 texto-13">
-            <label class="mb-0" for="isbn">ISBN-10</label>
-            <input class="form-control" name="isbn" type="number" formControlName="isbn"
-                [ngClass]="{ 'is-invalid': enviado && f['isbn'].errors }" (focusout)="buscaPorIsbn($event)">
-            <div *ngIf="enviado && f['isbn'].errors" class="texto-11">
-                <div *ngIf="f['isbn'].errors['required']" class="text-danger">É necessário informar o ISBN do livro</div>
-                <div *ngIf="f['isbn'].errors['existe']" class="text-danger">Este ISBN pertence a este livro: <br/>{{ livros[0].titulo }} - {{ livros[0].autores}}</div>
-                <div *ngIf="f['isbn'].errors['min'] || f['isbn'].errors['max']" class="text-danger">O ISBN deve conter 10 dígitos</div>
+            <label class="mb-0" for="autores">Autores</label>
+            <ng-select [items]="autoresLista | async"
+                [ngClass]="{ 'is-invalid': enviado && f['autores'].errors }"
+                bindLabel="nome_autor"
+                [addTag]="true"
+                [multiple]="true"
+                [hideSelected]="true"
+                [trackByFn]="trackByFn"
+                [minTermLength]="2"
+                addTagText="Adicionar autor"
+                loadingText="Carregando autores..."
+                typeToSearchText="Entre com 2 ou mais letras"
+                [typeahead]="autoresInput"
+                formControlName="autores">
+            </ng-select>
+            <div *ngIf="enviado && f['autores'].errors" class="texto-11">
+                <div *ngIf="f['autores'].errors['required']"
+                    class="text-danger">É necessário informar pelo menos 1 autor.</div>
             </div>
         </div>
+        <div class="mb-3 w-100 texto-13">
+            <label class="mb-0" for="autores">Assuntos</label>
+            <ng-select [items]="assuntosLista | async"
+                bindLabel="nome_assunto"
+                [addTag]="true"
+                [multiple]="true"
+                [hideSelected]="true"
+                [trackByFn]="trackByFn"
+                [minTermLength]="2"
+                addTagText="Adicionar assunto"
+                loadingText="Carregando assuntos..."
+                typeToSearchText="Entre com 2 ou mais letras"
+                [typeahead]="assuntosInput"
+                formControlName="assuntos">
+            </ng-select>
+        </div>
     </div>
-    <b>{{temResultado}} | {{ form.invalid }}</b>
     <!------------------------------------------------------------ Botões para voltar para página anterior ou avançar para próxima ------------------------------------------------->
     <div class="divBotoes d-inline-flex w-100">
         <div class="divBotoes d-inline-flex w-100">
@@ -43,5 +96,3 @@
     </div>
 </form>
 <!----------------------------------------------------------------------------------- Fim do código ---------------------------------------------------------------------------->
-
-

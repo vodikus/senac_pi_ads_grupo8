@@ -7,8 +7,8 @@ export class Livro {
     isbn: string = "";
     status: string = "";
     dh_atualizacao: Date = new Date();
-    autores: string = "";
-    assuntos: string = "";
+    autores: any;
+    assuntos: any;
     uid: number = 0;
     status_livro: string = "";
 }

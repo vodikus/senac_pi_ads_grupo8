@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { of, Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { Endereco } from '../_classes/endereco';
 
@@ -9,6 +9,7 @@ const ENDERECO_API = environment.backendUrl + '/api/enderecos/';
 const OPENCEP_API = "https://opencep.com/v1/";
 const APICEP_API = "https://cdn.apicep.com/file/apicep/";
 const REPUBLICA_VIRTUAL_CEP_API = "http://cep.republicavirtual.com.br/web_cep.php?formato=json&cep=";
+const BRASILAPI_CEP_API = "https://brasilapi.com.br/api/cep/v2/";
 
 
 @Injectable({
@@ -18,7 +19,7 @@ export class EnderecoService {
 
   constructor(private http: HttpClient) { }
 
-  buscarCepOnline(cep: string, provedor: string): Endereco {
+  buscarCepOnline(cep: string, provedor: string): Observable<Endereco> {
     let retorno: Endereco = new Endereco();
     switch (provedor) {
       case 'OPENCEP':
@@ -65,8 +66,23 @@ export class EnderecoService {
           }
         });
         break;
+
+      case 'BRASILAPI':
+        this.brasilapiCep(cep.replace('-', '')).subscribe({
+          next: data => {
+            retorno.cep = cep;
+            retorno.logradouro = data.street;
+            retorno.bairro = data.neighborhood;
+            retorno.cidade = data.city;
+            retorno.uf = data.state;
+          },
+          error: err => {
+            console.log(err);
+          }
+        });
+        break;
     }
-    return retorno;
+    return of(retorno);
   }
 
   openCep(cep: string): Observable<any> {
@@ -79,6 +95,10 @@ export class EnderecoService {
 
   republicaVirtualCep(cep: string): Observable<any> {
     return this.http.get(REPUBLICA_VIRTUAL_CEP_API + cep);
+  }
+
+  brasilapiCep(cep: string): Observable<any> {
+    return this.http.get(BRASILAPI_CEP_API + cep);
   }
 
   buscarMeusEnderecos(): Observable<any> {

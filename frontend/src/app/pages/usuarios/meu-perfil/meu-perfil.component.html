@@ -92,7 +92,7 @@
         </div>
     </div>
     <div *ngIf="livros!.length > 0; else semLivro">
-        <div *ngFor="let livro of livros" class="d-inline-flex flex-row flex-wrap">
+        <div *ngFor="let livro of livros" class="d-lg-inline-flex flex-row flex-wrap mx-1">
             <app-caixa-livro [uid]=livro.uid [livro]=livro [mostrarDadosEmprestimo]="false" [mostrarEmprestador]="false"
                 [mostrarBarraUsuario]="false" [mostrarBarraSocial]="false" [mostrarBarraAvaliacao]="false"
                 [mostrarBarraAcao_Solicitar]="false" [mostrarBarraAcao_Gerenciar]="true" [mostrarLivroDescricao]="false" [alturaVariavel]="true"></app-caixa-livro>

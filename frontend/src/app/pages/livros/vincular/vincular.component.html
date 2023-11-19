@@ -1,0 +1,43 @@
+<!----------------------------------------------------------------------------- Parte do título e solicitação ------------------------------------------------------------------>
+<div class="cabecalho mt-3 d-flex flex-column justify-content-flex-start">
+    <h2 class="titulo mb-0">Cadastrar Livro Semelhante</h2>
+</div>
+<!------------------------------------------------------------------- Parte do formulário de solicitação de documento e nome --------------------------------------------------->
+<form class="formLivro w-100 d-flex flex-column align-items-start">
+    <div class="divDados w-100 mt-3">
+        <div class="mb-3 w-100 texto-13 d-flex">
+            <div>
+                <img
+                    src="{{ livro.capa == undefined ? 'assets/sem-capa.png' : IMG_SERVER + livro.capa }}"
+                    class="livroCapa">
+            </div>
+            <div class="mx-2">
+                <div>
+                    <label class="mb-0 subtitulo" for="titulo">Título</label><br />{{livro.titulo}}
+                </div>
+                <div>
+                    <label class="mb-0 subtitulo" for="isbn">ISBN</label><br />{{livro.isbn}}
+                </div>
+            </div>
+        </div>
+        <div class="mb-3 w-100 texto-13">
+            <label class="mb-0 subtitulo" for="descricao">Descrição</label>
+            <br />{{livro.descricao}}
+        </div>
+        <div class="mb-3 w-100 texto-13">
+            <label class="mb-0 subtitulo" for="autores">Autores</label><br />
+            {{livro.autores}}
+        </div>
+        <div class="mb-3 w-100 texto-13">
+            <label class="mb-0 subtitulo" for="autores">Assuntos</label><br />
+            {{livro.assuntos}}
+        </div>
+    </div>
+    <!------------------------------------------------------------ Botões para voltar para página anterior ou avançar para próxima ------------------------------------------------->
+    <div class="divBotoes d-inline-flex w-100">
+        <div class="divBotoes d-inline-flex w-100">
+            <button class="botaoProximo mt-3 text-white" type="submit" (click)="cadastrarLivro()">Cadastrar</button>
+        </div>
+    </div>
+</form>
+<!----------------------------------------------------------------------------------- Fim do código ---------------------------------------------------------------------------->

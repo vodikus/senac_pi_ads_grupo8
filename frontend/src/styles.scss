@@ -1,5 +1,6 @@
 @import "../node_modules/bootstrap/scss/bootstrap";
 @import '../node_modules/ngx-bar-rating/themes/br-default-theme';
+@import "~@ng-select/ng-select/themes/default.theme.css";
 
 * {
     color: #101828;
@@ -160,6 +161,7 @@
         margin-bottom: 15px;
         border-radius: 5px;
         box-shadow: 5px 5px 5px gray;
+        // width: 100%;
     }
 }
 @include media-breakpoint-up(lg) { 
@@ -192,16 +194,34 @@
     width: 64px;
 }
 
+.livroCapa-lg {
+    width: 160px;
+}
+
 .livroAutor {
     text-transform: uppercase;
     color: lightslategray;
     font-size: 9px;
 }
 
+
+.livroAutor-lg {
+    text-transform: uppercase;
+    color: lightslategray;
+    font-size: 12px;
+}
+
 .livroDescricao {
     padding-top: 5px;
     color: lightslategray;
     font-size: 9px;
+    text-align: justify;
+}
+
+.livroDescricao-lg {
+    padding-top: 5px;
+    color: lightslategray;
+    font-size: 12px;
     text-align: justify;
 }
 
@@ -592,4 +612,9 @@ select {
 .iconeTituloGrande {
     width: 100%;
     height: auto;
+}
+
+ng-select.ng-invalid.is-invalid .ng-select-container {
+    border-color: #dc3545;
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 0 3px #fde6e8;
 }

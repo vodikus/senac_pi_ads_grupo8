@@ -7,6 +7,7 @@ import { LivrosComponent } from './livros.component';
 import { PadraoModule } from 'src/app/_shared/commons/padrao.module';
 import { BuscarComponent } from './buscar/buscar.component';
 import { DetalheComponent } from './detalhe/detalhe.component';
+import { VincularComponent } from './vincular/vincular.component';
 
 
 @NgModule({
@@ -14,7 +15,8 @@ import { DetalheComponent } from './detalhe/detalhe.component';
     AdicionarComponent,
     LivrosComponent,
     BuscarComponent,
-    DetalheComponent
+    DetalheComponent,
+    VincularComponent
   ],
   imports: [
     CommonModule,

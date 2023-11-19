@@ -5,7 +5,7 @@
 export const environment = {
   production: false,
   backendUrl: "http://clube-backend",
-  cepProvider: "OPENCEP"
+  cepProvider: "BRASILAPI"
 };
 
 /*

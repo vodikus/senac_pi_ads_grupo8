@@ -2,6 +2,7 @@ import { Injectable, LOCALE_ID } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
+import { Livro } from '../_classes/livro';
 
 const LIVRO_API = environment.backendUrl + '/api/livros/';
 
@@ -57,4 +58,10 @@ export class LivroService {
     let body = {'lid': lid, 'uid_dono': uid_dono };
     return this.http.post(LIVRO_API + 'removerFavorito', body);
   }
+
+  cadastrarLivro(livro: Livro): Observable<any> {
+    return this.http.post(LIVRO_API + 'cadastrar', livro);
+  }
+  
+
 }

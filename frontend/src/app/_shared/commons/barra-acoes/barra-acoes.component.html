@@ -17,9 +17,9 @@
         <div class="texto-pequeno3">Solicitar</div>
     </div>
     <div class="grow1 text-center clickable" *ngIf="mostrarCadastrar"
-        [routerLink]="['/livros/adicionar/',livroId]">
+        [routerLink]="['/livros/vincular/',livroId]">
         <div><img src="assets/adicionarLivro.png" class="img-tiny1" /></div>
-        <div class="texto-pequeno3">Cadastrar</div>
+        <div class="texto-pequeno3">Cadastrar semelhante</div>
     </div>
     <div class="grow1 text-center clickable" *ngIf="mostrarGerenciar && emprestimoId > 0"
         [routerLink]="['/emprestimos/gerenciar/',emprestimoId]">
