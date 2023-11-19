@@ -500,7 +500,7 @@ class LivroController extends BaseController
             if ($livroId > 0) {
                 // Adiciona capa ao livro
                 $capaUrl = 'https://covers.openlibrary.org/b/isbn/'.$livro['isbn'].'-S.jpg';
-                $capaTemp = tempnam(sys_get_temp_dir(), $livro['isbn']);
+                $capaTemp = dirname(__file__) . "/../imagens/temp/". $livro['isbn'];
                 FileHelper::downloadImagem($capaUrl,  $capaTemp);
                 if (filesize($capaTemp) > 999) {
                     $imagemModel = new ImagemModel(); 
