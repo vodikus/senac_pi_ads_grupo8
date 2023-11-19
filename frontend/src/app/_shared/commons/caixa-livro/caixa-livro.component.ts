@@ -27,9 +27,12 @@ export class CaixaLivroComponent implements OnInit {
   
   @Input('mostrarBarraAcao_Solicitar') mostrarBarraAcao_Solicitar: boolean = true;
   @Input('mostrarBarraAcao_Detalhes') mostrarBarraAcao_Detalhes: boolean = true;
+  @Input('mostrarBarraAcao_Adicionar') mostrarBarraAcao_Adicionar: boolean = false;
   @Input('mostrarBarraAcao_Gerenciar') mostrarBarraAcao_Gerenciar: boolean = false;
   @Input('mostrarBarraSocial_Favoritos') mostrarBarraSocial_Favoritos: boolean = true;
   @Input('mostrarBarraSocial_FlagFavoritos') mostrarBarraSocial_FlagFavoritos: boolean = false;
+
+  @Input('alturaVariavel') alturaVariavel: boolean = false;
 
   dominioStatus: {[key: string]: string} = {
     SOLI: 'Solicitado',

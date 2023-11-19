@@ -75,11 +75,19 @@ export class EnderecoComponent implements OnInit {
   }
 
   buscaCep(event: any): void {
-    let retorno: Endereco = this.enderecoService.buscarCepOnline(event.target.value, environment.cepProvider);
-    this.form.controls['logradouro'].setValue(retorno.logradouro);
-    this.form.controls['bairro'].setValue(retorno.bairro);
-    this.form.controls['cidade'].setValue(retorno.cidade);
-    this.form.controls['estado'].setValue(retorno.uf);
+    if (event.target.value.length > 0) {
+      this.enderecoService.buscarCepOnline(event.target.value, environment.cepProvider).subscribe({
+        next: data => {
+          this.form.controls['logradouro'].setValue(data.logradouro);
+          this.form.controls['bairro'].setValue(data.bairro);
+          this.form.controls['cidade'].setValue(data.cidade);
+          this.form.controls['uf'].setValue(data.uf);
+          console.log(data);
+        },
+        error: err => {
+          console.log(err);
+        }
+      });
+    }
   }
-
 }

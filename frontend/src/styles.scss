@@ -1,7 +1,13 @@
+@import "../node_modules/bootstrap/scss/bootstrap";
 @import '../node_modules/ngx-bar-rating/themes/br-default-theme';
+@import "~@ng-select/ng-select/themes/default.theme.css";
 
 * {
     color: #101828;
+}
+
+.main-section {
+    width: 100%;
 }
 
 .debug {
@@ -99,15 +105,15 @@
 }
 
 .texto-12 {
-    font-size: 12px;
+    font-size: 12px !important;
 }
 
 .texto-13 {
-    font-size: 13px;
+    font-size: 13px !important;
 }
 
 .texto-14 {
-    font-size: 14px;
+    font-size: 14px !important;
 }
 
 .texto-15 {
@@ -146,16 +152,50 @@
     flex: 1;
 }
 
-.livroBox {
-    font-size: 12px;
-    padding: 10px;
-    margin-bottom: 15px;
-    border-radius: 5px;
-    box-shadow: 5px 5px 5px gray;
+
+
+@include media-breakpoint-down(lg) { 
+    .livroBox {
+        font-size: 12px;
+        padding: 10px;
+        margin-bottom: 15px;
+        border-radius: 5px;
+        box-shadow: 5px 5px 5px gray;
+        // width: 100%;
+    }
 }
+@include media-breakpoint-up(lg) { 
+    .livroBox {
+        font-size: 12px;
+        padding: 10px;
+        margin-left: 20px;
+        margin-right: 20px;
+        margin-bottom: 15px;
+        border-radius: 5px;
+        box-shadow: 5px 5px 5px gray;
+        width: 350px;
+    }
+
+    .media-w-50 {
+        width: 50% !important;
+    }
+
+    .media-w-75 {
+        width: 75% !important;
+    }
+}
+
+.h-320 {
+    height: 320px;
+}
+
 
 .livroCapa {
     width: 64px;
+}
+
+.livroCapa-lg {
+    width: 160px;
 }
 
 .livroAutor {
@@ -164,10 +204,24 @@
     font-size: 9px;
 }
 
+
+.livroAutor-lg {
+    text-transform: uppercase;
+    color: lightslategray;
+    font-size: 12px;
+}
+
 .livroDescricao {
     padding-top: 5px;
     color: lightslategray;
     font-size: 9px;
+    text-align: justify;
+}
+
+.livroDescricao-lg {
+    padding-top: 5px;
+    color: lightslategray;
+    font-size: 12px;
     text-align: justify;
 }
 
@@ -227,8 +281,6 @@ select {
     border: none;
 }
 
-
-
 .botaoVerde,
 .botaoEnviar,
 .botaoContinuar,
@@ -259,45 +311,6 @@ select {
 .textoRedes {
     font-size: 14px;
     color: #4B5768;
-}
-
-.botoesVinculo button {
-    width: 100%;
-    height: 30px;
-    border-width: thin;
-    border-style: solid;
-    border-color: #D0D5DD;
-    margin-right: 3px;
-    border-radius: 5px;
-    padding: 5px;
-}
-
-.botaoGoogle img {
-    width: 16px;
-    height: 16px;
-    text-decoration: none;
-    margin-top: 2px;
-    margin-left: 3px;
-}
-
-.botaoGoogle p,
-.botaoApple p,
-.botaoFacebook p {
-    margin-top: 6px;
-    font-size: 12px;
-}
-
-.botaoApple img {
-    width: 28px;
-    height: 22px;
-    margin-left: 8px;
-}
-
-.botaoFacebook img {
-    width: 22px;
-    height: 20px;
-    margin-left: 1px;
-    margin-top: 2px;
 }
 
 .linhaTextoPreencha {
@@ -575,4 +588,33 @@ select {
 
 .control-file > input {
     display: none;
+}
+
+.btn-social {
+    width: 100%;
+    height: 30px;
+    border-width: thin;
+    border-style: solid;
+    border-color: #D0D5DD;
+    margin-right: 3px;
+    border-radius: 5px;
+}
+
+.escritaTituloGrande {
+    font-size: x-large;
+    font-weight: 800;
+    font-family: 'Open Sans', sans-serif;
+    font-stretch: ultra-expanded;
+    color: #047857;
+    margin-top: 5px;
+}
+
+.iconeTituloGrande {
+    width: 100%;
+    height: auto;
+}
+
+ng-select.ng-invalid.is-invalid .ng-select-container {
+    border-color: #dc3545;
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 0 3px #fde6e8;
 }

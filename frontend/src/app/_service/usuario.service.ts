@@ -78,10 +78,14 @@ export class UsuarioService {
     let body = `[{"iid": "${iid}"}]`;
     return this.http.post(USER_API + 'vincularAssunto', body);
   }
-
+  
   removerAssunto(iid: number): Observable<any> {
     let body = `[{"iid": "${iid}"}]`;
     return this.http.post(USER_API + 'desvincularAssunto', body);
   }
-
+  
+  vincularLivro(lid: number): Observable<any> {
+    let body = `[{"lid": "${lid}"}]`;
+    return this.http.post(USER_API + 'vincularLivro', body);
+  }
 }

@@ -4,19 +4,32 @@
 
 <div class="mt-3">
     <form [formGroup]="form">
-        <div class="mt-2">
-            <input type="search" class="caixaPesquisaForm border rounded-1 mb-2 py-3 w-100" (search)="buscar()"
-                placeholder="Digite o termo de busca" formControlName="pesquisa">
-        </div>
-        <div class="caixaFlex w-100">
+        <div class="caixaFlex w-100 mt-2">
             <div class="grow1 texto-12">Buscar por </div>
             <div class="grow2">
-                <select class="form-select form-select-sm" formControlName="tipo_busca">
+                <select class="form-select form-select-sm"
+                    formControlName="tipo_busca"
+                    [ngClass]="{ 'is-invalid': enviado && f['tipo_busca'].errors }">
                     <option value="assunto">Assunto</option>
                     <option value="titulo">Título</option>
                     <option value="autor">Autor</option>
                 </select>
+                <div *ngIf="enviado && f['tipo_busca'].errors" class="texto-11">
+                    <div *ngIf="f['tipo_busca'].errors['required']"
+                        class="text-danger">É necessário informar o tipo de
+                        busca</div>
+                </div>
             </div>
+        </div>
+        <div class="mt-2">
+            <input type="search" class="form-control" (search)="buscar()"
+                placeholder="Digite o termo de busca" formControlName="pesquisa"
+                [ngClass]="{ 'is-invalid': enviado && f['pesquisa'].errors }">
+        </div>
+        <div *ngIf="enviado && f['pesquisa'].errors" class="texto-11">
+            <div *ngIf="f['pesquisa'].errors['required']"
+                class="text-danger">É necessário informar o termo de
+                pesquisa</div>
         </div>
     </form>
 </div>
@@ -24,8 +37,10 @@
 <div class="mt-2">
     <!-- Lista de sugestões de livros -->
     <div *ngIf="livros!.length > 0; else noDataBlock">
-        <div *ngFor="let livro of livros">
-            <app-caixa-livro [uid]=livro.uid [livro]=livro [mostrarDadosEmprestimo]="false" [mostrarEmprestador]="false"
+        <div *ngFor="let livro of livros"
+            class="d-inline-flex flex-row flex-wrap">
+            <app-caixa-livro [uid]=livro.uid [livro]=livro
+                [mostrarDadosEmprestimo]="false" [mostrarEmprestador]="false"
                 [mostrarLivroStatus]="false"></app-caixa-livro>
         </div>
     </div>

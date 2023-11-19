@@ -8,6 +8,7 @@ include_once 'helpers/MessageHelper.php';
 include_once 'helpers/Constantes.php';
 include_once 'includes/CLException.php';
 include_once 'includes/CLConstException.php';
+require 'vendor/autoload.php';
 include_once 'includes/BaseController.php';
 
 use helpers\MessageHelper;

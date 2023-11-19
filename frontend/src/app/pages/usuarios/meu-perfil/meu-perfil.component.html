@@ -88,14 +88,14 @@
             <p>Meus Livros</p>
         </div>
         <div class="texto-10 grow2 text-end align-middle">
-            <div class="mt-2"><i class="fa-solid fa-plus"></i> Adicionar</div>
+            <div class="mt-2 clickable text-primary" [routerLink]="['/livros/buscar']" *ngIf="enderecos!.length == 0"><i class="fa-solid fa-plus text-primary"></i> Adicionar</div>
         </div>
     </div>
     <div *ngIf="livros!.length > 0; else semLivro">
-        <div *ngFor="let livro of livros" class="w-100">
+        <div *ngFor="let livro of livros" class="d-lg-inline-flex flex-row flex-wrap mx-1">
             <app-caixa-livro [uid]=livro.uid [livro]=livro [mostrarDadosEmprestimo]="false" [mostrarEmprestador]="false"
                 [mostrarBarraUsuario]="false" [mostrarBarraSocial]="false" [mostrarBarraAvaliacao]="false"
-                [mostrarBarraAcao_Solicitar]="false" [mostrarBarraAcao_Gerenciar]="true" [mostrarLivroDescricao]="false" [mostrarCapa]="false"></app-caixa-livro>
+                [mostrarBarraAcao_Solicitar]="false" [mostrarBarraAcao_Gerenciar]="true" [mostrarLivroDescricao]="false" [alturaVariavel]="true"></app-caixa-livro>
         </div>
     </div>
     <ng-template #semLivro>

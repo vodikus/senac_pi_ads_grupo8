@@ -7,6 +7,7 @@ include_once 'models/LivroAvaliacaoModel.php';
 include_once 'models/FavoritosModel.php';
 include_once 'models/UsuarioLivroModel.php';
 include_once 'models/ImagemModel.php';
+include_once 'services/OpenLibraryService.php';
 require_once 'helpers/FileHelper.php';
 
 use helpers\MessageHelper;
@@ -49,8 +50,11 @@ class LivroController extends BaseController
                     case 'buscar-por-usuario':
                         $this->buscarUsuario($params['params']);
                         break;
+                    case 'busca-completa':
+                        $this->buscaCompleta($params['params']);
+                        break;
                     case 'meus-livros':
-                        $entrada = sprintf("?uid=%s",$this->getFieldFromToken('uid'));
+                        $entrada = sprintf("?uid=%s", $this->getFieldFromToken('uid'));
                         $this->buscarUsuario($entrada);
                         break;
                     case 'favoritos':
@@ -71,6 +75,13 @@ class LivroController extends BaseController
                     case 'adicionar':
                         if ($this->isAuth()) {
                             $this->adicionar($dados);
+                        } else {
+                            $this->httpRawResponse(401, MessageHelper::fmtMsgConstJson('ERR_NAO_AUTORIZADO'));
+                        }
+                        break;
+                    case 'cadastrar':
+                        if ($this->isAuth()) {
+                            $this->cadastrar($this->getFieldFromToken('uid'), $dados);
                         } else {
                             $this->httpRawResponse(401, MessageHelper::fmtMsgConstJson('ERR_NAO_AUTORIZADO'));
                         }
@@ -243,7 +254,7 @@ class LivroController extends BaseController
             parse_str(substr($entrada, 1), $params);
             $ordem = (array_key_exists('ordem', $params)) ? $params['ordem'] : '';
             $livroModel = new LivroModel();
-            $arrLivros = (array)$livroModel->listarLivros($ordem);
+            $arrLivros = (array) $livroModel->listarLivros($ordem);
             $responseData = json_encode($arrLivros);
         } catch (Exception $e) {
             $this->httpRawResponse(500, MessageHelper::fmtException($e));
@@ -271,7 +282,7 @@ class LivroController extends BaseController
             $lid = (array_key_exists('id', $params)) ? $params['id'] : '';
             if (is_numeric($lid)) {
                 $livroModel = new LivroModel();
-                $arrLivros = (array)$livroModel->buscarLivroPorId($lid);
+                $arrLivros = (array) $livroModel->buscarLivroPorId($lid);
                 $responseData = json_encode($arrLivros);
             } else {
                 $this->httpRawResponse(200, MessageHelper::fmtMsgConstJson('ERR_ID_INVALIDO'));
@@ -300,7 +311,7 @@ class LivroController extends BaseController
             parse_str(substr($dados, 1), $params);
             $isbn = (array_key_exists('isbn', $params)) ? $params['isbn'] : '';
             $livroModel = new LivroModel();
-            $arrLivros = (array)$livroModel->buscarLivroPorIsbn(strval($isbn));
+            $arrLivros = (array) $livroModel->buscarLivroPorIsbn(strval($isbn));
             $responseData = json_encode($arrLivros);
         } catch (Exception $e) {
             $this->httpRawResponse(500, MessageHelper::fmtException($e));
@@ -326,7 +337,7 @@ class LivroController extends BaseController
             parse_str(substr($dados, 1), $params);
             $assunto = (array_key_exists('nome_assunto', $params)) ? $params['nome_assunto'] : '';
             $livroModel = new LivroModel();
-            $arrLivros = (array)$livroModel->buscarLivroPorAssunto($assunto);
+            $arrLivros = (array) $livroModel->buscarLivroPorAssunto($assunto);
             $responseData = json_encode($arrLivros);
         } catch (Exception $e) {
             $this->httpRawResponse(500, MessageHelper::fmtException($e));
@@ -352,7 +363,7 @@ class LivroController extends BaseController
             parse_str(substr($dados, 1), $params);
             $autor = (array_key_exists('nome_autor', $params)) ? $params['nome_autor'] : '';
             $livroModel = new LivroModel();
-            $arrLivros = (array)$livroModel->buscarLivroPorAutor($autor);
+            $arrLivros = (array) $livroModel->buscarLivroPorAutor($autor);
             $responseData = json_encode($arrLivros);
         } catch (Exception $e) {
             $this->httpRawResponse(500, MessageHelper::fmtException($e));
@@ -378,7 +389,7 @@ class LivroController extends BaseController
             parse_str(substr($dados, 1), $params);
             $titulo = (array_key_exists('titulo', $params)) ? $params['titulo'] : '';
             $livroModel = new LivroModel();
-            $arrLivros = (array)$livroModel->buscarLivroPorTitulo($titulo);
+            $arrLivros = (array) $livroModel->buscarLivroPorTitulo($titulo);
             $responseData = json_encode($arrLivros);
         } catch (Exception $e) {
             $this->httpRawResponse(500, MessageHelper::fmtException($e));
@@ -406,7 +417,7 @@ class LivroController extends BaseController
             $lid = (array_key_exists('lid', $params)) ? $params['lid'] : 0;
             if (is_numeric($uid) && is_numeric($lid)) {
                 $livroModel = new LivroModel();
-                $arrLivros = (array)$livroModel->buscarLivroPorUsuario($uid, $lid);
+                $arrLivros = (array) $livroModel->buscarLivroPorUsuario($uid, $lid);
                 $responseData = json_encode($arrLivros);
             } else {
                 $this->httpRawResponse(200, MessageHelper::fmtMsgConstJson('ERR_ID_INVALIDO'));
@@ -444,6 +455,97 @@ class LivroController extends BaseController
         try {
             $livroModel = new LivroModel();
             $livroId = $livroModel->adicionarLivro($dados);
+        } catch (Exception $e) {
+            $this->httpRawResponse(500, MessageHelper::fmtException($e));
+        }
+        $this->httpRawResponse(200, MessageHelper::fmtMsgConstJson('MSG_LIVRO_CADASTRO_SUCESSO', ['livroId' => $livroId]));
+    }
+
+    /**
+     * @api {post} /livros/cadastrar/ Cadastrar Livro
+     * @apiName Cadastrar
+     * @apiGroup Livros
+     * @apiVersion 1.0.0
+     *
+     * @apiBody {String} titulo Titulo do Livro.
+     * @apiBody {String} descricao Descricao do Livro.
+     * @apiBody {String} isbn ISBN do Livro.
+     * @apiBody {Autor} autor[] Autores do Livro.
+     * @apiBody {Assunto} assunto[] Assuntos do Livro.
+     *
+     * @apiUse SAIDA_PADRAO
+     * @apiUse ERR_GENERICOS
+     * @apiUse ERR_LIVRO_PADRAO
+     *
+     * @apiErrorExample Error-Response:
+     *     HTTP/1.1 500 Internal Server Error
+     *     {
+     *         "codigo": "9202",
+     *         "mensagem": "Já existe um livro com este ISBN",
+     *         "detalhe": ""
+     *     }
+     */
+    public function cadastrar($uid, $dados)
+    {
+        try {
+            // Separar pedaços para não quebrar validações dos modelos
+            $livro = $dados;
+            unset($livro['autores']);
+            unset($livro['assuntos']);
+
+            // Adicionar livro
+            $livroModel = new LivroModel();
+            $livroId = $livroModel->adicionarLivro($livro);
+
+            if ($livroId > 0) {
+                // Adiciona capa ao livro
+                $capaUrl = 'https://covers.openlibrary.org/b/isbn/'.$livro['isbn'].'-S.jpg';
+                $capaTemp = tempnam(sys_get_temp_dir(), $livro['isbn']);
+                FileHelper::downloadImagem($capaUrl,  $capaTemp);
+                if (filesize($capaTemp) > 999) {
+                    $imagemModel = new ImagemModel(); 
+                    $imagemModel->salvaCapaLivro($livroId,['imagem' => ['tmp_name' => $capaTemp]]);
+                }
+
+                // Autores
+                if (array_key_exists('autores', $dados)) {
+                    $livroAutorModel = new LivroAutorModel();
+                    foreach ($dados['autores'] as $key => $value) {
+                        if (!array_key_exists('aid', $value)) {
+                            // Cadastrar autor
+                            $autorModel = new AutorModel();
+                            $autorId = $autorModel->adicionarAutor($value);
+                        } else {
+                            $autorId = $value['aid'];
+                        }
+                        // Vincula autor ao livro
+                        if ($autorId > 0)
+                            $livroAutorModel->adicionarLivroAutor(['lid' => $livroId, 'aid' => $autorId]);
+                    }
+                }
+
+                // Assuntos
+                if (array_key_exists('assuntos', $dados)) {
+                    $livroAssuntoModel = new LivroAssuntoModel();
+                    foreach ($dados['assuntos'] as $key => $value) {
+                        if (!array_key_exists('iid', $value)) {
+                            // Cadastrar assunto
+                            $assuntoModel = new AssuntoModel();
+                            $assuntoId = $assuntoModel->adicionarAssunto($value);
+                        } else {
+                            $assuntoId = $value['iid'];
+                        }
+                        // Vincula assunto ao livro
+                        if ($assuntoId > 0)
+                            $livroAssuntoModel->adicionarLivroAssunto(['lid' => $livroId, 'iid' => $assuntoId]);
+                    }
+                }
+
+                // Vincula usuário ao livro e torna o livro disponível
+                $usuarioLivroModel = new UsuarioLivroModel();
+                $usuarioLivroModel->adicionarUsuarioLivro($uid, ['lid'=>$livroId]);
+                $usuarioLivroModel->atualizarUsuarioLivro($uid, ['lid'=>$livroId, 'status'=>'D']);
+            }
         } catch (Exception $e) {
             $this->httpRawResponse(500, MessageHelper::fmtException($e));
         }
@@ -680,7 +782,7 @@ class LivroController extends BaseController
             } else {
                 $this->httpRawResponse(500, MessageHelper::fmtMsgConstJson('ERR_JSON_INVALIDO'));
             }
-        } catch (CLException|CLConstException $e) {
+        } catch (CLException | CLConstException $e) {
             $this->httpRawResponse(500, MessageHelper::fmtException($e));
         }
         $this->httpRawResponse(200, MessageHelper::fmtMsgConstJson('MSG_LIVRO_ASSUNTO_DESVINCULADO_SUCESSO'));
@@ -844,7 +946,7 @@ class LivroController extends BaseController
             parse_str(substr($entrada, 1), $params);
             $ordem = (array_key_exists('ordem', $params)) ? $params['ordem'] : '';
             $livroModel = new LivroModel();
-            $arrLivros = (array)$livroModel->buscarLivrosDisponiveis($ordem);
+            $arrLivros = (array) $livroModel->buscarLivrosDisponiveis($ordem);
             $responseData = json_encode($arrLivros);
         } catch (Exception $e) {
             $this->httpRawResponse(500, MessageHelper::fmtException($e));
@@ -868,7 +970,7 @@ class LivroController extends BaseController
             parse_str(substr($entrada, 1), $params);
             $ordem = (array_key_exists('ordem', $params)) ? $params['ordem'] : '';
             $favoritoModel = new FavoritosModel();
-            $arrLivros = (array)$favoritoModel->listarFavoritos($uid, $ordem);
+            $arrLivros = (array) $favoritoModel->listarFavoritos($uid, $ordem);
             $responseData = json_encode($arrLivros);
         } catch (Exception $e) {
             $this->httpRawResponse(500, MessageHelper::fmtException($e));
@@ -877,7 +979,6 @@ class LivroController extends BaseController
     }
 
     public function enviarCapa($uid, $entrada = 0, $files = 0)
-
     {
         try {
             parse_str(substr($entrada, 1), $params);
@@ -894,7 +995,8 @@ class LivroController extends BaseController
         }
     }
 
-    public function removerCapa($entrada=0){
+    public function removerCapa($entrada = 0)
+    {
         try {
             parse_str(substr($entrada, 1), $params);
             $id = (array_key_exists('id', $params)) ? $params['id'] : '';
@@ -902,12 +1004,40 @@ class LivroController extends BaseController
                 $imagemModel = new ImagemModel();
                 $imagemModel->removeCapaLivro($id);
                 $this->httpRawResponse(200, MessageHelper::fmtMsgConstJson('CAPA_LIVRO_REMOVIDA_SUCESSO'));
-            }
-            else {
+            } else {
                 $this->httpRawResponse(200, MessageHelper::fmtMsgConstJson('ERR_ID_INVALIDO'));
             }
         } catch (Exception $e) {
             $this->httpRawResponse(500, MessageHelper::fmtException($e));
         }
+    }
+    public function buscaCompleta($entrada)
+    {
+        try {
+            parse_str(substr($entrada, 1), $params);
+            $scope = (array_key_exists('scope', $params)) ? $params['scope'] : '';
+            $key = (array_key_exists('key', $params)) ? $params['key'] : '';
+            $value = (array_key_exists('value', $params)) ? $params['value'] : '';
+
+            if (!empty($scope) && !empty($key) && !empty($value)) {
+                $ols = new OpenLibraryService();
+                switch ($scope) {
+                    case 'search':
+                        $arrLivros = $ols->requestSearch($key, $value);
+                        break;
+                    case 'books':
+                        $arrLivros = $ols->requestBooks($key, $value);
+                        break;
+
+                }
+                $responseData = json_encode($arrLivros);
+            } else {
+                $this->httpRawResponse(200, MessageHelper::fmtMsgConstJson('ERR_ID_INVALIDO'));
+            }
+
+        } catch (Exception $e) {
+            $this->httpRawResponse(500, MessageHelper::fmtException($e));
+        }
+        $this->montarSaidaOk($responseData);
     }
 }
